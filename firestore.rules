@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // RING_RP — sadece "wr_" önekli koleksiyonlar, sadece giriş yapmış (anonim dahil) istemciler.
+    // NYC_DB ile aynı Firebase projesini kullanıyorsan bu bloğu mevcut kurallarının İÇİNE ekle,
+    // dosyanın tamamını yapıştırma (yoksa NYC_DB'nin kuralları silinir).
+    match /{col}/{docId} {
+      allow read, write: if request.auth != null && col.matches('wr_.*');
+    }
+    match /{col}/{docId}/{sub}/{subId} {
+      allow read, write: if request.auth != null && col.matches('wr_.*');
+    }
+  }
+}
