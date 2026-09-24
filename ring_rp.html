@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RING_RP — AI Wrestling Roleplay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+  --bg0:#0b0b0e;--bg1:#111116;--bg2:#17171d;--bg3:#1e1e26;--bg4:#262631;--bg5:#30303d;
+  --ln:rgba(255,255,255,.07);--ln2:rgba(255,255,255,.13);
+  --t0:#f2f2f5;--t1:#b4b4c4;--t2:#737387;--t3:#44445a;
+  --gold:#e3b341;--gold-d:rgba(227,179,65,.13);
+  --face:#4a9fe8;--face-d:rgba(74,159,232,.14);
+  --heel:#e2504f;--heel-d:rgba(226,80,79,.14);
+  --tw:#b07ee8;--tw-d:rgba(176,126,232,.14);
+  --gn:#4db880;--gn-d:rgba(77,184,128,.14);
+  --am:#e8a74a;--am-d:rgba(232,167,74,.14);
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;--disp:'Anton',sans-serif;
+  --r:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--bg0);color:var(--t0);font-size:14px;line-height:1.5;overflow:hidden}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;color:var(--t0);background:var(--bg1);border:1px solid var(--ln2);border-radius:var(--r);padding:7px 10px;font-size:13px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:3px}
+
+/* layout */
+#app{display:flex;flex-direction:column;height:100vh}
+header{height:52px;display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--bg1);border-bottom:1px solid var(--ln);flex-shrink:0}
+.brand{font-family:var(--disp);font-size:22px;letter-spacing:.06em;color:var(--t0)}
+.brand em{color:var(--gold);font-style:normal}
+nav{display:flex;gap:4px;margin-left:10px;overflow-x:auto}
+nav button{background:none;border:1px solid transparent;color:var(--t2);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:var(--r);white-space:nowrap}
+nav button:hover{color:var(--t0);background:var(--bg3)}
+nav button.on{color:var(--gold);background:var(--gold-d);border-color:rgba(227,179,65,.35)}
+.spc{flex:1}
+.ai-pill{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;padding:4px 9px;border-radius:20px;border:1px solid var(--ln2);color:var(--t2);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.ai-pill .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+.ai-pill.ok{color:var(--gn);border-color:rgba(77,184,128,.35)}
+.ai-pill.busy{color:var(--am);border-color:rgba(232,167,74,.35)}
+.ai-pill.busy .d{animation:pu 1s infinite}
+@keyframes pu{50%{opacity:.3}}
+main{flex:1;overflow:hidden;position:relative}
+.view{display:none;height:100%;overflow:hidden}
+.view.on{display:flex}
+
+/* generic */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:7px 13px;border-radius:var(--r);border:1px solid var(--ln2);background:var(--bg3);color:var(--t1);font-size:12px;font-weight:600;transition:all .12s}
+.btn:hover{background:var(--bg4);color:var(--t0)}
+.btn.gold{background:var(--gold-d);border-color:rgba(227,179,65,.45);color:var(--gold)}
+.btn.gold:hover{background:rgba(227,179,65,.24)}
+.btn.red{background:var(--heel-d);border-color:rgba(226,80,79,.45);color:var(--heel)}
+.btn.sm{padding:4px 9px;font-size:11px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.lbl{font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);margin-bottom:5px;display:block}
+.muted{color:var(--t2);font-size:12px}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--t3);padding:40px;text-align:center;flex:1}
+.empty i{font-size:30px}
+.tag{display:inline-flex;align-items:center;font-family:var(--mono);font-size:9.5px;font-weight:600;padding:1px 7px;border-radius:10px;letter-spacing:.05em;text-transform:uppercase;border:1px solid}
+.al-face{color:var(--face);border-color:rgba(74,159,232,.4);background:var(--face-d)}
+.al-heel{color:var(--heel);border-color:rgba(226,80,79,.4);background:var(--heel-d)}
+.al-tweener{color:var(--tw);border-color:rgba(176,126,232,.4);background:var(--tw-d)}
+.tag.neutral{color:var(--t2);border-color:var(--ln2)}
+
+/* roster */
+#v-roster{flex-direction:column}
+.toolbar{display:flex;gap:8px;padding:12px 16px;border-bottom:1px solid var(--ln);flex-wrap:wrap;align-items:center;background:var(--bg1)}
+.grid{flex:1;overflow-y:auto;padding:16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;align-content:start}
+.card{background:var(--bg2);border:1px solid var(--ln);border-radius:10px;overflow:hidden;cursor:pointer;transition:border-color .12s,transform .12s;display:flex;flex-direction:column}
+.card:hover{border-color:var(--ln2);transform:translateY(-2px)}
+.card-top{display:flex;gap:10px;padding:12px;align-items:center}
+.ava{width:46px;height:46px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:18px;color:var(--t1);flex-shrink:0;overflow:hidden;border:2px solid var(--ln2)}
+.ava img{width:100%;height:100%;object-fit:cover}
+.card-nm{font-weight:700;font-size:14px;line-height:1.2}
+.card-sub{font-family:var(--mono);font-size:10px;color:var(--t2);margin-top:2px}
+.card-g{padding:0 12px 10px;font-size:12px;color:var(--t1);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-f{display:flex;gap:5px;padding:8px 12px;border-top:1px solid var(--ln);flex-wrap:wrap;margin-top:auto}
+
+/* modal */
+.mbd{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.mbd.on{display:flex}
+.mbox{background:var(--bg2);border:1px solid var(--ln2);border-radius:12px;width:100%;max-width:560px;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.mhd{padding:14px 18px;border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:10px}
+.mti{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;flex:1}
+.mcl{background:none;border:none;color:var(--t2);font-size:16px}
+.mbdy{padding:16px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.mft{padding:12px 18px;border-top:1px solid var(--ln);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ff input,.ff select,.ff textarea{width:100%}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.stat{background:var(--bg3);border-radius:var(--r);padding:6px 8px;text-align:center}
+.stat b{display:block;font-family:var(--mono);font-size:16px;color:var(--gold)}
+.stat span{font-family:var(--mono);font-size:9px;color:var(--t2);text-transform:uppercase;letter-spacing:.08em}
+.moveset{display:flex;flex-direction:column;gap:6px}
+.mvrow{display:flex;gap:8px;font-size:12px}
+.mvrow .k{font-family:var(--mono);font-size:10px;color:var(--t2);width:90px;flex-shrink:0;text-transform:uppercase;padding-top:2px}
+pre.json{background:var(--bg0);border:1px solid var(--ln);border-radius:var(--r);padding:10px;font-family:var(--mono);font-size:11px;color:var(--t1);white-space:pre-wrap;max-height:300px;overflow:auto}
+textarea.json{font-family:var(--mono);font-size:11px;min-height:260px;width:100%}
+.prog{height:6px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.prog>div{height:100%;background:var(--gold);width:0;transition:width .3s}
+.log-mini{background:var(--bg0);border:1px solid var(--ln);border-radius:var(--r);padding:8px;font-family:var(--mono);font-size:10.5px;color:var(--t2);max-height:160px;overflow-y:auto}
+
+/* match */
+#v-match{flex-direction:row}
+.m-side{width:270px;flex-shrink:0;background:var(--bg1);border-right:1px solid var(--ln);overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.m-side.right{border-right:none;border-left:1px solid var(--ln)}
+.m-center{flex:1;display:flex;flex-direction:column;min-width:0}
+.fighter{background:var(--bg2);border:1px solid var(--ln);border-radius:10px;padding:10px;position:relative}
+.fighter.turn{border-color:var(--gold);box-shadow:0 0 0 1px rgba(227,179,65,.25),0 0 18px rgba(227,179,65,.12)}
+.fighter .nm{font-family:var(--disp);font-size:18px;letter-spacing:.03em;line-height:1.1}
+.fighter .ctl{font-family:var(--mono);font-size:9.5px;color:var(--t2);margin-top:2px}
+.bar{margin-top:7px}
+.bar .bl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--t2);letter-spacing:.06em;text-transform:uppercase}
+.bar .bt{height:7px;background:var(--bg4);border-radius:4px;overflow:hidden;margin-top:2px}
+.bar .bt div{height:100%;border-radius:4px;transition:width .5s}
+.limbs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+.limb{background:var(--bg3);border-radius:4px;padding:3px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--t2)}
+.limb b{display:block;font-size:11px}
+.stateflags{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}
+.feed{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.ev{max-width:780px}
+.ev.sys{align-self:center;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--t2);letter-spacing:.06em;padding:4px 10px;border:1px dashed var(--ln2);border-radius:20px}
+.ev.act{background:var(--bg2);border:1px solid var(--ln);border-left:3px solid var(--t3);border-radius:0 8px 8px 0;padding:8px 12px}
+.ev.act .who{font-weight:700;font-size:12.5px}
+.ev.act .em{color:#c9a5f5;font-style:italic;font-size:13px}
+.ev.act .mv{font-family:var(--mono);font-size:10px;color:var(--t2);margin-top:3px}
+.ev.narr{font-size:13.5px;color:var(--t0);padding:4px 2px 4px 12px;border-left:2px solid var(--gold)}
+.ev.narr .tier{font-family:var(--mono);font-size:9.5px;font-weight:700;letter-spacing:.1em;padding:1px 7px;border-radius:10px;margin-right:6px;vertical-align:1px}
+.tier.clean{background:rgba(77,184,128,.18);color:var(--gn)}
+.tier.hit{background:rgba(74,159,232,.18);color:var(--face)}
+.tier.partial{background:rgba(232,167,74,.18);color:var(--am)}
+.tier.countered{background:rgba(176,126,232,.2);color:var(--tw)}
+.tier.botch{background:rgba(226,80,79,.18);color:var(--heel)}
+.ev.com{font-size:12.5px;color:var(--t1);padding-left:12px}
+.ev.com b{font-family:var(--mono);font-size:10.5px;color:var(--t2);margin-right:6px}
+.ev.ref{font-family:var(--mono);font-size:11.5px;color:#f0f0f0;background:#1b1b1b;border:1px solid #3a3a3a;border-radius:6px;padding:5px 10px;align-self:flex-start}
+.ev.ref i{margin-right:6px;color:var(--t2)}
+.ev.crowd{font-size:12px;color:var(--am);font-style:italic;padding-left:12px}
+.ev.count{align-self:center;font-family:var(--disp);font-size:34px;letter-spacing:.1em;color:var(--t0);text-shadow:0 0 18px rgba(227,179,65,.4)}
+.ev.win{align-self:center;text-align:center;background:linear-gradient(135deg,rgba(227,179,65,.2),rgba(227,179,65,.05));border:1px solid rgba(227,179,65,.5);border-radius:12px;padding:14px 22px}
+.ev.win .t{font-family:var(--disp);font-size:26px;color:var(--gold);letter-spacing:.05em}
+.dice{font-family:var(--mono);font-size:9.5px;color:var(--t3);margin-top:2px}
+.composer{border-top:1px solid var(--ln);background:var(--bg1);padding:10px 14px;display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.cmp-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:4px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:10px;font-weight:600;padding:4px 9px;border-radius:14px;border:1px solid var(--ln2);background:var(--bg3);color:var(--t2);letter-spacing:.04em}
+.chip:hover{color:var(--t0)}
+.chip.on{color:var(--gold);border-color:rgba(227,179,65,.5);background:var(--gold-d)}
+.chip.lock{opacity:.4}
+.cmp-row{display:flex;gap:8px}
+.cmp-row textarea{flex:1;resize:none;height:62px}
+.crowd-meter{height:120px;background:var(--bg2);border:1px solid var(--ln);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.crowd-meter .val{font-family:var(--disp);font-size:30px;color:var(--am)}
+.info-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--ln)}
+.info-row span:first-child{color:var(--t2);font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+
+/* segment */
+#v-seg{flex-direction:row}
+.seg-msg{background:var(--bg2);border:1px solid var(--ln);border-radius:8px;padding:8px 12px;max-width:760px}
+.seg-msg .who{font-weight:700;font-size:12.5px;margin-bottom:2px}
+.seg-msg .tx{font-size:13.5px;white-space:pre-wrap}
+.seg-msg .tx em{color:#c9a5f5}
+.seg-msg.ai{border-left:3px solid var(--tw)}
+.seg-msg.pl{border-left:3px solid var(--gold)}
+.part{display:flex;align-items:center;gap:8px;padding:6px;border-radius:6px;background:var(--bg2);border:1px solid var(--ln)}
+.part .nm{flex:1;font-size:12.5px;font-weight:600}
+
+/* history + settings */
+#v-hist,#v-set{flex-direction:column;overflow-y:auto}
+.panel{max-width:760px;width:100%;margin:0 auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+.box{background:var(--bg2);border:1px solid var(--ln);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.box h3{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.hist-item{display:flex;gap:10px;align-items:center;padding:10px;background:var(--bg2);border:1px solid var(--ln);border-radius:8px}
+
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:6px;z-index:300;pointer-events:none}
+.toast{background:var(--bg3);border:1px solid var(--ln2);padding:9px 14px;border-radius:8px;font-family:var(--mono);font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:tin .2s}
+.toast.err{border-color:var(--heel);color:var(--heel)}.toast.ok{border-color:var(--gn);color:var(--gn)}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+.mob-only{display:none}
+@media(max-width:900px){
+  #v-match,#v-seg{flex-direction:column;overflow-y:auto}
+  .m-side{width:100%;border:none;border-bottom:1px solid var(--ln);flex-direction:row;overflow-x:auto;padding:8px;flex-shrink:0}
+  .m-side .fighter{min-width:230px}
+  .m-center{min-height:70vh}
+  .row2{grid-template-columns:1fr}
+  .statgrid{grid-template-columns:repeat(4,1fr)}
+  .brand{font-size:18px}
+  header{gap:8px;padding:0 10px}
+  .cmp-row{flex-wrap:wrap}
+  .cmp-row select{width:100%!important}
+  .cmp-row textarea{min-width:0;flex-basis:calc(100% - 120px)}
+}
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="brand">RING<em>_</em>RP</div>
+  <nav id="nav">
+    <button data-v="roster" class="on"><i class="fas fa-users"></i> Kadro</button>
+    <button data-v="match"><i class="fas fa-ring"></i> Maç</button>
+    <button data-v="seg"><i class="fas fa-microphone"></i> Promo / Backstage</button>
+    <button data-v="hist"><i class="fas fa-trophy"></i> Geçmiş</button>
+    <button data-v="set"><i class="fas fa-cog"></i> Ayarlar</button>
+  </nav>
+  <div class="spc"></div>
+  <div class="ai-pill" id="ai-pill"><span class="d"></span><span id="ai-pill-t">AI</span></div>
+</header>
+<main>
+
+<!-- ═══ ROSTER ═══ -->
+<section class="view on" id="v-roster">
+  <div class="toolbar">
+    <input id="r-search" placeholder="Ara: isim, gimmick, promosyon…" style="flex:1;min-width:160px">
+    <select id="r-type">
+      <option value="">Tüm roller</option>
+      <option value="wrestler">Güreşçi</option><option value="referee">Hakem</option>
+      <option value="commentator">Yorumcu</option><option value="interviewer">Röportajcı</option>
+      <option value="announcer">Spiker</option><option value="manager">Menajer</option><option value="gm">GM / Otorite</option>
+    </select>
+    <select id="r-promo"><option value="">Tüm promosyonlar</option></select>
+    <button class="btn gold" onclick="Importer.open()"><i class="fas fa-wand-magic-sparkles"></i> AI ile Ekle</button>
+    <button class="btn" onclick="Editor.open()"><i class="fas fa-plus"></i> Custom Karakter</button>
+    <button class="btn" onclick="Store.exportFile()" title="JSON olarak indir"><i class="fas fa-download"></i></button>
+    <button class="btn" onclick="document.getElementById('imp-file').click()" title="JSON yükle"><i class="fas fa-upload"></i></button>
+    <input type="file" id="imp-file" accept=".json" style="display:none" onchange="Store.importFile(this)">
+  </div>
+  <div class="grid" id="r-grid"></div>
+</section>
+
+<!-- ═══ MATCH ═══ -->
+<section class="view" id="v-match">
+  <div class="m-side" id="m-left"></div>
+  <div class="m-center">
+    <div class="feed" id="m-feed">
+      <div class="empty"><i class="fas fa-ring"></i><p>Henüz maç yok.</p><button class="btn gold" onclick="MatchSetup.open()"><i class="fas fa-bell"></i> Yeni Maç Kur</button></div>
+    </div>
+    <div class="composer" id="m-comp" style="display:none">
+      <div class="cmp-top">
+        <span class="lbl" style="margin:0">Sıra:</span><b id="m-turn-nm" style="font-size:13px"></b>
+        <div class="spc"></div>
+        <div class="chips" id="m-cats"></div>
+      </div>
+      <div class="cmp-row">
+        <select id="m-move" style="width:210px"></select>
+        <textarea id="m-emote" placeholder="*Emote yaz* — örn: *Rakibini köşeye fırlatır, koşarak gelip Clothesline dener* (boş bırakırsan kısa otomatik emote)"></textarea>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn gold" id="m-go" onclick="Match.playerAct()"><i class="fas fa-bolt"></i> Hamle</button>
+          <button class="btn sm" onclick="Match.aiTakeTurn(true)" title="Bu turu AI oynasın"><i class="fas fa-robot"></i> AI oynasın</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-side right" id="m-right">
+    <button class="btn gold" onclick="MatchSetup.open()"><i class="fas fa-bell"></i> Yeni Maç</button>
+  </div>
+</section>
+
+<!-- ═══ SEGMENT ═══ -->
+<section class="view" id="v-seg">
+  <div class="m-side" id="s-left">
+    <div>
+      <span class="lbl">Segment Tipi</span>
+      <select id="s-type" style="width:100%">
+        <option value="promo">In-ring promo (seyirci var)</option>
+        <option value="backstage">Backstage</option>
+        <option value="interview">Röportaj</option>
+        <option value="contract">Kontrat imzası / Yüzleşme</option>
+      </select>
+    </div>
+    <div>
+      <span class="lbl">Ortam / Notlar</span>
+      <textarea id="s-ctx" rows="3" style="width:100%;resize:vertical" placeholder="Örn: Monday gecesi şovu, ana etkinlik öncesi. İki rakip PPV maçı için yüzleşiyor."></textarea>
+    </div>
+    <div>
+      <span class="lbl">Katılımcılar</span>
+      <div id="s-parts" style="display:flex;flex-direction:column;gap:5px"></div>
+      <select id="s-add" style="width:100%;margin-top:6px"><option value="">+ Karakter ekle…</option></select>
+    </div>
+    <button class="btn red sm" onclick="Segment.reset()"><i class="fas fa-rotate-left"></i> Segmenti sıfırla</button>
+  </div>
+  <div class="m-center">
+    <div class="feed" id="s-feed"><div class="empty"><i class="fas fa-microphone"></i><p>Katılımcı ekle, karakterini seç ve ilk repliği at.<br><span class="muted">AI kontrolündeki karakterler (röportajcı, rakip, GM…) ve seyirci cevap verir.</span></p></div></div>
+    <div class="composer">
+      <div class="cmp-top"><span class="lbl" style="margin:0">Konuşan:</span><select id="s-speaker"></select><div class="spc"></div><span class="muted" id="s-heat"></span></div>
+      <div class="cmp-row">
+        <textarea id="s-inp" placeholder="Replik veya *emote* — Enter gönderir, Shift+Enter satır atlar"></textarea>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <button class="btn gold" onclick="Segment.send()"><i class="fas fa-paper-plane"></i> Gönder</button>
+          <button class="btn sm" onclick="Segment.aiContinue()" title="Sadece AI karakterler devam etsin"><i class="fas fa-forward"></i> Devam</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HISTORY ═══ -->
+<section class="view" id="v-hist"><div class="panel" id="h-panel"></div></section>
+
+<!-- ═══ SETTINGS ═══ -->
+<section class="view" id="v-set">
+  <div class="panel">
+    <div class="box">
+      <h3><i class="fas fa-brain"></i> AI Sağlayıcı</h3>
+      <div class="row2">
+        <div class="ff"><span class="lbl">Birincil</span>
+          <select id="set-primary"><option value="gemini">Gemini API</option><option value="ollama">Lokal (Ollama)</option><option value="offline">Offline (AI yok, şablon)</option></select></div>
+        <div class="ff"><span class="lbl">Yedek (birincil hata verirse)</span>
+          <select id="set-fallback"><option value="offline">Offline şablon</option><option value="gemini">Gemini API</option><option value="ollama">Lokal (Ollama)</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="ff"><span class="lbl">Gemini API Key</span><input id="set-gkey" type="password" placeholder="AIza…"></div>
+        <div class="ff"><span class="lbl">Gemini Model</span><input id="set-gmodel" placeholder="gemini-3.6-flash"></div>
+      </div>
+      <div class="row2">
+        <div class="ff"><span class="lbl">Ollama URL</span><input id="set-ourl" placeholder="http://localhost:11434"></div>
+        <div class="ff"><span class="lbl">Ollama Model</span><input id="set-omodel" placeholder="qwen3:14b"></div>
+      </div>
+      <p class="muted">Anahtar sadece bu cihazın tarayıcısında (localStorage) saklanır; HTML dosyasına veya GitHub reposuna gömülmez. Ollama için bilgisayarda <code>OLLAMA_ORIGINS=*</code> ayarı gerekir, yoksa tarayıcı isteği engeller.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
+        <button class="btn" onclick="Settings.test()"><i class="fas fa-vial"></i> Bağlantıyı test et</button>
+      </div>
+    </div>
+    <div class="box">
+      <h3><i class="fas fa-dice-d20"></i> Oyun</h3>
+      <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="set-dice"> Zar / şans detaylarını akışta göster</label>
+      <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="set-autoai"> AI kontrolündeki güreşçi sırası gelince otomatik oynasın</label>
+      <div class="ff"><span class="lbl">AI hakemin yetkisi</span>
+        <select id="set-dmpower"><option value="0">Sadece anlatır (sonucu script belirler)</option><option value="1" selected>Sonucu 1 kademe kaydırabilir (DM modu)</option><option value="2">Sonucu 2 kademe kaydırabilir (serbest DM)</option></select></div>
+      <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
+    </div>
+    <div class="box">
+      <h3><i class="fas fa-database"></i> Veri</h3>
+      <p class="muted">Şimdilik her şey tarayıcıda (localStorage) duruyor. Çok oyunculu için bir sonraki adım Firebase senkronu.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" onclick="Store.exportFile()"><i class="fas fa-download"></i> Tüm veriyi indir</button>
+        <button class="btn red" onclick="Store.resetAll()"><i class="fas fa-trash"></i> Her şeyi sıfırla</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<!-- ═══ MODALS ═══ -->
+<div class="mbd" id="md-char"><div class="mbox" style="max-width:620px">
+  <div class="mhd"><span class="mti" id="mc-title">Karakter</span><button class="mcl" onclick="UI.close('md-char')">✕</button></div>
+  <div class="mbdy" id="mc-body"></div>
+  <div class="mft" id="mc-foot"></div>
+</div></div>
+
+<div class="mbd" id="md-edit"><div class="mbox" style="max-width:640px">
+  <div class="mhd"><span class="mti">Karakter Düzenle (JSON)</span><button class="mcl" onclick="UI.close('md-edit')">✕</button></div>
+  <div class="mbdy">
+    <p class="muted">Tüm alanlar düzenlenebilir. <b>type</b>: wrestler / referee / commentator / interviewer / announcer / manager / gm. <b>alignment</b>: face / heel / tweener. Statlar 1–100.</p>
+    <textarea class="json" id="ed-json"></textarea>
+  </div>
+  <div class="mft"><button class="btn" onclick="UI.close('md-edit')">İptal</button><button class="btn gold" onclick="Editor.save()"><i class="fas fa-save"></i> Kaydet</button></div>
+</div></div>
+
+<div class="mbd" id="md-imp"><div class="mbox" style="max-width:620px">
+  <div class="mhd"><span class="mti">AI ile Karakter Ekle</span><button class="mcl" onclick="UI.close('md-imp')">✕</button></div>
+  <div class="mbdy">
+    <div class="chips" id="imp-modes">
+      <button class="chip on" data-m="single">Tek karakter</button>
+      <button class="chip" data-m="bulk">Toplu (isim listesi / kadro)</button>
+      <button class="chip" data-m="paste">Metin yapıştır</button>
+      <button class="chip" data-m="custom">Custom fikir</button>
+    </div>
+    <div id="imp-single">
+      <div class="row2">
+        <div class="ff"><span class="lbl">İsim</span><input id="imp-name" placeholder="Güreşçi / hakem / yorumcu adı"></div>
+        <div class="ff"><span class="lbl">Promosyon (ipucu)</span><input id="imp-promo" placeholder="WWE, AEW, NJPW, TNA…"></div>
+      </div>
+      <label style="display:flex;gap:8px;align-items:center;font-size:12.5px;margin-top:8px"><input type="checkbox" id="imp-search" checked> İnternette ara (Gemini Google Search — güncel gimmick ve moveset için)</label>
+    </div>
+    <div id="imp-bulk" style="display:none">
+      <div class="row2">
+        <div class="ff"><span class="lbl">Kadroyu AI bulsun</span><input id="imp-roster-q" placeholder="örn: WWE Raw güncel kadro, AEW yorumcuları"></div>
+        <div class="ff" style="display:flex;align-items:flex-end"><button class="btn" style="width:100%" onclick="Importer.fetchRoster()"><i class="fas fa-list"></i> İsimleri getir</button></div>
+      </div>
+      <div class="ff"><span class="lbl">İsim listesi (her satıra bir kişi; "İsim | Promosyon" yazabilirsin)</span><textarea id="imp-list" rows="6" style="width:100%"></textarea></div>
+      <div class="prog"><div id="imp-prog"></div></div>
+      <div class="log-mini" id="imp-log">Hazır.</div>
+    </div>
+    <div id="imp-paste" style="display:none">
+      <div class="ff"><span class="lbl">Profil metni (Cagematch, Fandom, Wikipedia sayfasından kopyala-yapıştır)</span><textarea id="imp-text" rows="9" style="width:100%"></textarea></div>
+    </div>
+    <div id="imp-custom" style="display:none">
+      <div class="ff"><span class="lbl">Karakter fikrini anlat</span><textarea id="imp-idea" rows="5" style="width:100%" placeholder="Örn: Karadenizli, eski güreş milli takımından, sert tekniker bir heel. Sinirlenince Lazca bağırıyor. Finisher'ı bir tür suplex."></textarea></div>
+    </div>
+    <div id="imp-preview"></div>
+  </div>
+  <div class="mft">
+    <button class="btn" onclick="UI.close('md-imp')">Kapat</button>
+    <button class="btn gold" id="imp-go" onclick="Importer.run()"><i class="fas fa-wand-magic-sparkles"></i> Oluştur</button>
+  </div>
+</div></div>
+
+<div class="mbd" id="md-msetup"><div class="mbox" style="max-width:600px">
+  <div class="mhd"><span class="mti">Maç Kur</span><button class="mcl" onclick="UI.close('md-msetup')">✕</button></div>
+  <div class="mbdy">
+    <div class="row2">
+      <div class="ff"><span class="lbl">Köşe 1</span><select id="ms-a"></select><select id="ms-a-ctl" style="margin-top:5px"><option value="player">Oyuncu kontrolünde</option><option value="ai">AI kontrolünde</option></select></div>
+      <div class="ff"><span class="lbl">Köşe 2</span><select id="ms-b"></select><select id="ms-b-ctl" style="margin-top:5px"><option value="ai">AI kontrolünde</option><option value="player">Oyuncu kontrolünde</option></select></div>
+    </div>
+    <div class="row2">
+      <div class="ff"><span class="lbl">Maç tipi</span>
+        <select id="ms-type"><option value="standard">Standart (pinfall / submission / DQ)</option><option value="nodq">No DQ / Street Fight</option><option value="submission">Submission Match</option><option value="lms">Last Man Standing</option></select></div>
+      <div class="ff"><span class="lbl">Hakem</span><select id="ms-ref"></select></div>
+    </div>
+    <div class="row2">
+      <div class="ff"><span class="lbl">Yorumcu 1 (play-by-play)</span><select id="ms-c1"></select></div>
+      <div class="ff"><span class="lbl">Yorumcu 2 (renk)</span><select id="ms-c2"></select></div>
+    </div>
+    <div class="row2">
+      <div class="ff"><span class="lbl">Ring spikeri</span><select id="ms-ann"></select></div>
+      <div class="ff"><span class="lbl">Şov / Etkinlik</span><input id="ms-show" placeholder="örn: Monday Night Mayhem, Ep. 1"></div>
+    </div>
+    <div class="ff"><span class="lbl">Hikâye bağlamı (isteğe bağlı)</span><textarea id="ms-story" rows="2" style="width:100%" placeholder="Örn: İki eski takım arkadaşı. Geçen hafta B, A'yı sırtından bıçakladı."></textarea></div>
+    <div class="ff"><span class="lbl">Kemer (isteğe bağlı)</span><input id="ms-title" placeholder="örn: Dünya Ağır Sıklet Şampiyonluğu"></div>
+  </div>
+  <div class="mft"><button class="btn" onclick="UI.close('md-msetup')">İptal</button><button class="btn gold" onclick="MatchSetup.start()"><i class="fas fa-bell"></i> Zili Çal</button></div>
+</div></div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+/* ════════════════════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════════════════════ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+let rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+function toast(msg, t=''){
+  const el=document.createElement('div'); el.className='toast '+t; el.textContent=msg;
+  $('toast').appendChild(el); setTimeout(()=>el.remove(),3500);
+}
+function fmtEmote(s){ // *emote* → italic
+  return esc(s).replace(/\*([^*\n]+)\*/g,'<em>*$1*</em>').replace(/\n/g,'<br>');
+}
+function initials(n){ return ((n||'?').replace(/"[^"]*"/g,' ').replace(/[^\p{L}\s]/gu,'').trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2)||'?').toUpperCase(); }
+
+/* ════════════════════════════════════════════════════════════
+   SCHEMA + SEED  (orijinal kurgu karakterler — gerçek kadro AI import ile eklenir)
+════════════════════════════════════════════════════════════ */
+const TYPES = {wrestler:'Güreşçi',referee:'Hakem',commentator:'Yorumcu',interviewer:'Röportajcı',announcer:'Spiker',manager:'Menajer',gm:'GM / Otorite'};
+const CAT = {
+  strike:    {tr:'Vuruş',      base:7,  cost:4,  diff:0,  stat:['power','speed']},
+  grapple:   {tr:'Tutuş/Atış', base:10, cost:7,  diff:5,  stat:['power','technique']},
+  aerial:    {tr:'Havadan',    base:13, cost:10, diff:12, stat:['speed','speed']},
+  submission:{tr:'Submission', base:6,  cost:6,  diff:5,  stat:['technique','technique']},
+  signature: {tr:'İmza',       base:16, cost:12, diff:8,  stat:['power','technique'], needMom:45},
+  finisher:  {tr:'Finisher',   base:26, cost:15, diff:10, stat:['power','technique'], needMom:75},
+  pin:       {tr:'Pin',        base:0,  cost:3,  diff:0},
+  counter:   {tr:'Kontra bekle',base:0, cost:0,  diff:0},
+  taunt:     {tr:'Şov / Taunt',base:0,  cost:2,  diff:0},
+  rest:      {tr:'Nefeslen',   base:0,  cost:-14,diff:0},
+  weapon:    {tr:'Obje / Hile',base:14, cost:6,  diff:5,  stat:['power','power']},
+};
+const ACTION_ORDER = ['strike','grapple','aerial','submission','signature','finisher','pin','counter','taunt','rest','weapon'];
+function blankChar(){
+  return {id:uid(),type:'wrestler',name:'',ringName:'',promotion:'',brand:'',alignment:'face',
+    gimmick:'',bio:'',style:'allrounder',height:'',weight:'',hometown:'',nicknames:[],catchphrases:[],
+    entrance:'',theme:'',stats:{power:60,technique:60,speed:60,stamina:60,toughness:60,charisma:60,mic:60},
+    moves:{strike:[],grapple:[],aerial:[],submission:[],signature:[],finisher:[]},
+    voice:'',image:'',source:'custom',popularity:50,record:{w:0,l:0,d:0}};
+}
+function mk(o){ const c=blankChar(); return Object.assign(c,o,{stats:Object.assign(c.stats,o.stats||{}),moves:Object.assign(c.moves,o.moves||{})}); }
+const SEED = [
+  mk({id:'s_kaan',name:'Kaan Demir',ringName:'Kaan "Kasırga" Demir',promotion:'APW',brand:'Pazartesi',alignment:'face',style:'high-flyer',
+    gimmick:'İzmirli, kalabalığın sevgilisi hızlı high-flyer. Hiç pes etmeyen underdog.',hometown:'İzmir',height:"1.78",weight:'82 kg',
+    nicknames:['Kasırga','Ege Rüzgârı'],catchphrases:['Rüzgâr kimseyi beklemez!'],entrance:'Işıklar maviye döner, ring kenarından ikinci ipe zıplar.',
+    stats:{power:52,technique:68,speed:90,stamina:78,toughness:62,charisma:80,mic:65},
+    moves:{strike:['Dropkick','Enzuigiri','Superkick'],grapple:['Hurricanrana','Tornado DDT'],aerial:['Suicide Dive','Moonsault','Springboard Crossbody'],submission:['Crossface'],signature:['Kasırga Kick (Spinning heel kick)'],finisher:['Ege Dalgası (Shooting Star Press)']},
+    voice:'Enerjik, samimi, Ege şivesi hafif.'}),
+  mk({id:'s_viktor',name:'Viktor Kron',ringName:'Viktor Kron',promotion:'APW',brand:'Pazartesi',alignment:'heel',style:'powerhouse',
+    gimmick:'Soğukkanlı Doğu Avrupalı dev. Seyirciyi aşağılar, "zayıfları" temizlemeyi misyon sayar.',hometown:'Bilinmiyor',height:'1.98',weight:'138 kg',
+    nicknames:['Demir Perde'],catchphrases:['Zayıflık bir hastalıktır. Tedavisi benim.'],entrance:'Kırmızı ışık, yavaş yürüyüş, ringe girerken ipleri koparırcasına çeker.',
+    stats:{power:94,technique:58,speed:38,stamina:70,toughness:90,charisma:66,mic:58},
+    moves:{strike:['Big Boot','Forearm Smash','Headbutt'],grapple:['Chokeslam','Powerbomb','Belly-to-belly Suplex'],aerial:[],submission:['Bear Hug'],signature:['Demir Perde (Pumphandle Slam)'],finisher:['Kron Bomb (Sitout Powerbomb)']},
+    voice:'Kısa, soğuk, tehditkâr cümleler. Aksanlı Türkçe.'}),
+  mk({id:'s_mira',name:'Mira Vale',ringName:'Mira Vale',promotion:'APW',brand:'Cuma',alignment:'tweener',style:'technician',
+    gimmick:'Eski amatör güreş şampiyonu, kurallara takıntılı, kazanmak için gerekirse kuralları büker.',hometown:'Ankara',height:'1.70',weight:'62 kg',
+    nicknames:['Satranç Ustası'],catchphrases:['Her hamle bir önceki hamlenin cevabıdır.'],entrance:'Sessiz, analitik; rakibini ringden izler.',
+    stats:{power:55,technique:94,speed:72,stamina:82,toughness:70,charisma:70,mic:76},
+    moves:{strike:['European Uppercut','Knee Strike'],grapple:['German Suplex','Northern Lights Suplex','Dragon Screw'],aerial:['Missile Dropkick'],submission:['Armbar','Figure-Four','Crossface'],signature:['Üç Hamle (Triple German Suplex)'],finisher:['Şah Mat (Bridging Dragon Suplex / Crossface kombinasyonu)']},
+    voice:'Keskin, zeki, alaycı.'}),
+  mk({id:'s_brutus',name:'Brutus Oakes',ringName:'"Kasap" Brutus Oakes',promotion:'APW',brand:'Cuma',alignment:'heel',style:'brawler',
+    gimmick:'Barlardan gelen hardcore kavgacı. Kural tanımaz, sandalyeyi sever.',hometown:'Detroit',height:'1.88',weight:'120 kg',
+    nicknames:['Kasap'],catchphrases:['Temiz maç mı? Ben temizlik yapmam.'],entrance:'Çöp tenekesiyle gelir, seyirciyle kavga eder.',
+    stats:{power:84,technique:50,speed:48,stamina:74,toughness:92,charisma:72,mic:70},
+    moves:{strike:['Clothesline','Brass-knuckle Punch','Running Knee'],grapple:['Spinebuster','Piledriver','Side Slam'],aerial:['Senton'],submission:['Rear Naked Choke'],signature:['Mezbaha (Lariat)'],finisher:['Son Durak (Package Piledriver)']},
+    voice:'Kaba, kısa, esprili-tehditkâr.'}),
+  mk({id:'s_ref',type:'referee',name:'Tolga Aras',ringName:'Hakem Tolga Aras',promotion:'APW',alignment:'face',gimmick:'Kurallara sadık, sert ama adil kıdemli hakem. Arada dikkati dağılır.',stats:{power:40,technique:60,speed:60,stamina:70,toughness:50,charisma:50,mic:40},voice:'Net, kısa komutlar.'}),
+  mk({id:'s_c1',type:'commentator',name:'Selim Tan',ringName:'Selim Tan',promotion:'APW',alignment:'face',gimmick:'Play-by-play yorumcu. Heyecanlı, hamle isimlerini bilir, face\'leri tutar.',voice:'Coşkulu, anlatıcı: "İnanılmaz! İnanılmaz!"'}),
+  mk({id:'s_c2',type:'commentator',name:'Rıza Karaca',ringName:'Rıza "Reis" Karaca',promotion:'APW',alignment:'heel',gimmick:'Eski güreşçi, renk yorumcusu. Heel\'leri savunur, hileyi "strateji" diye över.',voice:'Alaycı, iğneleyici, kendini beğenmiş.'}),
+  mk({id:'s_int',type:'interviewer',name:'Deniz Yıldız',ringName:'Deniz Yıldız',promotion:'APW',alignment:'face',gimmick:'Backstage röportajcı. Profesyonel ama zor sorular sormaktan çekinmez.',voice:'Kibar, soğukkanlı.'}),
+  mk({id:'s_ann',type:'announcer',name:'Ece Kaya',ringName:'Ece Kaya',promotion:'APW',alignment:'face',gimmick:'Ring spikeri. Girişleri uzatarak, coşkuyla anons eder.',voice:'Resmî, görkemli anonslar.'}),
+  mk({id:'s_gm',type:'gm',name:'Hakan Başar',ringName:'GM Hakan Başar',promotion:'APW',alignment:'tweener',gimmick:'Genel menajer. Reyting için kaos sever, maç yapmakla tehdit eder.',voice:'Otoriter, iş adamı dili.'}),
+];
+
+/* ════════════════════════════════════════════════════════════
+   STORE (localStorage — Firebase adaptörü ileride aynı arayüzle takılır)
+════════════════════════════════════════════════════════════ */
+const Store = {
+  KEY:'ringrp_v1',
+  d:null,
+  load(){
+    try{ this.d = JSON.parse(localStorage.getItem(this.KEY)||'null'); }catch(e){ this.d=null; }
+    if(!this.d){ this.d = {chars:SEED.map(c=>JSON.parse(JSON.stringify(c))), matches:[], settings:{}}; this.save(); }
+    this.d.chars ||= []; this.d.matches ||= []; this.d.settings ||= {};
+  },
+  save(){ try{ localStorage.setItem(this.KEY, JSON.stringify(this.d)); }catch(e){ toast('Kaydedilemedi: depolama dolu olabilir','err'); } },
+  chars(type){ return this.d.chars.filter(c=>!type||c.type===type); },
+  get(id){ return this.d.chars.find(c=>c.id===id); },
+  upsert(c){ const i=this.d.chars.findIndex(x=>x.id===c.id); if(i>=0)this.d.chars[i]=c; else this.d.chars.push(c); this.save(); },
+  remove(id){ this.d.chars=this.d.chars.filter(c=>c.id!==id); this.save(); },
+  exportFile(){
+    const blob=new Blob([JSON.stringify({...this.d,settings:{...this.d.settings,gkey:undefined}},null,2)],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ringrp_data.json'; a.click();
+  },
+  importFile(inp){
+    const f=inp.files[0]; if(!f)return;
+    const rd=new FileReader(); rd.onload=()=>{
+      try{
+        const j=JSON.parse(rd.result);
+        const list = Array.isArray(j)?j:(j.chars||[]);
+        let n=0; list.forEach(c=>{ if(c&&c.name){ this.upsert(normalizeChar(c)); n++; } });
+        if(j.matches) this.d.matches = [...this.d.matches, ...j.matches.filter(m=>!this.d.matches.some(x=>x.id===m.id))];
+        this.save(); Roster.render(); toast(`${n} karakter yüklendi`,'ok');
+      }catch(e){ toast('JSON okunamadı','err'); }
+    }; rd.readAsText(f); inp.value='';
+  },
+  resetAll(){ if(!confirm('Tüm karakterler, maç geçmişi ve ayarlar silinsin mi?'))return; localStorage.removeItem(this.KEY); this.load(); Roster.render(); Settings.fill(); toast('Sıfırlandı','ok'); },
+};
+function normalizeChar(c){
+  const b=blankChar();
+  const out=Object.assign(b,c);
+  out.id = c.id || uid();
+  out.stats = Object.assign(blankChar().stats, c.stats||{});
+  Object.keys(out.stats).forEach(k=>out.stats[k]=clamp(parseInt(out.stats[k])||50,1,100));
+  out.moves = Object.assign(blankChar().moves, c.moves||{});
+  Object.keys(out.moves).forEach(k=>{ if(!Array.isArray(out.moves[k])) out.moves[k]= out.moves[k]?[String(out.moves[k])]:[]; });
+  ['nicknames','catchphrases'].forEach(k=>{ if(!Array.isArray(out[k])) out[k]=out[k]?[String(out[k])]:[]; });
+  if(!TYPES[out.type]) out.type='wrestler';
+  if(!['face','heel','tweener'].includes(out.alignment)) out.alignment='tweener';
+  out.ringName ||= out.name;
+  out.record ||= {w:0,l:0,d:0};
+  return out;
+}
+
+/* ════════════════════════════════════════════════════════════
+   AI ADAPTER — Gemini / Ollama / Offline, otomatik yedekleme
+════════════════════════════════════════════════════════════ */
+const AI = {
+  busy:0,
+  BUILD_KEY:'__GEMINI_KEY__', // GitHub Actions build sırasında değiştirilebilir (NYC_DB'deki gibi)
+  cfg(){
+    const bk = this.BUILD_KEY.startsWith('__') ? '' : this.BUILD_KEY;
+    const c = Object.assign({primary:bk?'gemini':'offline',fallback:'offline',gkey:'',gmodel:'gemini-3.6-flash',ourl:'http://localhost:11434',omodel:'qwen3:14b'}, Store.d.settings);
+    if(!c.gkey) c.gkey = bk;
+    return c;
+  },
+  pill(){
+    const c=this.cfg(), p=$('ai-pill'), t=$('ai-pill-t');
+    p.className='ai-pill'+(this.busy?' busy':(c.primary!=='offline'?' ok':''));
+    t.textContent = this.busy ? 'AI DÜŞÜNÜYOR' : ({gemini:'GEMINI',ollama:'LOKAL AI',offline:'OFFLINE'})[c.primary];
+  },
+  parseJSON(txt){
+    if(typeof txt!=='string') return txt;
+    let t=txt.replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'').trim();
+    try{ return JSON.parse(t); }catch(e){}
+    const a=Math.min(...['{','['].map(ch=>{const i=t.indexOf(ch);return i<0?1e9:i;}));
+    const b=Math.max(t.lastIndexOf('}'),t.lastIndexOf(']'));
+    if(a<1e9&&b>a){ try{ return JSON.parse(t.slice(a,b+1)); }catch(e){} }
+    throw new Error('AI geçerli JSON döndürmedi');
+  },
+  async gemini({system,prompt,json,search,temperature}){
+    const c=this.cfg(); if(!c.gkey) throw new Error('Gemini API key yok (Ayarlar)');
+    const body={
+      system_instruction:{parts:[{text:system||''}]},
+      contents:[{role:'user',parts:[{text:prompt}]}],
+      generationConfig:{temperature:temperature??0.8, maxOutputTokens:4096},
+    };
+    if(search) body.tools=[{google_search:{}}];          // grounding + JSON mode birlikte her modelde çalışmaz → metinden ayrıştırıyoruz
+    else if(json) body.generationConfig.responseMimeType='application/json';
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.gmodel)}:generateContent?key=${encodeURIComponent(c.gkey)}`,
+      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(`Gemini ${res.status}: ${e.error?.message||res.statusText}`); }
+    const d=await res.json();
+    const txt=(d.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('');
+    if(!txt) throw new Error('Gemini boş yanıt');
+    const sources=(d.candidates?.[0]?.groundingMetadata?.groundingChunks||[]).map(g=>g.web?.uri).filter(Boolean);
+    return {text:txt,sources};
+  },
+  async ollama({system,prompt,json,temperature}){
+    const c=this.cfg();
+    const res=await fetch(c.ourl.replace(/\/$/,'')+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:c.omodel,stream:false,format:json?'json':undefined,options:{temperature:temperature??0.8},
+        messages:[{role:'system',content:system||''},{role:'user',content:prompt}]})});
+    if(!res.ok) throw new Error('Ollama '+res.status);
+    const d=await res.json(); return {text:d.message?.content||'',sources:[]};
+  },
+  /** opts: {system,prompt,json,search,temperature,offline:()=>fallbackValue} */
+  async ask(opts){
+    const c=this.cfg(); const chain=[c.primary]; if(c.fallback&&c.fallback!==c.primary) chain.push(c.fallback);
+    let lastErr=null;
+    this.busy++; this.pill();
+    try{
+      for(const prov of chain){
+        if(prov==='offline'){ if(opts.offline) return {data:opts.offline(),provider:'offline',sources:[]}; continue; }
+        try{
+          const r = prov==='gemini' ? await this.gemini(opts) : await this.ollama(opts);
+          return {data: opts.json ? this.parseJSON(r.text) : r.text, provider:prov, sources:r.sources};
+        }catch(e){ lastErr=e; console.warn('[AI]',prov,e.message); }
+      }
+      if(opts.offline) return {data:opts.offline(),provider:'offline',sources:[],error:lastErr?.message};
+      throw lastErr||new Error('AI sağlayıcı yok');
+    }finally{ this.busy--; this.pill(); }
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   ENGINE — saf mekanik (DOM yok, test edilebilir)
+════════════════════════════════════════════════════════════ */
+const TIERS=['botch','countered','partial','hit','clean'];
+const TIER_TR={clean:'TEMİZ',hit:'İSABET',partial:'KISMİ',countered:'KONTRA',botch:'BOTCH'};
+const Engine = {
+  newFighter(c){ return {id:c.id,hp:100,st:100,mom:15,limbs:{head:0,body:0,arms:0,legs:0},downed:false,counter:false,lastBig:null,dazed:0}; },
+  tierFromScore(s){ return s>=20?'clean':s>=0?'hit':s>=-15?'partial':s>=-35?'countered':'botch'; },
+  shiftTier(t,n){ return TIERS[clamp(TIERS.indexOf(t)+n,0,4)]; },
+  limbFrom(text,cat){
+    const t=(text||'').toLowerCase();
+    if(/bacak|diz|ayak|leg|knee|ankle|figure|dragon screw|sharpshooter|boston/.test(t)) return 'legs';
+    if(/kol|omuz|bilek|arm|shoulder|kimura|fujiwara|crossface/.test(t)) return 'arms';
+    if(/kafa|baş|boyun|yüz|head|ddt|neck|piledriver|kick|choke|headbutt|superkick|enzuigiri/.test(t)) return 'head';
+    return cat==='submission'?'arms':'body';
+  },
+  weaponWords:/sandalye|chair|masa|table|merdiven|ladder|demir|kemer ile|belt shot|kendo|sopa|çöp|brass|muşta|low blow|alt vuruş|göz|eye poke/i,
+  /** Hamle öncesi şans hesabı. returns {chance, notes[]} */
+  chance(M,actorIdx,cat,text){
+    const A=M.f[actorIdx], D=M.f[1-actorIdx], ca=M.c[actorIdx], cd=M.c[1-actorIdx], k=CAT[cat];
+    const notes=[];
+    const atk = k.stat ? (ca.stats[k.stat[0]]+ca.stats[k.stat[1]])/2 : 60;
+    const def = (cd.stats.speed+cd.stats.technique+cd.stats.toughness)/3;
+    let ch = 58 + (atk-def)*0.4 + (A.mom-D.mom)*0.15 - k.diff;
+    if(A.st<35){ ch -= (35-A.st)*0.7; notes.push('yorgun'); }
+    if(D.downed && cat!=='pin'){ ch += 12; notes.push('rakip yerde'); }
+    if(D.counter){ ch -= 14; notes.push('rakip kontra pozisyonunda'); }
+    if(A.dazed){ ch -= 10; notes.push('sersem'); }
+    if(k.needMom && A.mom<k.needMom){ ch -= (k.needMom-A.mom)*0.6; notes.push('momentum yetersiz'); }
+    if(cat==='aerial' && !D.downed){ ch -= 5; }
+    if(cat==='weapon' && M.type==='standard' && !M.refDown) notes.push('DQ riski');
+    return {chance:clamp(Math.round(ch),5,95), notes};
+  },
+  /** Mekanik çözümleme. quality: AI'ın emote değerlendirmesi (-2..+2), dmShift: AI'ın kademe kaydırması */
+  resolve(M,actorIdx,cat,moveName,text,{quality=0,aiTier=null,dmPower=1}={}){
+    const A=M.f[actorIdx], D=M.f[1-actorIdx], ca=M.c[actorIdx], cd=M.c[1-actorIdx], k=CAT[cat];
+    const out={actorIdx,cat,move:moveName,text,events:[],tier:null,roll:null,chance:null,win:null};
+    A.counter=false;
+    if(A.dazed) A.dazed--;
+    // Non-attack actions
+    if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,100); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
+    if(cat==='counter'){ A.counter=true; A.st=clamp(A.st+4,0,100); A.downed=false; out.tier='hit'; return this._end(M,out,D); }
+    if(cat==='taunt'){
+      const ch=this.chance(M,actorIdx,'strike',text); out.chance=ch.chance; out.roll=rnd(1,100);
+      const risky = !D.downed;
+      const score = ch.chance-out.roll+quality*8+(D.downed?20:0);
+      out.tier=this.tierFromScore(score);
+      if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,100); out.events.push('taunt_punished'); }
+      else { A.mom=clamp(A.mom+12+quality*3,0,100); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
+      A.st=clamp(A.st-k.cost,0,100); A.downed=false;
+      return this._end(M,out,D);
+    }
+    if(cat==='pin') return this._pin(M,actorIdx,out,quality);
+    // Attacks
+    const c=this.chance(M,actorIdx,cat,text); out.chance=c.chance; out.notes=c.notes;
+    out.roll=rnd(1,100);
+    const margin=c.chance-out.roll;
+    let tier=this.tierFromScore(margin+quality*8);
+    if(aiTier && TIERS.includes(aiTier) && dmPower>0){
+      const diff=TIERS.indexOf(aiTier)-TIERS.indexOf(tier);
+      tier=this.shiftTier(tier, clamp(diff,-dmPower,dmPower));
+    }
+    out.tier=tier;
+    const limb=this.limbFrom(moveName+' '+text,cat);
+    let dmg=k.base*(1+ (ca.stats.power-60)/200) * (1-(cd.stats.toughness-60)/250);
+    if(cat==='finisher'||cat==='signature'){ A.mom = 20; }
+    A.st=clamp(A.st-k.cost,0,100);
+    // weapon / DQ
+    if(cat==='weapon'){
+      out.events.push('weapon');
+      if(M.type==='standard'||M.type==='submission'){
+        const seen = !M.refDown && Math.random()<0.65;
+        if(seen && tier!=='botch'){ out.win={idx:1-actorIdx,method:'DQ'}; out.events.push('dq'); }
+        else if(!seen) out.events.push('ref_missed');
+      }
+    }
+    const mult={clean:1.3,hit:1,partial:0.5,countered:0,botch:0}[tier];
+    if(mult>0){
+      const d=Math.round(dmg*mult);
+      D.hp=clamp(D.hp-d,0,100); D.limbs[limb]=clamp(D.limbs[limb]+Math.round(d*(cat==='submission'?2.2:1.1)),0,100);
+      D.st=clamp(D.st-Math.round(d/3),0,100);
+      A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,100);
+      D.mom=clamp(D.mom-(tier==='partial'?2:6),0,100);
+      M.crowd=clamp(M.crowd+(cat==='aerial'||cat==='finisher'?10:cat==='signature'?7:3),0,100);
+      if(['grapple','aerial','signature','finisher','weapon'].includes(cat) && tier!=='partial') D.downed=true;
+      if(cat==='finisher' && tier!=='partial'){ D.lastBig='finisher'; D.dazed=1; out.keepTurn=true; }
+      else if(cat==='signature' && tier!=='partial'){ D.lastBig='signature'; if(tier==='clean') out.keepTurn=true; }
+      out.dmg=d; out.limb=limb;
+      A.downed=false;
+      // submission tap check
+      if(cat==='submission' && tier!=='partial'){
+        const tapCh = clamp(D.limbs[limb]*0.55 + (100-D.hp)*0.35 - D.st*0.2 - cd.stats.toughness*0.15 + (tier==='clean'?10:0), 0, 90);
+        const r=rnd(1,100); out.tapRoll={r,tapCh:Math.round(tapCh)};
+        if(r<=tapCh && M.type!=='lms'){ out.win={idx:actorIdx,method:'Submission'}; out.events.push('tap'); }
+        else if(r<=tapCh){ D.st=clamp(D.st-15,0,100); D.downed=true; out.events.push('escaped'); }
+        else if(Math.random()<0.5) out.events.push('rope_break');
+        else out.events.push('escaped');
+      }
+    } else if(tier==='countered'){
+      const back=Math.round(k.base*0.55);
+      A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,100); A.mom=clamp(A.mom-6,0,100); A.downed=cat!=='strike'; D.downed=false;
+      out.backDmg=back; M.crowd=clamp(M.crowd+5,0,100);
+    } else { // botch
+      const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,100); A.downed=true;
+      out.selfDmg=self; M.crowd=clamp(M.crowd-4,0,100); out.events.push('botch');
+    }
+    // Last man standing: 10 count if hp low & downed
+    if(M.type==='lms' && D.downed && D.hp<30 && !out.win){
+      const up = D.hp*1.6 + D.st*0.3 + cd.stats.toughness*0.3 - (D.lastBig==='finisher'?25:0);
+      const r=rnd(1,100); out.lmsRoll={r,up:Math.round(up)};
+      if(r>up){ out.win={idx:actorIdx,method:'10 Sayım (LMS)'}; out.events.push('lms_ko'); } else out.events.push('lms_up');
+    }
+    return this._end(M,out,D);
+  },
+  _pin(M,actorIdx,out,quality){
+    const A=M.f[actorIdx], D=M.f[1-actorIdx], cd=M.c[1-actorIdx];
+    A.st=clamp(A.st-3,0,100);
+    if(M.type==='submission'||M.type==='lms'){ out.tier='partial'; out.events.push('pin_invalid'); return this._end(M,out,D); }
+    let kick = 18 + D.hp*0.62 + D.st*0.12 + D.mom*0.08 + cd.stats.toughness*0.1 - quality*4;
+    if(D.lastBig==='finisher') kick-=32; else if(D.lastBig==='signature') kick-=14;
+    if(D.downed) kick-=8; else kick+=25;
+    if(D.counter) kick+=20;
+    kick=clamp(Math.round(kick),3,98);
+    const r=rnd(1,100); out.pinRoll={r,kick};
+    let count;
+    if(r<=kick*0.45) count=1; else if(r<=kick) count=2; else count=3;
+    out.count=count;
+    out.nearFall = count===2 && r>kick*0.85;
+    out.tier = count===3?'clean':count===2?'hit':'partial';
+    if(count===3) out.win={idx:actorIdx,method:'Pinfall'};
+    else { D.mom=clamp(D.mom+(count===2?8:4),0,100); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
+    return this._end(M,out,D);
+  },
+  _end(M,out,D){
+    const A=M.f[out.actorIdx];
+    A.lastBig=null;
+    if(!['finisher','signature'].includes(out.cat)) D.lastBig=null; // finisher sonrası pin penceresi tek hamlelik
+    if(out.win){ M.over=true; M.result={winner:M.c[out.win.idx].id,loser:M.c[1-out.win.idx].id,method:out.win.method,round:M.round+1}; }
+    if(!out.keepTurn) M.turn = 1-M.turn;
+    M.round++;
+    const idle=M.f[1-M.turn]; idle.st=clamp(idle.st+3,0,100);
+    return out;
+  },
+  /** Offline / fallback: AI rakip için makul hamle seçimi */
+  autoChoose(M,idx){
+    const A=M.f[idx], D=M.f[1-idx], c=M.c[idx];
+    const has=cat=>(c.moves[cat]||[]).length>0;
+    if(D.downed && (D.lastBig==='finisher' || (D.hp<35 && Math.random()<0.7))) return 'pin';
+    if(A.mom>=75 && has('finisher') && D.hp<60) return 'finisher';
+    if(A.mom>=45 && has('signature') && Math.random()<0.45) return 'signature';
+    if(A.st<25) return Math.random()<0.6?'rest':'strike';
+    if(M.type==='submission' && has('submission') && Math.random()<0.45) return 'submission';
+    if(M.type==='nodq' && Math.random()<0.15) return 'weapon';
+    if(c.alignment==='heel' && M.type==='standard' && A.hp<D.hp-25 && Math.random()<0.1) return 'weapon';
+    if(D.downed && has('aerial') && Math.random()<0.4) return 'aerial';
+    if(Math.random()<0.1) return 'taunt';
+    if(Math.random()<0.08) return 'counter';
+    const pool=['strike','strike','grapple','grapple']; if(has('aerial'))pool.push('aerial'); if(has('submission'))pool.push('submission');
+    return pick(pool);
+  },
+  moveFor(c,cat){
+    const list=c.moves?.[cat]||[];
+    if(list.length) return pick(list);
+    return ({strike:'Yumruk / Tekme',grapple:'Body Slam',aerial:'Top-rope Elbow',submission:'Headlock',signature:'İmza Hareketi',finisher:'Finisher',pin:'Pin denemesi',counter:'Kontra pozisyonu',taunt:'Seyirciye şov',rest:'Köşede nefeslenir',weapon:'Sandalye'})[cat];
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   OFFLINE NARRATOR — AI yokken oyunun çalışmasını sağlar
+════════════════════════════════════════════════════════════ */
+const Offline = {
+  narr(M,out){
+    const a=M.c[out.actorIdx].ringName, d=M.c[1-out.actorIdx].ringName, mv=out.move;
+    if(out.cat==='pin'){
+      if(out.count===3) return `${a} üstüne kapanıyor… BİR! İKİ! ÜÇ! Bitti!`;
+      if(out.nearFall) return `${a} pin'e gidiyor… bir… iki… ve ${d} son saniyede omzunu kaldırıyor! 2.9!`;
+      return `${a} pin deniyor ama ${d} ${out.count===1?'hemen':'iki sayımda'} kurtuluyor.`;
+    }
+    if(out.cat==='rest') return `${a} köşeye çekilip nefesleniyor, ${d}'i gözünü ayırmadan izliyor.`;
+    if(out.cat==='counter') return `${a} ağırlığını düşürüp bekliyor; bir sonraki hamleye kontra kurmak istiyor.`;
+    if(out.cat==='taunt') return out.events.includes('taunt_punished') ? `${a} seyirciye dönüp şov yaparken ${d} arkadan yakalıyor!` : `${a} seyirciye dönüp poz veriyor, salon yankılanıyor!`;
+    const T={
+      clean:[`${a} ${mv}'i kusursuz oturtuyor! ${d} yere çakılıyor!`,`Tam isabet! ${a}'dan ${mv}, ${d} sersemledi!`],
+      hit:[`${a} ${mv} ile ${d}'i yakalıyor.`,`${mv}! ${a} avantajı alıyor.`],
+      partial:[`${a} ${mv} deniyor ama ${d} darbeyi kısmen savuşturuyor.`,`${mv} yarım oturuyor, ${d} hâlâ ayakta.`],
+      countered:[`${d} ${mv}'i okuyor ve kontra yapıyor!`,`Hayır! ${d} ${mv}'i tersine çeviriyor!`],
+      botch:[`${a} ${mv} sırasında dengesini kaybediyor ve kendisi yere yığılıyor!`,`Ah! ${mv} kötü bitti, ${a} kendine zarar verdi.`],
+    };
+    let s=pick(T[out.tier]);
+    if(out.events.includes('tap')) s+=` ${d} tap yapıyor!`;
+    if(out.events.includes('rope_break')) s+=` ${d} ipe uzanıyor, hakem tutuşu bozduruyor.`;
+    if(out.events.includes('dq')) s+=` Hakem gördü! Diskalifiye!`;
+    if(out.events.includes('ref_missed')) s+=` Hakem görmedi!`;
+    return s;
+  },
+  com(M,out){
+    const c1=M.staff.c1, c2=M.staff.c2, heel=M.c[out.actorIdx].alignment==='heel';
+    const L=[];
+    if(c1) L.push({speaker:c1.ringName,line: out.tier==='clean'?'İnanılmaz bir hamle!': out.tier==='countered'?'Bunu okudu! Harika kontra!': out.nearFall?'Bitti sandım! Bitti sandım!':'Maç tempo kazanıyor.'});
+    if(c2 && Math.random()<0.6) L.push({speaker:c2.ringName,line: heel?'İşte strateji budur, buna hile denmez.':'Abartmayın, şans eseri oldu.'});
+    return L;
+  },
+  crowd(out){ return out.nearFall?'Salon ayakta! "Bu harika!" tezahüratı!': out.tier==='clean'?'Kalabalık coşuyor!': out.tier==='botch'?'Seyirciden homurtu yükseliyor.':''; },
+};
+
+/* ════════════════════════════════════════════════════════════
+   MATCH CONTROLLER
+════════════════════════════════════════════════════════════ */
+const Match = {
+  M:null, cat:'strike', locked:false,
+  staffOf(ids){ const o={}; for(const [k,v] of Object.entries(ids)) o[k]=v?Store.get(v):null; return o; },
+  start(cfg){
+    const a=Store.get(cfg.a), b=Store.get(cfg.b);
+    this.M={id:uid(),date:new Date().toISOString(),type:cfg.type,show:cfg.show,story:cfg.story,title:cfg.title,
+      c:[a,b], ctl:[cfg.actl,cfg.bctl], f:[Engine.newFighter(a),Engine.newFighter(b)],
+      staff:this.staffOf({ref:cfg.ref,c1:cfg.c1,c2:cfg.c2,ann:cfg.ann}),
+      turn:Math.random()<0.5?0:1, round:0, crowd:50, refDown:false, over:false, result:null, log:[]};
+    $('m-feed').innerHTML='';
+    this.cat='strike';
+    this.render(); UI.show('match');
+    this.intro();
+  },
+  push(ev){ this.M.log.push(ev); this.renderEv(ev); },
+  async intro(){
+    const M=this.M, [a,b]=M.c;
+    this.push({t:'sys',text:`${M.show||'Canlı Şov'} — ${({standard:'Standart Maç',nodq:'No DQ',submission:'Submission Match',lms:'Last Man Standing'})[M.type]}${M.title?' · '+M.title:''}`});
+    this.locked=true; this.renderComposer();
+    const r=await AI.ask({
+      system:this.sys(), json:true, temperature:0.9,
+      prompt:`Maç başlıyor. Ring spikeri iki güreşçiyi takdim etsin (girişlerini karakterlerine uygun, kısa ve görkemli anlat), yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
+JSON: {"announcer":"spikerin anonsu","entrances":["A girişi 1-2 cümle","B girişi 1-2 cümle"],"commentary":[{"speaker":"isim","line":"..."}],"crowd":"seyirci"}`,
+      offline:()=>({announcer:`Bu karşılaşma tek düşüşe kadar! Köşemde ${a.hometown||'…'}'dan ${a.ringName}! Karşısında ${b.hometown||'…'}'dan ${b.ringName}!`,entrances:[a.entrance||`${a.ringName} ringe geliyor.`,b.entrance||`${b.ringName} ringe geliyor.`],commentary:[],crowd:'Salon dolu, atmosfer elektrikli.'})
+    });
+    const d=r.data||{};
+    if(d.announcer) this.push({t:'com',speaker:M.staff.ann?.ringName||'Spiker',line:d.announcer});
+    (d.entrances||[]).forEach(e=>this.push({t:'narr',text:e}));
+    (d.commentary||[]).forEach(c=>this.push({t:'com',speaker:c.speaker,line:c.line}));
+    if(d.crowd) this.push({t:'crowd',text:d.crowd});
+    this.push({t:'ref',text:`${M.staff.ref?.ringName||'Hakem'} iki güreşçiyi kontrol ediyor ve zili çaldırıyor. DING DING!`});
+    this.push({t:'sys',text:`${M.c[M.turn].ringName} ilk hamleyi yapacak`});
+    this.locked=false; this.render(); this.maybeAuto();
+  },
+  sys(){
+    const M=this.M;
+    const sheet=c=>`- ${c.ringName} (${c.alignment}, ${c.style}) | Gimmick: ${c.gimmick} | Ses/üslup: ${c.voice||'-'} | Lakap: ${(c.nicknames||[]).join(', ')} | Finisher: ${(c.moves.finisher||[]).join(', ')} | İmza: ${(c.moves.signature||[]).join(', ')}`;
+    const st=M.staff;
+    return `Sen bir profesyonel güreş (WWE/AEW tarzı) metin rol oyununun Dungeon Master'ısın. Aynı anda hakemi, yorumcuları, ring spikerini ve seyirciyi oynarsın.
+DİL: Her şey TÜRKÇE. Hamle isimleri İngilizce kalabilir (DDT, Suplex, Superkick gibi).
+TON: Canlı TV yayını. Kısa, sinematik, abartılı ama akıcı. Kayfabe'yi bozma.
+MAÇ: ${({standard:'Standart (pinfall/submission, obje/hile DQ)',nodq:'No DQ — her şey serbest',submission:'Sadece submission ile kazanılır',lms:'Last Man Standing — 10 sayımda kalkamayan kaybeder'})[M.type]}${M.title?' · Kemer: '+M.title:''}
+HİKÂYE: ${M.story||'-'}
+GÜREŞÇİLER:
+${sheet(M.c[0])}
+${sheet(M.c[1])}
+HAKEM: ${st.ref?`${st.ref.ringName} — ${st.ref.gimmick}`:'Hakem'}
+YORUMCULAR: ${[st.c1,st.c2].filter(Boolean).map(c=>`${c.ringName} (${c.alignment}) — ${c.gimmick} Üslup: ${c.voice||'-'}`).join(' | ')||'Yorumcu'}
+KURAL: Mekanik sonucu (hasar, sayım, kazanan) oyun motoru belirler. Sen motorun verdiği sonucu anlatırsın; sonucu değiştirecek bir şey uydurma. Karakterlerin gimmick ve üslubuna sadık kal. Yorumcular karakterlerine göre taraf tutar.`;
+  },
+  stateLine(){
+    const M=this.M; return M.c.map((c,i)=>{const f=M.f[i];return `${c.ringName}: can ${f.hp}, dayanıklılık ${f.st}, momentum ${f.mom}${f.downed?', YERDE':''}${f.counter?', kontra pozisyonunda':''}, uzuv hasarı ${JSON.stringify(f.limbs)}`;}).join(' || ')+` || Seyirci ${M.crowd}/100`;
+  },
+  lastLog(n=8){
+    return this.M.log.slice(-n).map(e=>e.t==='act'?`[${e.who}] ${e.text} (${e.move})`:e.t==='narr'?`[Anlatı] ${e.text}`:e.t==='com'?`[${e.speaker}] ${e.line}`:e.t==='ref'?`[Hakem] ${e.text}`:e.t==='crowd'?`[Seyirci] ${e.text}`:'').filter(Boolean).join('\n');
+  },
+
+  /* ── Oyuncu hamlesi ── */
+  async playerAct(){
+    if(!this.M||this.M.over||this.locked) return;
+    const idx=this.M.turn;
+    const emote=$('m-emote').value.trim();
+    const mv=$('m-move').value;
+    $('m-emote').value='';
+    await this.act(idx,this.cat,mv||Engine.moveFor(this.M.c[idx],this.cat),emote);
+  },
+  /** AI rakip turu (veya "AI oynasın") */
+  async aiTakeTurn(force=false){
+    const M=this.M; if(!M||M.over||this.locked) return;
+    const idx=M.turn; if(!force && M.ctl[idx]!=='ai') return;
+    const c=M.c[idx];
+    this.locked=true; this.renderComposer();
+    const avail=ACTION_ORDER.filter(k=>k!=='weapon'||M.type!=='submission');
+    const r=await AI.ask({
+      system:this.sys(), json:true, temperature:0.95,
+      prompt:`Şimdi ${c.ringName} sırası. Onu karakterine uygun oyna: bir sonraki hamlesini seç ve emote yaz.
+Durum: ${this.stateLine()}
+Son akış:
+${this.lastLog()}
+Kategoriler: ${avail.join(', ')} (finisher için momentum 75+, signature için 45+ önerilir; rakip yerdeyken ve yorgunken pin mantıklı).
+Moveset: ${JSON.stringify(c.moves)}
+JSON: {"category":"...","move":"moveset'ten veya uygun bir hareket adı","emote":"*3. şahıs emote, 1-2 cümle, Türkçe*"}`,
+      offline:()=>{ const cat=Engine.autoChoose(M,idx); return {category:cat,move:Engine.moveFor(c,cat),emote:''}; }
+    });
+    let {category,move,emote}=r.data||{};
+    if(!CAT[category]) category=Engine.autoChoose(M,idx);
+    this.locked=false;
+    await this.act(idx,category,move||Engine.moveFor(c,category),emote||'');
+  },
+  autoEmote(c,cat,mv){
+    return ({pin:`*${c.ringName} rakibinin üstüne kapanıp bacağını kavrar.*`,rest:`*${c.ringName} köşeye çekilip nefeslenir.*`,counter:`*${c.ringName} dizlerini kırar, rakibini okumaya çalışır.*`,taunt:`*${c.ringName} seyirciye döner ve kollarını açar.*`})[cat] || `*${c.ringName} ${mv} dener.*`;
+  },
+  async act(idx,cat,mv,emote){
+    const M=this.M; const c=M.c[idx];
+    if(!emote) emote=this.autoEmote(c,cat,mv);
+    this.push({t:'act',idx,who:c.ringName,text:emote,move:mv,cat});
+    this.locked=true; this.renderComposer();
+    const pre = CAT[cat].base>0 ? Engine.chance(M,idx,cat,emote) : null;
+    const dmPower=parseInt(Store.d.settings.dmpower??1);
+    // 1) AI: emote kalitesini değerlendir + DM kararı + anlatım (tek çağrı)
+    let ai=null;
+    if(!['rest','counter'].includes(cat)){
+      const preRoll = rnd(1,100); // AI'a gösterilecek zar; motor aynı zarı kullansın diye sabitliyoruz
+      Match._fixedRoll = preRoll;
+      const margin = pre? pre.chance-preRoll : null;
+      const baseTier = pre? Engine.tierFromScore(margin) : null;
+      const r=await AI.ask({
+        system:this.sys(), json:true, temperature:0.85,
+        prompt:`HAMLE: ${c.ringName} → kategori "${CAT[cat].tr}", hareket "${mv}".
+Emote: ${emote}
+Durum (hamle öncesi): ${this.stateLine()}
+Son akış:
+${this.lastLog()}
+${pre?`MOTOR: başarı şansı %${pre.chance}, zar ${preRoll}, fark ${margin}. Notlar: ${pre.notes.join(', ')||'-'}. Emote kalitesiz sayılırsa motorun sonucu: "${baseTier}".`:''}
+GÖREVİN:
+1) Emote'u değerlendir (quality -2..+2): karaktere uygunluk, mantık, ring içi gerçekçilik, yaratıcılık. "Her şeyi yaparım" tarzı güç oyunu (powergaming) veya rakibin tepkisini kendi yazmaya çalışmak = -1/-2. Boş/otomatik emote = 0.
+2) ${dmPower>0&&pre?`DM olarak final sonucu seç: "tier" ∈ clean/hit/partial/countered/botch. Temel olarak skor = fark + quality*8 → ≥20 clean, ≥0 hit, ≥-15 partial, ≥-35 countered, altı botch. Hikâye gerekiyorsa en fazla ${dmPower} kademe kaydırabilirsin.`:'tier alanını motorun sonucuna göre boş bırakabilirsin.'}
+3) Sonucu anlat ("narration", 1-3 cümle, canlı yayın dili). Pin ise sayımı anlatma, motor sayacak — sadece pine gidişi anlat. Submission ise tutuşun kurulmasını anlat.
+4) 1-2 yorumcu satırı (karakterlerine uygun), seyirci tepkisi, gerekiyorsa hakem notu.
+JSON: {"quality":0,"reason":"kısa gerekçe","tier":"hit","narration":"...","commentary":[{"speaker":"isim","line":"..."}],"crowd":"...","referee":null}`,
+        offline:()=>null
+      });
+      ai=r.data;
+    }
+    const q=clamp(parseInt(ai?.quality)||0,-2,2);
+    // 2) Motor çözümler
+    const out = Engine.resolve(M,idx,cat,mv,emote,{quality:q,aiTier:ai?.tier||null,dmPower});
+    Match._fixedRoll=null;
+    // 3) Akışa yaz
+    const narr = (ai?.narration && (!ai.tier || ai.tier===out.tier || cat==='pin' || cat==='taunt')) ? ai.narration : Offline.narr(M,out);
+    this.push({t:'narr',text:narr,tier:out.tier,cat,dice:pre?`şans %${out.chance} · zar ${out.roll} · emote ${q>=0?'+':''}${q}${ai?.reason?' ('+ai.reason+')':''}${out.dmg?` · ${out.dmg} hasar → ${out.limb}`:''}`:(out.pinRoll?`kick-out şansı %${out.pinRoll.kick} · zar ${out.pinRoll.r}`:'')});
+    if(cat==='pin'){ await this.pinCount(out); }
+    if(out.tapRoll) this.push({t:'sys',text:out.events.includes('tap')?'TAP OUT!':out.events.includes('rope_break')?'İp! Tutuş bozuldu.':'Kurtuldu!'});
+    const coms = ai?.commentary?.length ? ai.commentary : Offline.com(M,out);
+    coms.slice(0,2).forEach(x=>x?.line&&this.push({t:'com',speaker:x.speaker,line:x.line}));
+    const crowd = ai?.crowd || Offline.crowd(out); if(crowd) this.push({t:'crowd',text:crowd});
+    if(ai?.referee) this.push({t:'ref',text:ai.referee});
+    if(out.events.includes('dq')) this.push({t:'ref',text:`${M.staff.ref?.ringName||'Hakem'} kollarını sallıyor: DİSKALİFİYE!`});
+    if(out.events.includes('lms_up')) this.push({t:'ref',text:`Hakem sayıyor… 1… 5… 8… ${M.c[1-idx].ringName} 9'da ayağa kalkıyor!`});
+    if(out.events.includes('lms_ko')) this.push({t:'ref',text:`…8… 9… 10! ${M.c[1-idx].ringName} kalkamıyor!`});
+    if(out.keepTurn && !M.over) this.push({t:'sys',text:`${c.ringName} avantajı bırakmıyor — takip hakkı!`});
+    if(M.over) await this.finish(out);
+    this.locked=false; this.render(); this.maybeAuto();
+  },
+  async pinCount(out){
+    const n=out.count;
+    for(let i=1;i<=Math.min(n,3);i++){
+      await sleep(550);
+      const last = i===n && n<3;
+      this.push({t:'count',text: last ? (out.nearFall&&i===2?'İ K İ . . . !':'KICK-OUT!') : (['BİR!','İKİ!','ÜÇ!'][i-1])});
+    }
+    if(n<3){ this.push({t:'sys',text: n===2 ? `${this.M.c[1-out.actorIdx].ringName} omzunu kaldırdı!${out.nearFall?' 2.9!':''}` : 'Erken kick-out.'}); }
+  },
+  async finish(out){
+    const M=this.M, w=Store.get(M.result.winner)||M.c[out.win.idx], l=Store.get(M.result.loser)||M.c[1-out.win.idx];
+    this.push({t:'win',winner:w.ringName,method:M.result.method});
+    w.record.w++; l.record.l++;
+    w.popularity=clamp((w.popularity||50)+3,0,100);
+    Store.upsert(w); Store.upsert(l);
+    M.result.summary=null;
+    const r=await AI.ask({system:this.sys(),json:true,temperature:0.8,
+      prompt:`Maç bitti: ${w.ringName} ${M.result.method} ile kazandı. Son akış:\n${this.lastLog(12)}\nRing spikeri kazananı anonsun, yorumcular maç sonrası birer cümle, ve arşiv için 2 cümlelik maç özeti.
+JSON: {"announcer":"...","commentary":[{"speaker":"","line":""}],"summary":"..."}`,
+      offline:()=>({announcer:`Bu maçın galibi… ${w.ringName}!`,commentary:[],summary:`${w.ringName}, ${l.ringName}'ı ${M.result.method} ile yendi.`})});
+    const d=r.data||{};
+    if(d.announcer) this.push({t:'com',speaker:M.staff.ann?.ringName||'Spiker',line:d.announcer});
+    (d.commentary||[]).slice(0,2).forEach(x=>this.push({t:'com',speaker:x.speaker,line:x.line}));
+    M.result.summary=d.summary||'';
+    Store.d.matches.unshift({id:M.id,date:M.date,show:M.show,type:M.type,title:M.title,a:M.c[0].ringName,b:M.c[1].ringName,winner:w.ringName,method:M.result.method,rounds:M.round,summary:M.result.summary,log:M.log});
+    Store.d.matches=Store.d.matches.slice(0,100); Store.save();
+    History.render();
+  },
+  maybeAuto(){
+    const M=this.M; if(!M||M.over) return;
+    if(M.ctl[M.turn]==='ai' && (Store.d.settings.autoai!==false)) setTimeout(()=>this.aiTakeTurn(),700);
+  },
+
+  /* ── Render ── */
+  render(){
+    const M=this.M; if(!M) return;
+    const fighter=(i)=>{
+      const c=M.c[i], f=M.f[i], al=c.alignment;
+      const bar=(l,v,col)=>`<div class="bar"><div class="bl"><span>${l}</span><span>${v}</span></div><div class="bt"><div style="width:${v}%;background:${col}"></div></div></div>`;
+      return `<div class="fighter ${M.turn===i&&!M.over?'turn':''}">
+        <div style="display:flex;gap:9px;align-items:center">
+          <div class="ava" style="border-color:var(--${al==='heel'?'heel':al==='face'?'face':'tw'})">${c.image?`<img src="${esc(c.image)}">`:initials(c.ringName)}</div>
+          <div style="min-width:0"><div class="nm">${esc(c.ringName)}</div><div class="ctl">${M.ctl[i]==='ai'?'🤖 AI':'🎮 Oyuncu'} · <span class="tag al-${al}">${al}</span></div></div>
+        </div>
+        ${bar('Can',f.hp,'var(--gn)')}${bar('Dayanıklılık',f.st,'var(--face)')}${bar('Momentum',f.mom,'var(--gold)')}
+        <div class="limbs">${['head','body','arms','legs'].map(k=>`<div class="limb">${({head:'Kafa',body:'Gövde',arms:'Kol',legs:'Bacak'})[k]}<b style="color:${f.limbs[k]>60?'var(--heel)':f.limbs[k]>30?'var(--am)':'var(--t1)'}">${f.limbs[k]}</b></div>`).join('')}</div>
+        <div class="stateflags">${f.downed?'<span class="tag al-heel">YERDE</span>':''}${f.counter?'<span class="tag al-tweener">KONTRA</span>':''}${f.dazed?'<span class="tag al-heel">SERSEM</span>':''}${f.mom>=75?'<span class="tag" style="color:var(--gold);border-color:var(--gold)">FİNİSHER HAZIR</span>':''}</div>
+      </div>`;
+    };
+    $('m-left').innerHTML=fighter(0)+fighter(1);
+    $('m-right').innerHTML=`
+      <div class="crowd-meter"><span class="lbl">Seyirci</span><div class="val">${M.crowd}</div><div class="bt" style="height:8px;background:var(--bg4);border-radius:4px;overflow:hidden"><div style="height:100%;width:${M.crowd}%;background:var(--am)"></div></div></div>
+      <div class="box" style="padding:10px;gap:0">
+        <div class="info-row"><span>Maç</span><span>${({standard:'Standart',nodq:'No DQ',submission:'Submission',lms:'Last Man Standing'})[M.type]}</span></div>
+        <div class="info-row"><span>Tur</span><span>${M.round}</span></div>
+        <div class="info-row"><span>Hakem</span><span>${esc(M.staff.ref?.ringName||'-')}</span></div>
+        <div class="info-row"><span>Yorum</span><span style="text-align:right">${esc([M.staff.c1,M.staff.c2].filter(Boolean).map(c=>c.ringName).join(', ')||'-')}</span></div>
+        ${M.title?`<div class="info-row"><span>Kemer</span><span>${esc(M.title)}</span></div>`:''}
+      </div>
+      <button class="btn gold" onclick="MatchSetup.open()"><i class="fas fa-bell"></i> Yeni Maç</button>
+      ${M.over?'':`<button class="btn sm red" onclick="Match.abort()"><i class="fas fa-flag"></i> Maçı iptal et</button>`}`;
+    this.renderComposer();
+  },
+  renderComposer(){
+    const M=this.M; const comp=$('m-comp');
+    if(!M||M.over){ comp.style.display='none'; return; }
+    comp.style.display='flex';
+    const c=M.c[M.turn], f=M.f[M.turn];
+    $('m-turn-nm').innerHTML=`${esc(c.ringName)} <span class="muted">(${M.ctl[M.turn]==='ai'?'AI':'Oyuncu'})</span>`;
+    $('m-cats').innerHTML=ACTION_ORDER.filter(k=>!(k==='pin'&&(M.type==='submission'||M.type==='lms'))).map(k=>{
+      const need=CAT[k].needMom, lock=need&&f.mom<need;
+      return `<button class="chip ${this.cat===k?'on':''} ${lock?'lock':''}" data-cat="${k}" title="${lock?`Momentum ${need}+ önerilir (düşük şansla yine denenebilir)`:''}">${CAT[k].tr}</button>`;
+    }).join('');
+    $('m-cats').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{this.cat=b.dataset.cat;this.renderComposer();});
+    const list=c.moves?.[this.cat]||[];
+    $('m-move').innerHTML = CAT[this.cat].base>0 || this.cat==='weapon'
+      ? (list.length?list:[Engine.moveFor(c,this.cat)]).map(m=>`<option>${esc(m)}</option>`).join('')+`<option value="">(emote'tan anlaşılsın)</option>`
+      : `<option value="${esc(Engine.moveFor(c,this.cat))}">${esc(Engine.moveFor(c,this.cat))}</option>`;
+    const dis=this.locked;
+    $('m-go').disabled=dis; comp.style.opacity=dis?.55:1;
+    $('m-go').innerHTML = dis?'<i class="fas fa-spinner fa-spin"></i> …':'<i class="fas fa-bolt"></i> Hamle';
+  },
+  renderEv(ev,feed=$('m-feed'),M=this.M){
+    feed.querySelector('.empty')?.remove();
+    const el=document.createElement('div'); const showDice=!!Store.d.settings.dice;
+    if(ev.t==='sys'){ el.className='ev sys'; el.textContent=ev.text; }
+    else if(ev.t==='act'){ const al=M.c[ev.idx]?.alignment; el.className='ev act'; el.style.borderLeftColor=`var(--${al==='heel'?'heel':al==='face'?'face':'tw'})`;
+      el.innerHTML=`<div class="who">${esc(ev.who)}</div><div class="em">${fmtEmote(ev.text)}</div><div class="mv">${esc(CAT[ev.cat]?.tr||'')} · ${esc(ev.move)}</div>`; }
+    else if(ev.t==='narr'){ el.className='ev narr'; el.innerHTML=`${ev.tier&&!['rest','counter'].includes(ev.cat)?`<span class="tier ${ev.tier}">${TIER_TR[ev.tier]}</span>`:''}${esc(ev.text)}${showDice&&ev.dice?`<div class="dice">🎲 ${esc(ev.dice)}</div>`:''}`; }
+    else if(ev.t==='com'){ el.className='ev com'; el.innerHTML=`<b>🎙 ${esc(ev.speaker)}</b>${esc(ev.line)}`; }
+    else if(ev.t==='ref'){ el.className='ev ref'; el.innerHTML=`<i class="fas fa-shirt"></i>${esc(ev.text)}`; }
+    else if(ev.t==='crowd'){ el.className='ev crowd'; el.textContent='👥 '+ev.text; }
+    else if(ev.t==='count'){ el.className='ev count'; el.textContent=ev.text; }
+    else if(ev.t==='win'){ el.className='ev win'; el.innerHTML=`<div class="lbl" style="color:var(--gold)">KAZANAN</div><div class="t">${esc(ev.winner)}</div><div class="muted">${esc(ev.method)}</div>`; }
+    feed.appendChild(el); feed.scrollTop=feed.scrollHeight;
+  },
+  abort(){ if(!this.M||!confirm('Maç iptal edilsin mi? (Kayda geçmez)'))return; this.M.over=true; this.push({t:'sys',text:'Maç iptal edildi — No Contest'}); this.render(); },
+};
+// Motorun zarını AI'a gösterdiğimiz zarla aynı yapmak için rnd'yi sarmalıyoruz
+const _rnd=rnd;
+// eslint-disable-next-line no-func-assign
+rnd = function(a,b){ if(a===1&&b===100&&Match._fixedRoll!=null){ const v=Match._fixedRoll; Match._fixedRoll=null; return v; } return _rnd(a,b); };
+
+const MatchSetup = {
+  open(){
+    const opt=(type,sel,withNone)=> (withNone?'<option value="">— yok —</option>':'')+Store.chars(type).map(c=>`<option value="${c.id}" ${c.id===sel?'selected':''}>${esc(c.ringName)}${c.promotion?' · '+esc(c.promotion):''}</option>`).join('');
+    const w=Store.chars('wrestler');
+    if(w.length<2){ toast('En az 2 güreşçi gerekli','err'); return; }
+    $('ms-a').innerHTML=opt('wrestler',w[0].id); $('ms-b').innerHTML=opt('wrestler',w[1].id);
+    const first=t=>Store.chars(t)[0]?.id;
+    $('ms-ref').innerHTML=opt('referee',first('referee'),true);
+    const cs=Store.chars('commentator');
+    $('ms-c1').innerHTML=opt('commentator',cs[0]?.id,true); $('ms-c2').innerHTML=opt('commentator',cs[1]?.id,true);
+    $('ms-ann').innerHTML=opt('announcer',first('announcer'),true);
+    UI.open('md-msetup');
+  },
+  start(){
+    const cfg={a:$('ms-a').value,b:$('ms-b').value,actl:$('ms-a-ctl').value,bctl:$('ms-b-ctl').value,type:$('ms-type').value,
+      ref:$('ms-ref').value,c1:$('ms-c1').value,c2:$('ms-c2').value,ann:$('ms-ann').value,show:$('ms-show').value.trim(),story:$('ms-story').value.trim(),title:$('ms-title').value.trim()};
+    if(cfg.a===cfg.b){ toast('İki farklı güreşçi seç','err'); return; }
+    UI.close('md-msetup'); Match.start(cfg);
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   SEGMENT — promo / backstage / röportaj
+════════════════════════════════════════════════════════════ */
+const Segment = {
+  parts:[], log:[], heat:0,
+  render(){
+    $('s-parts').innerHTML=this.parts.map((p,i)=>{const c=Store.get(p.id); if(!c)return''; return `<div class="part"><div class="ava" style="width:28px;height:28px;font-size:11px">${initials(c.ringName)}</div><span class="nm">${esc(c.ringName)}</span>
+      <select data-i="${i}" class="s-ctl" style="padding:3px 6px;font-size:11px"><option value="player" ${p.ctl==='player'?'selected':''}>Oyuncu</option><option value="ai" ${p.ctl==='ai'?'selected':''}>AI</option></select>
+      <button class="mcl" onclick="Segment.removePart(${i})">✕</button></div>`;}).join('')||'<span class="muted">Henüz kimse yok.</span>';
+    document.querySelectorAll('.s-ctl').forEach(s=>s.onchange=()=>{this.parts[s.dataset.i].ctl=s.value;this.render();});
+    $('s-add').innerHTML='<option value="">+ Karakter ekle…</option>'+Store.d.chars.filter(c=>!this.parts.some(p=>p.id===c.id)).map(c=>`<option value="${c.id}">${esc(c.ringName)} — ${TYPES[c.type]}</option>`).join('');
+    const pl=this.parts.filter(p=>p.ctl==='player');
+    $('s-speaker').innerHTML=pl.map(p=>`<option value="${p.id}">${esc(Store.get(p.id)?.ringName)}</option>`).join('')||'<option value="">(oyuncu karakteri yok)</option>';
+    $('s-heat').textContent = $('s-type').value==='promo' ? `Seyirci: ${this.heat>0?'+':''}${this.heat}` : '';
+  },
+  addPart(id){ if(!id)return; const c=Store.get(id); this.parts.push({id,ctl:['wrestler','manager'].includes(c.type)&&!this.parts.some(p=>p.ctl==='player')?'player':'ai'}); this.render(); },
+  removePart(i){ this.parts.splice(i,1); this.render(); },
+  reset(){ this.log=[]; this.heat=0; $('s-feed').innerHTML=''; this.render(); },
+  pushMsg(m){
+    this.log.push(m); const feed=$('s-feed'); feed.querySelector('.empty')?.remove();
+    const el=document.createElement('div');
+    if(m.crowd){ el.className='ev crowd'; el.textContent='👥 '+m.text; }
+    else { el.className='seg-msg '+(m.ai?'ai':'pl'); el.innerHTML=`<div class="who">${esc(m.who)}</div><div class="tx">${fmtEmote(m.text)}</div>`; }
+    feed.appendChild(el); feed.scrollTop=feed.scrollHeight;
+  },
+  async send(){
+    const id=$('s-speaker').value, txt=$('s-inp').value.trim();
+    if(!id||!txt){ toast(id?'Bir şey yaz':'Önce oyuncu kontrolünde bir karakter ekle','err'); return; }
+    $('s-inp').value='';
+    this.pushMsg({who:Store.get(id).ringName,text:txt,ai:false});
+    await this.aiContinue();
+  },
+  async aiContinue(){
+    const ais=this.parts.filter(p=>p.ctl==='ai').map(p=>Store.get(p.id)).filter(Boolean);
+    const type=$('s-type').value;
+    if(!ais.length && type!=='promo'){ toast('AI kontrolünde karakter yok',''); return; }
+    const all=this.parts.map(p=>Store.get(p.id)).filter(Boolean);
+    const sheet=c=>`- ${c.ringName} [${TYPES[c.type]}, ${c.alignment}] Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}`;
+    const r=await AI.ask({
+      json:true,temperature:0.95,
+      system:`Profesyonel güreş metin RP'sinde Dungeon Master'sın. Dil TÜRKÇE. Sadece AI kontrolündeki karakterleri oynarsın; oyuncuların karakterleri adına ASLA konuşma veya eylem yazma. Kayfabe'yi koru. Karakter üsluplarına sadık kal. Replikler kısa ve TV'ye uygun olsun; emote için *yıldız* kullan.
+Segment: ${({promo:'Ringde canlı promo — seyirci var ve tepki verir (alkış, yuhalama, tezahürat).',backstage:'Backstage sahnesi — seyirci yok.',interview:'Backstage röportaj — röportajcı soru sorar.',contract:'Kontrat imzası / yüzleşme — ring içinde, seyirci var.'})[type]}
+Bağlam: ${$('s-ctx').value||'-'}
+Sahnedekiler:\n${all.map(sheet).join('\n')}
+AI kontrolündekiler: ${ais.map(c=>c.ringName).join(', ')||'(yok — sadece seyirci tepkisi ver)'}`,
+      prompt:`Son akış:\n${this.log.slice(-14).map(m=>m.crowd?`[Seyirci] ${m.text}`:`[${m.who}] ${m.text}`).join('\n')}\n\nSıradaki tepkileri yaz. Gerekirse birden fazla AI karakter konuşabilir (0-3 replik). Uygunsa seyirci tepkisi ekle ve heat değişimini (-10..+10, oyuncunun promosu ne kadar iyi tuttu) ver.
+JSON: {"replies":[{"speaker":"isim","text":"..."}],"crowd":"… veya boş","heat_delta":0}`,
+      offline:()=>({replies:ais.slice(0,1).map(c=>({speaker:c.ringName,text:(c.catchphrases||[])[0]||'*Sessizce dinler ve başını sallar.*'})),crowd:type==='promo'||type==='contract'?pick(['Seyirci bağırıyor!','Yuhalamalar yükseliyor!','"Bu adam haklı!" tezahüratı']):'',heat_delta:rnd(-3,5)})
+    });
+    const d=r.data||{};
+    for(const rep of (d.replies||[])){ if(rep?.text){ await sleep(250); this.pushMsg({who:rep.speaker,text:rep.text,ai:true}); } }
+    if(d.crowd) this.pushMsg({crowd:true,text:d.crowd});
+    const hd=clamp(parseInt(d.heat_delta)||0,-10,10); this.heat+=hd;
+    if(hd){ const pl=this.parts.find(p=>p.ctl==='player'); const c=pl&&Store.get(pl.id); if(c){ c.popularity=clamp((c.popularity||50)+Math.round(hd/3),0,100); Store.upsert(c);} }
+    this.render();
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   IMPORTER — AI ile karakter kartı üretme
+════════════════════════════════════════════════════════════ */
+const CHAR_SCHEMA = `{
+ "type":"wrestler|referee|commentator|interviewer|announcer|manager|gm",
+ "name":"gerçek/tam isim","ringName":"ring adı","promotion":"güncel promosyon","brand":"brand/show",
+ "alignment":"face|heel|tweener","style":"powerhouse|technician|high-flyer|brawler|giant|allrounder|submission|hardcore|showman|luchador|strong-style",
+ "gimmick":"2-3 cümle, Türkçe: karakterin güncel persona ve motivasyonu","bio":"2-3 cümle Türkçe kariyer özeti",
+ "hometown":"billed from","height":"","weight":"",
+ "nicknames":[],"catchphrases":["orijinal dilinde kısa sloganlar"],"entrance":"giriş tarifi, Türkçe 1 cümle","theme":"giriş müziği adı",
+ "voice":"konuşma üslubu tarifi, Türkçe (AI bu karakteri oynarken kullanacak)",
+ "stats":{"power":1-100,"technique":1-100,"speed":1-100,"stamina":1-100,"toughness":1-100,"charisma":1-100,"mic":1-100},
+ "moves":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]}
+}`;
+const Importer = {
+  mode:'single', last:null,
+  open(){ this.last=null; $('imp-preview').innerHTML=''; UI.open('md-imp'); this.setMode(this.mode); },
+  setMode(m){
+    this.mode=m;
+    document.querySelectorAll('#imp-modes .chip').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+    ['single','bulk','paste','custom'].forEach(k=>$('imp-'+k).style.display=k===m?'block':'none');
+    $('imp-go').innerHTML = m==='bulk'?'<i class="fas fa-layer-group"></i> Hepsini oluştur':'<i class="fas fa-wand-magic-sparkles"></i> Oluştur';
+  },
+  sys(){ return `Profesyonel güreş veritabanı editörüsün. Verilen kişiyi/karakteri aşağıdaki şemaya göre JSON karakter kartına dönüştürürsün. Sadece JSON döndür, başka metin yok.
+Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketlerini kullan; emin olmadığın bilgiyi uydurma, boş bırak. Hareket isimleri İngilizce (yaygın adlarıyla). Statları kariyerine ve stiline göre gerçekçi ver (sıradan orta kart ≈ 55-70, elit ≈ 85-95). Hakem/yorumcu/spiker gibi rollerde moves boş kalabilir; voice ve gimmick alanlarını özellikle iyi doldur.
+ŞEMA:\n${CHAR_SCHEMA}`; },
+  async generate(prompt,search){
+    const cfg=AI.cfg();
+    if(cfg.primary==='offline'&&cfg.fallback==='offline') throw new Error('AI kapalı — Ayarlar\'dan Gemini veya Ollama bağla');
+    const r=await AI.ask({system:this.sys(),prompt,json:true,search,temperature:0.3});
+    if(r.provider==='offline') throw new Error(r.error||'AI yanıt vermedi');
+    let d=r.data; if(Array.isArray(d)) d=d[0];
+    const c=normalizeChar({...d,source:r.provider+(search?'+search':'')});
+    c.sources=r.sources||[];
+    return c;
+  },
+  async run(){
+    const btn=$('imp-go'); btn.disabled=true;
+    try{
+      if(this.mode==='bulk') return await this.bulk();
+      let prompt, search=false;
+      if(this.mode==='single'){
+        const n=$('imp-name').value.trim(); if(!n) throw new Error('İsim yaz');
+        const p=$('imp-promo').value.trim(); search=$('imp-search').checked && AI.cfg().primary==='gemini';
+        prompt=`Karakter: ${n}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları) ve ':''}kartını oluştur.`;
+      } else if(this.mode==='paste'){
+        const t=$('imp-text').value.trim(); if(t.length<40) throw new Error('Daha uzun bir metin yapıştır');
+        prompt=`Aşağıdaki profil metnini karta dönüştür. Metinde olmayan hareketleri yaygın bilgine göre tamamlayabilirsin.\n---\n${t.slice(0,12000)}`;
+      } else {
+        const t=$('imp-idea').value.trim(); if(t.length<10) throw new Error('Fikri biraz anlat');
+        prompt=`Tamamen ORİJİNAL, kurgusal bir güreş karakteri yarat (gerçek kişilere dayanmasın). Fikir: ${t}. İsim de uydur. source alanı "custom".`;
+      }
+      $('imp-preview').innerHTML='<div class="muted"><i class="fas fa-spinner fa-spin"></i> AI kartı hazırlıyor…</div>';
+      const c=await this.generate(prompt,search);
+      if(this.mode==='custom') c.source='custom-ai';
+      this.last=c; this.preview(c);
+    }catch(e){ $('imp-preview').innerHTML=`<div class="toast err" style="position:static">${esc(e.message)}</div>`; }
+    finally{ btn.disabled=false; }
+  },
+  preview(c){
+    $('imp-preview').innerHTML=`<div class="box" style="gap:8px">${Roster.detailHTML(c)}
+      ${c.sources?.length?`<div class="muted" style="font-size:11px">Kaynaklar: ${c.sources.slice(0,4).map(s=>`<a href="${esc(s)}" target="_blank" style="color:var(--face)">link</a>`).join(' · ')}</div>`:''}
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="Editor.open(Importer.last)"><i class="fas fa-pen"></i> Düzenle</button><button class="btn gold" onclick="Importer.accept()"><i class="fas fa-check"></i> Kadroya ekle</button></div></div>`;
+  },
+  accept(){ if(!this.last)return; Store.upsert(this.last); Roster.render(); toast(`${this.last.ringName} eklendi`,'ok'); $('imp-preview').innerHTML=''; this.last=null; },
+  async fetchRoster(){
+    const q=$('imp-roster-q').value.trim(); if(!q){toast('Ne getirileceğini yaz','err');return;}
+    const log=$('imp-log'); log.textContent='Kadro aranıyor…';
+    try{
+      const r=await AI.ask({system:'Sadece JSON döndür.',prompt:`İstek: "${q}". ${AI.cfg().primary==='gemini'?'İnternette güncel bilgiyi ara. ':''}İlgili kişilerin listesini ver. JSON: {"people":[{"name":"ring adı","promotion":"...","role":"wrestler|referee|commentator|interviewer|announcer|manager|gm"}]}`,json:true,search:AI.cfg().primary==='gemini',temperature:0.2});
+      if(r.provider==='offline') throw new Error(r.error||'AI kapalı');
+      const ppl=(r.data.people||r.data||[]).filter(p=>p?.name);
+      const have=new Set(Store.d.chars.map(c=>(c.ringName||'').toLowerCase()));
+      const fresh=ppl.filter(p=>!have.has(p.name.toLowerCase()));
+      $('imp-list').value=fresh.map(p=>`${p.name} | ${p.promotion||''}${p.role&&p.role!=='wrestler'?' | '+p.role:''}`).join('\n');
+      log.textContent=`${ppl.length} kişi bulundu, ${ppl.length-fresh.length} tanesi zaten kadroda. Listeyi kontrol et, sonra "Hepsini oluştur".`;
+    }catch(e){ log.textContent='Hata: '+e.message; }
+  },
+  async bulk(){
+    const lines=$('imp-list').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    if(!lines.length) throw new Error('Liste boş');
+    const log=$('imp-log'), bar=$('imp-prog'); log.innerHTML='';
+    const search=AI.cfg().primary==='gemini';
+    let ok=0;
+    for(let i=0;i<lines.length;i++){
+      const [name,promo,role]=lines[i].split('|').map(s=>s?.trim());
+      const line=document.createElement('div'); line.textContent=`⏳ ${name}…`; log.appendChild(line); log.scrollTop=log.scrollHeight;
+      try{
+        const c=await this.generate(`Karakter: ${name}${promo?` (${promo})`:''}${role?`, rolü: ${role}`:''}. ${search?'Güncel bilgisini internette ara ve ':''}kartını oluştur.`,search);
+        const dup=Store.d.chars.find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase());
+        if(dup) c.id=dup.id;
+        Store.upsert(c); ok++; line.textContent=`✅ ${c.ringName} (${c.promotion||'-'})`;
+      }catch(e){ line.textContent=`❌ ${name}: ${e.message}`; line.style.color='var(--heel)'; }
+      bar.style.width=Math.round((i+1)/lines.length*100)+'%';
+      Roster.render();
+      await sleep(1200); // rate limit için
+    }
+    toast(`${ok}/${lines.length} karakter eklendi`,'ok');
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   ROSTER UI
+════════════════════════════════════════════════════════════ */
+const Roster = {
+  render(){
+    const q=$('r-search').value.toLowerCase(), t=$('r-type').value, p=$('r-promo').value;
+    const promos=[...new Set(Store.d.chars.map(c=>c.promotion).filter(Boolean))].sort();
+    const cur=$('r-promo').value;
+    $('r-promo').innerHTML='<option value="">Tüm promosyonlar</option>'+promos.map(x=>`<option ${x===cur?'selected':''}>${esc(x)}</option>`).join('');
+    const list=Store.d.chars.filter(c=>(!t||c.type===t)&&(!p||c.promotion===p)&&(!q||[c.name,c.ringName,c.gimmick,c.promotion,...(c.nicknames||[])].join(' ').toLowerCase().includes(q)));
+    $('r-grid').innerHTML=list.map(c=>`<div class="card" onclick="Roster.show('${c.id}')">
+      <div class="card-top"><div class="ava" style="border-color:var(--${c.alignment==='heel'?'heel':c.alignment==='face'?'face':'tw'})">${c.image?`<img src="${esc(c.image)}" onerror="this.remove()">`:initials(c.ringName)}</div>
+        <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(TYPES[c.type])}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' · '+esc(c.brand):''}</div></div></div>
+      <div class="card-g">${esc(c.gimmick||'—')}</div>
+      <div class="card-f"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.type==='wrestler'?`<span class="tag neutral">${esc(c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}${c.source&&c.source!=='custom'?`<span class="tag neutral">${esc(c.source)}</span>`:''}</div>
+    </div>`).join('') || '<div class="empty"><i class="fas fa-user-slash"></i><p>Sonuç yok</p></div>';
+  },
+  detailHTML(c){
+    const s=c.stats||{};
+    return `<div style="display:flex;gap:12px;align-items:center">
+        <div class="ava" style="width:60px;height:60px;font-size:22px">${c.image?`<img src="${esc(c.image)}" onerror="this.remove()">`:initials(c.ringName)}</div>
+        <div><div style="font-family:var(--disp);font-size:22px;line-height:1.1">${esc(c.ringName)}</div>
+        <div class="muted">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(TYPES[c.type])}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' / '+esc(c.brand):''}</div>
+        <div style="display:flex;gap:5px;margin-top:4px"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.type==='wrestler'?`<span class="tag neutral">${esc(c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}</div></div></div>
+      ${c.gimmick?`<div><span class="lbl">Gimmick</span><div style="font-size:13px">${esc(c.gimmick)}</div></div>`:''}
+      ${c.bio?`<div><span class="lbl">Kariyer</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.bio)}</div></div>`:''}
+      ${c.voice?`<div><span class="lbl">Üslup (AI için)</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.voice)}</div></div>`:''}
+      ${c.type==='wrestler'?`<div class="statgrid">${Object.entries({power:'Güç',technique:'Teknik',speed:'Hız',stamina:'Kondisyon',toughness:'Dayanım',charisma:'Karizma',mic:'Mikrofon'}).map(([k,l])=>`<div class="stat"><b>${s[k]}</b><span>${l}</span></div>`).join('')}<div class="stat"><b>${c.popularity||50}</b><span>Popülerlik</span></div></div>
+      <div class="moveset">${Object.entries(c.moves||{}).filter(([k,v])=>v?.length).map(([k,v])=>`<div class="mvrow"><span class="k">${CAT[k]?.tr||k}</span><span>${v.map(esc).join(', ')}</span></div>`).join('')}</div>`:''}
+      ${(c.nicknames||[]).length?`<div class="mvrow"><span class="k">Lakaplar</span><span>${c.nicknames.map(esc).join(', ')}</span></div>`:''}
+      ${(c.catchphrases||[]).length?`<div class="mvrow"><span class="k">Sözleri</span><span>${c.catchphrases.map(x=>'"'+esc(x)+'"').join(' · ')}</span></div>`:''}
+      ${c.entrance?`<div class="mvrow"><span class="k">Giriş</span><span>${esc(c.entrance)}${c.theme?` <span class="muted">♪ ${esc(c.theme)}</span>`:''}</span></div>`:''}`;
+  },
+  show(id){
+    const c=Store.get(id); if(!c)return;
+    $('mc-title').textContent=TYPES[c.type];
+    $('mc-body').innerHTML=this.detailHTML(c)+(c.type==='wrestler'?`<div class="muted">Rekor: ${c.record.w}G – ${c.record.l}M</div>`:'');
+    $('mc-foot').innerHTML=`<button class="btn red" onclick="if(confirm('Silinsin mi?')){Store.remove('${c.id}');UI.close('md-char');Roster.render();}"><i class="fas fa-trash"></i></button>
+      <div class="spc"></div><button class="btn" onclick="UI.close('md-char');Editor.open(Store.get('${c.id}'))"><i class="fas fa-pen"></i> Düzenle</button>
+      <button class="btn gold" onclick="UI.close('md-char')">Kapat</button>`;
+    UI.open('md-char');
+  },
+};
+const Editor = {
+  open(c){ $('ed-json').value=JSON.stringify(c?c:blankChar(),null,2); UI.open('md-edit'); },
+  save(){
+    try{
+      const c=normalizeChar(JSON.parse($('ed-json').value));
+      if(!c.name&&!c.ringName) throw new Error('İsim gerekli');
+      c.name ||= c.ringName;
+      Store.upsert(c); UI.close('md-edit'); Roster.render();
+      if(Importer.last && Importer.last.id===c.id){ Importer.last=null; $('imp-preview').innerHTML=''; }
+      toast('Kaydedildi','ok');
+    }catch(e){ toast('JSON hatası: '+e.message,'err'); }
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   HISTORY + SETTINGS + UI
+════════════════════════════════════════════════════════════ */
+const History = {
+  render(){
+    const ms=Store.d.matches;
+    const top=Store.chars('wrestler').filter(c=>c.record.w+c.record.l>0).sort((a,b)=>(b.record.w-b.record.l)-(a.record.w-a.record.l)).slice(0,8);
+    $('h-panel').innerHTML=`
+      <div class="box"><h3><i class="fas fa-ranking-star"></i> Sıralama</h3>
+        ${top.map((c,i)=>`<div class="info-row"><span>#${i+1} ${esc(c.ringName)}</span><span>${c.record.w}G – ${c.record.l}M</span></div>`).join('')||'<span class="muted">Henüz maç oynanmadı.</span>'}</div>
+      <div class="box"><h3><i class="fas fa-clock-rotate-left"></i> Maç Arşivi</h3>
+        ${ms.map((m,i)=>`<div class="hist-item"><div style="flex:1;min-width:0"><div style="font-weight:700">${esc(m.a)} vs ${esc(m.b)}</div>
+          <div class="muted">${new Date(m.date).toLocaleString('tr-TR')} · ${esc(m.show||'Şov')} · Kazanan: <b style="color:var(--gold)">${esc(m.winner)}</b> (${esc(m.method)}, ${m.rounds} tur)</div>
+          ${m.summary?`<div style="font-size:12.5px;margin-top:3px">${esc(m.summary)}</div>`:''}</div>
+          <button class="btn sm" onclick="History.replay(${i})"><i class="fas fa-eye"></i></button></div>`).join('')||'<span class="muted">Arşiv boş.</span>'}</div>`;
+  },
+  replay(i){
+    const m=Store.d.matches[i]; if(!m?.log)return;
+    const fakeM={c:[{ringName:m.a,alignment:'face'},{ringName:m.b,alignment:'heel'}]};
+    $('mc-title').textContent=`${m.a} vs ${m.b}`;
+    $('mc-body').innerHTML='<div class="feed" id="replay-feed" style="padding:0"></div>';
+    m.log.forEach(ev=>Match.renderEv(ev,$('replay-feed'),fakeM));
+    $('mc-foot').innerHTML='<button class="btn gold" onclick="UI.close(\'md-char\')">Kapat</button>';
+    UI.open('md-char');
+  },
+};
+const Settings = {
+  fill(){
+    const s=AI.cfg();
+    $('set-primary').value=s.primary; $('set-fallback').value=s.fallback; $('set-gkey').value=s.gkey||''; $('set-gmodel').value=s.gmodel;
+    $('set-ourl').value=s.ourl; $('set-omodel').value=s.omodel; $('set-dice').checked=!!Store.d.settings.dice;
+    $('set-autoai').checked=Store.d.settings.autoai!==false; $('set-dmpower').value=String(Store.d.settings.dmpower??1);
+    AI.pill();
+  },
+  save(){
+    Object.assign(Store.d.settings,{primary:$('set-primary').value,fallback:$('set-fallback').value,gkey:$('set-gkey').value.trim(),gmodel:$('set-gmodel').value.trim()||'gemini-3.6-flash',
+      ourl:$('set-ourl').value.trim()||'http://localhost:11434',omodel:$('set-omodel').value.trim()||'qwen3:14b',dice:$('set-dice').checked,autoai:$('set-autoai').checked,dmpower:parseInt($('set-dmpower').value)});
+    Store.save(); AI.pill(); toast('Ayarlar kaydedildi','ok');
+  },
+  async test(){
+    this.save();
+    try{
+      const r=await AI.ask({system:'Kısa cevap ver.',prompt:'Sadece şu JSON\'u döndür: {"ok":true,"mesaj":"Zil çaldı!"}',json:true,temperature:0});
+      if(r.provider==='offline') throw new Error(r.error||'Offline moddasın');
+      toast(`✓ ${r.provider}: ${r.data.mesaj||'bağlandı'}`,'ok');
+    }catch(e){ toast('Bağlantı hatası: '+e.message,'err'); }
+  },
+};
+const UI = {
+  open(id){ $(id).classList.add('on'); }, close(id){ $(id).classList.remove('on'); },
+  show(v){
+    document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
+    document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+    if(v==='roster')Roster.render(); if(v==='hist')History.render(); if(v==='seg')Segment.render(); if(v==='set')Settings.fill();
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   BOOT
+════════════════════════════════════════════════════════════ */
+function boot(){
+  Store.load();
+  document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>UI.show(b.dataset.v));
+  document.querySelectorAll('#imp-modes .chip').forEach(b=>b.onclick=()=>Importer.setMode(b.dataset.m));
+  document.querySelectorAll('.mbd').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on');}));
+  ['r-search','r-type','r-promo'].forEach(id=>$(id).addEventListener('input',()=>Roster.render()));
+  $('s-add').onchange=e=>{Segment.addPart(e.target.value);};
+  $('s-type').onchange=()=>Segment.render();
+  $('s-inp').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();Segment.send();}});
+  $('m-emote').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();Match.playerAct();}});
+  Settings.fill(); Roster.render();
+  if(AI.cfg().primary==='offline') setTimeout(()=>toast('AI kapalı (offline şablon). Ayarlar\'dan Gemini key ekleyebilirsin.'),800);
+}
+document.addEventListener('DOMContentLoaded',boot);
+</script>
+</body>
+</html>
