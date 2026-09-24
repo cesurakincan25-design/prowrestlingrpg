@@ -22,7 +22,8 @@ window.APP_CONFIG = {
   */
   prefix: 'wr_',            // Firestore koleksiyon ön eki (başka projelerle aynı Firebase'i paylaşırken çakışmasın)
   anonAuth: true,           // Firebase Anonymous Auth ile giriş (firestore.rules buna göre yazıldı)
-  workerUrl: '',            // Cloudflare Worker adresi: https://ring-rp-ai.KULLANICI.workers.dev
+  geminiKey: '__GEMINI_KEY__', // GitHub Actions deploy sırasında repo secret'ı GEMINI_API_KEY ile değiştirilir — ELLE DOLDURMA
+  workerUrl: '',            // (isteğe bağlı) Cloudflare Worker adresi
   appToken: '',             // Worker'da APP_TOKEN tanımladıysan aynısı
   model: 'gemini-3.6-flash',
   firebaseSdk: '11.9.1',
@@ -501,13 +502,13 @@ body.ss .gmonly{display:none!important}
         <h3><i class="fas fa-brain"></i> AI Sağlayıcı</h3>
         <div class="row2">
           <div class="ff"><span class="lbl">Birincil</span>
-            <select id="set-primary"><option value="worker">Cloudflare Worker (önerilen)</option><option value="gemini">Gemini — kendi key'im</option><option value="ollama">Lokal (Ollama)</option><option value="offline">Offline şablon</option></select></div>
+            <select id="set-primary"><option value="worker">Cloudflare Worker (önerilen)</option><option value="gemini">Gemini API (sitenin key'i / kendi key'in)</option><option value="ollama">Lokal (Ollama)</option><option value="offline">Offline şablon</option></select></div>
           <div class="ff"><span class="lbl">Yedek</span>
-            <select id="set-fallback"><option value="offline">Offline şablon</option><option value="worker">Cloudflare Worker</option><option value="gemini">Gemini — kendi key'im</option><option value="ollama">Lokal (Ollama)</option></select></div>
+            <select id="set-fallback"><option value="offline">Offline şablon</option><option value="worker">Cloudflare Worker</option><option value="gemini">Gemini API (sitenin key'i / kendi key'in)</option><option value="ollama">Lokal (Ollama)</option></select></div>
         </div>
         <div class="muted" id="set-worker-info"></div>
         <div class="row2">
-          <div class="ff"><span class="lbl">Gemini key (sadece "kendi key'im" için)</span><input id="set-gkey" type="password" placeholder="AIza…"></div>
+          <div class="ff"><span class="lbl">Kendi Gemini key'in (boş = sitenin key'i)</span><input id="set-gkey" type="password" placeholder="AIza…"></div>
           <div class="ff"><span class="lbl">Model</span><input id="set-gmodel"></div>
         </div>
         <div class="row2">
@@ -934,13 +935,14 @@ const AI = {
   cfg(){
     const d=Prefs.d, C=APP_CONFIG;
     return {
-      primary: d.primary || (C.workerUrl ? 'worker' : 'offline'),
+      primary: d.primary || (C.workerUrl ? 'worker' : this.buildKey() ? 'gemini' : 'offline'),
       fallback: d.fallback || 'offline',
-      gkey: d.gkey || '', gmodel: d.gmodel || C.model || 'gemini-3.6-flash',
+      gkey: d.gkey || this.buildKey(), gmodel: d.gmodel || C.model || 'gemini-3.6-flash',
       ourl: d.ourl || 'http://localhost:11434', omodel: d.omodel || 'qwen3:14b',
       workerUrl: C.workerUrl || '', appToken: C.appToken || '',
     };
   },
+  buildKey(){ const k=APP_CONFIG.geminiKey||''; return k.startsWith('__')?'':k; },
   canSearch(){ return ['worker','gemini'].includes(this.cfg().primary); },
   enabled(){ const c=this.cfg(); return c.primary!=='offline' || c.fallback!=='offline'; },
   setBusy(d){ this.busy+=d; Bus.emit('aibusy',this.busy); },
