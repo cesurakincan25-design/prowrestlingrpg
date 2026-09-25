@@ -468,6 +468,61 @@ body.ss .gmonly{display:none!important}
 #mu-auto.on{color:var(--gold)}
 .mu-v{width:220px;height:124px;border-radius:8px;overflow:hidden;background:#000}
 #mu-vol{width:100%;accent-color:var(--gold);padding:0;border:none;background:none}
+/* ── evren v2: logolar, kemerler ── */
+.rnd.c{align-items:center}
+.rnd.c .rnd-f img{filter:none}
+.imgf{display:flex;gap:8px;align-items:center}
+.imgf input{flex:1}
+.imgf-p{width:64px;height:40px;flex-shrink:0;border:1px dashed var(--ln2);border-radius:6px;display:flex;align-items:center;justify-content:center;background:var(--bg1);overflow:hidden;font-size:9px;color:var(--t3);text-align:center}
+.imgf-p img{max-width:100%;max-height:100%;object-fit:contain}
+.bchip.has-logo{display:inline-flex;align-items:center;gap:5px}
+.bchip.has-logo img{height:14px;max-width:40px;object-fit:contain}
+.pr-logo{width:84px;height:64px;flex-shrink:0}
+.pr-logo.ph{display:flex;align-items:center;justify-content:center;border:1px dashed var(--ln2);border-radius:10px;color:var(--t3);font-size:22px}
+.tile.promo{border-top:3px solid var(--pc)}
+.pr-head{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btile{border-top:3px solid var(--bc)}
+.bt-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.bt-logo{height:52px;width:150px}
+.bt-logo .rnd-f{margin-right:auto}
+.sh-logo{width:54px;height:30px;flex-shrink:0}
+.ev-logo{width:110px;height:54px;flex-shrink:0}
+.bar-logo{width:44px;height:20px;flex-shrink:0}
+.vs-logo{width:46px;height:18px;flex-shrink:0;margin-right:6px}
+.vs-top{align-items:center}
+.dash-logo{display:inline-flex;width:64px;height:40px;vertical-align:middle;margin-right:10px}
+#dash-title{display:flex;align-items:center}
+.belt-ph{display:flex;align-items:center;justify-content:center;font-size:26px}
+.belt-lg{width:220px;height:110px}
+.belt-md{width:92px;height:46px;flex-shrink:0}
+.belt-sm{width:54px;height:28px;flex-shrink:0}
+.belt-xs{width:30px;height:16px;display:inline-flex}
+.belt-vs{width:150px;height:62px}
+.beltrow{display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap}
+.beltchip{display:inline-flex;align-items:center;padding:1px 4px;border:1px solid rgba(227,179,65,.45);border-radius:10px;background:var(--gold-d);font-size:11px}
+.tcard{display:flex;gap:18px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--ln);border-left:4px solid var(--tc);border-radius:12px;padding:16px;margin-bottom:12px}
+.tc-belt{display:flex;align-items:center;justify-content:center;min-width:220px;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--tc) 22%,transparent),transparent 70%);border-radius:10px}
+.tc-belt .belt-ph{font-size:54px}
+.tc-main{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+.tc-name{font-family:var(--disp);font-size:26px;letter-spacing:.02em;line-height:1.05;color:var(--tc)}
+.tc-name small{font-family:var(--mono);font-size:11px;color:var(--t2)}
+.tc-tags{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.tc-champ{display:flex;gap:12px;align-items:center;background:var(--bg3);border-radius:10px;padding:8px 12px;cursor:pointer;min-height:70px}
+.tc-champ b{display:block;font-size:16px}
+.tc-champ.vac{cursor:default;flex-direction:column;align-items:flex-start;gap:2px}
+.tc-r{width:64px;height:84px;flex-shrink:0}
+.tc-act{display:flex;gap:6px}
+.champstrip{display:flex;flex-direction:column;gap:6px}
+.cs-i{display:flex;gap:12px;align-items:center;padding:8px 10px;border:1px solid color-mix(in srgb,var(--tc) 55%,transparent);background:color-mix(in srgb,var(--tc) 10%,var(--bg2));border-radius:10px}
+.cs-i b{display:block;font-size:14px}
+.belt-xs.belt-ph{font-size:11px}.belt-sm.belt-ph{font-size:16px}.belt-md.belt-ph{font-size:26px}
+.fh-belts{display:flex;gap:3px;margin:2px 0}
+.vs-beltimg{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);z-index:2;filter:drop-shadow(0 4px 10px rgba(0,0,0,.8))}
+.vs-card.mini .belt-vs,.vs-card.side .belt-vs{width:96px;height:40px}
+.vs-champ{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--gold)}
+.ev.titlemsg{align-self:center;display:flex;gap:12px;align-items:center;margin:8px 0;padding:10px 16px;border:1px solid rgba(227,179,65,.5);border-radius:12px;background:linear-gradient(135deg,rgba(227,179,65,.18),rgba(227,179,65,.04));font-family:var(--disp);font-size:20px;letter-spacing:.03em;color:var(--gold);flex-shrink:0}
+.ev.titlemsg.def{font-size:16px}
+@media(max-width:640px){.tile.promo .big{font-size:19px!important}.pr-logo{width:60px;height:46px}.belt-lg{width:160px;height:80px}.tc-belt{min-width:160px;width:100%}.belt-vs{width:100px;height:42px}}
 </style>
 </head>
 
@@ -787,8 +842,9 @@ body.ss .gmonly{display:none!important}
     <div class="row2">
       <div class="ff"><span class="lbl">AI hakemin yetkisi</span>
         <select id="ms-dm"><option value="0">Sadece anlatır (sonucu script belirler)</option><option value="1" selected>Sonucu 1 kademe kaydırabilir</option><option value="2">Sonucu 2 kademe kaydırabilir</option></select></div>
-      <div class="ff"><span class="lbl">Kemer (isteğe bağlı)</span><input id="ms-title" placeholder="örn: Dünya Şampiyonluğu"></div>
+      <div class="ff"><span class="lbl">Kemer (isteğe bağlı — kazanan şampiyon olur)</span><select id="ms-title"></select></div>
     </div>
+    <div class="warnbox hidden" id="ms-warn"></div>
     <div class="ff"><span class="lbl">Hikâye bağlamı (isteğe bağlı)</span><textarea id="ms-story" rows="2" style="width:100%" placeholder="Örn: Eski takım arkadaşları. Geçen hafta B, A'yı sırtından bıçakladı."></textarea></div>
   </div>
   <div class="mft"><button class="btn" onclick="UI.close('md-msetup')">İptal</button><button class="btn gold" onclick="MatchSetup.start()"><i class="fas fa-bell"></i> Zili Çal</button></div>
@@ -1972,7 +2028,7 @@ const MatchCtl = {
   async create(cfg){
     const a=Store.get(cfg.a), b=Store.get(cfg.b);
     const id='m_'+uid(), now=Date.now();
-    const match={type:cfg.type,show:cfg.show,story:cfg.story,title:cfg.title,dm:cfg.dm,
+    const match={type:cfg.type,show:cfg.show,story:cfg.story,title:cfg.title,titleId:cfg.titleId||null,ig:isIG(a,b),dm:cfg.dm,
       cids:[a.id,b.id],ctl:[cfg.actl,cfg.bctl],sids:{ref:cfg.ref||null,c1:cfg.c1||null,c2:cfg.c2||null,ann:cfg.ann||null},
       f:[Engine.newFighter(a),Engine.newFighter(b)],turn:Math.random()<0.5?0:1,round:0,crowd:50,refDown:false,
       over:false,result:null,host:Me.id,pending:null,v:0,started:false};
@@ -1985,12 +2041,13 @@ const MatchCtl = {
     const mv=(c,k)=>(c.moves[k]||[]).map((n,i)=>c.movesDesc?.[k]?.[i]?`${n} [${c.movesDesc[k][i]}]`:n).join(', ');
     const sheet=c=>`- ${c.ringName} (${c.alignment}, ${c.style}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) | Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Lakap: ${(c.nicknames||[]).join(', ')} | Finisher: ${mv(c,'finisher')} | İmza: ${mv(c,'signature')}`;
     const rel=relBetween(M.c[0],M.c[1]);
+    const champ=c=>titlesOf(c.id).map(t=>t.name).join(', ');
     const st=M.staff;
     return `Sen bir profesyonel güreş (WWE/AEW tarzı) metin rol oyununun Dungeon Master'ısın. Aynı anda hakemi, yorumcuları, ring spikerini ve seyirciyi oynarsın.
 DİL: Her şey TÜRKÇE. Hamle isimleri İngilizce kalabilir.
 TON: Canlı TV yayını. Kısa, sinematik, akıcı. Kayfabe'yi bozma.
 MAÇ: ${({standard:'Standart (pinfall/submission, obje/hile DQ)',nodq:'No DQ — her şey serbest',submission:'Sadece submission ile kazanılır',lms:'Last Man Standing — 10 sayımda kalkamayan kaybeder'})[M.type]}${M.title?' · Kemer: '+M.title:''}
-HİKÂYE: ${M.story||'-'}${rel?`\nİLİŞKİ: ${M.c[1].ringName}, ${M.c[0].ringName}'in ${REL_TYPES[rel.type]?.tr||rel.type} (yoğunluk ${rel.lvl||3}/5)${rel.note?' — '+rel.note:''}. Anlatıda ve yorumlarda bunu hissettir.`:''}
+HİKÂYE: ${M.story||'-'}${M.c.map(c=>champ(c)?`\nŞAMPİYON: ${c.ringName} — ${champ(c)}`:'').join('')}${isIG(M.c[0],M.c[1])?'\nBu bir INTERGENDER maç (erkek vs kadın): anlatımı sporcu gözüyle, saygılı ve rekabetçi yap.':''}${rel?`\nİLİŞKİ: ${M.c[1].ringName}, ${M.c[0].ringName}'in ${REL_TYPES[rel.type]?.tr||rel.type} (yoğunluk ${rel.lvl||3}/5)${rel.note?' — '+rel.note:''}. Anlatıda ve yorumlarda bunu hissettir.`:''}
 GÜREŞÇİLER:
 ${sheet(M.c[0])}
 ${sheet(M.c[1])}
@@ -2012,7 +2069,7 @@ KURAL: Mekanik sonucu (hasar, sayım, kazanan) oyun motoru belirler; sen anlatı
     if(!got) return;
     const M=this.hydrate({match:got.match}); const [a,b]=M.c;
     try{
-      await Msgs.post(roomId,{k:'card',pid:null,text:'',meta:{a:a.id,b:b.id,type:M.type,title:M.title||'',show:M.show||''}},{touch:false});
+      await Msgs.post(roomId,{k:'card',pid:null,text:'',meta:{a:a.id,b:b.id,type:M.type,title:M.title||'',titleId:M.titleId||null,show:M.show||''}},{touch:false});
       await Msgs.post(roomId,{k:'sys',pid:null,text:`${M.show||'Canlı Şov'} — ${({standard:'Standart Maç',nodq:'No DQ',submission:'Submission Match',lms:'Last Man Standing'})[M.type]}${M.title?' · '+M.title:''}`},{touch:false});
       const r=await AI.ask({system:this.sys(M),json:true,temperature:0.9,
         prompt:`Maç başlıyor. Ring spikeri iki güreşçiyi takdim etsin, girişlerini karakterlerine uygun kısa ve görkemli anlat, yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
@@ -2296,7 +2353,7 @@ const SEG_TYPES = {
 };
 const MTYPES = {standard:'Standart',nodq:'No DQ',submission:'Submission',lms:'Last Man Standing'};
 const starsHTML = r => r==null ? '' : `<span class="stars" title="${r} yıldız">${'★'.repeat(Math.floor(r))}${r%1>=0.5?'½':''}<span style="color:var(--t3)">${'★'.repeat(Math.max(0,5-Math.ceil(r)))}</span> <span class="muted" style="font-size:11px">${r.toFixed(2).replace(/\.?0+$/,'')}</span></span>`;
-const brandChip = b => b ? `<span class="bchip" style="color:${esc(b.color||'#888')}">${esc(b.name)}</span>` : '<span class="bchip" style="color:var(--t2)">ORTAK</span>';
+const brandChip = b => b ? `<span class="bchip ${b.logo?.url?'has-logo':''}" style="color:${esc(b.color||'#888')}">${b.logo?.url?`<img src="${esc(b.logo.url)}" alt="" onerror="this.remove()">`:''}${esc(b.name)}</span>` : '<span class="bchip" style="color:var(--t2)">ORTAK</span>';
 
 /* ── Data genişletme ── */
 Object.assign(Data,{brands:new Map(),shows:new Map(),events:new Map(),titles:new Map(),universe:null});
@@ -2397,10 +2454,12 @@ const Form = {
       else if(f.type==='textarea') inp=`<textarea id="fm-${f.id}" rows="${f.rows||3}">${esc(v)}</textarea>`;
       else if(f.type==='checks') inp=`<div class="checks">${f.options.map(o=>`<label><input type="checkbox" value="${esc(o[0])}" data-f="${f.id}" ${(v||[]).includes(o[0])?'checked':''}> ${esc(o[1])}</label>`).join('')||'<span class="muted">—</span>'}</div>`;
       else if(f.type==='checkbox') inp=`<label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="fm-${f.id}" ${v?'checked':''}> ${esc(f.text||'')}</label>`;
+      else if(f.type==='image'){ const u=typeof v==='object'?(v?.url||''):v; inp=`<div class="imgf"><div class="imgf-p ${f.round?'round':''}" id="fmp-${f.id}">${u?`<img src="${esc(u)}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'açılmadı'}))">`:'<span>—</span>'}</div><input id="fm-${f.id}" value="${esc(u)}" placeholder="${esc(f.ph||'https://i.imgur.com/….png')}"></div>`; }
       else inp=`<input id="fm-${f.id}" type="${f.type||'text'}" value="${esc(v)}" ${f.min!=null?`min="${f.min}"`:''} ${f.max!=null?`max="${f.max}"`:''} ${f.ph?`placeholder="${esc(f.ph)}"`:''}>`;
       return `<div class="ff ${f.half?'half':''}" data-wrap="${f.id}"><span class="lbl">${esc(f.label||'')}</span>${inp}${f.hint?`<div class="muted" style="margin-top:3px">${f.hint}</div>`:''}</div>`;
     }).join('');
-    const vals=()=>{ const o={}; fields.forEach(f=>{ if(f.type==='checks') o[f.id]=[...document.querySelectorAll(`[data-f="${f.id}"]:checked`)].map(x=>x.value); else { const el=$('fm-'+f.id); o[f.id]= f.type==='number'?Number(el.value):f.type==='checkbox'?el.checked:el.value; } }); return o; };
+    const vals=()=>{ const o={}; fields.forEach(f=>{ if(f.type==='checks') o[f.id]=[...document.querySelectorAll(`[data-f="${f.id}"]:checked`)].map(x=>x.value); else { const el=$('fm-'+f.id); o[f.id]= f.type==='number'?Number(el.value):f.type==='checkbox'?el.checked:f.type==='image'?Media.fixUrl(el.value):el.value; } }); return o; };
+    fields.filter(f=>f.type==='image').forEach(f=>$('fm-'+f.id).addEventListener('change',e=>{ const u=Media.fixUrl(e.target.value); e.target.value=u; $('fmp-'+f.id).innerHTML=u?`<img src="${esc(u)}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'açılmadı — direkt resim linki olmalı'}))">`:'<span>—</span>'; }));
     this.vals=vals;
     if(onChange){ const run=()=>onChange(vals(),(id,show)=>{ const w=document.querySelector(`[data-wrap="${id}"]`); if(w) w.style.display=show?'':'none'; }); $('fm-body').querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('change',run)); run(); }
     $('fm-go').onclick=async()=>{ $('fm-go').disabled=true; try{ const ok=await onSave(vals()); if(ok!==false) UI.close('md-form'); }catch(e){ console.error(e); toast(e.message,'err'); } finally{ $('fm-go').disabled=false; } };
@@ -2420,8 +2479,9 @@ const Show = {
     const id='e_'+uid();
     const ev={showId,brandId:sh.brandId||null,date,style:sh.style||'tv',status:'planned',createdAt:Date.now(),rating:null,
       title:title||(sh.freq==='weekly'?`${sh.name} #${n}`:`${sh.name} — ${Dt.month(date)}`),
-      staff:{ref:sh.staff?.ref||Store.chars('referee')[0]?.id||null,c1:sh.staff?.c1||Store.chars('commentator')[0]?.id||null,
-             c2:sh.staff?.c2||Store.chars('commentator')[1]?.id||null,ann:sh.staff?.ann||Store.chars('announcer')[0]?.id||null}};
+      staff:(()=>{ const bs=Univ.brand(sh.brandId)?.staff||{}; const pick=k=>(sh.staff?.[k]&&Data.char(sh.staff[k])?sh.staff[k]:null)||(bs[k]&&Data.char(bs[k])?bs[k]:null);
+        return {ref:pick('ref')||Store.chars('referee')[0]?.id||null,c1:pick('c1')||Store.chars('commentator')[0]?.id||null,
+                c2:pick('c2')||Store.chars('commentator')[1]?.id||null,ann:pick('ann')||Store.chars('announcer')[0]?.id||null}; })()};
     await B.set('events/'+id,ev); Data.events.set(id,{...ev,id}); return id;
   },
   label(r){
@@ -2439,7 +2499,7 @@ const Show = {
       const a=Store.get(s.a), b=Store.get(s.b); if(!a||!b||a.id===b.id) throw new Error('İki farklı güreşçi seç');
       const t=Data.titles.get(s.titleId);
       const st=ev.staff||{};
-      const match={type:s.mtype||'standard',show:ev.title,story:s.note||'',title:t?.name||'',titleId:t?.id||null,dm:s.dm??1,style:ev.style,
+      const match={type:s.mtype||'standard',show:ev.title,story:s.note||'',title:t?.name||'',titleId:t?.id||null,ig:isIG(a,b),dm:s.dm??1,style:ev.style,
         cids:[a.id,b.id],ctl:[s.actl||Univ.ctlFor(a.id),s.bctl||Univ.ctlFor(b.id)],sids:{ref:st.ref||null,c1:st.c1||null,c2:st.c2||null,ann:st.ann||null},
         f:[Engine.newFighter(a),Engine.newFighter(b)],turn:Math.random()<0.5?0:1,round:0,crowd:50+(STYLES[ev.style]?.crowd||0),refDown:false,
         over:false,result:null,host:null,pending:null,v:0,started:false};
@@ -2576,8 +2636,8 @@ MatchCtl.finish = async function(roomId,M,out,{quick=false}={}){
       if(t.holder===w.id){ res={kind:'def',name:t.name,n:(t.defenses||0)+1}; return {defenses:(t.defenses||0)+1}; }
       res={kind:'kept',name:t.name,holder:t.holder}; return null;
     }).catch(e=>{ res=null; toast('Kemer güncellenemedi: '+e.message,'err'); });
-    if(res?.kind==='new'){ await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 VE YENİİİ! ${w.ringName} yeni ${res.name}!`},{touch:false}); M.result.titleChange=true; }
-    else if(res?.kind==='def') await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 ${w.ringName} kemerini korudu! (${res.n}. savunma)`},{touch:false});
+    if(res?.kind==='new'){ await Msgs.post(roomId,{k:'sys',pid:null,text:`VE YENİİİ! ${w.ringName} yeni ${res.name}!`,meta:{titleId:M.titleId,tc:'new'}},{touch:false}); M.result.titleChange=true; }
+    else if(res?.kind==='def') await Msgs.post(roomId,{k:'sys',pid:null,text:`${w.ringName} kemerini korudu! (${res.n}. savunma)`,meta:{titleId:M.titleId,tc:'def'}},{touch:false});
     else if(res?.kind==='kept') await Msgs.post(roomId,{k:'sys',pid:null,text:`Kemer ${M.result.method} ile el değiştirmez — ${Data.char(res.holder)?.ringName||'şampiyon'} hâlâ şampiyon.`},{touch:false});
   }
   let d={};
@@ -2703,11 +2763,11 @@ const Booker = {
       system:'Deneyimli bir güreş bookerısın (WWE GM modu). Hikâyeleri, kemer yarışlarını ve rekabetleri ilerleten mantıklı bir şov kartı kurarsın. Sadece JSON döndür. İsimleri AYNEN listeden kullan.',
       prompt:`Şov: ${ev.title} · ${STYLES[ev.style]?.tr} · ${Dt.nice(ev.date)}
 Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}`).join('\n')}
-Kemerler: ${titles.map(t=>`${t.name} (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
+Kemerler: ${titles.map(t=>`${t.name} [${TITLE_DIV[t.division||'open']}, ${TITLE_TIER[t.tier||'mid']}] (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
-Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Erkek-kadın karışık maç yapma (cinsiyeti belirsizse serbest). Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
-JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|nodq|submission|lms","title":"kemer adı ya da boş","note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
+Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Intergender (erkek vs kadın) maç yapabilirsin ama nadir olsun ve hikâye gerekçesi olsun (ör. feud, menajer, karma rekabet); öyle bir maçta "intergender":true yaz. Kemer maçlarında kemerin bölümüne (Erkekler / Kadınlar / Açık) uy. Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
+JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|nodq|submission|lms","title":"kemer adı ya da boş","intergender":false,"note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
       offline:()=>this.offline(ev,roster,titles,nm,np,staffPool)});
     let segs=(r.data?.segments||[]).slice(0,12);
     for(const s of existing){ await B.del('rooms/'+s.id); Data.rooms.delete(s.id); }
@@ -2717,8 +2777,10 @@ JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|n
         if(s.type==='match'){
           const a=Data.findCharByName(s.a,roster), b=Data.findCharByName(s.b,roster);
           if(!a||!b||a.id===b.id||used.has(a.id)||used.has(b.id)) continue;
+          let t=titles.find(x=>s.title&&x.name.toLowerCase()===String(s.title).toLowerCase())||(s.title?titles.find(x=>String(s.title).toLowerCase().includes(x.name.toLowerCase().split(' ').pop())):null);
+          if(isIG(a,b) && !confirm(`AI bir INTERGENDER maç önerdi:\n\n${a.ringName} vs ${b.ringName}${t?` (${t.name})`:''}${s.note?`\n"${s.note}"`:''}\n\nKarta eklensin mi?`)) continue;
+          if(t && (!titleEligible(t,a)||!titleEligible(t,b))) t=null;   // bölüme uymayan kemer maçı → kemersiz
           used.add(a.id); used.add(b.id);
-          const t=titles.find(x=>s.title&&x.name.toLowerCase()===String(s.title).toLowerCase())||(s.title?titles.find(x=>String(s.title).toLowerCase().includes(x.name.toLowerCase().split(' ').pop())):null);
           await Show.addSeg(eventId,{type:'match',a:a.id,b:b.id,mtype:MTYPES[s.matchType]?s.matchType:'standard',titleId:t&&[a.id,b.id].includes(t.holder)?t.id:(t&&!t.holder?t.id:null),note:s.note||''});
         } else if(SEG_TYPES[s.type]){
           const ps=(s.participants||[]).map(x=>Data.findCharByName(x,[...roster,...staffPool])).filter(Boolean).map(c=>c.id);
@@ -2762,13 +2824,13 @@ JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|n
 ════════════════════════════════════════════════════════════ */
 const Dash = {
   render(){
-    $('dash-title').textContent=Univ.name(); $('dash-sub').textContent=Dt.nice(Univ.date(),{year:'numeric'});
+    $('dash-title').innerHTML=(Promo.logoHTML('dash-logo')||'')+`<span>${esc(Univ.name())}</span>`; $('dash-sub').textContent=Dt.nice(Univ.date(),{year:'numeric'});
     const live=Univ.live(), next=Univ.next(), gm=Univ.isGM(), star=Univ.star();
     const evTile=(e,label)=>e?`<div class="tile" style="cursor:pointer" onclick="Ev.open('${e.id}')"><h3>${label}</h3>
-      <div>${brandChip(Univ.brand(e.brandId))} <span class="muted">${esc(STYLES[e.style]?.tr||'')}</span></div>
+      <div style="display:flex;gap:8px;align-items:center">${eventLogoHTML(e,'sh-logo')}${brandChip(Univ.brand(e.brandId))} <span class="muted">${esc(STYLES[e.style]?.tr||'')}</span></div>
       <div class="big">${esc(e.title)}</div><div class="muted">${Dt.nice(e.date)} · ${Univ.segs(e.id).length} segment</div>
       ${e.status==='live'?'<button class="btn gold">Şova dön ▶</button>':''}</div>`:'';
-    const champs=Univ.titles().map(t=>{ const c=Data.char(t.holder); return `<div class="listrow">${c?avaHTML(c,'sm'):'<div class="ava sm">—</div>'}<div class="mid"><b style="font-size:13px">${esc(t.name)}</b><div class="muted">${c?esc(c.ringName):'Boş'}${t.since?` · ${Dt.diff(t.since,Univ.date())} gün`:''}</div></div>${brandChip(Univ.brand(t.brandId))}</div>`; }).join('')||'<span class="muted">Kemer yok</span>';
+    const champs=Univ.titles().map(t=>{ const c=Data.char(t.holder); return `<div class="listrow">${beltHTML(t,'belt-sm')}${c?avaHTML(c,'sm'):'<div class="ava sm">—</div>'}<div class="mid"><b style="font-size:13px">${esc(t.name)}</b><div class="muted">${c?esc(c.ringName):'Boş'}${t.since?` · ${Dt.diff(t.since,Univ.date())} gün`:''}</div></div>${brandChip(Univ.brand(t.brandId))}</div>`; }).join('')||'<span class="muted">Kemer yok</span>';
     const pops=Store.chars('wrestler').sort((a,b)=>(b.popularity||50)-(a.popularity||50)).slice(0,6).map((c,i)=>`<div class="info-row"><span>#${i+1} ${esc(c.ringName)}</span><span>${c.popularity||50}</span></div>`).join('');
     const lastShows=Univ.events().filter(e=>e.status==='done').slice(-4).reverse().map(e=>`<div class="listrow" style="cursor:pointer" onclick="Ev.open('${e.id}')"><div class="mid"><b style="font-size:13px">${esc(e.title)}</b><div class="muted">${Dt.nice(e.date)} · ${e.viewers||'-'}M</div></div>${starsHTML(e.rating)}</div>`).join('')||'<span class="muted">Henüz şov yapılmadı</span>';
     let starTile='';
@@ -2866,7 +2928,7 @@ const Ev = {
     }
     $('ev-body').innerHTML=`
       <div class="tile">
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${brandChip(b)}<span class="tag neutral">${esc(STYLES[ev.style]?.tr||'')}</span>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${eventLogoHTML(ev,'ev-logo')}${brandChip(b)}<span class="tag neutral">${esc(STYLES[ev.style]?.tr||'')}</span>
           <span class="tag ${ev.status==='live'?'al-heel':ev.status==='done'?'al-face':'neutral'}">${({planned:'PLANLANDI',live:'CANLI',done:'BİTTİ'})[ev.status]}</span>
           ${ev.status==='done'?`${starsHTML(ev.rating)} <span class="muted">${ev.viewers}M izleyici</span>`:''}</div>
         ${ev.headline?`<div class="big" style="font-size:22px">${esc(ev.headline)}</div>`:''}
@@ -2881,7 +2943,7 @@ const Ev = {
         return `<div class="segrow ${s.status}" ${me?'style="border-color:var(--gold)"':''}>
           <div class="no">${i+1}</div><div class="ic"><i class="fas ${SEG_TYPES[s.segType]?.ic}"></i></div>
           <div class="mid"><b>${esc(Show.label(s))}${res}</b>
-            <div class="muted">${esc(SEG_TYPES[s.segType]?.tr)}${m?` · ${MTYPES[m.type]}${m.title?' · 🏆 '+esc(m.title):''}`:''}${s.topic?' · '+esc(s.topic):''}</div>
+            <div class="muted">${esc(SEG_TYPES[s.segType]?.tr)}${m?` · ${MTYPES[m.type]}${m.title?' · 🏆 '+esc(m.title):''}${m.ig?' · ⚥ Intergender':''}`:''}${s.topic?' · '+esc(s.topic):''}</div>
             <div class="muted" style="font-size:11px">${ctl}</div></div>
           ${s.status==='done'?starsHTML(s.rating):s.status==='live'?'<span class="tag al-heel">CANLI</span>':''}
           <div class="acts">
@@ -3078,7 +3140,7 @@ Side.render = function(){
     const ev=Univ.event(r.eventId); const segs=Univ.segs(r.eventId); const i=segs.findIndex(s=>s.id===r.id); const gm=Univ.isGM();
     $('ch-title').innerHTML=`<i class="fas ${SEG_TYPES[r.segType]?.ic}" style="opacity:.6"></i> ${esc(Show.label(r))}`;
     bar.classList.remove('hidden');
-    bar.innerHTML=`${brandChip(Univ.brand(ev?.brandId))}<span class="t">${esc(ev?.title||'')} · SEGMENT ${i+1}/${segs.length} · ${esc(SEG_TYPES[r.segType]?.tr||'')}</span>
+    bar.innerHTML=`${eventLogoHTML(ev,'bar-logo')}${brandChip(Univ.brand(ev?.brandId))}<span class="t">${esc(ev?.title||'')} · SEGMENT ${i+1}/${segs.length} · ${esc(SEG_TYPES[r.segType]?.tr||'')}</span>
       ${r.status==='done'?starsHTML(r.rating):r.status==='live'?'<span class="tag al-heel">CANLI</span>':'<span class="tag neutral">BEKLİYOR</span>'}
       <span style="flex:1"></span>
       <button class="btn sm" onclick="Ev.open('${r.eventId}')"><i class="fas fa-list"></i> Kart</button>
@@ -3983,6 +4045,258 @@ Değişmeyen alanları AYNEN koru; bilmediğin şeyi silme ya da uydurma. Kurgus
     toast(`${this.undo.length} karakter eski haline döndü`,'ok'); this.undo=null; $('imp-r-undo').classList.add('hidden'); Roster.render();
   },
 });
+
+/* ════════════════════════════════════════════════════════════
+   EVREN v2 — logolar (promosyon / marka / şov), gelişmiş kemerler, intergender
+════════════════════════════════════════════════════════════ */
+/** kırpılmış (şeffaf kenarsız) görseli kutuya ortalayarak sığdır: logo, kemer */
+Media.fitHTML = function(m,{cls=''}={}){
+  if(!m?.url) return '';
+  const [tx,ty,tw,th]=(Array.isArray(m.trim)&&m.trim.length===4)?m.trim:[0,0,1,1];
+  return `<div class="rnd c ${cls}"><div class="rnd-f" style="--ar:${+m.ar||1}"><img src="${esc(m.url)}" style="width:${100/tw}%;height:${100/th}%;left:${-tx/tw*100}%;top:${-ty/th*100}%" loading="lazy" onerror="this.closest('.rnd').classList.add('bad')"></div></div>`;
+};
+/** url → {url, trim, ar}; aynı url ise eskisini koru */
+async function fitMedia(url,prev){
+  url=Media.fixUrl(url||''); if(!url) return null;
+  if(prev?.url===url) return prev;
+  try{ const f=await Media.autoFit(url); return {url,trim:f.trim,ar:f.ar}; }
+  catch(e){ toast('Görsel açılmadı — direkt resim linki olmalı','err'); return {url,trim:[0,0,1,1],ar:1}; }
+}
+const Promo = {
+  get(){ return Data.universe||{}; },
+  logoHTML(cls='pr-logo'){ return Media.fitHTML(this.get().logo,{cls}); },
+  edit(){
+    const u=this.get();
+    Form.open({title:'Promosyonu düzenle',fields:[
+      {id:'name',label:'Promosyon adı',value:u.name||'',half:true,ph:'örn. APW — Anatolia Pro Wrestling'},{id:'short',label:'Kısaltma',value:u.short||'',half:true,ph:'APW'},
+      {id:'logo',label:'Logo (PNG / foto, direkt link)',type:'image',value:u.logo?.url||''},
+      {id:'color',label:'Ana renk',type:'color',value:u.color||'#e3b341',half:true},
+      {id:'chair',label:'Başkan / sahip (karakter)',type:'select',options:[['','—'],...Store.chars().map(c=>[c.id,c.ringName])],value:u.chair||'',half:true},
+      {id:'hq',label:'Merkez / ana arena',value:u.hq||'',ph:'örn. İstanbul — Sinan Erdem',half:true},{id:'founded',label:'Kuruluş',value:u.founded||'',ph:'2024',half:true},
+      {id:'desc',label:'Tanıtım',type:'textarea',value:u.desc||'',rows:3}],
+      onSave:async v=>{
+        if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
+        const logo=await fitMedia(v.logo,u.logo);
+        await B.set('meta/universe',{...u,id:undefined,name:v.name.trim(),short:v.short.trim(),logo,color:v.color,chair:v.chair||null,hq:v.hq.trim(),founded:v.founded.trim(),desc:v.desc.trim(),date:u.date||Univ.date()},true);
+        toast('Promosyon güncellendi','ok');
+      }});
+  },
+};
+function showLogoHTML(sh,cls='sh-logo'){ return sh?.logo?.url?Media.fitHTML(sh.logo,{cls}):''; }
+function eventLogoHTML(ev,cls='sh-logo'){ const sh=Univ.show(ev?.showId); return showLogoHTML(sh,cls)||(Univ.brand(ev?.brandId)?.logo?.url?Media.fitHTML(Univ.brand(ev.brandId).logo,{cls}):''); }
+
+/* ── kemerler ── */
+const TITLE_DIV={open:'Açık (herkes)',men:'Erkekler',women:'Kadınlar'};
+const TITLE_TIER={world:'Dünya / ana kemer',mid:'Orta kart',tertiary:'Üçüncül',special:'Özel / turnuva'};
+{ const _t=Univ.titles; Univ.titles=function(all=false){ const l=_t.call(this); return all?l:l.filter(t=>t.active!==false); }; }
+function titlesOf(cid){ return cid?Univ.titles().filter(t=>t.holder===cid):[]; }
+function titleEligible(t,c){ if(!t||!c) return true; const d=t.division||'open'; return d==='open'||!c.gender||(d==='men'?c.gender==='m':c.gender==='f'); }
+function beltHTML(t,cls='belt'){ return t?.img?.url?Media.fitHTML(t.img,{cls}):`<div class="belt-ph ${cls}">🏆</div>`; }
+function beltsMini(cid,cls='belt-xs'){ const ts=titlesOf(cid); return ts.map(t=>`<span class="beltchip" title="${esc(t.name)} şampiyonu">${t.img?.url?Media.fitHTML(t.img,{cls}):'🏆'}</span>`).join(''); }
+function reignNo(t,cid){ return (t.history||[]).filter(h=>h.holder===cid).length+(t.holder===cid?1:0); }
+function isIG(a,b){ return !!(a?.gender&&b?.gender&&a.gender!==b.gender); }
+
+TitlesPage.render = function(){
+  const all=Univ.titles(true), act=all.filter(t=>t.active!==false), ret=all.filter(t=>t.active===false), gm=Univ.isGM();
+  const card=t=>{ const c=Data.char(t.holder), days=t.since?Dt.diff(t.since,Univ.date()):null;
+    const hist=[...(t.history||[])].reverse();
+    return `<div class="tcard" style="--tc:${esc(t.color||'#e3b341')}">
+      <div class="tc-belt">${beltHTML(t,'belt-lg')}</div>
+      <div class="tc-main">
+        <div class="tc-name">${esc(t.name)}${t.short?` <small>${esc(t.short)}</small>`:''}</div>
+        <div class="tc-tags">${brandChip(Univ.brand(t.brandId))}<span class="tag neutral">${esc(TITLE_TIER[t.tier||'mid']||'')}</span><span class="tag neutral">${esc(TITLE_DIV[t.division||'open'])}</span>${t.active===false?'<span class="tag al-heel">EMEKLİ</span>':''}</div>
+        ${c?`<div class="tc-champ" onclick="Roster.show('${c.id}')">${Media.hasRender(c)?Media.renderHTML(c,{cls:'tc-r'}):avaHTML(c,'lg')}
+            <div><span class="lbl" style="margin:0">Şampiyon</span><b>${esc(c.ringName)}</b><div class="muted">${days!=null?days+' gün · ':''}${t.defenses||0} savunma · ${reignNo(t,c.id)}. saltanat</div></div></div>`
+          :`<div class="tc-champ vac"><b>BOŞ KEMER</b><div class="muted">Bir sonraki kemer maçının galibi şampiyon olur.</div></div>`}
+        ${t.desc?`<div class="muted" style="font-size:12px">${esc(t.desc)}</div>`:''}
+        ${hist.length?`<details><summary class="muted" style="cursor:pointer">Kemer geçmişi (${hist.length})</summary>${hist.map(h=>`<div class="info-row"><span>${esc(Data.char(h.holder)?.ringName||'Boş')}</span><span>${h.from?Dt.nice(h.from):'?'} → ${Dt.nice(h.to)} · ${h.from?Dt.diff(h.from,h.to)+' gün · ':''}${h.defenses||0} savunma${h.lostTo?` · ${esc(Data.char(h.lostTo)?.ringName||'?')}'a kaybetti`:h.how?` · ${esc(h.how)}`:''}</span></div>`).join('')}</details>`:''}
+        ${gm?`<div class="tc-act"><button class="btn sm" onclick="TitlesPage.edit('${t.id}')"><i class="fas fa-pen"></i> Düzenle</button>${t.holder?`<button class="btn sm red" onclick="TitlesPage.vacate('${t.id}')"><i class="fas fa-ban"></i> Boşa çıkar</button>`:''}</div>`:''}
+      </div></div>`; };
+  $('ti-body').innerHTML=`
+    ${act.map(card).join('')||'<div class="empty"><i class="fas fa-trophy"></i><p>Kemer yok.</p></div>'}
+    ${ret.length?`<details class="tile"><summary class="muted" style="cursor:pointer">Emekli kemerler (${ret.length})</summary>${ret.map(card).join('')}</details>`:''}`;
+};
+TitlesPage.edit = function(id){
+  const t=id?Data.titles.get(id):{division:'open',tier:'mid',color:'#e3b341'};
+  const wopts=[['','— boş —'],...Store.chars('wrestler').map(c=>[c.id,`${c.ringName}${c.gender?` (${GENDERS[c.gender]})`:''}`])];
+  Form.open({title:id?'Kemeri düzenle':'Yeni kemer',fields:[
+    {id:'name',label:'Kemer adı',value:t.name||'',ph:'örn. APW Dünya Şampiyonluğu'},
+    {id:'short',label:'Kısa ad',value:t.short||'',half:true,ph:'Dünya'},{id:'color',label:'Renk',type:'color',value:t.color||'#e3b341',half:true},
+    {id:'img',label:'Kemer görseli (şeffaf PNG önerilir, direkt link)',type:'image',value:t.img?.url||'',hint:'Şeffaf kenarlar otomatik kırpılır.'},
+    {id:'brandId',label:'Marka',type:'select',options:[['','Ortak (tüm markalar)'],...Univ.brands().map(b=>[b.id,b.name])],value:t.brandId||'',half:true},
+    {id:'tier',label:'Seviye',type:'select',options:Object.entries(TITLE_TIER),value:t.tier||'mid',half:true},
+    {id:'division',label:'Bölüm',type:'select',options:Object.entries(TITLE_DIV),value:t.division||'open',half:true},
+    {id:'holder',label:'Şampiyon',type:'select',options:wopts,value:t.holder||'',half:true,hint:'Değiştirirsen eski saltanat kemer geçmişine işlenir.'},
+    {id:'since',label:'Saltanat başlangıcı',type:'date',value:t.since||Univ.date(),half:true},{id:'defenses',label:'Savunma sayısı',type:'number',value:t.defenses||0,min:0,half:true},
+    {id:'desc',label:'Açıklama / soy ağacı notu',type:'textarea',value:t.desc||'',rows:2},
+    {id:'active',label:'',type:'checkbox',text:'Aktif kemer (kapatırsan emekliye ayrılır, booker kullanmaz)',value:t.active!==false}],
+    extra:id?`<button class="btn red sm" onclick="if(confirm('Kemer tamamen silinsin mi? (geçmişi de gider)')){B.del('titles/${id}');UI.close('md-form');}"><i class="fas fa-trash"></i></button>`:'',
+    onSave:async v=>{
+      if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
+      const h=Store.get(v.holder);
+      if(h && !titleEligible({division:v.division},h) && !confirm(`${h.ringName} bu bölüme (${TITLE_DIV[v.division]}) uymuyor. Yine de şampiyon yapılsın mı?`)) return false;
+      const nid=id||'t_'+uid();
+      const patch={name:v.name.trim(),short:v.short.trim(),color:v.color,brandId:v.brandId||null,tier:v.tier,division:v.division,desc:v.desc.trim(),active:!!v.active,
+        img:await fitMedia(v.img,t.img),order:t.order??Date.now(),holder:v.holder||null,since:v.since||null,defenses:Math.max(0,v.defenses|0)};
+      if((v.holder||null)!==(t.holder||null)){
+        patch.history=t.holder?[...(t.history||[]),{holder:t.holder,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:v.holder||null,how:'Elle değiştirildi'}].slice(-60):(t.history||[]);
+        if(v.since===t.since||!v.since) patch.since=Univ.date();
+        if(v.defenses===(t.defenses||0)) patch.defenses=0;
+      }
+      await B.set('titles/'+nid,{...t,...patch,id:undefined},true);
+      toast('Kemer kaydedildi','ok');
+    }});
+};
+TitlesPage.vacate = async function(id){
+  const t=Data.titles.get(id); if(!t?.holder) return;
+  if(!confirm(`${t.name} boşa çıkarılsın mı? (${Data.char(t.holder)?.ringName||''})`)) return;
+  await B.update('titles/'+id,{holder:null,since:null,defenses:0,history:[...(t.history||[]),{holder:t.holder,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:null,how:'Boşa çıkarıldı'}].slice(-60)});
+  toast('Kemer boşa çıkarıldı','ok');
+};
+/** profilden hızlı atama */
+TitlesPage.assign = async function(tid,cid){
+  const t=Data.titles.get(tid), c=Store.get(cid); if(!t||!c) return;
+  if(!titleEligible(t,c) && !confirm(`${c.ringName} bu bölüme (${TITLE_DIV[t.division]}) uymuyor. Yine de verilsin mi?`)) return;
+  await B.update('titles/'+tid,{holder:cid,since:Univ.date(),defenses:0,history:t.holder?[...(t.history||[]),{holder:t.holder,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:cid,how:'Elle değiştirildi'}].slice(-60):(t.history||[])});
+  toast(`${c.ringName} artık ${t.name} şampiyonu`,'ok');
+};
+
+/* ── şampiyonluk gösterimleri ── */
+{ const _card=Roster.cardHTML;
+  Roster.cardHTML=function(c){ const b=beltsMini(c.id); return _card.call(this,c).replace('<span class="tag" style="color:var(--gold);border-color:var(--gold)">🏆</span>',b?`<span class="beltrow">${b}</span>`:''); }; }
+function champStripHTML(c){
+  const ts=titlesOf(c.id); if(!ts.length) return '';
+  return `<div class="champstrip">${ts.map(t=>`<div class="cs-i" style="--tc:${esc(t.color||'#e3b341')}">${beltHTML(t,'belt-md')}<div><span class="lbl" style="margin:0;color:var(--tc)">Şampiyon</span><b>${esc(t.name)}</b><div class="muted">${t.since?Dt.diff(t.since,Univ.date())+' gün · ':''}${t.defenses||0} savunma · ${reignNo(t,c.id)}. saltanat</div></div></div>`).join('')}</div>`;
+}
+{ const _show=Roster.show;
+  Roster.show=function(id){
+    _show.call(this,id);
+    const c=Store.get(id); if(!c) return;
+    $('mc-body').querySelector('.prof')?.insertAdjacentHTML('afterend',champStripHTML(c));
+    if(Univ.isGM() && hasRole(c,'wrestler')){
+      const opts=Univ.titles().filter(t=>t.holder!==c.id);
+      if(opts.length){
+        $('mc-body').insertAdjacentHTML('beforeend',`<div class="ff"><span class="lbl">Şampiyonluk ver (GM)</span><select id="mc-champ"><option value="">— kemer seç —</option>${opts.map(t=>`<option value="${t.id}">${esc(t.name)}${t.holder?` (şu an: ${esc(Data.char(t.holder)?.ringName||'?')})`:' (boş)'}${titleEligible(t,c)?'':' ⚠ bölüm'}</option>`).join('')}</select></div>`);
+        $('mc-champ').onchange=async e=>{ if(e.target.value){ await TitlesPage.assign(e.target.value,c.id); Roster.show(c.id); } };
+      }
+    }
+  };
+}
+{ const _fh=Info.fighterHead;
+  Info.fighterHead=function(c,ctl,i){ const b=beltsMini(c.id,'belt-xs'); const h=_fh.call(this,c,ctl,i); return b?h.replace('</div><div class="ctl">',`</div><div class="fh-belts">${b}</div><div class="ctl">`):h; }; }
+
+/* VS kartı: kemer görseli, şampiyon etiketi, intergender, şov logosu */
+{ const _html=MatchCard.html;
+  MatchCard.html=function(o,cls=''){
+    let h=_html.call(this,o,cls); if(!h) return h;
+    const t=(o.titleId&&Data.titles.get(o.titleId))||(o.title?Univ.titles(true).find(x=>x.name===o.title):null);
+    const A=typeof o.a==='string'?Data.char(o.a):o.a, Bc=typeof o.b==='string'?Data.char(o.b):o.b;
+    if(t) h=h.replace('<div class="vs-x">VS</div>',`<div class="vs-x">VS</div><div class="vs-beltimg">${beltHTML(t,'belt-vs')}</div>`);
+    if(t?.holder){ const side=t.holder===A?.id?'l':t.holder===Bc?.id?'r':null;
+      if(side) h=h.replace(`<div class="vs-n ${side}"><b>`,`<div class="vs-n ${side}"><span class="vs-champ">ŞAMPİYON</span><b>`); }
+    if(isIG(A,Bc)) h=h.replace(/<div class="vs-mt">([^<]*)<\/div>/,'<div class="vs-mt">$1<br><span style="color:var(--tw)">⚥ INTERGENDER</span></div>');
+    const ev=Univ.events().find(e=>e.title===o.show); const lg=ev?eventLogoHTML(ev,'vs-logo'):'';
+    if(lg) h=h.replace('<div class="vs-top"><span>',`<div class="vs-top">${lg}<span>`);
+    return h;
+  };
+  MatchCard.fromMatch=function(M,cls=''){ return this.html({a:M.c[0],b:M.c[1],type:M.type,title:M.title,titleId:M.titleId,show:M.show},cls); };
+}
+/* sohbet: kemer değişimi / savunma mesajında kemer görseli */
+{ const _rm=Chat.renderMsg;
+  Chat.renderMsg=function(m,prev){
+    if(m.k==='sys'&&m.meta?.titleId){ const t=Data.titles.get(m.meta.titleId); const el=document.createElement('div'); el.className='ev titlemsg '+(m.meta.tc||'');
+      el.innerHTML=`${beltHTML(t,'belt-md')}<div>${esc(m.text)}</div>`; return el; }
+    return _rm.call(this,m,prev);
+  };
+}
+/* ── manuel maç: kemer seçimi + intergender uyarısı ── */
+{ const _open=MatchSetup.open;
+  MatchSetup.open=function(){
+    _open.call(this);
+    $('ms-title').innerHTML='<option value="">— kemer yok —</option>'+Univ.titles().map(t=>`<option value="${t.id}">${esc(t.name)}${t.holder?` · şampiyon: ${esc(Data.char(t.holder)?.ringName||'?')}`:' · boş'}</option>`).join('');
+    const upd=()=>{ const a=Store.get($('ms-a').value), b=Store.get($('ms-b').value), t=Data.titles.get($('ms-title').value); const w=[];
+      if(isIG(a,b)) w.push('⚥ Intergender maç (erkek vs kadın).');
+      if(t && (!titleEligible(t,a)||!titleEligible(t,b))) w.push(`Kemer bölümü "${TITLE_DIV[t.division]}" — bir güreşçi uymuyor.`);
+      if(t && t.holder && ![a?.id,b?.id].includes(t.holder)) w.push(`Şampiyon (${Data.char(t.holder)?.ringName}) bu maçta değil — kazanan yine de kemeri alır.`);
+      $('ms-warn').innerHTML=w.join('<br>'); $('ms-warn').classList.toggle('hidden',!w.length); };
+    ['ms-a','ms-b','ms-title'].forEach(id=>$(id).addEventListener('change',upd)); upd();
+  };
+  MatchSetup.start=function(){
+    const t=Data.titles.get($('ms-title').value);
+    const cfg={a:$('ms-a').value,b:$('ms-b').value,actl:$('ms-a-ctl').value,bctl:$('ms-b-ctl').value,type:$('ms-type').value,
+      ref:$('ms-ref').value,c1:$('ms-c1').value,c2:$('ms-c2').value,ann:$('ms-ann').value,show:$('ms-show').value.trim(),
+      story:$('ms-story').value.trim(),title:t?.name||'',titleId:t?.id||null,dm:parseInt($('ms-dm').value)};
+    if(cfg.a===cfg.b){ toast('İki farklı güreşçi seç','err'); return; }
+    UI.close('md-msetup'); MatchCtl.create(cfg);
+  };
+}
+
+/* ── promosyon / marka / şov sayfası ── */
+const staffOpts=(role)=>[['','— yok —'],...Store.chars(role).map(c=>[c.id,c.ringName])];
+BrandsPage.render = function(){
+  const brands=Univ.brands(), shows=Univ.shows(), u=Promo.get();
+  const unb=Store.chars('wrestler').filter(c=>!c.brandId||!Univ.brand(c.brandId)).length;
+  const staffLine=st=>{ const n=[st?.ref,st?.c1,st?.c2,st?.ann].map(id=>Data.char(id)?.ringName).filter(Boolean); return n.length?'Ekip: '+n.join(', '):''; };
+  $('br-body').innerHTML=`
+    <div class="tile promo" style="--pc:${esc(u.color||'#e3b341')}">
+      <div class="pr-head">${Promo.logoHTML('pr-logo')||'<div class="pr-logo ph"><i class="fas fa-building"></i></div>'}
+        <div style="flex:1;min-width:0"><div class="big" style="font-size:26px">${esc(u.name||'Promosyon')}${u.short?` <small class="muted" style="font-size:13px">${esc(u.short)}</small>`:''}</div>
+          <div class="muted">${[u.hq,u.founded?'Kuruluş '+u.founded:'',Data.char(u.chair)?'Başkan: '+Data.char(u.chair).ringName:''].filter(Boolean).map(esc).join(' · ')||'Logo, renk ve tanıtım ekleyebilirsin.'}</div></div>
+        ${Univ.isGM()?`<button class="btn sm" onclick="Promo.edit()"><i class="fas fa-pen"></i> Düzenle</button>`:''}</div>
+      ${u.desc?`<div style="font-size:13px;color:var(--t1)">${esc(u.desc)}</div>`:''}
+      <div class="muted">${brands.length} marka · ${shows.length} şov · ${Store.chars('wrestler').length} güreşçi · ${Univ.titles().length} kemer</div>
+    </div>
+    <div class="tile"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h3>Markalar (brand)</h3>
+      <div style="display:flex;gap:6px"><button class="btn sm" onclick="BrandsPage.draft()"><i class="fas fa-shuffle"></i> Draft (${unb} markasız)</button><button class="btn sm gold" onclick="BrandsPage.brand()"><i class="fas fa-plus"></i> Marka</button></div></div>
+      <div class="tiles">${brands.map(b=>{ const r=Store.chars('wrestler').filter(c=>c.brandId===b.id); const bt=Univ.titles().filter(t=>t.brandId===b.id);
+        return `<div class="tile btile" style="--bc:${esc(b.color)}">
+          <div class="bt-head">${b.logo?.url?Media.fitHTML(b.logo,{cls:'bt-logo'}):`<div class="big" style="font-size:22px;color:${esc(b.color)}">${esc(b.name)}</div>`}<button class="btn sm" onclick="BrandsPage.brand('${b.id}')"><i class="fas fa-pen"></i></button></div>
+          ${b.logo?.url?`<b style="color:${esc(b.color)}">${esc(b.name)}</b>`:''}
+          ${b.tagline?`<div style="font-size:12.5px;font-style:italic;color:var(--t1)">"${esc(b.tagline)}"</div>`:''}
+          <div class="muted">${esc(b.desc||'')}</div>
+          <div class="muted">GM: ${esc(Data.char(b.ogm)?.ringName||Data.player(b.gm)?.name||'—')} · ${r.length} güreşçi${b.day!=null&&b.day!==''?` · ${DOW_TR[b.day]}`:''}</div>
+          ${staffLine(b.staff)?`<div class="muted">${esc(staffLine(b.staff))}</div>`:''}
+          ${bt.length?`<div class="beltrow">${bt.map(t=>`<span class="beltchip" title="${esc(t.name)}">${beltHTML(t,'belt-xs')}</span>`).join('')}</div>`:''}
+          <div style="display:flex;flex-wrap:wrap;gap:4px">${r.map(c=>`<span class="tag neutral" style="cursor:pointer" onclick="Roster.show('${c.id}')">${c.gender==='f'?'♀ ':''}${esc(c.ringName)}</span>`).join('')}</div></div>`; }).join('')}</div></div>
+    <div class="tile"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Şov şablonları</h3><button class="btn sm gold" onclick="BrandsPage.show()"><i class="fas fa-plus"></i> Şov</button></div>
+      ${shows.map(s=>`<div class="listrow">${showLogoHTML(s,'sh-logo')||brandChip(Univ.brand(s.brandId))}<div class="mid"><b style="font-size:13.5px">${esc(s.name)}</b> ${s.logo?.url?brandChip(Univ.brand(s.brandId)):''}<div class="muted">${esc(STYLES[s.style]?.tr||'')} · ${s.freq==='weekly'?'Her '+DOW_TR[s.day]:s.freq==='monthly'?'Her ayın son '+DOW_TR[s.day]+'si':'Tek seferlik'} · ${s.matches} maç + ${s.promos} segment${s.venue?' · 📍 '+esc(s.venue):''}</div>${staffLine(s.staff)?`<div class="muted">${esc(staffLine(s.staff))}</div>`:''}</div><button class="btn sm" onclick="BrandsPage.show('${s.id}')"><i class="fas fa-pen"></i></button></div>`).join('')||'<div class="muted">Şov yok.</div>'}
+    </div>`;
+};
+BrandsPage.brand = function(id){
+  const b=id?Univ.brand(id):{color:'#e3b341'}, st=b.staff||{};
+  Form.open({title:id?'Markayı düzenle':'Yeni marka',fields:[
+    {id:'name',label:'Marka adı',value:b.name||'',half:true,ph:'örn. MAYHEM'},{id:'color',label:'Renk',type:'color',value:b.color||'#e3b341',half:true},
+    {id:'logo',label:'Logo (PNG / foto, direkt link)',type:'image',value:b.logo?.url||''},
+    {id:'tagline',label:'Slogan',value:b.tagline||'',ph:'örn. Pazartesi geceleri kaos'},
+    {id:'desc',label:'Açıklama',type:'textarea',value:b.desc||'',rows:2},
+    {id:'ogm',label:'Ekrandaki GM (karakter)',type:'select',options:staffOpts('gm'),value:b.ogm||'',half:true},
+    {id:'gm',label:'Markayı yöneten oyuncu',type:'select',options:[['','—'],...[...Data.players.values()].map(p=>[p.id,p.name])],value:b.gm||'',half:true},
+    {id:'ref',label:'Varsayılan hakem',type:'select',options:staffOpts('referee'),value:st.ref||'',half:true},{id:'ann',label:'Ring spikeri',type:'select',options:staffOpts('announcer'),value:st.ann||'',half:true},
+    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true}],
+    extra:id?`<button class="btn red sm" onclick="if(confirm('Marka silinsin mi?')){B.del('brands/${id}');UI.close('md-form');}"><i class="fas fa-trash"></i></button>`:'',
+    onSave:async v=>{ if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
+      await B.set('brands/'+(id||'b_'+uid()),{name:v.name.trim(),color:v.color,logo:await fitMedia(v.logo,b.logo),tagline:v.tagline.trim(),desc:v.desc,gm:v.gm||null,ogm:v.ogm||null,
+        staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},order:b.order??Date.now()},true); }});
+};
+BrandsPage.show = function(id){
+  const s=id?Univ.show(id):{freq:'weekly',day:0,style:'tv',matches:4,promos:2}, st=s.staff||{};
+  Form.open({title:id?'Şov şablonunu düzenle':'Yeni şov',fields:[
+    {id:'name',label:'Şov adı',value:s.name||'',ph:'örn. Monday Mayhem'},
+    {id:'logo',label:'Şov logosu (PNG / foto, direkt link)',type:'image',value:s.logo?.url||''},
+    {id:'brandId',label:'Marka',type:'select',options:[['','Ortak (tüm markalar)'],...Univ.brands().map(b=>[b.id,b.name])],value:s.brandId||'',half:true},
+    {id:'style',label:'Şov tarzı',type:'select',options:Object.entries(STYLES).map(([k,v])=>[k,v.tr]),value:s.style,half:true},
+    {id:'freq',label:'Sıklık',type:'select',options:[['weekly','Haftalık'],['monthly','Aylık (ayın son …)'],['once','Tek seferlik']],value:s.freq,half:true},
+    {id:'day',label:'Gün',type:'select',options:DOW_TR.map((d,i)=>[i,d]),value:s.day,half:true},
+    {id:'matches',label:'Varsayılan maç sayısı',type:'number',value:s.matches,min:1,max:10,half:true},
+    {id:'promos',label:'Konuşma segmenti sayısı',type:'number',value:s.promos,min:0,max:8,half:true},
+    {id:'venue',label:'Arena / mekân',value:s.venue||'',ph:'örn. Ankara Spor Salonu'},
+    {id:'ref',label:'Hakem (boşsa markanınki)',type:'select',options:staffOpts('referee'),value:st.ref||'',half:true},{id:'ann',label:'Ring spikeri',type:'select',options:staffOpts('announcer'),value:st.ann||'',half:true},
+    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true}],
+    extra:id?`<button class="btn red sm" onclick="if(confirm('Şov şablonu silinsin mi? (takvimdeki şovlar kalır)')){B.del('shows/${id}');UI.close('md-form');}"><i class="fas fa-trash"></i></button>`:'',
+    onSave:async v=>{ if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
+      await B.set('shows/'+(id||'sh_'+uid()),{name:v.name.trim(),logo:await fitMedia(v.logo,s.logo),brandId:v.brandId||null,style:v.style,freq:v.freq,day:Number(v.day),matches:clamp(v.matches||4,1,10),promos:clamp(v.promos||0,0,8),
+        venue:v.venue.trim(),staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},order:s.order??Date.now()},true); }});
+};
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
