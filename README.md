@@ -67,6 +67,22 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
   - *Maç* → canlı motor: can, dayanıklılık, momentum, uzuv hasarı, imza/finisher, pin sayımı (2.9!), submission, DQ, LMS.
     Script zar atar, AI (hakem/DM) emote'u puanlar ve sonucu en fazla ±1-2 kademe kaydırır, yorumcular ve seyirci anlatır.
   - *Promo / Backstage / Röportaj / Kontrat* → text-RP. Oyuncular yazar, sahipsiz karakterleri AI oynar; GM "Segmenti bitir" deyince AI puanlar.
+- **Promosyon / markalar / şovlar:** Markalar & Şovlar sayfasında promosyonun adı, kısaltması, **logosu**, rengi, başkanı ve tanıtımı;
+  markalara **logo**, slogan, ekrandaki GM ve varsayılan hakem / yorumcu / spiker; şov şablonlarına **logo**, arena ve şova özel ekip.
+  Logolar şeffaf PNG ya da normal foto olabilir (direkt link); şeffaf kenarlar otomatik kırpılır. Panelde, takvimde, şov ekranında ve maç kartında görünür.
+- **Tema şarkıları (promosyon / marka / şov):** üçünün formunda da YouTube linki + başlangıç saniyesi. **"Şovu başlat"** önce herkeste
+  bir **açılış ekranı** açar (logo, şov adı, tarih, arena, kart) ve tema çalar — öncelik: şov teması > marka teması > promosyon teması.
+  Başlatan kişi "Başla ▶" deyince şov canlıya geçer. Sağ paneldeki müzik kutusundan bu temalar da elle çalınabilir.
+- **Güncelleme kaydı:** her karakterde son 8 güncelleme tutulur (ne zaman, kim, nasıl — elle / AI ile oluşturma / AI güncelleme — ve
+  neler değişti, AI neyi bulamadı). Editörün üstünde ve "AI ile Güncelle" ekranında görünür; eksik alanlar (gimmick, statlar, hareket
+  tarifleri, ilişki, görsel, tema…) ayrıca listelenir. **"Sadece eksikleri güncelle"** yalnızca eksik bölümleri seçer ve AI'a önce
+  onları araması söylenir.
+- **Kemerler:** kemer görseli (PNG), kısa ad, renk, marka, seviye (dünya / orta kart / üçüncül / özel), bölüm (açık / erkek / kadın),
+  şampiyon, saltanat başlangıcı, savunma sayısı, açıklama, emekliye ayırma, **boşa çıkarma**, ayrıntılı kemer geçmişi.
+  Şampiyonu kemer sayfasından ya da güreşçi profilindeki "Şampiyonluk ver"den belirle. Kemer maçında (şov ya da manuel maç) kazanan
+  otomatik şampiyon olur, savunmalar sayılır. Şampiyonlar profilde, kadro kartında, VS kartında ve maç panelinde kemerleriyle görünür.
+- **Intergender maçlar:** manuel maç kurarken serbest (uyarı gösterilir); AI booker da önerebilir ama her intergender maçı karta
+  eklemeden önce sorar. Kemer bölümüne uymayan güreşçiyle AI kemer maçı kurmaz.
 - **Puan & reyting:** her maça / segmente yıldız, şova toplam yıldız + izlenme (M). Kemerler el değiştirir (DQ'da değiştirmez), savunmalar sayılır.
 - **Kontrol:** her köşe/katılımcı "AI" ya da bir oyuncu. AI güreşçilerin turlarını şovu yürüten (host) cihaz oynatır.
 - **Komutlar:** `/me` · `/do` · `/s` bağır · `/l` alçak · `/b` veya `((…))` OOC · `*eylem*` = /me
