@@ -1044,7 +1044,29 @@ const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
-const clean = o => JSON.parse(JSON.stringify(o ?? null));   // Firestore undefined kabul etmez
+/* Firestore: undefined ve İÇ İÇE DİZİ (dizi içinde dizi) kabul etmez.
+   clean() → JSON temizliği + iç içe dizileri {_nestedArr:[…]} olarak paketler; fsDec() okurken geri açar. */
+const NA='_nestedArr';
+function fsEnc(v,inArr){
+  if(Array.isArray(v)){ const a=v.map(x=>fsEnc(x,true)); return inArr?{[NA]:a}:a; }
+  if(v && typeof v==='object'){ const o={}; for(const k in v) o[k]=fsEnc(v[k],false); return o; }
+  return v;
+}
+function fsDec(v){
+  if(Array.isArray(v)) return v.map(fsDec);
+  if(v && typeof v==='object'){
+    if(Array.isArray(v[NA]) && Object.keys(v).length===1) return v[NA].map(fsDec);
+    const o={}; for(const k in v) o[k]=fsDec(v[k]); return o;
+  }
+  return v;
+}
+/** Yerel modda da Firestore kurallarını uygula ki canlıda patlayacak veri yerelde de yakalansın. */
+function fsCheck(v,path='',inArr=false){
+  if(v===undefined) throw new Error('Firestore: undefined değer '+path);
+  if(Array.isArray(v)){ if(inArr) throw new Error('Firestore: iç içe dizi desteklenmez '+path); v.forEach((x,i)=>fsCheck(x,path+'['+i+']',true)); return; }
+  if(v && typeof v==='object') for(const k in v){ if(/^__.*__$/.test(k)) throw new Error('Firestore: ayrılmış alan adı '+k); fsCheck(v[k],path+'.'+k,false); }
+}
+const clean = o => { const r=fsEnc(JSON.parse(JSON.stringify(o ?? null)),false); fsCheck(r); return r; };
 function toast(msg, t=''){
   const el=document.createElement('div'); el.className='toast '+t; el.textContent=msg;
   $('toast').appendChild(el); setTimeout(()=>el.remove(),3800);
@@ -1094,8 +1116,8 @@ const LocalBackend = {
   },
   emit(){ if(this._q) return; this._q=true; queueMicrotask(()=>{ this._q=false; this.subs.forEach(s=>{ try{ s(); }catch(e){ console.error(e); } }); }); },
   _col(path){ const pre=path+'/', depth=path.split('/').length+1;
-    return Object.entries(this.db).filter(([k])=>k.startsWith(pre)&&k.split('/').length===depth).map(([k,v])=>({...v,id:k.slice(pre.length)})); },
-  _doc(path){ const v=this.db[path]; return v?{...JSON.parse(JSON.stringify(v)),id:path.split('/').pop()}:null; },
+    return Object.entries(this.db).filter(([k])=>k.startsWith(pre)&&k.split('/').length===depth).map(([k,v])=>({...fsDec(v),id:k.slice(pre.length)})); },
+  _doc(path){ const v=this.db[path]; return v?{...fsDec(JSON.parse(JSON.stringify(v))),id:path.split('/').pop()}:null; },
   watchCol(path,o,cb){ const run=()=>cb(localQuery(this._col(path),o)); this.subs.add(run); setTimeout(run,0); return ()=>this.subs.delete(run); },
   watchDoc(path,cb){ const run=()=>cb(this._doc(path)); this.subs.add(run); setTimeout(run,0); return ()=>this.subs.delete(run); },
   async getDoc(path){ return this._doc(path); },
@@ -1144,17 +1166,17 @@ const FirebaseBackend = {
     if(o.limit) c.push(F.limit(o.limit));
     return F.query(this.ref(path),...c);
   },
-  watchCol(path,o,cb){ return this.F.onSnapshot(this.q(path,o), s=>cb(s.docs.map(d=>({...d.data(),id:d.id}))), e=>{ console.warn('[fb]',path,e); toast('Senkron hatası: '+(e.code||e.message),'err'); }); },
-  watchDoc(path,cb){ return this.F.onSnapshot(this.ref(path), s=>cb(s.exists()?{...s.data(),id:s.id}:null), e=>console.warn('[fb]',path,e)); },
-  async getDoc(path){ const s=await this.F.getDoc(this.ref(path)); return s.exists()?{...s.data(),id:s.id}:null; },
-  async getCol(path,o){ const s=await this.F.getDocs(this.q(path,o)); return s.docs.map(d=>({...d.data(),id:d.id})); },
+  watchCol(path,o,cb){ return this.F.onSnapshot(this.q(path,o), s=>cb(s.docs.map(d=>({...fsDec(d.data()),id:d.id}))), e=>{ console.warn('[fb]',path,e); toast('Senkron hatası: '+(e.code||e.message),'err'); }); },
+  watchDoc(path,cb){ return this.F.onSnapshot(this.ref(path), s=>cb(s.exists()?{...fsDec(s.data()),id:s.id}:null), e=>console.warn('[fb]',path,e)); },
+  async getDoc(path){ const s=await this.F.getDoc(this.ref(path)); return s.exists()?{...fsDec(s.data()),id:s.id}:null; },
+  async getCol(path,o){ const s=await this.F.getDocs(this.q(path,o)); return s.docs.map(d=>({...fsDec(d.data()),id:d.id})); },
   async set(path,data,merge=false){ await this.F.setDoc(this.ref(path),clean(data),merge?{merge:true}:{}); },
   async update(path,patch){ await this.F.updateDoc(this.ref(path),clean(patch)); },
   async del(path){ await this.F.deleteDoc(this.ref(path)); },
   async txn(path,fn){
     const ref=this.ref(path);
     return this.F.runTransaction(this.db, async t=>{
-      const s=await t.get(ref); const cur=s.exists()?{...s.data(),id:s.id}:null;
+      const s=await t.get(ref); const cur=s.exists()?{...fsDec(s.data()),id:s.id}:null;
       const patch=fn(cur); if(!patch) return null;
       if(s.exists()) t.update(ref,clean(patch)); else t.set(ref,clean(patch));
       return patch;
@@ -4775,9 +4797,11 @@ const MV = {
   isMulti(M){ return M.sides.length>2 || M.sides.some(s=>s.length>1); },
   sideName(M,k){ return M.sides[k].map(i=>M.c[i]?.ringName||'?').join(' & '); },
   title(M){ const n=M.c.length; return (M.sides.length>6)?`${this.rules(M).tr} (${n})`:M.sides.map((_,k)=>this.sideName(M,k)).join(' vs '); },
+  /** WarGames: herkes girene kadar ("Match Beyond") pinfall / submission ile bitmez */
+  locked(M){ return M?.type==='wargames' && (M.f||[]).some(f=>!f.entered); },
   cats(M,i){
     const R=this.rules(M);
-    const l=ACTION_ORDER.filter(k=>k!=='pin'||R.pins);
+    const l=ACTION_ORDER.filter(k=>k!=='pin'||(R.pins&&!this.locked(M)));
     if(R.table||R.tableDmg) l.splice(l.indexOf('signature'),0,'table');
     if(R.climb||R.escape) l.push('climb');
     if(R.over) l.push('overTop');
@@ -4933,7 +4957,7 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
     const crowdB=opp.length>1?20:0;   // kalabalık merdiven maçında herkes birbirini meşgul eder
     const ch=clamp(Math.round(20+crowdB+ca.stats.speed/6+A.climb*15+(up?-Math.min(up,2)*pen:30)-(A.hp<20?8:0)-(A.st<20?6:0)+quality*6),6,92);
     const r=roll??rnd(1,100); out.chance=ch; out.roll=r; A.st=clamp(A.st-8,0,100);
-    if(r<=ch*0.5 && A.climb>=(up||R.escape?2:1)){ out.tier='clean'; out.win={idx:a,victim:null,method:R.escape?'Kafesten kaçtı':(M.type==='mitb'?'Çantayı indirdi':'Merdivenden indirdi')}; out.events.push('climb_win'); }
+    if(r<=ch*0.5 && A.climb>=(up?3:2) && (M.round||0)>=6){   /* en az 2 basamak (rakip ayaktaysa 3), ilk turlar geçmiş olmalı */ out.tier='clean'; out.win={idx:a,victim:null,method:R.escape?'Kafesten kaçtı':(M.type==='mitb'?'Çantayı indirdi':'Merdivenden indirdi')}; out.events.push('climb_win'); }
     else if(r<=ch){ A.climb++; out.tier='hit'; out.events.push('climb_up'); M.crowd=clamp(M.crowd+4,0,100); }
     else { A.climb=Math.max(0,A.climb-1); A.hp=clamp(A.hp-7,0,100); A.downed=true; out.tier='countered'; out.events.push('climb_fail');
       const puller=opp.filter(j=>!M.f[j].downed); if(puller.length){ out.tgt=pick(puller); M.f[out.tgt].mom=clamp(M.f[out.tgt].mom+8,0,100); } }
@@ -4992,7 +5016,7 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
     if(cat==='submission' && tier!=='partial'){
       const tapCh=clamp(D.limbs[limb]*0.55+(100-D.hp)*0.35-D.st*0.2-cd.stats.toughness*0.15+(tier==='clean'?10:0),0,90);
       const r=rnd(1,100); out.tapRoll={r,tapCh:Math.round(tapCh)};
-      if(r<=tapCh && R.subs){ out.win={idx:a,victim:t,method:R.quit?'"I QUIT!"':'Submission'}; out.events.push('tap'); }
+      if(r<=tapCh && R.subs && !MV.locked(M)){ out.win={idx:a,victim:t,method:R.quit?'"I QUIT!"':'Submission'}; out.events.push('tap'); }
       else if(r<=tapCh){ D.st=clamp(D.st-15,0,100); D.downed=true; out.events.push('escaped'); }
       else if(Math.random()<0.5) out.events.push('rope_break'); else out.events.push('escaped');
       // çok kişili maçta başkası tutuşu bozabilir
@@ -5083,7 +5107,7 @@ Engine.autoChoose=function(M,i){
     if(out.cat==='overTop'){ if(out.events.includes('backfire')) return `${a}, ${d}'ı atmaya çalışırken ters köşeye yattı — kendisi ipin üstünden uçtu!`;
       return out.elimVictim!=null?`${a}, ${d}'ı ipin üstünden fırlattı! ${d} elendi!`:`${a}, ${d}'ı ipin üstüne kaldırdı ama ${d} ayaklarıyla ipe tutunup kurtuldu!`; }
     const cM={...M,c:M.c}; const orig=M.c; // eski anlatıcı 1-actorIdx kullanıyor → geçici 2'li görünüm
-    const view={...M,c:[orig[out.actorIdx],out.tgt!=null?orig[out.tgt]:orig[out.actorIdx]]};
+    const view={...M,c:[orig[out.actorIdx],out.tgt!=null?orig[out.tgt]:(orig[MV.opponents(M,out.actorIdx)[0]]||orig.find((_,j)=>j!==out.actorIdx)||orig[out.actorIdx])]};
     let s=_n.call(this,view,{...out,actorIdx:0});
     if(out.events.includes('pin_broken')&&out.broken!=null) s+=` ${M.c[out.broken].ringName} son anda tuşu bozuyor!`;
     if(out.events.includes('sub_broken')&&out.broken!=null) s+=` ${M.c[out.broken].ringName} araya girip tutuşu bozuyor!`;
@@ -5104,9 +5128,10 @@ MatchCtl.create=async function(cfg){
   if(!cfg.sides && cfg.a && cfg.b) cfg.sides=[[{cid:cfg.a,ctl:cfg.actl}],[{cid:cfg.b,ctl:cfg.bctl}]];
   const match=MV.build({...cfg,host:Me.id,sids:{ref:cfg.ref||null,c1:cfg.c1||null,c2:cfg.c2||null,ann:cfg.ann||null}});
   const id='m_'+uid(), now=Date.now(); const name=MV.title(this.hydrate({match}));
-  await B.set('rooms/'+id,{name,kind:'match',topic:cfg.show||'',createdBy:Me.id,createdAt:now,lastAt:now,lastText:'',match});
+  try{ await B.set('rooms/'+id,{name,kind:'match',topic:cfg.show||'',createdBy:Me.id,createdAt:now,lastAt:now,lastText:'',match}); }
+  catch(e){ console.error(e); toast('Maç oluşturulamadı: '+e.message,'err'); return; }
   Data.rooms.set(id,{id,name,kind:'match',match,createdAt:now,lastAt:now});
-  Chat.open(id); this.intro(id);
+  Chat.open(id); this.intro(id).catch(e=>{ console.error(e); toast('Maç açılışı hatası: '+e.message,'err'); });
 };
 MatchCtl.sys=function(M){
   const R=MV.rules(M), big=M.c.length>8;
@@ -5533,8 +5558,10 @@ const MatchBuilder = {
     UI.close('md-mb');
     if(st.mode==='seg'){
       const payload={type:'match',sides,mtype:st.type,titleId:cfg.titleId,note:cfg.story,dm:st.dm,tornado:st.tornado,every:st.every,limit:st.limit,fast:cfg.fast};
-      if(st.roomId){ const old=Data.rooms.get(st.roomId); await B.del('rooms/'+st.roomId); Data.rooms.delete(st.roomId); const id=await Show.addSeg(st.eventId,payload); await B.update('rooms/'+id,{order:old?.order}); }
-      else await Show.addSeg(st.eventId,payload);
+      try{
+        if(st.roomId){ const old=Data.rooms.get(st.roomId); const id=await Show.addSeg(st.eventId,payload); await B.update('rooms/'+id,{order:old?.order}); await B.del('rooms/'+st.roomId); Data.rooms.delete(st.roomId); }
+        else await Show.addSeg(st.eventId,payload);
+      }catch(e){ console.error(e); toast('Maç karta eklenemedi: '+e.message,'err'); return; }
       Ev.render(); toast('Maç karta eklendi','ok');
     } else {
       await MatchCtl.create({...cfg,show:st.show.trim(),ref:st.ref,c1:st.c1,c2:st.c2,ann:st.ann});
