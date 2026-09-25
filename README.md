@@ -77,7 +77,15 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
 - **Segment tipleri:**
   - *Maç* → canlı motor: can, dayanıklılık, momentum, uzuv hasarı, imza/finisher, pin sayımı (2.9!), submission, DQ, LMS.
     Script zar atar, AI (hakem/DM) emote'u puanlar ve sonucu en fazla ±1-2 kademe kaydırır, yorumcular ve seyirci anlatır.
-  - *Promo / Backstage / Röportaj / Kontrat* → text-RP. Oyuncular yazar, sahipsiz karakterleri AI oynar; GM "Segmenti bitir" deyince AI puanlar.
+  - *Konuşma segmentleri* — Ringde promo, Backstage, Röportaj, Kontrat / yüzleşme, **Video paketi**, **Backstage saldırısı**, **Kutlama**,
+    **Otorite duyurusu**, **Debut** → text-RP. Oyuncular yazar, sahipsiz karakterleri AI oynar (kimin oynayacağı segment başlarken belirlenir).
+    - **Plan:** "Planlanan sonuç / ana an", adım adım "Olay akışı" ve "Planlanan kazanan". AI sahneyi oyuncuları zorlamadan buna yönlendirir,
+      adımları işaretler; bitişte planlanan kazanan ilan edilir.
+    - **Sıra & süre:** "Sırayla" düzeninde katılımcılar sırayla konuşur (AI kendi sırasını bekler); "Süre" (IC mesaj sayısı) dolunca segment
+      kendiliğinden biter ve puanlanır.
+    - **Canlı GM araçları** (sağ panel): Yönet (yönetmen notu → AI sahneye koyar), Saldırı, Sürpriz giriş (run-in + müzik), **Maça dönüştür**
+      (hemen sıradaki segment olur; saldırıya uğrayan yıpranmış başlar), **Sonraki şova maç** (sözleşme: bir sonraki şovun kartına eklenir).
+    - Video paketi kendiliğinden oynar ve puanlanır. AI booker da yeni tipleri ve segment hedeflerini kullanır.
 - **Promosyon / markalar / şovlar:** Markalar & Şovlar sayfasında promosyonun adı, kısaltması, **logosu**, rengi, başkanı ve tanıtımı;
   markalara **logo**, slogan, ekrandaki GM ve varsayılan hakem / yorumcu / spiker; şov şablonlarına **logo**, arena ve şova özel ekip.
   Logolar şeffaf PNG ya da normal foto olabilir (direkt link); şeffaf kenarlar otomatik kırpılır. Panelde, takvimde, şov ekranında ve maç kartında görünür.
