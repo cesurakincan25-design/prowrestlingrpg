@@ -70,7 +70,15 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
 - **Puan & reyting:** her maça / segmente yıldız, şova toplam yıldız + izlenme (M). Kemerler el değiştirir (DQ'da değiştirmez), savunmalar sayılır.
 - **Kontrol:** her köşe/katılımcı "AI" ya da bir oyuncu. AI güreşçilerin turlarını şovu yürüten (host) cihaz oynatır.
 - **Komutlar:** `/me` · `/do` · `/s` bağır · `/l` alçak · `/b` veya `((…))` OOC · `*eylem*` = /me
-- **Kadro:** "AI ile Ekle" (tek isim / toplu kadro / metin yapıştır / custom), karakteri "oyna" ile sahiplen, GM markasını atar.
+- **Kadro:** "AI ile Ekle" (tek isim / toplu kadro / metin yapıştır / custom) ya da **"Manuel Ekle"**. Karakteri "oyna" ile sahiplen, GM markasını atar.
+  - **Editör** (sekmeli form): kimlik, **çoklu rol** (ör. Superstar + GM aynı anda), **cinsiyet**, gimmick/üslup, statlar,
+    **move-set** (hareket ekle/çıkar/sırala + her hareket için AI'ın okuyacağı tarif), **ilişkiler**, müzik ve gelişmiş JSON.
+  - **Görseller:** ikon, banner ve **PNG render** — imgur vb. direkt resim linki. Render'ın şeffaf kenarları otomatik kırpılır ve oranı korunur;
+    ölçek / kaydırma / bakış yönü elle ayarlanır. Render'lar maç öncesi **VS maç kartında** ve maç panelinde görünür.
+  - **İlişkiler:** feud, düşman, rakip, müttefik, tag partneri, stable, aşk, eski sevgili, aile, akıl hocası/öğrenci, menajer, ihanet…
+    Karşı tarafa otomatik yazılır; AI maç anlatısında, promolarda ve booker'da kullanır.
+  - **Tema şarkısı:** YouTube linki (youtube.com, youtu.be, music.youtube.com, shorts) + başlangıç saniyesi. Maç girişinde, maç ve
+    promo/segment kazanıldığında odadaki herkeste otomatik çalar; sağ paneldeki ♪ ile elle çalınır. Ayarlar'dan otomatik çalma kapatılabilir.
 
 ## AI sağlayıcıları (Ayarlar, cihaza özel)
 

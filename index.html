@@ -341,6 +341,112 @@ body.ss .gmonly{display:none!important}
   .hint.dk,#cmp-hint{display:none}
   #movebar .cmp-top .mt{width:100%}
 }
+/* ── kadro v2: editör ── */
+.etabs{display:flex;gap:2px;padding:6px 10px 0;border-bottom:1px solid var(--ln);overflow-x:auto;scrollbar-width:none}
+.etab{background:none;border:none;border-bottom:2px solid transparent;color:var(--t2);padding:8px 11px;font-size:12px;font-weight:600;display:flex;gap:6px;align-items:center;white-space:nowrap}
+.etab:hover{color:var(--t0)}
+.etab.on{color:var(--gold);border-bottom-color:var(--gold)}
+#ed-body .erow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+#ed-body .ff{display:flex;flex-direction:column;flex:1 1 100%;min-width:0}
+#ed-body .ff.half{flex:1 1 200px}
+#ed-body textarea{width:100%;resize:vertical}
+#ed-body .hint{margin-top:3px;color:var(--t2)}
+#ed-body .checks{display:flex;flex-wrap:wrap;gap:6px}
+.ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;padding:5px 10px;border:1px solid var(--ln2);border-radius:16px;background:var(--bg3);cursor:pointer;color:var(--t1)}
+.ck.on{border-color:rgba(227,179,65,.5);color:var(--gold);background:var(--gold-d)}
+.ck input{accent-color:var(--gold)}
+.ck small{font-family:var(--mono);font-size:9px;opacity:.8}
+.rng{display:flex;align-items:center;gap:10px}
+.rng .rl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--t2);width:96px;flex-shrink:0}
+.rng input{flex:1;accent-color:var(--gold);padding:0;border:none;background:none}
+.rng b{font-family:var(--mono);font-size:12px;color:var(--gold);width:48px;text-align:right}
+.imgsec{display:flex;gap:16px;flex-wrap:wrap;padding:12px;background:var(--bg1);border:1px solid var(--ln);border-radius:10px}
+.imgcol{flex:1 1 280px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.imgcol.prev{flex:0 1 auto;align-items:flex-start}
+.mvcat{border:1px solid var(--ln);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px;background:var(--bg1)}
+.mvcat-h{display:flex;gap:10px;align-items:center}
+.mvcat-h b{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.mvcat-h .btn{margin-left:auto}
+.mvitem{display:flex;flex-direction:column;gap:5px;padding:8px;background:var(--bg2);border-radius:8px}
+.mvitem textarea{font-size:12.5px}
+.relrow{display:grid;grid-template-columns:1.2fr 1.3fr auto 2fr auto;gap:6px;align-items:center}
+@media(max-width:640px){.relrow{grid-template-columns:1fr 1fr}.relrow input{grid-column:1/-1}}
+.mv-desc{font-size:12px;color:var(--t1);font-style:italic;padding:0 2px}
+.mv-desc:empty{display:none}
+
+/* ── görseller ── */
+.ava.xl{width:92px;height:92px;font-size:32px;border-width:3px}
+.ava img{transition:none}
+.bnr{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.bnr img{width:100%;height:100%;object-fit:cover;display:block}
+.bnr.bad{display:none}
+.rnd{container-type:size;position:relative;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.rnd-f{position:relative;width:min(100cqw,calc(100cqh * var(--ar)));height:min(100cqh,calc(100cqw / var(--ar)));transform-origin:50% 100%;flex-shrink:0}
+.rnd-f img{position:absolute;max-width:none;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.55))}
+.rnd.bad{display:none}
+.card{position:relative}
+.card.has-bn .card-bn{position:relative;height:74px;inset:auto}
+.card.has-bn .card-bn::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,var(--bg2))}
+.card.has-bn .card-top{margin-top:-30px;position:relative}
+.card.has-bn .card-top .ava{box-shadow:0 0 0 3px var(--bg2)}
+.prof{position:relative;border-radius:10px;overflow:hidden;background:var(--bg1);min-height:92px;display:flex;align-items:flex-end}
+.prof.has-bn,.prof.has-r{min-height:190px}
+.prof-bn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,14,.92) 20%,rgba(11,11,14,.35) 70%,rgba(11,11,14,.1)),linear-gradient(0deg,rgba(11,11,14,.8),transparent 60%)}
+.prof-r{position:absolute;right:3%;top:10px;bottom:0;width:40%}
+.prof-id{position:relative;display:flex;gap:12px;align-items:center;padding:14px;max-width:70%}
+.prof-nm{font-family:var(--disp);font-size:26px;overflow-wrap:anywhere;line-height:1.05;letter-spacing:.02em;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.themebar{display:flex;gap:8px;align-items:center;font-size:12.5px;color:var(--t1)}
+.rels{display:flex;flex-direction:column;gap:5px}
+.rel{display:flex;gap:9px;align-items:center;padding:7px 9px;background:var(--bg3);border-left:3px solid var(--rc);border-radius:0 8px 8px 0;cursor:pointer;font-size:13px}
+.rel:hover{background:var(--bg4)}
+.rel-t{font-family:var(--mono);font-size:10px;color:var(--rc);margin-left:4px}
+.rel-l{font-size:8px;color:var(--rc);letter-spacing:1px;margin-left:4px}
+.mvn{display:inline-block;margin:0 6px 3px 0}
+.mvn.has{border-bottom:1px dotted var(--t2);cursor:help;position:relative}
+.mvn .mvd{display:none}
+.mvn.has:hover .mvd{display:block;position:absolute;left:0;top:100%;z-index:5;width:240px;background:var(--bg4);border:1px solid var(--ln2);border-radius:6px;padding:6px 8px;font-size:11.5px;color:var(--t0);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+
+/* ── maç paneli başlığı ── */
+.fhd{position:relative;height:118px;margin:-10px -10px 4px;border-radius:10px 10px 0 0;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--al) 28%,var(--bg1)),var(--bg1) 70%)}
+.fhd-bn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,11,14,.85) 30%,rgba(11,11,14,.2))}
+.fhd-r{position:absolute;right:2%;top:6px;bottom:0;width:46%}
+.fhd-t{position:absolute;left:10px;bottom:9px;max-width:56%}
+.fhd-t .nm{text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.fhd-mu{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.45)!important;color:var(--gold)!important}
+.fighter[style*="padding:0"] .fhd{margin:0;border-radius:10px}
+
+/* ── VS maç kartı ── */
+.vs-card{position:relative;border-radius:12px;overflow:hidden;background:#07070a;border:1px solid rgba(227,179,65,.35);box-shadow:0 10px 30px rgba(0,0,0,.5);width:100%;max-width:620px}
+.ev.card{align-self:center;margin:10px 0;width:100%;max-width:620px;flex-shrink:0}
+.vs-card,.fighter,.prof{flex-shrink:0}
+.vs-top{display:flex;justify-content:space-between;gap:8px;padding:7px 12px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
+.vs-belt{color:var(--gold)}
+.vs-stage{position:relative;display:flex;height:250px}
+.vs-side{position:relative;flex:1;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--al) 45%,transparent),transparent 70%),linear-gradient(180deg,#0d0d12,#07070a)}
+.vs-side.l{clip-path:polygon(0 0,100% 0,88% 100%,0 100%);margin-right:-6%}
+.vs-side.r{clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);margin-left:-6%}
+.vs-bn img{opacity:.35;filter:saturate(.8)}
+.vs-r{position:absolute;inset:6% 6% 0 6%}
+.vs-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.vs-x{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) skewX(-8deg);font-family:var(--disp);font-size:54px;color:var(--gold);text-shadow:0 0 22px rgba(227,179,65,.55),0 4px 0 #000;letter-spacing:.02em;z-index:2}
+.vs-names{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(90deg,rgba(74,159,232,.08),transparent 40%,transparent 60%,rgba(226,80,79,.08));border-top:1px solid rgba(255,255,255,.06)}
+.vs-n b{display:block;font-family:var(--disp);font-size:22px;letter-spacing:.03em;line-height:1.05}
+.vs-n small{font-family:var(--mono);font-size:9.5px;color:var(--t2)}
+.vs-n.r{text-align:right}
+.vs-mt{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-align:center;border:1px solid rgba(227,179,65,.4);border-radius:12px;padding:3px 9px}
+.vs-card.mini{max-width:340px}.vs-card.mini .vs-stage{height:150px}.vs-card.mini .vs-x{font-size:34px}.vs-card.mini .vs-n b{font-size:15px}
+.vs-card.side .vs-stage{height:170px}.vs-card.side .vs-x{font-size:36px}.vs-card.side .vs-n b{font-size:15px}.vs-card.side .vs-mt{font-size:8px;padding:2px 6px}
+@media(max-width:640px){.prof-nm{font-size:19px}.prof-r{width:34%;opacity:.9}.prof-id{max-width:68%;padding:12px}.prof-id .ava.lg{width:46px;height:46px}.prof.has-bn,.prof.has-r{min-height:160px}.vs-stage{height:190px}.vs-x{font-size:40px}.vs-n b{font-size:16px}}
+
+/* ── müzik çalar ── */
+#music{position:fixed;right:14px;bottom:14px;z-index:90;width:236px;background:var(--bg2);border:1px solid rgba(227,179,65,.4);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.6);padding:8px;display:flex;flex-direction:column;gap:6px;transform:translateY(calc(100% + 30px));transition:transform .25s}
+#music.on{transform:none}
+.mu-h{display:flex;align-items:center;gap:4px}
+.mu-h b{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gold)}
+.mu-h small{font-family:var(--mono);font-size:9.5px;color:var(--t2)}
+#mu-auto.on{color:var(--gold)}
+.mu-v{width:220px;height:124px;border-radius:8px;overflow:hidden;background:#000}
+#mu-vol{width:100%;accent-color:var(--gold);padding:0;border:none;background:none}
 </style>
 </head>
 
@@ -421,6 +527,7 @@ body.ss .gmonly{display:none!important}
           <div id="movebar" class="hidden">
             <div class="cmp-top"><span class="mt" id="mv-title">SIRA SENDE</span><div style="flex:1"></div><div class="chips" id="mv-cats"></div></div>
             <div class="cmp-top"><select id="mv-move" style="flex:1;min-width:160px"></select><span class="hint dk">Aşağıya emote'unu yaz → <b>Hamle</b></span></div>
+            <div class="mv-desc" id="mv-desc"></div>
           </div>
           <div class="cmp-top" id="cmp-asrow">
             <span class="lbl" style="margin:0">Kimle</span>
@@ -479,15 +586,16 @@ body.ss .gmonly{display:none!important}
       <input id="r-search" placeholder="Ara: isim, gimmick, promosyon…" style="flex:1;min-width:150px">
       <select id="r-type">
         <option value="">Tüm roller</option>
-        <option value="wrestler">Güreşçi</option><option value="referee">Hakem</option>
+        <option value="wrestler">Superstar</option><option value="referee">Hakem</option>
         <option value="commentator">Yorumcu</option><option value="interviewer">Röportajcı</option>
         <option value="announcer">Spiker</option><option value="manager">Menajer</option><option value="gm">GM / Otorite</option>
       </select>
+      <select id="r-gender"><option value="">Tüm cinsiyetler</option><option value="m">Erkek</option><option value="f">Kadın</option></select>
       <select id="r-promo"><option value="">Tüm promosyonlar</option></select>
       <select id="r-brand"><option value="">Tüm markalar</option></select>
       <select id="r-own"><option value="">Herkes</option><option value="mine">Benimkiler</option><option value="free">Sahipsiz (AI)</option></select>
       <button class="btn gold" onclick="Importer.open()"><i class="fas fa-wand-magic-sparkles"></i> AI ile Ekle</button>
-      <button class="btn" onclick="Editor.open()"><i class="fas fa-plus"></i> Custom</button>
+      <button class="btn gold" onclick="Editor.open()"><i class="fas fa-user-plus"></i> Manuel Ekle</button>
       <button class="btn" onclick="Store.exportFile()" title="JSON indir"><i class="fas fa-download"></i></button>
       <button class="btn" onclick="document.getElementById('imp-file').click()" title="JSON yükle"><i class="fas fa-upload"></i></button>
       <input type="file" id="imp-file" accept=".json" style="display:none" onchange="Store.importFile(this)">
@@ -531,6 +639,7 @@ body.ss .gmonly{display:none!important}
         <h3><i class="fas fa-dice-d20"></i> Görünüm & Oyun</h3>
         <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="set-dice"> Zar / şans detaylarını göster</label>
         <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="set-autoai"> Host olduğum maçlarda AI güreşçiler otomatik oynasın</label>
+        <label style="display:flex;gap:8px;align-items:center;font-size:13px"><input type="checkbox" id="set-music"> Giriş / kazanma anlarında tema şarkılarını otomatik çal</label>
         <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
       </div>
       <div class="box gmonly">
@@ -561,13 +670,11 @@ body.ss .gmonly{display:none!important}
   <div class="mft" id="mc-foot"></div>
 </div></div>
 
-<div class="mbd" id="md-edit"><div class="mbox" style="max-width:640px">
-  <div class="mhd"><span class="mti">Karakter Düzenle (JSON)</span><button class="mcl" onclick="UI.close('md-edit')">✕</button></div>
-  <div class="mbdy">
-    <p class="muted"><b>type</b>: wrestler / referee / commentator / interviewer / announcer / manager / gm. <b>alignment</b>: face / heel / tweener. Statlar 1–100. <b>image</b>: görsel linki.</p>
-    <textarea class="json" id="ed-json"></textarea>
-  </div>
-  <div class="mft"><button class="btn" onclick="UI.close('md-edit')">İptal</button><button class="btn gold" onclick="Editor.save()"><i class="fas fa-save"></i> Kaydet</button></div>
+<div class="mbd" id="md-edit"><div class="mbox" style="max-width:860px">
+  <div class="mhd"><span class="mti" id="ed-title">Karakter</span><button class="mcl" onclick="UI.close('md-edit')">✕</button></div>
+  <div class="etabs" id="ed-tabs"></div>
+  <div class="mbdy" id="ed-body"></div>
+  <div class="mft"><button class="btn" onclick="UI.close('md-edit')">İptal</button><div style="flex:1"></div><button class="btn gold" onclick="Editor.save()"><i class="fas fa-save"></i> Kaydet</button></div>
 </div></div>
 
 <div class="mbd" id="md-imp"><div class="mbox" style="max-width:620px">
@@ -652,6 +759,13 @@ body.ss .gmonly{display:none!important}
 </div></div>
 
 <div id="toast"></div>
+<div id="music">
+  <div class="mu-h"><div style="min-width:0;flex:1"><b id="mu-name">♪</b><small id="mu-why"></small></div>
+    <button class="ibtn" id="mu-auto" onclick="Music.toggleAuto()" title="Otomatik müzik (giriş / kazanma anlarında) aç-kapa"><i class="fas fa-wand-magic-sparkles"></i></button>
+    <button class="ibtn" onclick="Music.stop()" title="Durdur"><i class="fas fa-stop"></i></button></div>
+  <div class="mu-v"><div id="yt-player"></div></div>
+  <input type="range" id="mu-vol" min="0" max="100" value="60" oninput="Music.setVol(this.value)" title="Ses">
+</div>
 
 <script>
 'use strict';
@@ -810,7 +924,7 @@ const Prefs = {
 
 /* ═══ SCHEMA ═══ */
 
-const TYPES = {wrestler:'Güreşçi',referee:'Hakem',commentator:'Yorumcu',interviewer:'Röportajcı',announcer:'Spiker',manager:'Menajer',gm:'GM / Otorite'};
+const TYPES = {wrestler:'Superstar',referee:'Hakem',commentator:'Yorumcu',interviewer:'Röportajcı',announcer:'Spiker',manager:'Menajer',gm:'GM / Otorite'};
 const CAT = {
   strike:    {tr:'Vuruş',      base:7,  cost:4,  diff:0,  stat:['power','speed']},
   grapple:   {tr:'Tutuş/Atış', base:10, cost:7,  diff:5,  stat:['power','technique']},
@@ -830,8 +944,47 @@ function blankChar(){
     gimmick:'',bio:'',style:'allrounder',height:'',weight:'',hometown:'',nicknames:[],catchphrases:[],
     entrance:'',theme:'',stats:{power:60,technique:60,speed:60,stamina:60,toughness:60,charisma:60,mic:60},
     moves:{strike:[],grapple:[],aerial:[],submission:[],signature:[],finisher:[]},
-    voice:'',image:'',source:'custom',popularity:50,record:{w:0,l:0,d:0}};
+    voice:'',image:'',source:'custom',popularity:50,record:{w:0,l:0,d:0},
+    roles:['wrestler'],gender:'',
+    movesDesc:{strike:[],grapple:[],aerial:[],submission:[],signature:[],finisher:[]},   // moves ile aynı sırada: AI için hareket tarifi
+    media:{icon:{url:'',x:50,y:50,z:1},banner:{url:'',x:50,y:50,z:1},render:{url:'',trim:[0,0,1,1],ar:0.6,s:1,ox:0,oy:0,face:'front'}},
+    rels:[],                                        // [{id, type, lvl 1-5, note}]
+    themeUrl:'',themeStart:0};
 }
+const GENDERS={m:'Erkek',f:'Kadın'};
+const REL_TYPES={
+  feud:{tr:'Feud / Rekabet',ic:'🔥',col:'var(--heel)',mirror:'feud'},
+  enemy:{tr:'Düşman / Nefret',ic:'💢',col:'var(--heel)',mirror:'enemy'},
+  rival:{tr:'Saygılı rakip',ic:'⚔️',col:'var(--am)',mirror:'rival'},
+  ally:{tr:'Müttefik',ic:'🤝',col:'var(--face)',mirror:'ally'},
+  tag:{tr:'Tag partneri',ic:'👥',col:'var(--face)',mirror:'tag'},
+  stable:{tr:'Aynı grup (stable)',ic:'🛡️',col:'var(--face)',mirror:'stable'},
+  friend:{tr:'Arkadaş',ic:'🙂',col:'var(--gn)',mirror:'friend'},
+  romance:{tr:'Aşk ilişkisi',ic:'❤️',col:'#e85a9b',mirror:'romance'},
+  crush:{tr:'Platonik aşkı (karşılıksız)',ic:'💘',col:'#e85a9b',mirror:'admirer'},
+  admirer:{tr:'Ona platonik aşık',ic:'🥺',col:'#e85a9b',mirror:'crush'},
+  ex:{tr:'Eski sevgili',ic:'💔',col:'#b0598a',mirror:'ex'},
+  family:{tr:'Aile',ic:'🏠',col:'var(--gn)',mirror:'family'},
+  mentor:{tr:'Akıl hocası',ic:'🎓',col:'var(--tw)',mirror:'protege'},
+  protege:{tr:'Öğrencisi',ic:'🌱',col:'var(--tw)',mirror:'mentor'},
+  manager:{tr:'Menajeri',ic:'💼',col:'var(--tw)',mirror:'client'},
+  client:{tr:'Menajerlik yaptığı kişi',ic:'📋',col:'var(--tw)',mirror:'manager'},
+  betrayed:{tr:'İhanet ettiği kişi',ic:'🗡️',col:'var(--heel)',mirror:'betrayer'},
+  betrayer:{tr:'Ona ihanet eden',ic:'🐍',col:'var(--heel)',mirror:'betrayed'},
+};
+function hasRole(c,r){ return !!c && (Array.isArray(c.roles)&&c.roles.length ? c.roles.includes(r) : c.type===r); }
+function roleLabel(c){ return (c?.roles?.length?c.roles:[c?.type||'wrestler']).map(r=>TYPES[r]||r).join(' / '); }
+function moveDesc(c,cat,name){ const i=(c?.moves?.[cat]||[]).indexOf(name); return i>=0?(c.movesDesc?.[cat]?.[i]||''):''; }
+function relsOf(c){   // kendi ilişkileri + başkalarının ona dair (henüz karşılığı yazılmamış) ilişkileri
+  if(!c) return [];
+  const out=(c.rels||[]).filter(r=>Data.char(r.id)).map(r=>({...r,dir:'out'}));
+  for(const o of Data.chars.values()){ if(o.id===c.id) continue;
+    for(const r of (o.rels||[])){ if(r.id!==c.id || out.some(x=>x.id===o.id)) continue;
+      const mt=REL_TYPES[r.type]?.mirror; out.push({id:o.id,type:mt||r.type,lvl:r.lvl,note:r.note,dir:'in',raw:r.type}); } }
+  return out;
+}
+function relBetween(a,b){ return relsOf(a).find(r=>r.id===b?.id)||null; }
+function relLine(c,pool){ const ids=new Set((pool||[]).map(x=>x?.id)); return relsOf(c).filter(r=>!pool||ids.has(r.id)).map(r=>`${Data.char(r.id)?.ringName} onun ${REL_TYPES[r.type]?.tr||r.type}${r.lvl?` (${r.lvl}/5)`:''}${r.note?`: ${r.note}`:''}`).join('; '); }
 
 
 function normalizeChar(c){
@@ -843,7 +996,18 @@ function normalizeChar(c){
   out.moves = Object.assign(blankChar().moves, c.moves||{});
   Object.keys(out.moves).forEach(k=>{ if(!Array.isArray(out.moves[k])) out.moves[k]= out.moves[k]?[String(out.moves[k])]:[]; });
   ['nicknames','catchphrases'].forEach(k=>{ if(!Array.isArray(out[k])) out[k]=out[k]?[String(out[k])]:[]; });
-  if(!TYPES[out.type]) out.type='wrestler';
+  // roller: eski tek "type" alanından çoklu role geçiş; type = birincil rol (eski kod için)
+  out.roles=[...new Set((Array.isArray(c.roles)&&c.roles.length?c.roles:[c.type]).filter(r=>TYPES[r]))];
+  if(!out.roles.length) out.roles=['wrestler'];
+  out.type=out.roles[0];
+  if(!GENDERS[out.gender]) out.gender='';
+  out.movesDesc=Object.fromEntries(Object.keys(out.moves).map(k=>[k,out.moves[k].map((_,i)=>String(c.movesDesc?.[k]?.[i]||''))]));
+  const bm=blankChar().media, cm=c.media||{};
+  out.media={icon:{...bm.icon,...(cm.icon||{})},banner:{...bm.banner,...(cm.banner||{})},render:{...bm.render,...(cm.render||{})}};
+  if(!out.media.icon.url && c.image) out.media.icon.url=c.image;      // eski "image" alanı → ikon
+  out.image=out.media.icon.url||'';
+  out.rels=(Array.isArray(c.rels)?c.rels:[]).filter(r=>r&&r.id&&r.id!==out.id).map(r=>({id:r.id,type:REL_TYPES[r.type]?r.type:'rival',lvl:clamp(parseInt(r.lvl)||3,1,5),note:String(r.note||'')}));
+  out.themeUrl=String(c.themeUrl||''); out.themeStart=Math.max(0,parseInt(c.themeStart)||0);
   if(!['face','heel','tweener'].includes(out.alignment)) out.alignment='tweener';
   out.ringName ||= out.name;
   out.record ||= {w:0,l:0,d:0};
@@ -877,7 +1041,7 @@ const Data = {
 /* Store — kadro kodunun kullandığı sade arayüz (Data + backend üstünde) */
 const Store = {
   d:{ get chars(){ return [...Data.chars.values()]; }, get matches(){ return Data.history; }, get settings(){ return Prefs.d; } },
-  chars(type){ return this.d.chars.filter(c=>!type||c.type===type).sort((a,b)=>a.ringName.localeCompare(b.ringName,'tr')); },
+  chars(type){ return this.d.chars.filter(c=>!type||hasRole(c,type)).sort((a,b)=>a.ringName.localeCompare(b.ringName,'tr')); },
   get(id){ return Data.chars.get(id); },
   upsert(c){
     c=normalizeChar(c); c.updatedAt=Date.now();
@@ -1192,7 +1356,8 @@ const Offline = {
 /* ═══ IMPORTER / ROSTER / EDITOR ═══ */
 
 const CHAR_SCHEMA = `{
- "type":"wrestler|referee|commentator|interviewer|announcer|manager|gm",
+ "roles":["wrestler | referee | commentator | interviewer | announcer | manager | gm — birden fazla olabilir, ilki birincil rol"],
+ "gender":"m|f",
  "name":"gerçek/tam isim","ringName":"ring adı","promotion":"güncel promosyon","brand":"brand/show",
  "alignment":"face|heel|tweener","style":"powerhouse|technician|high-flyer|brawler|giant|allrounder|submission|hardcore|showman|luchador|strong-style",
  "gimmick":"2-3 cümle, Türkçe: karakterin güncel persona ve motivasyonu","bio":"2-3 cümle Türkçe kariyer özeti",
@@ -1200,8 +1365,10 @@ const CHAR_SCHEMA = `{
  "nicknames":[],"catchphrases":["orijinal dilinde kısa sloganlar"],"entrance":"giriş tarifi, Türkçe 1 cümle","theme":"giriş müziği adı",
  "voice":"konuşma üslubu tarifi, Türkçe (AI bu karakteri oynarken kullanacak)",
  "stats":{"power":1-100,"technique":1-100,"speed":1-100,"stamina":1-100,"toughness":1-100,"charisma":1-100,"mic":1-100},
- "moves":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]}
-}`;
+ "moves":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]},
+ "movesDesc":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]}
+}
+movesDesc: moves ile AYNI SIRADA, her hareket için 1 cümle Türkçe tarif (güreşçi tam olarak ne yapıyor). Özellikle signature ve finisher için mutlaka yaz.`;
 const Importer = {
   mode:'single', last:null,
   open(){ this.last=null; $('imp-preview').innerHTML=''; UI.open('md-imp'); this.setMode(this.mode); },
@@ -1298,12 +1465,12 @@ const Roster = {
     const promos=[...new Set(Store.d.chars.map(c=>c.promotion).filter(Boolean))].sort();
     const cur=$('r-promo').value;
     $('r-promo').innerHTML='<option value="">Tüm promosyonlar</option>'+promos.map(x=>`<option ${x===cur?'selected':''}>${esc(x)}</option>`).join('');
-    const list=Store.d.chars.filter(c=>(!t||c.type===t)&&(!p||c.promotion===p)&&(!q||[c.name,c.ringName,c.gimmick,c.promotion,...(c.nicknames||[])].join(' ').toLowerCase().includes(q)));
+    const list=Store.d.chars.filter(c=>(!t||hasRole(c,t))&&(!p||c.promotion===p)&&(!q||[c.name,c.ringName,c.gimmick,c.promotion,...(c.nicknames||[])].join(' ').toLowerCase().includes(q)));
     $('r-grid').innerHTML=list.map(c=>`<div class="card" onclick="Roster.show('${c.id}')">
       <div class="card-top"><div class="ava" style="border-color:var(--${c.alignment==='heel'?'heel':c.alignment==='face'?'face':'tw'})">${c.image?`<img src="${esc(c.image)}" onerror="this.remove()">`:initials(c.ringName)}</div>
-        <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(TYPES[c.type])}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' · '+esc(c.brand):''}</div></div></div>
+        <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' · '+esc(c.brand):''}</div></div></div>
       <div class="card-g">${esc(c.gimmick||'—')}</div>
-      <div class="card-f"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.type==='wrestler'?`<span class="tag neutral">${esc(c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}${c.source&&c.source!=='custom'?`<span class="tag neutral">${esc(c.source)}</span>`:''}</div>
+      <div class="card-f"><span class="tag al-${c.alignment}">${c.alignment}</span>${hasRole(c,'wrestler')?`<span class="tag neutral">${esc(c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}${c.source&&c.source!=='custom'?`<span class="tag neutral">${esc(c.source)}</span>`:''}</div>
     </div>`).join('') || '<div class="empty"><i class="fas fa-user-slash"></i><p>Sonuç yok</p></div>';
   },
   detailHTML(c){
@@ -1311,12 +1478,12 @@ const Roster = {
     return `<div style="display:flex;gap:12px;align-items:center">
         <div class="ava" style="width:60px;height:60px;font-size:22px">${c.image?`<img src="${esc(c.image)}" onerror="this.remove()">`:initials(c.ringName)}</div>
         <div><div style="font-family:var(--disp);font-size:22px;line-height:1.1">${esc(c.ringName)}</div>
-        <div class="muted">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(TYPES[c.type])}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' / '+esc(c.brand):''}</div>
-        <div style="display:flex;gap:5px;margin-top:4px"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.type==='wrestler'?`<span class="tag neutral">${esc(c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}</div></div></div>
+        <div class="muted">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}${c.brand?' / '+esc(c.brand):''}</div>
+        <div style="display:flex;gap:5px;margin-top:4px"><span class="tag al-${c.alignment}">${c.alignment}</span>${hasRole(c,'wrestler')?`<span class="tag neutral">${esc(c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}</div></div></div>
       ${c.gimmick?`<div><span class="lbl">Gimmick</span><div style="font-size:13px">${esc(c.gimmick)}</div></div>`:''}
       ${c.bio?`<div><span class="lbl">Kariyer</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.bio)}</div></div>`:''}
       ${c.voice?`<div><span class="lbl">Üslup (AI için)</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.voice)}</div></div>`:''}
-      ${c.type==='wrestler'?`<div class="statgrid">${Object.entries({power:'Güç',technique:'Teknik',speed:'Hız',stamina:'Kondisyon',toughness:'Dayanım',charisma:'Karizma',mic:'Mikrofon'}).map(([k,l])=>`<div class="stat"><b>${s[k]}</b><span>${l}</span></div>`).join('')}<div class="stat"><b>${c.popularity||50}</b><span>Popülerlik</span></div></div>
+      ${hasRole(c,'wrestler')?`<div class="statgrid">${Object.entries({power:'Güç',technique:'Teknik',speed:'Hız',stamina:'Kondisyon',toughness:'Dayanım',charisma:'Karizma',mic:'Mikrofon'}).map(([k,l])=>`<div class="stat"><b>${s[k]}</b><span>${l}</span></div>`).join('')}<div class="stat"><b>${c.popularity||50}</b><span>Popülerlik</span></div></div>
       <div class="moveset">${Object.entries(c.moves||{}).filter(([k,v])=>v?.length).map(([k,v])=>`<div class="mvrow"><span class="k">${CAT[k]?.tr||k}</span><span>${v.map(esc).join(', ')}</span></div>`).join('')}</div>`:''}
       ${(c.nicknames||[]).length?`<div class="mvrow"><span class="k">Lakaplar</span><span>${c.nicknames.map(esc).join(', ')}</span></div>`:''}
       ${(c.catchphrases||[]).length?`<div class="mvrow"><span class="k">Sözleri</span><span>${c.catchphrases.map(x=>'"'+esc(x)+'"').join(' · ')}</span></div>`:''}
@@ -1324,27 +1491,15 @@ const Roster = {
   },
   show(id){
     const c=Store.get(id); if(!c)return;
-    $('mc-title').textContent=TYPES[c.type];
-    $('mc-body').innerHTML=this.detailHTML(c)+(c.type==='wrestler'?`<div class="muted">Rekor: ${c.record.w}G – ${c.record.l}M</div>`:'');
+    $('mc-title').textContent=roleLabel(c);
+    $('mc-body').innerHTML=this.detailHTML(c)+(hasRole(c,'wrestler')?`<div class="muted">Rekor: ${c.record.w}G – ${c.record.l}M</div>`:'');
     $('mc-foot').innerHTML=`<button class="btn red" onclick="if(confirm('Silinsin mi?')){Store.remove('${c.id}');UI.close('md-char');Roster.render();}"><i class="fas fa-trash"></i></button>
       <div class="spc"></div><button class="btn" onclick="UI.close('md-char');Editor.open(Store.get('${c.id}'))"><i class="fas fa-pen"></i> Düzenle</button>
       <button class="btn gold" onclick="UI.close('md-char')">Kapat</button>`;
     UI.open('md-char');
   },
 };
-const Editor = {
-  open(c){ $('ed-json').value=JSON.stringify(c?c:blankChar(),null,2); UI.open('md-edit'); },
-  save(){
-    try{
-      const c=normalizeChar(JSON.parse($('ed-json').value));
-      if(!c.name&&!c.ringName) throw new Error('İsim gerekli');
-      c.name ||= c.ringName;
-      Store.upsert(c); UI.close('md-edit'); Roster.render();
-      if(Importer.last && Importer.last.id===c.id){ Importer.last=null; $('imp-preview').innerHTML=''; }
-      toast('Kaydedildi','ok');
-    }catch(e){ toast('JSON hatası: '+e.message,'err'); }
-  },
-};
+// Editor: aşağıda (KARAKTER EDİTÖRÜ) tanımlı
 
 
 /* ════════════════════════════════════════════════════════════
@@ -1716,8 +1871,8 @@ const Info = {
     </div>
     <div class="box">
       <h3>AI karakterler</h3>
-      ${ai.map(c=>`<div class="part">${avaHTML(c,'sm')}<span class="nm">${esc(c.ringName)}</span><span class="tag neutral">${esc(TYPES[c.type])}</span>${can?`<button class="mcl" data-rm="${c.id}">✕</button>`:''}</div>`).join('')||'<span class="muted">Yok</span>'}
-      ${can?`<select id="if-add"><option value="">+ AI karakter ekle…</option>${Store.chars().filter(c=>!c.owner&&!(sc.ai||[]).includes(c.id)).map(c=>`<option value="${c.id}">${esc(c.ringName)} — ${TYPES[c.type]}</option>`).join('')}</select>`:''}
+      ${ai.map(c=>`<div class="part">${avaHTML(c,'sm')}<span class="nm">${esc(c.ringName)}</span><span class="tag neutral">${esc(roleLabel(c))}</span>${can?`<button class="mcl" data-rm="${c.id}">✕</button>`:''}</div>`).join('')||'<span class="muted">Yok</span>'}
+      ${can?`<select id="if-add"><option value="">+ AI karakter ekle…</option>${Store.chars().filter(c=>!c.owner&&!(sc.ai||[]).includes(c.id)).map(c=>`<option value="${c.id}">${esc(c.ringName)} — ${roleLabel(c)}</option>`).join('')}</select>`:''}
       <button class="btn sm" data-a="scene-go"><i class="fas fa-forward"></i> AI şimdi devam etsin</button>
       ${['promo','contract'].includes(sc.type)?`<div class="muted">Seyirci heat: <b style="color:var(--am)">${r.heat||0}</b></div>`:''}
     </div>
@@ -1777,13 +1932,15 @@ const MatchCtl = {
     this.intro(id);
   },
   sys(M){
-    const sheet=c=>`- ${c.ringName} (${c.alignment}, ${c.style}) | Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Lakap: ${(c.nicknames||[]).join(', ')} | Finisher: ${(c.moves.finisher||[]).join(', ')} | İmza: ${(c.moves.signature||[]).join(', ')}`;
+    const mv=(c,k)=>(c.moves[k]||[]).map((n,i)=>c.movesDesc?.[k]?.[i]?`${n} [${c.movesDesc[k][i]}]`:n).join(', ');
+    const sheet=c=>`- ${c.ringName} (${c.alignment}, ${c.style}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) | Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Lakap: ${(c.nicknames||[]).join(', ')} | Finisher: ${mv(c,'finisher')} | İmza: ${mv(c,'signature')}`;
+    const rel=relBetween(M.c[0],M.c[1]);
     const st=M.staff;
     return `Sen bir profesyonel güreş (WWE/AEW tarzı) metin rol oyununun Dungeon Master'ısın. Aynı anda hakemi, yorumcuları, ring spikerini ve seyirciyi oynarsın.
 DİL: Her şey TÜRKÇE. Hamle isimleri İngilizce kalabilir.
 TON: Canlı TV yayını. Kısa, sinematik, akıcı. Kayfabe'yi bozma.
 MAÇ: ${({standard:'Standart (pinfall/submission, obje/hile DQ)',nodq:'No DQ — her şey serbest',submission:'Sadece submission ile kazanılır',lms:'Last Man Standing — 10 sayımda kalkamayan kaybeder'})[M.type]}${M.title?' · Kemer: '+M.title:''}
-HİKÂYE: ${M.story||'-'}
+HİKÂYE: ${M.story||'-'}${rel?`\nİLİŞKİ: ${M.c[1].ringName}, ${M.c[0].ringName}'in ${REL_TYPES[rel.type]?.tr||rel.type} (yoğunluk ${rel.lvl||3}/5)${rel.note?' — '+rel.note:''}. Anlatıda ve yorumlarda bunu hissettir.`:''}
 GÜREŞÇİLER:
 ${sheet(M.c[0])}
 ${sheet(M.c[1])}
@@ -1805,6 +1962,7 @@ KURAL: Mekanik sonucu (hasar, sayım, kazanan) oyun motoru belirler; sen anlatı
     if(!got) return;
     const M=this.hydrate({match:got.match}); const [a,b]=M.c;
     try{
+      await Msgs.post(roomId,{k:'card',pid:null,text:'',meta:{a:a.id,b:b.id,type:M.type,title:M.title||'',show:M.show||''}},{touch:false});
       await Msgs.post(roomId,{k:'sys',pid:null,text:`${M.show||'Canlı Şov'} — ${({standard:'Standart Maç',nodq:'No DQ',submission:'Submission Match',lms:'Last Man Standing'})[M.type]}${M.title?' · '+M.title:''}`},{touch:false});
       const r=await AI.ask({system:this.sys(M),json:true,temperature:0.9,
         prompt:`Maç başlıyor. Ring spikeri iki güreşçiyi takdim etsin, girişlerini karakterlerine uygun kısa ve görkemli anlat, yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
@@ -1812,7 +1970,10 @@ JSON: {"announcer":"spikerin anonsu","entrances":["A girişi 1-2 cümle","B giri
         offline:()=>({announcer:`Bu karşılaşma tek düşüşe kadar! Köşemde ${a.ringName}! Karşısında ${b.ringName}!`,entrances:[a.entrance||`${a.ringName} ringe geliyor.`,b.entrance||`${b.ringName} ringe geliyor.`],commentary:[],crowd:'Salon dolu, atmosfer elektrikli.'})});
       const d=r.data||{};
       if(d.announcer) await Msgs.post(roomId,{k:'com',text:d.announcer,cid:M.staff.ann?.id||null,pid:null,meta:M.staff.ann?{}:{name:'Spiker'}},{touch:false});
-      for(const e of (d.entrances||[])) await Msgs.post(roomId,{k:'narr',text:e,pid:null},{touch:false});
+      for(const [i,e] of (d.entrances||[]).slice(0,2).entries()){
+        const who=M.c[i];
+        await Msgs.post(roomId,{k:'narr',text:e,pid:null,meta:who?.themeUrl?{theme:who.id,mt:'entrance'}:{}},{touch:false});
+      }
       await this.postCom(roomId,M,d.commentary);
       if(d.crowd) await Msgs.post(roomId,{k:'crowd',text:d.crowd,pid:null},{touch:false});
       await Msgs.post(roomId,{k:'ref',pid:null,cid:M.staff.ref?.id||null,text:`${M.staff.ref?.ringName||'Hakem'} iki güreşçiyi kontrol ediyor ve zili çaldırıyor. DING DING!`},{touch:false});
@@ -1846,7 +2007,7 @@ JSON: {"announcer":"spikerin anonsu","entrances":["A girişi 1-2 cümle","B giri
         const margin=pre?pre.chance-preRoll:null, baseTier=pre?Engine.tierFromScore(margin):null;
         const recent=await Msgs.recent(roomId,10);
         const r=await AI.ask({system:this.sys(M),json:true,temperature:0.85,
-          prompt:`HAMLE: ${c.ringName} → kategori "${CAT[cat].tr}", hareket "${mv}".
+          prompt:`HAMLE: ${c.ringName} → kategori "${CAT[cat].tr}", hareket "${mv}".${moveDesc(c,cat,mv)?` Hareketin tarifi: ${moveDesc(c,cat,mv)}`:''}
 Emote: ${emote}
 Durum (hamle öncesi): ${this.stateLine(M)}
 Son akış:
@@ -1914,7 +2075,7 @@ Durum: ${this.stateLine(M)}
 Son akış:
 ${Msgs.log(recent)}
 Kategoriler: ${avail.join(', ')} (finisher için momentum 75+, signature için 45+ önerilir; rakip yerdeyken ve yorgunken pin mantıklı).
-Moveset: ${JSON.stringify(c.moves)}
+Moveset: ${JSON.stringify(Object.fromEntries(Object.entries(c.moves).map(([k,v])=>[k,v.map((n,i)=>c.movesDesc?.[k]?.[i]?`${n} (${c.movesDesc[k][i]})`:n)])))}
 JSON: {"category":"...","move":"hareket adı","emote":"3. şahıs emote, 1-2 cümle, Türkçe, yıldızsız"}`,
         offline:()=>{ const cat=Engine.autoChoose(M,idx); return {category:cat,move:Engine.moveFor(c,cat),emote:''}; }});
       let {category,move,emote}=r.data||{};
@@ -1990,7 +2151,8 @@ const Scene = {
       await sleep(400); // aynı anda gelen mesajları da yakalamak için
       const recent=await Msgs.recent(roomId,18);
       const playerChars=[...new Set(recent.filter(m=>m.pid&&m.cid).map(m=>m.cid))].map(id=>Data.char(id)).filter(c=>c&&!(sc.ai||[]).includes(c.id));
-      const sheet=(c,tag)=>`- ${c.ringName} [${TYPES[c.type]}, ${c.alignment}]${tag} Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}`;
+      const inScene=[...aiChars,...playerChars];
+      const sheet=(c,tag)=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}]${tag} Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,inScene)?` | İlişkiler: ${relLine(c,inScene)}`:''}`;
       const r=await AI.ask({json:true,temperature:0.95,
         system:`Profesyonel güreş metin RP'sinde Dungeon Master'sın. Dil TÜRKÇE. Sadece AI kontrolündeki karakterleri oynarsın; OYUNCU karakterleri adına ASLA konuşma, eylem veya düşünce yazma. Kayfabe'yi koru, üsluplara sadık kal. Replikler kısa ve TV'ye uygun olsun. Eylemleri "emote" alanına 3. şahıs yaz (GTA World /me gibi, yıldızsız).
 Sahne: ${({free:'Serbest sahne.',promo:'Ringde canlı promo — seyirci var ve tepki verir.',backstage:'Backstage — seyirci yok.',interview:'Backstage röportaj — röportajcı soru sorar.',contract:'Kontrat imzası / yüzleşme — ring içinde, seyirci var.'})[sc.type||'free']}
@@ -2027,7 +2189,7 @@ const RoomNew = {
     $('rn-body').innerHTML=`<div class="ff"><span class="lbl">Kanal adı</span><input id="rn-name" placeholder="örn. raw-backstage" maxlength="40"></div>
       <div class="ff"><span class="lbl">Konu</span><input id="rn-topic" placeholder="örn. Pazartesi şovu, soyunma odaları"></div>
       <div class="ff"><span class="lbl">Sahne tipi</span><select id="rn-type"><option value="free">Serbest</option><option value="backstage">Backstage</option><option value="promo">Ringde promo</option><option value="interview">Röportaj</option><option value="contract">Kontrat / yüzleşme</option></select></div>
-      <div class="ff"><span class="lbl">AI karakterler (sahipsiz karakterlerden)</span><div style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">${Store.chars().filter(c=>!c.owner).map(c=>`<label style="display:flex;gap:8px;align-items:center;font-size:12.5px"><input type="checkbox" value="${c.id}" class="rn-ai"> ${esc(c.ringName)} <span class="muted">${TYPES[c.type]}</span></label>`).join('')}</div></div>
+      <div class="ff"><span class="lbl">AI karakterler (sahipsiz karakterlerden)</span><div style="max-height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">${Store.chars().filter(c=>!c.owner).map(c=>`<label style="display:flex;gap:8px;align-items:center;font-size:12.5px"><input type="checkbox" value="${c.id}" class="rn-ai"> ${esc(c.ringName)} <span class="muted">${roleLabel(c)}</span></label>`).join('')}</div></div>
       <label style="display:flex;gap:8px;align-items:center;font-size:12.5px"><input type="checkbox" id="rn-auto" checked> AI otomatik cevap versin</label>`;
     $('rn-go').onclick=async()=>{
       const name=$('rn-name').value.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^\p{L}\p{N}_-]/gu,'');
@@ -2243,7 +2405,7 @@ const Show = {
   segForm(eventId,room){
     const r=room||{}; const m=r.match; const type=r.segType||'match';
     const tOpts=[['','— kemer yok —'],...Univ.titles().map(t=>[t.id,t.name])];
-    const w=charOpts('wrestler'); const allC=Store.chars().map(c=>[c.id,`${c.ringName} — ${TYPES[c.type]}`]);
+    const w=charOpts('wrestler'); const allC=Store.chars().map(c=>[c.id,`${c.ringName} — ${roleLabel(c)}`]);
     Form.open({title:room?'Segmenti düzenle':'Segment ekle',saveLabel:room?'Kaydet':'Ekle',
       fields:[
         {id:'type',label:'Segment tipi',type:'select',options:Object.entries(SEG_TYPES).map(([k,v])=>[k,v.tr]),value:type},
@@ -2302,9 +2464,11 @@ const Show = {
     const res=await AI.ask({json:true,temperature:0.4,
       system:'Profesyonel güreş şovu eleştirmenisin (Wrestling Observer tarzı). Türkçe yaz.',
       prompt:`Şov: ${ev?.title} (${STYLES[ev?.style]?.tr||''}). Segment tipi: ${SEG_TYPES[r.segType]?.tr}. Seyirci heat: ${r.heat||0}.
-Akış:\n${Msgs.log(recent)}\nBu segmenti puanla (0.5-5 yıldız, çeyrek adımlarla) ve tek cümle özetle. JSON: {"rating":3.25,"summary":"..."}`,
+Katılımcılar: ${Univ.segParticipants(r).map(x=>Data.char(x)?.ringName).filter(Boolean).join(', ')||'-'}
+Akış:\n${Msgs.log(recent)}\nBu segmenti puanla (0.5-5 yıldız, çeyrek adımlarla) ve tek cümle özetle. Segmentten açıkça üstün çıkan (seyirciyi kazanan / son sözü söyleyen / rakibini ezen) bir katılımcı varsa "winner" alanına tam adını yaz, yoksa null. JSON: {"rating":3.25,"summary":"...","winner":null}`,
       offline:()=>({rating:Rating.scene(r.heat,recent.filter(m=>CHAT_K.includes(m.k)).length),summary:`${Show.label(r)} segmenti tamamlandı.`})});
     const rating=clamp(Math.round((parseFloat(res.data?.rating)||Rating.scene(r.heat,recent.length))*4)/4,0.5,5);
+    await Scene.postWinner(id,r,res.data?.winner);
     await Msgs.post(id,{k:'sys',pid:null,text:`Segment bitti · ${'★'.repeat(Math.round(rating))} (${rating})`},{touch:false});
     await B.update('rooms/'+id,{status:'done',rating,summary:res.data?.summary||'',lastAt:Msgs.ts(),lastText:'Segment bitti'});
     toast(`Segment bitti: ${rating}★`,'ok');
@@ -2343,7 +2507,7 @@ MatchCtl.finish = async function(roomId,M,out,{quick=false}={}){
   const wi=M.c.findIndex(c=>c.id===M.result.winner);
   const w=Store.get(M.result.winner)||M.c[wi], l=Store.get(M.result.loser)||M.c[1-wi];
   const rating=Rating.match(M); M.result.rating=rating;
-  await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:w.ringName,method:M.result.method,rating}},{touch:false});
+  await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:w.ringName,method:M.result.method,rating,...(w.themeUrl?{theme:w.id,mt:'win'}:{})}},{touch:false});
   // Rekor + popülerlik: güncel belge üzerinden transaction (aynı anda biten maçlar birbirini ezmesin)
   const bump=(id,fn)=>B.txn('chars/'+id,cur=>cur?{...fn(normalizeChar(cur)),updatedAt:Date.now()}:null).catch(e=>toast('Rekor yazılamadı: '+e.message,'err'));
   await bump(w.id,c=>({record:{...c.record,w:(c.record.w||0)+1},popularity:clamp((c.popularity||50)+2+Math.round(rating/2),0,100)}));
@@ -2428,15 +2592,23 @@ Scene.opening = async function(id){
   const res=await AI.ask({json:true,temperature:0.9,
     system:`Profesyonel güreş TV şovunun yönetmeni ve anlatıcısısın. Türkçe. Şov tonu: ${STYLES[ev?.style]?.tone||''}`,
     prompt:`Segment başlıyor: ${SEG_TYPES[r.segType]?.tr}. Şov: ${ev?.title||''}. Not: ${r.topic||'-'}.
-Katılımcılar: ${ps.map(c=>`${c.ringName} (${c.alignment}) — ${c.gimmick}`).join(' | ')}
+Katılımcılar: ${ps.map(c=>`${c.ringName} (${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) — ${c.gimmick}${relLine(c,ps)?` [${relLine(c,ps)}]`:''}`).join(' | ')}
 Sahneyi 1-2 cümleyle kur (kamera nereye bakıyor, kim nerede, giriş müziği vb.). Karakterlere replik yazma. ${['promo','contract'].includes(r.segType)?'Seyircinin ilk tepkisini de ver.':''}
 JSON: {"scene":"...","crowd":""}`,
     offline:()=>({scene:r.segType==='backstage'||r.segType==='interview'?`Kamera backstage'e geçiyor. ${ps.map(c=>c.ringName).join(' ve ')} kadrajda.`:`Işıklar kararıyor, müzik çalıyor: ${ps[0]?.ringName||''} ringe doğru yürüyor.`,crowd:['promo','contract'].includes(r.segType)?'Seyirci ayakta!':''})});
   await Msgs.post(id,{k:'sys',pid:null,text:`${SEG_TYPES[r.segType]?.tr} başladı`},{touch:false});
+  if(['promo','contract'].includes(r.segType)) for(const c of ps.filter(c=>c.themeUrl)) await Msgs.post(id,{k:'sys',pid:null,text:`♪ ${c.ringName} sahneye çıkıyor${c.theme?` — ${c.theme}`:''}`,meta:{theme:c.id,mt:'entrance'}},{touch:false});
   if(res.data?.scene) await Msgs.post(id,{k:'narr',pid:null,text:res.data.scene},{touch:false});
   if(res.data?.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:res.data.crowd},{touch:false});
   await B.update('rooms/'+id,{lastAt:Msgs.ts(),lastText:'Segment başladı'});
   if((r.scene?.ai||[]).length) await Scene.respond(id);
+};
+/** promo/segment kazananı: sistem mesajı + tema müziği */
+Scene.postWinner = async function(id,r,name){
+  if(!name||typeof name!=='string') return;
+  const pool=Univ.segParticipants(r).map(x=>Data.char(x)).filter(Boolean);
+  const c=Data.findCharByName(name,pool); if(!c) return;
+  await Msgs.post(id,{k:'sys',pid:null,text:`🏆 ${c.ringName} segmentten galip ayrıldı${c.themeUrl?' ♪':''}`,meta:c.themeUrl?{theme:c.id,mt:'win'}:{}},{touch:false});
 };
 Scene.sim = async function(id){
   const r=Data.rooms.get(id); const ev=Univ.event(r?.eventId);
@@ -2445,10 +2617,10 @@ Scene.sim = async function(id){
   const res=await AI.ask({json:true,temperature:0.95,
     system:`Profesyonel güreş TV yazarısın. Türkçe. Şov tonu: ${STYLES[ev?.style]?.tone||''}. Karakterlerin gimmick ve üsluplarına sadık kal.`,
     prompt:`Segment: ${SEG_TYPES[r.segType]?.tr}. Şov: ${ev?.title||''}. Not: ${r.topic||'-'}.
-Karakterler:\n${ps.map(c=>`- ${c.ringName} [${TYPES[c.type]}, ${c.alignment}] ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}`).join('\n')}
+Karakterler:\n${ps.map(c=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}] ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,ps)?` | İlişkiler: ${relLine(c,ps)}`:''}`).join('\n')}
 Şimdiye kadar:\n${Msgs.log(recent)||'-'}
-Segmenti baştan sona (veya kaldığı yerden) 5-8 satırda yaz ve bitir. Sonra puanla (0.5-5) ve tek cümle özetle.
-JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3,"summary":"..."}`,
+Segmenti baştan sona (veya kaldığı yerden) 5-8 satırda yaz ve bitir. Sonra puanla (0.5-5) ve tek cümle özetle. Segmentten açıkça üstün çıkan biri varsa "winner" alanına tam adını yaz, yoksa null.
+JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3,"summary":"...","winner":null}`,
     offline:()=>({lines:ps.map(c=>({speaker:c.ringName,emote:'kameraya döner',text:(c.catchphrases||[])[0]||'Bu iş burada bitmedi.'})),crowd:['promo','contract'].includes(r.segType)?'Seyirci tezahürat yapıyor!':'',rating:Rating.scene(r.heat,6),summary:`${Show.label(r)} (sim).`})});
   const d=res.data||{};
   await Msgs.post(id,{k:'sys',pid:null,text:'⏩ Hızlı simülasyon'},{touch:false});
@@ -2459,6 +2631,7 @@ JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3
   }
   if(d.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:d.crowd},{touch:false});
   const rating=clamp(Math.round((parseFloat(d.rating)||2.5)*4)/4,0.5,5);
+  await Scene.postWinner(id,r,d.winner);
   await Msgs.post(id,{k:'sys',pid:null,text:`Segment bitti · ${rating}★`},{touch:false});
   await B.update('rooms/'+id,{status:'done',rating,summary:d.summary||'',lastAt:Msgs.ts(),lastText:'Segment bitti'});
 };
@@ -2473,17 +2646,17 @@ const Booker = {
     const roster=Univ.roster(ev.brandId); if(roster.length<2){ toast('Bu markada yeterli güreşçi yok','err'); return; }
     const titles=Univ.titles().filter(t=>!ev.brandId||t.brandId===ev.brandId||!t.brandId);
     const nm=sh?.matches||4, np=sh?.promos||2;
-    const staffPool=Store.chars().filter(c=>['interviewer','gm','manager'].includes(c.type));
+    const staffPool=Store.chars().filter(c=>['interviewer','gm','manager'].some(r=>hasRole(c,r)));
     const recent=Data.history.slice(0,12).map(h=>`${h.a} vs ${h.b} → ${h.winner} (${h.method}${h.titleChange?', YENİ ŞAMPİYON':''})`).join('\n');
     toast('AI kartı kuruyor…');
     const r=await AI.ask({json:true,temperature:0.9,
       system:'Deneyimli bir güreş bookerısın (WWE GM modu). Hikâyeleri, kemer yarışlarını ve rekabetleri ilerleten mantıklı bir şov kartı kurarsın. Sadece JSON döndür. İsimleri AYNEN listeden kullan.',
       prompt:`Şov: ${ev.title} · ${STYLES[ev.style]?.tr} · ${Dt.nice(ev.date)}
-Marka kadrosu (isim | yön | stil | popülerlik | rekor):\n${roster.map(c=>`${c.ringName} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l}`).join('\n')}
+Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}`).join('\n')}
 Kemerler: ${titles.map(t=>`${t.name} (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
-Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
+Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Erkek-kadın karışık maç yapma (cinsiyeti belirsizse serbest). Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
 JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|nodq|submission|lms","title":"kemer adı ya da boş","note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
       offline:()=>this.offline(ev,roster,titles,nm,np,staffPool)});
     let segs=(r.data?.segments||[]).slice(0,12);
@@ -2510,17 +2683,20 @@ JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|n
   },
   offline(ev,roster,titles,nm,np,staffPool){
     const pool=[...roster].sort((a,b)=>(b.popularity||50)-(a.popularity||50));
-    const main=[pool.shift(),pool.shift()].filter(Boolean);
+    const okPair=(a,b)=>!a.gender||!b.gender||a.gender===b.gender;
+    const takeFor=a=>{ const i=pool.findIndex(b=>okPair(a,b)); return i<0?null:pool.splice(i,1)[0]; };
+    const m0=pool.shift(), m1=m0?takeFor(m0):null;
+    const main=m1?[m0,m1]:[]; if(m0&&!m1) pool.push(m0);
     for(let i=pool.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
     const matches=[];
-    while(matches.length<nm-1 && pool.length>=2){ const a=pool.shift(), b=pool.shift(); matches.push({type:'match',a:a.ringName,b:b.ringName,matchType:Math.random()<0.15?'nodq':'standard',title:'',note:''}); }
+    while(matches.length<nm-1 && pool.length>=2){ const a=pool.shift(), b=takeFor(a); if(!b) continue; matches.push({type:'match',a:a.ringName,b:b.ringName,matchType:Math.random()<0.15?'nodq':'standard',title:'',note:''}); }
     const tt=titles.find(t=>main.some(c=>c?.id===t.holder));
     if(main.length===2) matches.push({type:'match',a:main[0].ringName,b:main[1].ringName,matchType:'standard',title:ev.style==='ple'&&tt?tt.name:'',note:'Ana maç'});
     const talkers=[...roster].sort(()=>Math.random()-0.5);
     const promos=[];
     for(let i=0;i<np;i++){
       const t=['promo','backstage','interview'][i%3]; const c=talkers[i%talkers.length];
-      const helper=t==='interview'?staffPool.find(x=>x.type==='interviewer'):t==='backstage'?staffPool.find(x=>x.type==='gm'):null;
+      const helper=t==='interview'?staffPool.find(x=>hasRole(x,'interviewer')):t==='backstage'?staffPool.find(x=>hasRole(x,'gm')):null;
       promos.push({type:t,participants:[c.ringName,...(helper?[helper.ringName]:[])],note:''});
     }
     const out=[]; const m=[...matches]; const last=m.pop();
@@ -2896,13 +3072,13 @@ Roster.render = function(){
   const all=Store.chars();
   const promos=[...new Set(all.map(c=>c.promotion).filter(Boolean))].sort();
   $('r-promo').innerHTML='<option value="">Tüm promosyonlar</option>'+promos.map(x=>`<option ${x===p?'selected':''}>${esc(x)}</option>`).join('');
-  const list=all.filter(c=>(!t||c.type===t)&&(!p||c.promotion===p)&&(!bf||(bf==='none'?!Univ.brand(c.brandId):c.brandId===bf))&&(!own||(own==='mine'?c.owner===Me.id:!c.owner))
+  const list=all.filter(c=>(!t||hasRole(c,t))&&(!p||c.promotion===p)&&(!bf||(bf==='none'?!Univ.brand(c.brandId):c.brandId===bf))&&(!own||(own==='mine'?c.owner===Me.id:!c.owner))
     &&(!q||[c.name,c.ringName,c.gimmick,c.promotion,...(c.nicknames||[])].join(' ').toLowerCase().includes(q)));
   $('r-grid').innerHTML=list.map(c=>`<div class="card" data-id="${c.id}">
     <div class="card-top">${avaHTML(c)}
-      <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(TYPES[c.type])}${c.promotion?' · '+esc(c.promotion):''}</div></div></div>
+      <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</div></div></div>
     <div class="card-g">${esc(c.gimmick||'—')}</div>
-    <div class="card-f">${c.type==='wrestler'&&Univ.brand(c.brandId)?brandChip(Univ.brand(c.brandId)):''}${Univ.titles().some(t=>t.holder===c.id)?'<span class="tag" style="color:var(--gold);border-color:var(--gold)">🏆</span>':''}<span class="tag al-${c.alignment}">${c.alignment}</span>${c.type==='wrestler'?`<span class="tag neutral">${esc(c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}
+    <div class="card-f">${hasRole(c,'wrestler')&&Univ.brand(c.brandId)?brandChip(Univ.brand(c.brandId)):''}${Univ.titles().some(t=>t.holder===c.id)?'<span class="tag" style="color:var(--gold);border-color:var(--gold)">🏆</span>':''}<span class="tag al-${c.alignment}">${c.alignment}</span>${hasRole(c,'wrestler')?`<span class="tag neutral">${esc(c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}
       ${c.owner?`<span class="tag" style="color:${esc(Data.player(c.owner)?.color||'var(--t1)')};border-color:currentColor">@${esc(Data.player(c.owner)?.name||'?')}</span>`:'<span class="tag neutral">AI / NPC</span>'}</div>
   </div>`).join('') || '<div class="empty"><i class="fas fa-user-slash"></i><p>Sonuç yok</p></div>';
   $('r-grid').querySelectorAll('.card').forEach(el=>el.onclick=()=>Roster.show(el.dataset.id));
@@ -2910,11 +3086,11 @@ Roster.render = function(){
 Roster.show = function(id){
   const c=Store.get(id); if(!c) return;
   const mine=c.owner===Me.id, canEdit=Me.admin||mine||!c.owner;
-  $('mc-title').textContent=TYPES[c.type];
+  $('mc-title').textContent=roleLabel(c);
   $('mc-body').innerHTML=this.detailHTML(c)
-    +(c.type==='wrestler'?`<div class="muted">Rekor: ${c.record.w}G – ${c.record.l}M</div>`:'')
+    +(hasRole(c,'wrestler')?`<div class="muted">Rekor: ${c.record.w}G – ${c.record.l}M</div>`:'')
     +`<div class="muted">Sahibi: ${c.owner?'<b>@'+esc(Data.player(c.owner)?.name||'?')+'</b> (oyuncu karakteri)':'yok — AI/NPC olarak kullanılır'}</div>`
-    +(Univ.isGM()&&c.type==='wrestler'?`<div class="ff"><span class="lbl">Marka (GM)</span><select id="mc-brand"><option value="">— markasız —</option>${Univ.brands().map(b=>`<option value="${b.id}" ${c.brandId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div>`:'')
+    +(Univ.isGM()&&hasRole(c,'wrestler')?`<div class="ff"><span class="lbl">Marka (GM)</span><select id="mc-brand"><option value="">— markasız —</option>${Univ.brands().map(b=>`<option value="${b.id}" ${c.brandId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div>`:'')
     +(Me.admin?`<div class="ff"><span class="lbl">Sahibini ata (yönetici)</span><select id="mc-owner"><option value="">— AI / NPC —</option>${[...Data.players.values()].map(p=>`<option value="${p.id}" ${c.owner===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:'');
   $('mc-foot').innerHTML=`${canEdit?`<button class="btn red" id="mc-del"><i class="fas fa-trash"></i></button>`:''}<div style="flex:1"></div>
     ${!c.owner?'<button class="btn gold" id="mc-claim"><i class="fas fa-hand"></i> Bu karakteri oyna</button>':''}
@@ -2930,6 +3106,517 @@ Roster.show = function(id){
   $('mc-del')&&($('mc-del').onclick=async()=>{ if(confirm('Silinsin mi?')){ await Store.remove(c.id); UI.close('md-char'); } });
   UI.open('md-char');
 };
+
+/* ════════════════════════════════════════════════════════════
+   GÖRSELLER — ikon / banner / PNG render (imgur vb. direkt link)
+   ikon & banner: kırpma odağı (x,y %) + yakınlaştırma (z)
+   render: şeffaf kenarlar otomatik kırpılır (trim), oranı korunarak kutuya sığdırılır,
+           elle ölçek (s) + kaydırma (ox, oy %) + bakış yönü (face) ayarlanabilir
+════════════════════════════════════════════════════════════ */
+const Media = {
+  fixUrl(u){
+    u=String(u||'').trim();
+    const m=u.match(/^https?:\/\/(?:www\.|m\.)?imgur\.com\/([A-Za-z0-9]{5,8})(?:\.[a-z]+)?$/i);   // imgur sayfa linki → direkt resim
+    if(m) return `https://i.imgur.com/${m[1]}.png`;
+    return u;
+  },
+  coverStyle(m){ const x=m?.x??50, y=m?.y??50, z=m?.z||1; return `object-position:${x}% ${y}%;transform:scale(${z});transform-origin:${x}% ${y}%`; },
+  iconUrl(c){ return c?.media?.icon?.url || c?.image || ''; },
+  bannerHTML(c,cls=''){
+    const b=c?.media?.banner; if(!b?.url) return '';
+    return `<div class="bnr ${cls}"><img src="${esc(b.url)}" style="${this.coverStyle(b)}" loading="lazy" onerror="this.parentNode.classList.add('bad')"></div>`;
+  },
+  /** want: 'right' | 'left' | null — karakterin bakması gereken yön (VS kartında ortaya baksınlar diye) */
+  renderHTML(c,{want=null,cls=''}={}){
+    const r=c?.media?.render; if(!r?.url) return '';
+    const [tx,ty,tw,th]=(Array.isArray(r.trim)&&r.trim.length===4)?r.trim:[0,0,1,1];
+    const flip = want && ['left','right'].includes(r.face) && r.face!==want;
+    return `<div class="rnd ${cls}"><div class="rnd-f" style="--ar:${+r.ar||0.6};transform:translate(${+r.ox||0}%,${+r.oy||0}%) scale(${+r.s||1})${flip?' scaleX(-1)':''}"><img src="${esc(r.url)}" style="width:${100/tw}%;height:${100/th}%;left:${-tx/tw*100}%;top:${-ty/th*100}%" loading="lazy" onerror="this.closest('.rnd').classList.add('bad')"></div></div>`;
+  },
+  hasRender(c){ return !!c?.media?.render?.url; },
+  _load(url,cors){ return new Promise((res,rej)=>{ const i=new Image(); if(cors) i.crossOrigin='anonymous'; i.onload=()=>res(i); i.onerror=()=>rej(new Error('Görsel yüklenemedi')); i.src=url; }); },
+  /** Şeffaf kenarları bul → {trim:[x,y,w,h] (0-1), ar, W, H, trimmed} */
+  async autoFit(url){
+    let img, cors=true;
+    try{ img=await this._load(url,true); }catch(e){ cors=false; img=await this._load(url,false); }
+    const W=img.naturalWidth, H=img.naturalHeight; let trim=[0,0,1,1], trimmed=false;
+    if(cors){
+      try{
+        const k=Math.min(1,480/Math.max(W,H)), w=Math.max(1,Math.round(W*k)), h=Math.max(1,Math.round(H*k));
+        const cv=document.createElement('canvas'); cv.width=w; cv.height=h; const cx=cv.getContext('2d');
+        cx.drawImage(img,0,0,w,h); const d=cx.getImageData(0,0,w,h).data;
+        let x0=w,y0=h,x1=-1,y1=-1;
+        for(let y=0;y<h;y++) for(let x=0;x<w;x++) if(d[(y*w+x)*4+3]>16){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; }
+        if(x1>=x0 && y1>=y0){
+          const pad=1; x0=Math.max(0,x0-pad); y0=Math.max(0,y0-pad); x1=Math.min(w-1,x1+pad); y1=Math.min(h-1,y1+pad);
+          trim=[x0/w,y0/h,(x1-x0+1)/w,(y1-y0+1)/h].map(v=>Math.round(v*10000)/10000);
+          trimmed = trim[2]<0.995||trim[3]<0.995;
+        }
+      }catch(e){ /* CORS yok → kırpmasız */ }
+    }
+    return {trim, ar:Math.round((trim[2]*W)/(trim[3]*H)*1000)/1000, W, H, trimmed, cors};
+  },
+};
+
+/* ── avatar: ikon odak/zoom destekli ── */
+avaHTML = function(c,cls=''){
+  const col = c?.alignment==='heel'?'var(--heel)':c?.alignment==='face'?'var(--face)':c?.alignment?'var(--tw)':(c?.color||'var(--ln2)');
+  const u=Media.iconUrl(c);
+  return `<div class="ava ${cls}" style="border-color:${esc(col)}">${u?`<img src="${esc(u)}" style="${Media.coverStyle(c.media?.icon)}" onerror="this.remove()">`:esc(initials(c?.ringName||c?.name))}</div>`;
+};
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ KARTI (VS) — WWE tarzı
+════════════════════════════════════════════════════════════ */
+const MTYPE_TR={standard:'Tekli Maç',nodq:'No DQ',submission:'Submission Match',lms:'Last Man Standing'};
+const MatchCard = {
+  side(c,want){
+    const col=c?.alignment==='heel'?'var(--heel)':c?.alignment==='face'?'var(--face)':'var(--tw)';
+    const body = Media.hasRender(c) ? Media.renderHTML(c,{want,cls:'vs-r'})
+      : `<div class="vs-ph">${avaHTML(c,'xl')}</div>`;
+    return `<div class="vs-side ${want==='right'?'l':'r'}" style="--al:${col}">${Media.bannerHTML(c,'vs-bn')}${body}</div>`;
+  },
+  html({a,b,type,title,show},cls=''){
+    const A=typeof a==='string'?Data.char(a):a, Bc=typeof b==='string'?Data.char(b):b;
+    if(!A||!Bc) return '';
+    return `<div class="vs-card ${cls}">
+      <div class="vs-top"><span>${esc(show||'')}</span>${title?`<span class="vs-belt">🏆 ${esc(title)}</span>`:''}</div>
+      <div class="vs-stage">${this.side(A,'right')}${this.side(Bc,'left')}<div class="vs-x">VS</div></div>
+      <div class="vs-names"><div class="vs-n l"><b>${esc(A.ringName)}</b><small>${esc([A.hometown,A.record?`${A.record.w}-${A.record.l}`:''].filter(Boolean).join(' · '))}</small></div>
+        <div class="vs-mt">${esc(MTYPE_TR[type]||'Maç')}</div>
+        <div class="vs-n r"><b>${esc(Bc.ringName)}</b><small>${esc([Bc.hometown,Bc.record?`${Bc.record.w}-${Bc.record.l}`:''].filter(Boolean).join(' · '))}</small></div></div>
+    </div>`;
+  },
+  fromMatch(M,cls=''){ return this.html({a:M.c[0],b:M.c[1],type:M.type,title:M.title,show:M.show},cls); },
+};
+
+/* ════════════════════════════════════════════════════════════
+   MÜZİK — YouTube tema şarkıları (youtube.com, youtu.be, music.youtube.com, shorts)
+   Mesajlarda meta.theme = karakter id → odadaki herkeste çalar.
+════════════════════════════════════════════════════════════ */
+const Music = {
+  player:null, ready:null, q:[], cur:null, timer:null, fadeT:null, played:new Set(), boot:Date.now(),
+  ytId(url){
+    const u=String(url||'').trim();
+    const m=u.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/|v\/))([\w-]{11})/i);
+    if(m) return m[1];
+    return /^[\w-]{11}$/.test(u)?u:null;
+  },
+  ytStart(url){
+    const m=String(url||'').match(/[?&#](?:t|start)=([\dhms]+)/i); if(!m) return 0;
+    const v=m[1]; if(/^\d+$/.test(v)) return +v;
+    const g=k=>+(v.match(new RegExp('(\\d+)'+k))?.[1]||0); return g('h')*3600+g('m')*60+g('s');
+  },
+  auto(){ return Prefs.d.music!==false; },
+  vol(){ return Prefs.d.vol ?? 60; },
+  load(){
+    if(this.ready) return this.ready;
+    this.ready=new Promise((res,rej)=>{
+      if(window.YT?.Player) return res();
+      const prev=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=()=>{ prev?.(); res(); };
+      const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; s.onerror=()=>rej(new Error('YouTube oynatıcı yüklenemedi')); document.head.appendChild(s);
+    }).then(()=>new Promise(res=>{
+      this.player=new YT.Player('yt-player',{width:'100%',height:'100%',playerVars:{playsinline:1,rel:0,modestbranding:1},
+        events:{onReady:()=>res(),onError:e=>this.onErr(e),onStateChange:e=>{ if(e.data===0) this.next(); }}});
+    })).catch(e=>{ this.ready=null; toast(e.message,'err'); throw e; });
+    return this.ready;
+  },
+  onErr(e){
+    const why={2:'geçersiz video',5:'oynatılamıyor',100:'video bulunamadı / gizli',101:'sahibi gömülü oynatmaya izin vermiyor',150:'sahibi gömülü oynatmaya izin vermiyor'}[e.data]||('hata '+e.data);
+    toast(`♪ ${this.cur?.name||''}: ${why}. Başka bir yükleme (lyric / audio) dene.`,'err'); this.next();
+  },
+  /** c: karakter · opts: {dur: sn (0 = bitene kadar), why: etiket} */
+  async play(c,{dur=0,why=''}={}){
+    const id=this.ytId(c?.themeUrl); if(!id) return false;
+    try{ await this.load(); }catch(e){ return false; }
+    clearTimeout(this.timer); clearInterval(this.fadeT);
+    this.cur={cid:c.id,name:c.ringName,why};
+    this.player.setVolume(this.vol()); this.player.unMute?.();
+    this.player.loadVideoById({videoId:id,startSeconds:c.themeStart||this.ytStart(c.themeUrl)||0});
+    this.ui(true);
+    if(dur) this.timer=setTimeout(()=>this.next(true),dur*1000);
+    return true;
+  },
+  enqueue(cid,{interrupt=false,dur=0,why=''}={}){
+    const c=Data.char(cid); if(!c||!this.ytId(c.themeUrl)) return;
+    if(interrupt){ this.q=[]; this.play(c,{dur,why}); return; }
+    if(!this.cur) this.play(c,{dur,why}); else this.q.push({cid,dur,why});
+  },
+  next(fade=false){
+    const n=this.q.shift();
+    if(n) return this.play(Data.char(n.cid),n);
+    if(fade) this.fadeStop(); else if(!this.q.length && this.player?.getPlayerState?.()===0) this.stop();
+  },
+  fadeStop(){
+    if(!this.player){ return; } clearInterval(this.fadeT);
+    let v=this.vol(); this.fadeT=setInterval(()=>{ v-=6; if(v<=0){ clearInterval(this.fadeT); this.stop(); } else this.player.setVolume(v); },150);
+  },
+  stop(){ clearTimeout(this.timer); clearInterval(this.fadeT); this.q=[]; this.cur=null; try{ this.player?.stopVideo(); }catch(e){} this.ui(false); },
+  ui(on){
+    const el=$('music'); if(!el) return;
+    el.classList.toggle('on',!!on);
+    $('mu-name').textContent=this.cur?`♪ ${this.cur.name}`:'♪';
+    $('mu-why').textContent=this.cur?.why||'';
+    $('mu-auto').classList.toggle('on',this.auto());
+    $('mu-vol').value=this.vol();
+  },
+  setVol(v){ Prefs.d.vol=+v; Prefs.save(); try{ this.player?.setVolume(+v); }catch(e){} },
+  toggleAuto(){ Prefs.d.music=!this.auto(); Prefs.save(); this.ui(!!this.cur); toast(this.auto()?'Otomatik müzik açık':'Otomatik müzik kapalı'); },
+  /** yeni gelen mesaj → müzik tetikleyici */
+  onMsg(m){
+    const cid=m?.meta?.theme; if(!cid || this.played.has(m.id)) return;
+    this.played.add(m.id);
+    if(!this.auto() || m.ts<this.boot-5000 || Date.now()-m.ts>90000) return;
+    const mt=m.meta.mt||'entrance';
+    if(mt==='entrance') this.enqueue(cid,{dur:22,why:'Giriş'});
+    else if(mt==='win') this.enqueue(cid,{interrupt:true,dur:35,why:'Kazanan'});
+    else this.enqueue(cid,{interrupt:true,why:'Sahnede'});
+  },
+  /** herkese çal: odaya müzik mesajı at */
+  async cue(roomId,cid){
+    const c=Data.char(cid); if(!c?.themeUrl){ toast('Bu karakterin tema şarkısı yok','err'); return; }
+    await Msgs.post(roomId,{k:'sys',pid:null,text:`♪ ${c.ringName}${c.theme?` — ${c.theme}`:''}`,meta:{theme:c.id,mt:'manual'}},{touch:false});
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   KARAKTER EDİTÖRÜ — sekmeli form (JSON yerine)
+════════════════════════════════════════════════════════════ */
+const STYLE_OPTS={powerhouse:'Powerhouse',technician:'Tekniker',['high-flyer']:'High-flyer',brawler:'Brawler',giant:'Dev',allrounder:'All-rounder',submission:'Submission uzmanı',hardcore:'Hardcore',showman:'Showman',luchador:'Luchador',['strong-style']:'Strong Style'};
+const STAT_TR={power:'Güç',technique:'Teknik',speed:'Hız',stamina:'Kondisyon',toughness:'Dayanım',charisma:'Karizma',mic:'Mikrofon'};
+const MOVE_CATS=['strike','grapple','aerial','submission','signature','finisher'];
+const Editor = {
+  c:null, orig:null, tab:'id', isNew:false,
+  TABS:[['id','Kimlik','fa-id-card'],['char','Karakter','fa-masks-theater'],['img','Görseller','fa-image'],['stats','Statlar','fa-chart-simple'],['moves','Move-set','fa-hand-fist'],['rels','İlişkiler','fa-people-arrows'],['music','Müzik','fa-music'],['json','JSON','fa-code']],
+  open(c){
+    this.isNew=!c || !Data.char(c.id);
+    this.c=normalizeChar(JSON.parse(JSON.stringify(c||{...blankChar(),source:'custom'})));
+    this.orig=c&&Data.char(c.id)?JSON.parse(JSON.stringify(Data.char(c.id))):null;
+    this.tab='id';
+    $('ed-title').textContent=this.isNew?'Yeni Karakter':`Düzenle — ${this.c.ringName||this.c.name}`;
+    this.render(); UI.open('md-edit');
+  },
+  setTab(t){
+    if(this.tab==='json' && t!=='json' && !this.applyJSON()) return;
+    this.tab=t; this.render();
+  },
+  applyJSON(){
+    try{ const j=JSON.parse($('ed-json').value); this.c=normalizeChar({...j,id:j.id||this.c.id}); return true; }
+    catch(e){ toast('JSON hatası: '+e.message,'err'); return false; }
+  },
+  render(){
+    $('ed-tabs').innerHTML=this.TABS.map(([k,l,ic])=>`<button class="etab ${this.tab===k?'on':''}" data-t="${k}"><i class="fas ${ic}"></i><span>${l}</span></button>`).join('');
+    $('ed-tabs').querySelectorAll('.etab').forEach(b=>b.onclick=()=>this.setTab(b.dataset.t));
+    $('ed-body').innerHTML=this['t_'+this.tab]();
+    this.wire();
+  },
+  // ── yardımcılar ──
+  get(path){ return path.split('.').reduce((o,k)=>o?.[k],this.c); },
+  set(path,v){ const ks=path.split('.'); let o=this.c; ks.slice(0,-1).forEach(k=>{ o[k] ??= {}; o=o[k]; }); o[ks.at(-1)]=v; },
+  inp(path,label,{ph='',type='text',half=false,hint=''}={}){
+    return `<div class="ff ${half?'half':''}"><span class="lbl">${label}</span><input data-k="${path}" type="${type}" value="${esc(this.get(path)??'')}" placeholder="${esc(ph)}">${hint?`<div class="hint">${hint}</div>`:''}</div>`;
+  },
+  area(path,label,{ph='',rows=3,hint=''}={}){
+    return `<div class="ff"><span class="lbl">${label}</span><textarea data-k="${path}" rows="${rows}" placeholder="${esc(ph)}">${esc(this.get(path)??'')}</textarea>${hint?`<div class="hint">${hint}</div>`:''}</div>`;
+  },
+  sel(path,label,opts,{half=false,none=null}={}){
+    const v=this.get(path)??'';
+    return `<div class="ff ${half?'half':''}"><span class="lbl">${label}</span><select data-k="${path}">${none!==null?`<option value="">${esc(none)}</option>`:''}${Object.entries(opts).map(([k,l])=>`<option value="${esc(k)}" ${String(v)===k?'selected':''}>${esc(l)}</option>`).join('')}</select></div>`;
+  },
+  list(path,label,{ph='',hint='Her satıra bir tane'}={}){
+    return `<div class="ff"><span class="lbl">${label}</span><textarea data-list="${path}" rows="3" placeholder="${esc(ph)}">${esc((this.get(path)||[]).join('\n'))}</textarea><div class="hint">${hint}</div></div>`;
+  },
+  range(path,label,min,max,step=1,suf=''){
+    const v=this.get(path);
+    return `<div class="rng"><span class="rl">${label}</span><input type="range" data-k="${path}" data-num="1" min="${min}" max="${max}" step="${step}" value="${v}"><b data-show="${path}">${v}${suf}</b></div>`;
+  },
+  // ── sekmeler ──
+  t_id(){
+    const c=this.c;
+    return `<div class="erow">${this.inp('ringName','Ring adı',{ph:'Kaan "Kasırga" Demir',half:true})}${this.inp('name','Gerçek adı',{ph:'Kaan Demir',half:true})}</div>
+      <div class="ff"><span class="lbl">Roller (birden fazla seçebilirsin — ilk seçilen birincil rol)</span>
+        <div class="checks">${Object.entries(TYPES).map(([k,l])=>`<label class="ck ${c.roles.includes(k)?'on':''}"><input type="checkbox" data-role="${k}" ${c.roles.includes(k)?'checked':''}>${esc(l)}${c.roles[0]===k&&c.roles.length>1?' <small>(birincil)</small>':''}</label>`).join('')}</div></div>
+      <div class="erow">${this.sel('gender','Cinsiyet',GENDERS,{half:true,none:'— seç —'})}${this.sel('alignment','Taraf',{face:'Face (iyi)',heel:'Heel (kötü)',tweener:'Tweener'},{half:true})}</div>
+      <div class="erow">${this.sel('style','Güreş stili',STYLE_OPTS,{half:true})}${Univ.brands().length?this.sel('brandId','Marka',Object.fromEntries(Univ.brands().map(b=>[b.id,b.name])),{half:true,none:'— markasız —'}):''}</div>
+      <div class="erow">${this.inp('promotion','Promosyon',{ph:'APW',half:true})}${this.inp('hometown','Memleket (billed from)',{ph:'İzmir',half:true})}</div>
+      <div class="erow">${this.inp('height','Boy',{ph:'1.85',half:true})}${this.inp('weight','Kilo',{ph:'102 kg',half:true})}</div>
+      ${this.list('nicknames','Lakaplar',{ph:'Kasırga\nEge Rüzgârı'})}`;
+  },
+  t_char(){
+    return `${this.area('gimmick','Gimmick — karakterin personası, motivasyonu',{rows:4,ph:'İzmirli, kalabalığın sevgilisi hızlı high-flyer. Hiç pes etmeyen underdog…'})}
+      ${this.area('bio','Kariyer / geçmiş',{rows:3})}
+      ${this.area('voice','Konuşma üslubu (AI bu karakteri oynarken buna uyar)',{rows:2,ph:'Enerjik, samimi, hafif Ege şivesi…'})}
+      ${this.area('entrance','Giriş tarifi',{rows:2,ph:'Işıklar maviye döner, ring kenarından ikinci ipe zıplar…'})}
+      ${this.list('catchphrases','Sloganlar / sözleri',{ph:'Rüzgâr kimseyi beklemez!'})}`;
+  },
+  t_img(){
+    const m=this.c.media, cc=this.c;
+    const url=(k,label,hint)=>`<div class="ff"><span class="lbl">${label}</span><div style="display:flex;gap:6px"><input data-img="${k}" value="${esc(m[k].url)}" placeholder="https://i.imgur.com/xxxx.png" style="flex:1">${m[k].url?`<button class="btn sm" data-clr="${k}" title="Kaldır"><i class="fas fa-xmark"></i></button>`:''}</div><div class="hint">${hint}</div></div>`;
+    return `<div class="muted" style="font-size:12px">Görseli imgur vb. bir siteye yükle → resme sağ tıkla → <b>Resim adresini kopyala</b> → buraya yapıştır. (imgur sayfa linkini de kabul ediyorum.)</div>
+      <div class="imgsec">
+        <div class="imgcol">${url('render','PNG render (şeffaf arka planlı tam boy)','Maç kartında ve maç panelinde görünür. Şeffaf kenarlar otomatik kırpılır.')}
+          ${m.render.url?`<div class="erow"><button class="btn sm" data-fit="1"><i class="fas fa-wand-magic-sparkles"></i> Otomatik ayarla</button><span class="hint" id="ed-fitinfo">${m.render.trim?.[2]<1||m.render.trim?.[3]<1?'Kenarlar kırpıldı':''}</span></div>
+          ${this.range('media.render.s','Ölçek',0.5,1.6,0.02,'×')}${this.range('media.render.ox','Yatay',-40,40,1,'%')}${this.range('media.render.oy','Dikey',-30,40,1,'%')}
+          ${this.sel('media.render.face','Render nereye bakıyor?',{front:'Önden / fark etmez',right:'Sağa bakıyor',left:'Sola bakıyor'})}
+          <div class="hint">VS kartında iki güreşçi ortaya baksın diye gerekirse otomatik aynalanır.</div>`:''}</div>
+        <div class="imgcol prev"><span class="lbl">Önizleme — maç kartı</span>${MatchCard.html({a:cc,b:{...blankChar(),id:'_x',ringName:'RAKİP',alignment:cc.alignment==='heel'?'face':'heel'},type:'standard',show:'Önizleme'},'mini')}
+          <span class="lbl" style="margin-top:8px">Maç paneli</span><div class="fighter" style="padding:0;width:260px">${Info.fighterHead(cc,'AI')}</div></div>
+      </div>
+      <div class="imgsec">
+        <div class="imgcol">${url('banner','Banner (yatay kapak görseli)','Kadro kartının ve profilin üst kısmında görünür.')}
+          ${m.banner.url?`${this.range('media.banner.x','Odak X',0,100,1,'%')}${this.range('media.banner.y','Odak Y',0,100,1,'%')}${this.range('media.banner.z','Yakınlaştır',1,3,0.05,'×')}`:''}</div>
+        <div class="imgcol prev"><span class="lbl">Önizleme — kadro kartı</span><div style="width:260px">${Roster.cardHTML(cc)}</div></div>
+      </div>
+      <div class="imgsec">
+        <div class="imgcol">${url('icon','İkon (kare / yüz)','Sohbette, listelerde yuvarlak avatar olarak görünür.')}
+          ${m.icon.url?`${this.range('media.icon.x','Odak X',0,100,1,'%')}${this.range('media.icon.y','Odak Y',0,100,1,'%')}${this.range('media.icon.z','Yakınlaştır',1,3,0.05,'×')}`:''}</div>
+        <div class="imgcol prev" style="flex-direction:row;align-items:center;gap:14px">${avaHTML(cc,'xl')}${avaHTML(cc,'lg')}${avaHTML(cc)}${avaHTML(cc,'sm')}</div>
+      </div>`;
+  },
+  t_stats(){
+    return `<div class="muted" style="font-size:12px">Maç motoru bu statları kullanır (1-100).</div>
+      ${Object.entries(STAT_TR).map(([k,l])=>this.range('stats.'+k,l,1,100)).join('')}
+      ${this.range('popularity','Popülerlik',0,100)}
+      <div class="erow">${this.inp('record.w','Galibiyet',{type:'number',half:true})}${this.inp('record.l','Mağlubiyet',{type:'number',half:true})}</div>`;
+  },
+  t_moves(){
+    const c=this.c;
+    return `<div class="muted" style="font-size:12px">Her hareketin altına güreşçinin <b>tam olarak ne yaptığını</b> yaz — AI hakem/anlatıcı bunu okuyarak anlatır ve emote'u değerlendirir.</div>
+      ${MOVE_CATS.map(cat=>`<div class="mvcat"><div class="mvcat-h"><b>${esc(CAT[cat].tr)}</b><span class="muted">${(c.moves[cat]||[]).length} hareket${CAT[cat].needMom?` · momentum ${CAT[cat].needMom}+`:''}</span><button class="btn sm" data-addmv="${cat}"><i class="fas fa-plus"></i> Ekle</button></div>
+        ${(c.moves[cat]||[]).map((n,i)=>`<div class="mvitem"><div style="display:flex;gap:6px"><input data-mvn="${cat}|${i}" value="${esc(n)}" placeholder="Hareket adı (ör. Shooting Star Press)" style="flex:1;font-weight:600">
+          <button class="btn sm" data-mvup="${cat}|${i}" title="Yukarı" ${i?'':'disabled'}><i class="fas fa-arrow-up"></i></button><button class="btn sm red" data-mvdel="${cat}|${i}" title="Sil"><i class="fas fa-trash"></i></button></div>
+          <textarea data-mvd="${cat}|${i}" rows="2" placeholder="Ne yapıyor? Ör: Üst ipe çıkar, geriye doğru 450° dönüp rakibinin göğsüne gövdesiyle iner.">${esc(c.movesDesc?.[cat]?.[i]||'')}</textarea></div>`).join('')||'<div class="muted" style="font-size:12px;padding:4px 0">Henüz yok.</div>'}
+      </div>`).join('')}`;
+  },
+  t_rels(){
+    const c=this.c, others=Store.chars().filter(x=>x.id!==c.id);
+    const incoming=[...Data.chars.values()].filter(o=>o.id!==c.id&&(o.rels||[]).some(r=>r.id===c.id)&&!c.rels.some(r=>r.id===o.id));
+    return `<div class="muted" style="font-size:12px">Feud'lar, müttefikler, aşklar… AI maç/promo anlatırken ve booker kart kurarken bunları kullanır.<br>Satırı şöyle oku: <b>[seçtiğin karakter]</b> → bu karakterin <b>[ilişki]</b>si. Ör: "Viktor Kron — Akıl hocası" = Viktor onun akıl hocası.</div>
+      <label class="ck on" style="align-self:flex-start"><input type="checkbox" id="ed-mirror" ${Prefs.d.relMirror!==false?'checked':''}> Karşı tarafa da otomatik yaz (feud ↔ feud, akıl hocası ↔ öğrencisi…)</label>
+      ${c.rels.map((r,i)=>`<div class="relrow">
+        <select data-rel="${i}|id">${others.map(o=>`<option value="${o.id}" ${o.id===r.id?'selected':''}>${esc(o.ringName)}</option>`).join('')}</select>
+        <select data-rel="${i}|type">${Object.entries(REL_TYPES).map(([k,t])=>`<option value="${k}" ${k===r.type?'selected':''}>${t.ic} ${esc(t.tr)}</option>`).join('')}</select>
+        <select data-rel="${i}|lvl" title="Yoğunluk">${[1,2,3,4,5].map(n=>`<option value="${n}" ${n===r.lvl?'selected':''}>${'●'.repeat(n)}${'○'.repeat(5-n)}</option>`).join('')}</select>
+        <input data-rel="${i}|note" value="${esc(r.note)}" placeholder="Not: ör. SummerSlam'de sırtından bıçakladı">
+        <button class="btn sm red" data-reldel="${i}"><i class="fas fa-trash"></i></button></div>`).join('')}
+      ${others.length?`<button class="btn" data-reladd="1" style="align-self:flex-start"><i class="fas fa-plus"></i> İlişki ekle</button>`:'<div class="muted">Kadroda başka karakter yok.</div>'}
+      ${incoming.length?`<div class="box" style="padding:10px"><span class="lbl">Başkalarının bu karaktere dair yazdıkları</span>${incoming.map(o=>{ const r=o.rels.find(x=>x.id===c.id); return `<div class="info-row"><span>${esc(o.ringName)}</span><span>${REL_TYPES[r.type]?.ic||''} ${esc(REL_TYPES[r.type]?.tr||r.type)}</span></div>`; }).join('')}</div>`:''}`;
+  },
+  t_music(){
+    const c=this.c, id=Music.ytId(c.themeUrl);
+    return `${this.inp('theme','Şarkı adı',{ph:'Ör. "Rise Up" — Kaan Demir tema'})}
+      ${this.inp('themeUrl','YouTube linki',{ph:'https://www.youtube.com/watch?v=… · youtu.be/… · music.youtube.com/… · /shorts/…',hint:id?`✅ Video ID: <code>${id}</code>`:(c.themeUrl?'⚠️ Link tanınmadı':'')})}
+      ${this.inp('themeStart','Başlangıç saniyesi (girişin "vurduğu" an)',{type:'number',ph:'0',hint:'Linkte ?t=… varsa o da kullanılır.'})}
+      <div class="erow"><button class="btn gold" data-mplay="1" ${id?'':'disabled'}><i class="fas fa-play"></i> Dinle</button><button class="btn" onclick="Music.stop()"><i class="fas fa-stop"></i> Durdur</button></div>
+      <div class="muted" style="font-size:12px">Çalma anları: maç girişi, maç kazanma, promo/segment kazanma ve maç panelindeki ♪ butonu. Bazı resmi klipler (özellikle plak şirketlerinin) başka sitelerde çalınmayı engeller — o zaman "lyric" veya "audio" yüklemesini dene.</div>`;
+  },
+  t_json(){
+    return `<div class="muted" style="font-size:12px">Gelişmiş: tüm alanlar ham JSON olarak. Başka sekmeye geçince uygulanır.</div><textarea class="json" id="ed-json">${esc(JSON.stringify(this.c,null,2))}</textarea>`;
+  },
+  // ── olaylar ──
+  wire(){
+    const B_=$('ed-body');
+    B_.querySelectorAll('[data-k]').forEach(el=>{
+      const ev=el.tagName==='SELECT'?'change':'input';
+      el.addEventListener(ev,()=>{
+        const k=el.dataset.k; let v=el.value;
+        if(el.dataset.num||el.type==='number') v=parseFloat(v)||0;
+        if(k.startsWith('record.')||k==='themeStart') v=Math.max(0,parseInt(el.value)||0);
+        this.set(k,v);
+        const sh=B_.querySelector(`[data-show="${k}"]`); if(sh) sh.textContent=v+(sh.textContent.replace(/^[-\d.]+/,'')||'');
+        if(k.startsWith('media.')||k==='alignment'||k==='ringName') this.refreshPrev();
+        if(k==='themeUrl'&&ev==='input') clearTimeout(this._mt), this._mt=setTimeout(()=>this.render(),500);
+      });
+    });
+    B_.querySelectorAll('[data-list]').forEach(el=>el.addEventListener('input',()=>this.set(el.dataset.list,el.value.split('\n').map(s=>s.trim()).filter(Boolean))));
+    B_.querySelectorAll('[data-role]').forEach(el=>el.onchange=()=>{
+      const r=el.dataset.role; let rs=this.c.roles.filter(x=>x!==r); if(el.checked) rs.push(r);
+      if(!rs.length){ el.checked=true; toast('En az bir rol olmalı'); return; }
+      this.c.roles=rs; this.c.type=rs[0]; this.render();
+    });
+    // görseller
+    B_.querySelectorAll('[data-img]').forEach(el=>el.onchange=async()=>{
+      const k=el.dataset.img, u=Media.fixUrl(el.value); this.c.media[k].url=u;
+      if(k==='icon') this.c.image=u;
+      if(k==='render'&&u) await this.fit();
+      this.render();
+    });
+    B_.querySelectorAll('[data-clr]').forEach(b=>b.onclick=()=>{ const k=b.dataset.clr; this.c.media[k]={...blankChar().media[k]}; if(k==='icon') this.c.image=''; this.render(); });
+    B_.querySelector('[data-fit]')?.addEventListener('click',async()=>{ await this.fit(); this.render(); });
+    // move-set
+    B_.querySelectorAll('[data-addmv]').forEach(b=>b.onclick=()=>{ const k=b.dataset.addmv; (this.c.moves[k] ||= []).push(''); (this.c.movesDesc[k] ||= []).push(''); this.render(); const all=$('ed-body').querySelectorAll(`[data-mvn^="${k}|"]`); all[all.length-1]?.focus(); });
+    const ci=el=>{ const [k,i]=el.split('|'); return [k,+i]; };
+    B_.querySelectorAll('[data-mvn]').forEach(el=>el.addEventListener('input',()=>{ const [k,i]=ci(el.dataset.mvn); this.c.moves[k][i]=el.value; }));
+    B_.querySelectorAll('[data-mvd]').forEach(el=>el.addEventListener('input',()=>{ const [k,i]=ci(el.dataset.mvd); this.c.movesDesc[k][i]=el.value; }));
+    B_.querySelectorAll('[data-mvdel]').forEach(b=>b.onclick=()=>{ const [k,i]=ci(b.dataset.mvdel); this.c.moves[k].splice(i,1); this.c.movesDesc[k].splice(i,1); this.render(); });
+    B_.querySelectorAll('[data-mvup]').forEach(b=>b.onclick=()=>{ const [k,i]=ci(b.dataset.mvup); if(!i) return; for(const a of [this.c.moves[k],this.c.movesDesc[k]]) [a[i-1],a[i]]=[a[i],a[i-1]]; this.render(); });
+    // ilişkiler
+    B_.querySelector('[data-reladd]')?.addEventListener('click',()=>{ const used=new Set(this.c.rels.map(r=>r.id)); const o=Store.chars().find(x=>x.id!==this.c.id&&!used.has(x.id))||Store.chars().find(x=>x.id!==this.c.id); if(o){ this.c.rels.push({id:o.id,type:'feud',lvl:3,note:''}); this.render(); } });
+    B_.querySelectorAll('[data-rel]').forEach(el=>el.addEventListener(el.tagName==='SELECT'?'change':'input',()=>{ const [i,f]=el.dataset.rel.split('|'); this.c.rels[+i][f]=f==='lvl'?+el.value:el.value; }));
+    B_.querySelectorAll('[data-reldel]').forEach(b=>b.onclick=()=>{ this.c.rels.splice(+b.dataset.reldel,1); this.render(); });
+    $('ed-mirror')&&($('ed-mirror').onchange=e=>{ Prefs.d.relMirror=e.target.checked; Prefs.save(); });
+    // müzik
+    B_.querySelector('[data-mplay]')?.addEventListener('click',()=>Music.play(this.c,{why:'Önizleme'}));
+  },
+  refreshPrev(){ if(this.tab!=='img') return; const y=$('ed-body').scrollTop; $('ed-body').querySelectorAll('.imgcol.prev').forEach((el,i)=>{ const tmp=document.createElement('div'); tmp.innerHTML=this.t_img(); el.replaceWith(tmp.querySelectorAll('.imgcol.prev')[i]); }); $('ed-body').scrollTop=y; },
+  async fit(){
+    const r=this.c.media.render; if(!r.url) return;
+    const info=$('ed-fitinfo'); if(info) info.textContent='Analiz ediliyor…';
+    try{
+      const f=await Media.autoFit(r.url);
+      Object.assign(r,{trim:f.trim,ar:f.ar,s:1,ox:0,oy:0});
+      toast(f.trimmed?'Şeffaf kenarlar kırpıldı, orantı ayarlandı':(f.cors?'Görsel ayarlandı (kırpılacak şeffaf kenar yok)':'Görsel ayarlandı (site kırpmaya izin vermiyor, oran korunuyor)'),'ok');
+    }catch(e){ toast('Görsel yüklenemedi — direkt resim linki olmalı (.png)','err'); }
+  },
+  async save(){
+    if(this.tab==='json' && !this.applyJSON()) return;
+    const c=normalizeChar(this.c);
+    c.ringName=(c.ringName||'').trim(); c.name=(c.name||'').trim()||c.ringName; c.ringName ||= c.name;
+    if(!c.ringName){ toast('Ring adı gerekli','err'); this.setTab('id'); return; }
+    c.moves=Object.fromEntries(Object.entries(c.moves).map(([k,v])=>{ const keep=v.map((n,i)=>[String(n).trim(),c.movesDesc[k]?.[i]||'']).filter(([n])=>n); c.movesDesc[k]=keep.map(x=>x[1].trim()); return [k,keep.map(x=>x[0])]; }));
+    const seen=new Set(); c.rels=c.rels.filter(r=>r.id!==c.id&&!seen.has(r.id)&&seen.add(r.id));
+    await Store.upsert(c);
+    if(Prefs.d.relMirror!==false) await this.mirrorRels(c);
+    UI.close('md-edit'); Roster.render();
+    if(Importer.last && Importer.last.id===c.id){ Importer.last=null; $('imp-preview').innerHTML=''; }
+    toast(this.isNew?`${c.ringName} kadroya eklendi`:'Kaydedildi','ok');
+  },
+  /** ilişkileri karşı tarafa yansıt (yeni/değişen → ekle/güncelle, silinen → karşılığını da sil) */
+  async mirrorRels(c){
+    const before=new Map((this.orig?.rels||[]).map(r=>[r.id,r]));
+    const now=new Map(c.rels.map(r=>[r.id,r]));
+    for(const id of new Set([...before.keys(),...now.keys()])){
+      const o=Store.get(id); if(!o) continue;
+      const rels=[...(o.rels||[])], i=rels.findIndex(r=>r.id===c.id);
+      const nr=now.get(id), br=before.get(id);
+      if(nr){
+        const mt=REL_TYPES[nr.type]?.mirror; if(!mt) continue;
+        const want={id:c.id,type:mt,lvl:nr.lvl,note:i>=0?rels[i].note:nr.note};
+        if(i>=0 && rels[i].type===mt && rels[i].lvl===nr.lvl) continue;
+        if(i>=0) rels[i]=want; else rels.push(want);
+      } else if(br && i>=0 && rels[i].type===REL_TYPES[br.type]?.mirror) rels.splice(i,1);
+      else continue;
+      await Store.upsert({...o,rels});
+    }
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   KADRO — kart + profil (banner, render, ilişkiler, müzik)
+════════════════════════════════════════════════════════════ */
+Roster.cardHTML = function(c){
+  const g=c.gender==='f'?'<span class="tag neutral" title="Kadın">♀</span>':c.gender==='m'?'<span class="tag neutral" title="Erkek">♂</span>':'';
+  return `<div class="card ${c.media?.banner?.url?'has-bn':''}" data-id="${c.id}">
+    ${Media.bannerHTML(c,'card-bn')}
+    <div class="card-top">${avaHTML(c)}
+      <div style="min-width:0"><div class="card-nm">${esc(c.ringName)}</div><div class="card-sub">${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</div></div></div>
+    <div class="card-g">${esc(c.gimmick||'—')}</div>
+    <div class="card-f">${hasRole(c,'wrestler')&&Univ.brand(c.brandId)?brandChip(Univ.brand(c.brandId)):''}${Univ.titles().some(t=>t.holder===c.id)?'<span class="tag" style="color:var(--gold);border-color:var(--gold)">🏆</span>':''}<span class="tag al-${c.alignment}">${c.alignment}</span>${g}${hasRole(c,'wrestler')?`<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>`:''}${c.themeUrl?'<span class="tag neutral" title="Tema şarkısı var">♪</span>':''}
+      ${c.owner?`<span class="tag" style="color:${esc(Data.player(c.owner)?.color||'var(--t1)')};border-color:currentColor">@${esc(Data.player(c.owner)?.name||'?')}</span>`:'<span class="tag neutral">AI / NPC</span>'}</div>
+  </div>`;
+};
+Roster.render = function(){
+  const q=$('r-search').value.toLowerCase(), t=$('r-type').value, p=$('r-promo').value, own=$('r-own').value, bf=$('r-brand').value, gf=$('r-gender').value;
+  $('r-brand').innerHTML='<option value="">Tüm markalar</option><option value="none" '+(bf==='none'?'selected':'')+'>Markasız</option>'+Univ.brands().map(b=>`<option value="${b.id}" ${bf===b.id?'selected':''}>${esc(b.name)}</option>`).join('');
+  const all=Store.chars();
+  const promos=[...new Set(all.map(c=>c.promotion).filter(Boolean))].sort();
+  $('r-promo').innerHTML='<option value="">Tüm promosyonlar</option>'+promos.map(x=>`<option ${x===p?'selected':''}>${esc(x)}</option>`).join('');
+  const list=all.filter(c=>(!t||hasRole(c,t))&&(!gf||c.gender===gf)&&(!p||c.promotion===p)&&(!bf||(bf==='none'?!Univ.brand(c.brandId):c.brandId===bf))&&(!own||(own==='mine'?c.owner===Me.id:!c.owner))
+    &&(!q||[c.name,c.ringName,c.gimmick,c.promotion,...(c.nicknames||[])].join(' ').toLowerCase().includes(q)));
+  $('r-grid').innerHTML=list.map(c=>this.cardHTML(c)).join('') || `<div class="empty"><i class="fas fa-user-slash"></i><p>${all.length?'Sonuç yok':'Kadro boş — "Manuel Ekle" ya da "AI ile Ekle" ile başla.'}</p></div>`;
+  $('r-grid').querySelectorAll('.card').forEach(el=>el.onclick=()=>Roster.show(el.dataset.id));
+};
+Roster.detailHTML = function(c){
+  const s=c.stats||{}, w=hasRole(c,'wrestler');
+  const rels=Data.char(c.id)?relsOf(c):(c.rels||[]).map(r=>({...r,dir:'out'}));
+  return `<div class="prof ${c.media?.banner?.url?'has-bn':''} ${Media.hasRender(c)?'has-r':''}">
+      ${Media.bannerHTML(c,'prof-bn')}${Media.renderHTML(c,{want:'left',cls:'prof-r'})}
+      <div class="prof-id">${avaHTML(c,'lg')}
+        <div style="min-width:0"><div class="prof-nm">${esc(c.ringName)}</div>
+        <div class="muted">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</div>
+        <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.gender?`<span class="tag neutral">${GENDERS[c.gender]}</span>`:''}${w?`<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}${c.height?`<span class="tag neutral">${esc(c.height)}</span>`:''}${c.weight?`<span class="tag neutral">${esc(c.weight)}</span>`:''}</div></div></div>
+    </div>
+    ${c.themeUrl?`<div class="themebar"><button class="btn sm gold" data-theme="${c.id}"><i class="fas fa-play"></i></button><span>♪ ${esc(c.theme||'Tema şarkısı')}</span></div>`:''}
+    ${c.gimmick?`<div><span class="lbl">Gimmick</span><div style="font-size:13px">${esc(c.gimmick)}</div></div>`:''}
+    ${c.bio?`<div><span class="lbl">Kariyer</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.bio)}</div></div>`:''}
+    ${c.voice?`<div><span class="lbl">Üslup (AI için)</span><div style="font-size:12.5px;color:var(--t1)">${esc(c.voice)}</div></div>`:''}
+    ${rels.length?`<div><span class="lbl">İlişkiler</span><div class="rels">${rels.map(r=>{ const o=Data.char(r.id), t=REL_TYPES[r.type]||{tr:r.type,ic:'•',col:'var(--t2)'}; return o?`<div class="rel" data-goto="${o.id}" style="--rc:${t.col}">${avaHTML(o,'sm')}<div style="min-width:0;flex:1"><div><b>${esc(o.ringName)}</b> <span class="rel-t">${t.ic} ${esc(t.tr)}</span> <span class="rel-l">${'●'.repeat(r.lvl||3)}</span></div>${r.note?`<div class="muted" style="font-size:11.5px">${esc(r.note)}</div>`:''}</div></div>`:''; }).join('')}</div></div>`:''}
+    ${w?`<div class="statgrid">${Object.entries(STAT_TR).map(([k,l])=>`<div class="stat"><b>${s[k]}</b><span>${l}</span></div>`).join('')}<div class="stat"><b>${c.popularity||50}</b><span>Popülerlik</span></div></div>
+    <div class="moveset">${MOVE_CATS.filter(k=>c.moves?.[k]?.length).map(k=>`<div class="mvrow"><span class="k">${CAT[k]?.tr||k}</span><span>${c.moves[k].map((n,i)=>{ const d=c.movesDesc?.[k]?.[i]; return `<span class="mvn ${d?'has':''}">${esc(n)}${d?`<span class="mvd">${esc(d)}</span>`:''}</span>`; }).join('')}</span></div>`).join('')}</div>`:''}
+    ${(c.nicknames||[]).length?`<div class="mvrow"><span class="k">Lakaplar</span><span>${c.nicknames.map(esc).join(', ')}</span></div>`:''}
+    ${(c.catchphrases||[]).length?`<div class="mvrow"><span class="k">Sözleri</span><span>${c.catchphrases.map(x=>'"'+esc(x)+'"').join(' · ')}</span></div>`:''}
+    ${c.entrance?`<div class="mvrow"><span class="k">Giriş</span><span>${esc(c.entrance)}</span></div>`:''}`;
+};
+{ const _show=Roster.show;
+  Roster.show=function(id){
+    _show.call(this,id);
+    const c=Store.get(id); if(!c) return;
+    $('mc-title').textContent=roleLabel(c);
+    $('mc-body').querySelectorAll('[data-goto]').forEach(el=>el.onclick=()=>Roster.show(el.dataset.goto));
+    $('mc-body').querySelector('[data-theme]')?.addEventListener('click',()=>Music.play(c,{why:'Profil'}));
+  };
+}
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ PANELİ — render'lı başlık + maç öncesi VS kartı + müzik
+════════════════════════════════════════════════════════════ */
+Info.fighterHead = function(c,ctlLabel,i=0){
+  const al=c.alignment;
+  if(!Media.hasRender(c) && !c.media?.banner?.url) return `<div style="display:flex;gap:9px;align-items:center">${avaHTML(c)}
+      <div style="min-width:0;flex:1"><div class="nm">${esc(c.ringName)}</div><div class="ctl">${ctlLabel} · <span class="tag al-${al}">${al}</span></div></div>${c.themeUrl?`<button class="ibtn" data-cue="${c.id}" title="Müziğini çal">♪</button>`:''}</div>`;
+  return `<div class="fhd" style="--al:var(--${al==='heel'?'heel':al==='face'?'face':'tw'})">${Media.bannerHTML(c,'fhd-bn')}${Media.renderHTML(c,{want:'left',cls:'fhd-r'})}
+    <div class="fhd-t"><div class="nm">${esc(c.ringName)}</div><div class="ctl">${ctlLabel} · <span class="tag al-${al}">${al}</span></div></div>
+    ${c.themeUrl?`<button class="ibtn fhd-mu" data-cue="${c.id}" title="Müziğini çal">♪</button>`:''}</div>`;
+};
+{ const _fh=Info.fighterHTML;
+  Info.fighterHTML=function(M,i){
+    const html=_fh.call(this,M,i), c=M.c[i];
+    const ctl=M.ctl[i]==='ai'?'🤖 AI':'🎮 '+esc(Data.player(M.ctl[i])?.name||'?');
+    // ilk satırı (avatar + isim) render'lı başlıkla değiştir
+    return html.replace(/<div style="display:flex;gap:9px;align-items:center">[\s\S]*?<\/div><\/div><\/div>/, this.fighterHead(c,ctl,i));
+  };
+}
+{ const _mh=Info.matchHTML;
+  Info.matchHTML=function(r){
+    const M=MatchCtl.hydrate(r);
+    return (!M.started||M.over?MatchCard.fromMatch(M,'side'):'')+_mh.call(this,r)+this.musicBox(r);
+  };
+  const _ch=Info.channelHTML;
+  Info.channelHTML=function(r){ return _ch.call(this,r)+this.musicBox(r); };
+  const _render=Info.render;
+  Info.render=function(){
+    _render.call(this);
+    $('info').querySelectorAll('[data-cue]').forEach(b=>b.onclick=()=>Music.cue(Chat.room,b.dataset.cue));
+    $('mu-cue-go')?.addEventListener('click',()=>{ const v=$('mu-cue').value; if(v) Music.cue(Chat.room,v); });
+  };
+}
+Info.musicBox = function(r){
+  const inRoom=new Set([...(r.match?.cids||[]),...(r.participants||[]),...(r.scene?.ai||[])]);
+  const withTheme=Store.chars().filter(c=>c.themeUrl).sort((a,b)=>(inRoom.has(b.id)-inRoom.has(a.id)));
+  if(!withTheme.length) return '';
+  return `<div class="box" style="padding:10px;gap:6px"><span class="lbl" style="margin:0">🎵 Giriş müziği çal (odadaki herkes duyar)</span>
+    <div style="display:flex;gap:6px"><select id="mu-cue" style="flex:1">${withTheme.map(c=>`<option value="${c.id}">${inRoom.has(c.id)?'★ ':''}${esc(c.ringName)}</option>`).join('')}</select><button class="btn sm gold" id="mu-cue-go"><i class="fas fa-play"></i></button></div></div>`;
+};
+
+/* sohbet: maç kartı mesajı + müzik tetikleme */
+EV_K.push('card');
+{ const _rm=Chat.renderMsg;
+  Chat.renderMsg=function(m,prev){
+    if(m.k==='card'){ const el=document.createElement('div'); el.className='ev card'; el.innerHTML=MatchCard.html(m.meta||{}); return el; }
+    return _rm.call(this,m,prev);
+  };
+  const _on=Chat.onMsgs;
+  Chat.onMsgs=function(docs){ _on.call(this,docs); for(const m of docs.slice(-12)) Music.onMsg(m); };
+}
+/* Composer: seçili hareketin tarifini göster */
+{ const _rm=Composer.renderMoves;
+  Composer.renderMoves=function(){
+    _rm.call(this);
+    const r=Chat.R, M=MatchCtl.hydrate(r), c=M.c[M.turn];
+    const show=()=>{ const d=moveDesc(c,this.cat,$('mv-move').value); $('mv-desc').textContent=d?'↳ '+d:''; };
+    $('mv-move').onchange=show; show();
+  };
+}
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
@@ -2954,7 +3641,7 @@ const Settings = {
   fill(){
     const s=AI.cfg();
     $('set-primary').value=s.primary; $('set-fallback').value=s.fallback; $('set-gkey').value=Prefs.d.gkey||''; $('set-gmodel').value=s.gmodel;
-    $('set-ourl').value=s.ourl; $('set-omodel').value=s.omodel; $('set-dice').checked=!!Prefs.d.dice; $('set-autoai').checked=Prefs.d.autoai!==false;
+    $('set-ourl').value=s.ourl; $('set-omodel').value=s.omodel; $('set-dice').checked=!!Prefs.d.dice; $('set-autoai').checked=Prefs.d.autoai!==false; $('set-music').checked=Prefs.d.music!==false;
     $('set-worker-info').innerHTML = s.workerUrl ? `Worker: <code>${esc(s.workerUrl)}</code>` : 'Worker adresi tanımlı değil — dosyanın başındaki <code>APP_CONFIG.workerUrl</code> alanını doldur.';
     $('set-uname').value=Univ.name(); $('set-udate').value=Univ.date();
     $('set-backend').innerHTML = B.mode==='firebase'
@@ -2964,7 +3651,7 @@ const Settings = {
   },
   save(){
     Object.assign(Prefs.d,{primary:$('set-primary').value,fallback:$('set-fallback').value,gkey:$('set-gkey').value.trim(),gmodel:$('set-gmodel').value.trim(),
-      ourl:$('set-ourl').value.trim(),omodel:$('set-omodel').value.trim(),dice:$('set-dice').checked,autoai:$('set-autoai').checked});
+      ourl:$('set-ourl').value.trim(),omodel:$('set-omodel').value.trim(),dice:$('set-dice').checked,autoai:$('set-autoai').checked,music:$('set-music').checked});
     Prefs.save(); toast('Ayarlar kaydedildi','ok');
   },
   async test(){
@@ -3033,7 +3720,7 @@ const App = {
     $('cal-brand').onchange=()=>Cal.render();
     document.querySelectorAll('#imp-modes .chip').forEach(b=>b.onclick=()=>Importer.setMode(b.dataset.m));
     document.querySelectorAll('.mbd').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('on'); }));
-    ['r-search','r-type','r-promo','r-own','r-brand'].forEach(id=>$(id).addEventListener('input',()=>Roster.render()));
+    ['r-search','r-type','r-gender','r-promo','r-own','r-brand'].forEach(id=>$(id).addEventListener('input',()=>Roster.render()));
     $('cmp-inp').addEventListener('keydown',e=>{
       if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); Composer.isMyTurn()?Composer.move():Composer.send(); }
     });
