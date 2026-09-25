@@ -523,6 +523,35 @@ body.ss .gmonly{display:none!important}
 .ev.titlemsg{align-self:center;display:flex;gap:12px;align-items:center;margin:8px 0;padding:10px 16px;border:1px solid rgba(227,179,65,.5);border-radius:12px;background:linear-gradient(135deg,rgba(227,179,65,.18),rgba(227,179,65,.04));font-family:var(--disp);font-size:20px;letter-spacing:.03em;color:var(--gold);flex-shrink:0}
 .ev.titlemsg.def{font-size:16px}
 @media(max-width:640px){.tile.promo .big{font-size:19px!important}.pr-logo{width:60px;height:46px}.belt-lg{width:160px;height:80px}.tc-belt{min-width:160px;width:100%}.belt-vs{width:100px;height:42px}}
+/* ── şov açılış ekranı ── */
+#preshow{position:fixed;inset:0;z-index:95;display:none;align-items:center;justify-content:center;padding:16px}
+#preshow.on{display:flex}
+.in-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,color-mix(in srgb,var(--bc) 30%,#000) 0%,#050507 70%);animation:inpulse 4s ease-in-out infinite alternate}
+@keyframes inpulse{from{filter:brightness(.85)}to{filter:brightness(1.15)}}
+.in-box{position:relative;width:100%;max-width:640px;max-height:92vh;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;animation:inrise .6s ease-out}
+@keyframes inrise{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+.in-top{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t2)}
+.in-plogo{width:40px;height:24px}
+.in-logo{width:min(420px,80vw);height:170px;filter:drop-shadow(0 0 30px rgba(0,0,0,.8))}
+.in-title-only{font-family:var(--disp);font-size:54px;letter-spacing:.03em;color:var(--gold);text-shadow:0 0 30px rgba(227,179,65,.5)}
+.in-title{font-family:var(--disp);font-size:30px;letter-spacing:.04em}
+.in-sub{font-family:var(--mono);font-size:11px;color:var(--t1);letter-spacing:.08em}
+.in-mu{font-size:12.5px;color:var(--gold);animation:inpulse 1.2s ease-in-out infinite alternate}
+.in-card{width:100%;display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.in-seg{display:flex;gap:8px;align-items:center;justify-content:center;padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;font-size:13px}
+.in-seg.main{border-color:rgba(227,179,65,.5);background:rgba(227,179,65,.08)}
+.in-act{display:flex;gap:8px;align-items:center;margin-top:8px}
+/* ── güncelleme kaydı ── */
+#ed-upd{padding:8px 18px;border-bottom:1px solid var(--ln);background:var(--bg1);max-height:190px;overflow-y:auto}
+.upd{display:flex;flex-direction:column;gap:5px;font-size:12px;width:100%;padding:8px 10px;background:var(--bg1);border:1px solid var(--ln);border-radius:8px}
+#ed-upd .upd{border:none;padding:0;background:none}
+.up-e{display:flex;flex-direction:column;gap:3px;padding:3px 0}
+.up-chips{display:flex;flex-wrap:wrap;gap:4px}
+.up-c{font-family:var(--mono);font-size:9.5px;padding:1px 7px;border-radius:10px;border:1px solid}
+.up-c.ok{color:var(--gn);border-color:rgba(77,184,128,.4);background:var(--gn-d)}
+.up-c.miss{color:var(--am);border-color:rgba(232,167,74,.45);background:var(--am-d)}
+.pk-meta{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--t2);white-space:nowrap}
+.pick small{margin-left:8px!important}
 </style>
 </head>
 
@@ -750,6 +779,7 @@ body.ss .gmonly{display:none!important}
 <div class="mbd" id="md-edit"><div class="mbox" style="max-width:860px">
   <div class="mhd"><span class="mti" id="ed-title">Karakter</span><button class="mcl" onclick="UI.close('md-edit')">✕</button></div>
   <div class="etabs" id="ed-tabs"></div>
+  <div id="ed-upd" style="display:none"></div>
   <div class="mbdy" id="ed-body"></div>
   <div class="mft"><button class="btn" onclick="UI.close('md-edit')">İptal</button><div style="flex:1"></div><button class="btn gold" onclick="Editor.save()"><i class="fas fa-save"></i> Kaydet</button></div>
 </div></div>
@@ -790,6 +820,7 @@ body.ss .gmonly{display:none!important}
       <div style="display:flex;gap:6px;align-items:center"><input id="imp-r-q" placeholder="Karakter ara…" style="flex:1" oninput="Importer.renderPick()">
         <button class="btn sm" onclick="Importer.pickAll(true)">Tümü</button><button class="btn sm" onclick="Importer.pickAll(false)">Temizle</button><span class="hint" id="imp-r-count"></span></div>
       <div class="picklist" id="imp-r-list"></div>
+      <div id="imp-r-info" style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"></div>
       <div class="ff"><span class="lbl">Neler güncellensin?</span><div class="checks" id="imp-r-opts">
         <label class="ck on"><input type="checkbox" data-o="basic" checked>Temel bilgiler</label>
         <label class="ck on"><input type="checkbox" data-o="stats" checked>Statlar</label>
@@ -863,6 +894,7 @@ body.ss .gmonly{display:none!important}
 </div></div>
 
 <div id="toast"></div>
+<div id="preshow"></div>
 <div id="music">
   <div class="mu-h"><div style="min-width:0;flex:1"><b id="mu-name">♪</b><small id="mu-why"></small></div>
     <button class="ibtn" id="mu-auto" onclick="Music.toggleAuto()" title="Otomatik müzik (giriş / kazanma anlarında) aç-kapa"><i class="fas fa-wand-magic-sparkles"></i></button>
@@ -4073,11 +4105,11 @@ const Promo = {
       {id:'color',label:'Ana renk',type:'color',value:u.color||'#e3b341',half:true},
       {id:'chair',label:'Başkan / sahip (karakter)',type:'select',options:[['','—'],...Store.chars().map(c=>[c.id,c.ringName])],value:u.chair||'',half:true},
       {id:'hq',label:'Merkez / ana arena',value:u.hq||'',ph:'örn. İstanbul — Sinan Erdem',half:true},{id:'founded',label:'Kuruluş',value:u.founded||'',ph:'2024',half:true},
-      {id:'desc',label:'Tanıtım',type:'textarea',value:u.desc||'',rows:3}],
+      {id:'desc',label:'Tanıtım',type:'textarea',value:u.desc||'',rows:3},...themeFields(u)],
       onSave:async v=>{
         if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
         const logo=await fitMedia(v.logo,u.logo);
-        await B.set('meta/universe',{...u,id:undefined,name:v.name.trim(),short:v.short.trim(),logo,color:v.color,chair:v.chair||null,hq:v.hq.trim(),founded:v.founded.trim(),desc:v.desc.trim(),date:u.date||Univ.date()},true);
+        await B.set('meta/universe',{...u,id:undefined,name:v.name.trim(),short:v.short.trim(),logo,color:v.color,chair:v.chair||null,hq:v.hq.trim(),founded:v.founded.trim(),desc:v.desc.trim(),...themeVals(v),date:u.date||Univ.date()},true);
         toast('Promosyon güncellendi','ok');
       }});
   },
@@ -4244,6 +4276,7 @@ BrandsPage.render = function(){
           <div class="muted">${[u.hq,u.founded?'Kuruluş '+u.founded:'',Data.char(u.chair)?'Başkan: '+Data.char(u.chair).ringName:''].filter(Boolean).map(esc).join(' · ')||'Logo, renk ve tanıtım ekleyebilirsin.'}</div></div>
         ${Univ.isGM()?`<button class="btn sm" onclick="Promo.edit()"><i class="fas fa-pen"></i> Düzenle</button>`:''}</div>
       ${u.desc?`<div style="font-size:13px;color:var(--t1)">${esc(u.desc)}</div>`:''}
+      ${u.themeUrl?`<div class="themebar"><button class="btn sm gold" onclick="Music.play(Music.src('promo'),{why:'Promosyon'})"><i class="fas fa-play"></i></button><span>♪ ${esc(u.theme||'Promosyon teması')}</span></div>`:''}
       <div class="muted">${brands.length} marka · ${shows.length} şov · ${Store.chars('wrestler').length} güreşçi · ${Univ.titles().length} kemer</div>
     </div>
     <div class="tile"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><h3>Markalar (brand)</h3>
@@ -4253,13 +4286,14 @@ BrandsPage.render = function(){
           <div class="bt-head">${b.logo?.url?Media.fitHTML(b.logo,{cls:'bt-logo'}):`<div class="big" style="font-size:22px;color:${esc(b.color)}">${esc(b.name)}</div>`}<button class="btn sm" onclick="BrandsPage.brand('${b.id}')"><i class="fas fa-pen"></i></button></div>
           ${b.logo?.url?`<b style="color:${esc(b.color)}">${esc(b.name)}</b>`:''}
           ${b.tagline?`<div style="font-size:12.5px;font-style:italic;color:var(--t1)">"${esc(b.tagline)}"</div>`:''}
+          ${b.themeUrl?`<div class="themebar"><button class="btn sm gold" onclick="Music.play(Music.src('brand:${b.id}'),{why:'Marka'})"><i class="fas fa-play"></i></button><span>♪ ${esc(b.theme||'Marka teması')}</span></div>`:''}
           <div class="muted">${esc(b.desc||'')}</div>
           <div class="muted">GM: ${esc(Data.char(b.ogm)?.ringName||Data.player(b.gm)?.name||'—')} · ${r.length} güreşçi${b.day!=null&&b.day!==''?` · ${DOW_TR[b.day]}`:''}</div>
           ${staffLine(b.staff)?`<div class="muted">${esc(staffLine(b.staff))}</div>`:''}
           ${bt.length?`<div class="beltrow">${bt.map(t=>`<span class="beltchip" title="${esc(t.name)}">${beltHTML(t,'belt-xs')}</span>`).join('')}</div>`:''}
           <div style="display:flex;flex-wrap:wrap;gap:4px">${r.map(c=>`<span class="tag neutral" style="cursor:pointer" onclick="Roster.show('${c.id}')">${c.gender==='f'?'♀ ':''}${esc(c.ringName)}</span>`).join('')}</div></div>`; }).join('')}</div></div>
     <div class="tile"><div style="display:flex;justify-content:space-between;align-items:center"><h3>Şov şablonları</h3><button class="btn sm gold" onclick="BrandsPage.show()"><i class="fas fa-plus"></i> Şov</button></div>
-      ${shows.map(s=>`<div class="listrow">${showLogoHTML(s,'sh-logo')||brandChip(Univ.brand(s.brandId))}<div class="mid"><b style="font-size:13.5px">${esc(s.name)}</b> ${s.logo?.url?brandChip(Univ.brand(s.brandId)):''}<div class="muted">${esc(STYLES[s.style]?.tr||'')} · ${s.freq==='weekly'?'Her '+DOW_TR[s.day]:s.freq==='monthly'?'Her ayın son '+DOW_TR[s.day]+'si':'Tek seferlik'} · ${s.matches} maç + ${s.promos} segment${s.venue?' · 📍 '+esc(s.venue):''}</div>${staffLine(s.staff)?`<div class="muted">${esc(staffLine(s.staff))}</div>`:''}</div><button class="btn sm" onclick="BrandsPage.show('${s.id}')"><i class="fas fa-pen"></i></button></div>`).join('')||'<div class="muted">Şov yok.</div>'}
+      ${shows.map(s=>`<div class="listrow">${showLogoHTML(s,'sh-logo')||brandChip(Univ.brand(s.brandId))}<div class="mid"><b style="font-size:13.5px">${esc(s.name)}</b> ${s.logo?.url?brandChip(Univ.brand(s.brandId)):''}<div class="muted">${esc(STYLES[s.style]?.tr||'')} · ${s.freq==='weekly'?'Her '+DOW_TR[s.day]:s.freq==='monthly'?'Her ayın son '+DOW_TR[s.day]+'si':'Tek seferlik'} · ${s.matches} maç + ${s.promos} segment${s.venue?' · 📍 '+esc(s.venue):''}${s.themeUrl?' · ♪ '+esc(s.theme||'tema'):''}</div>${staffLine(s.staff)?`<div class="muted">${esc(staffLine(s.staff))}</div>`:''}</div><button class="btn sm" onclick="BrandsPage.show('${s.id}')"><i class="fas fa-pen"></i></button></div>`).join('')||'<div class="muted">Şov yok.</div>'}
     </div>`;
 };
 BrandsPage.brand = function(id){
@@ -4272,11 +4306,11 @@ BrandsPage.brand = function(id){
     {id:'ogm',label:'Ekrandaki GM (karakter)',type:'select',options:staffOpts('gm'),value:b.ogm||'',half:true},
     {id:'gm',label:'Markayı yöneten oyuncu',type:'select',options:[['','—'],...[...Data.players.values()].map(p=>[p.id,p.name])],value:b.gm||'',half:true},
     {id:'ref',label:'Varsayılan hakem',type:'select',options:staffOpts('referee'),value:st.ref||'',half:true},{id:'ann',label:'Ring spikeri',type:'select',options:staffOpts('announcer'),value:st.ann||'',half:true},
-    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true}],
+    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true},...themeFields(b)],
     extra:id?`<button class="btn red sm" onclick="if(confirm('Marka silinsin mi?')){B.del('brands/${id}');UI.close('md-form');}"><i class="fas fa-trash"></i></button>`:'',
     onSave:async v=>{ if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
       await B.set('brands/'+(id||'b_'+uid()),{name:v.name.trim(),color:v.color,logo:await fitMedia(v.logo,b.logo),tagline:v.tagline.trim(),desc:v.desc,gm:v.gm||null,ogm:v.ogm||null,
-        staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},order:b.order??Date.now()},true); }});
+        staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},...themeVals(v),order:b.order??Date.now()},true); }});
 };
 BrandsPage.show = function(id){
   const s=id?Univ.show(id):{freq:'weekly',day:0,style:'tv',matches:4,promos:2}, st=s.staff||{};
@@ -4291,12 +4325,222 @@ BrandsPage.show = function(id){
     {id:'promos',label:'Konuşma segmenti sayısı',type:'number',value:s.promos,min:0,max:8,half:true},
     {id:'venue',label:'Arena / mekân',value:s.venue||'',ph:'örn. Ankara Spor Salonu'},
     {id:'ref',label:'Hakem (boşsa markanınki)',type:'select',options:staffOpts('referee'),value:st.ref||'',half:true},{id:'ann',label:'Ring spikeri',type:'select',options:staffOpts('announcer'),value:st.ann||'',half:true},
-    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true}],
+    {id:'c1',label:'Yorumcu 1',type:'select',options:staffOpts('commentator'),value:st.c1||'',half:true},{id:'c2',label:'Yorumcu 2',type:'select',options:staffOpts('commentator'),value:st.c2||'',half:true},...themeFields(s)],
     extra:id?`<button class="btn red sm" onclick="if(confirm('Şov şablonu silinsin mi? (takvimdeki şovlar kalır)')){B.del('shows/${id}');UI.close('md-form');}"><i class="fas fa-trash"></i></button>`:'',
     onSave:async v=>{ if(!v.name.trim()){ toast('İsim gerekli','err'); return false; }
       await B.set('shows/'+(id||'sh_'+uid()),{name:v.name.trim(),logo:await fitMedia(v.logo,s.logo),brandId:v.brandId||null,style:v.style,freq:v.freq,day:Number(v.day),matches:clamp(v.matches||4,1,10),promos:clamp(v.promos||0,0,8),
-        venue:v.venue.trim(),staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},order:s.order??Date.now()},true); }});
+        venue:v.venue.trim(),staff:{ref:v.ref||null,c1:v.c1||null,c2:v.c2||null,ann:v.ann||null},...themeVals(v),order:s.order??Date.now()},true); }});
 };
+
+/* ════════════════════════════════════════════════════════════
+   TEMA MÜZİKLERİ v2 — karakter + marka + şov + promosyon
+   anahtar: karakter id | 'brand:ID' | 'show:ID' | 'promo'
+════════════════════════════════════════════════════════════ */
+Music.src = function(key){
+  if(!key) return null;
+  if(typeof key==='object') return key;
+  if(key==='promo'){ const u=Data.universe||{}; return {id:'promo',ringName:u.name||'Promosyon',themeUrl:u.themeUrl,themeStart:u.themeStart,theme:u.theme}; }
+  if(key.startsWith('brand:')){ const b=Univ.brand(key.slice(6)); return b&&{id:key,ringName:b.name,themeUrl:b.themeUrl,themeStart:b.themeStart,theme:b.theme}; }
+  if(key.startsWith('show:')){ const s=Univ.show(key.slice(5)); return s&&{id:key,ringName:s.name,themeUrl:s.themeUrl,themeStart:s.themeStart,theme:s.theme}; }
+  return Data.char(key);
+};
+Music.enqueue = function(key,{interrupt=false,dur=0,why=''}={}){
+  const c=this.src(key); if(!c||!this.ytId(c.themeUrl)) return;
+  if(interrupt){ this.q=[]; this.play(c,{dur,why}); return; }
+  if(!this.cur) this.play(c,{dur,why}); else this.q.push({cid:key,dur,why});
+};
+Music.next = function(fade=false){
+  const n=this.q.shift();
+  if(n) return this.play(this.src(n.cid),n);
+  if(fade) this.fadeStop(); else if(!this.q.length && this.player?.getPlayerState?.()===0) this.stop();
+};
+Music.cue = async function(roomId,key){
+  const c=this.src(key); if(!c?.themeUrl){ toast('Tema şarkısı yok','err'); return; }
+  await Msgs.post(roomId,{k:'sys',pid:null,text:`♪ ${c.ringName}${c.theme?` — ${c.theme}`:''}`,meta:{theme:c.id,mt:'manual'}},{touch:false});
+};
+/** şov için tema: şov > marka > promosyon */
+function eventThemeKey(ev){
+  const sh=Univ.show(ev?.showId), b=Univ.brand(ev?.brandId);
+  if(sh?.themeUrl) return 'show:'+sh.id;
+  if(b?.themeUrl) return 'brand:'+b.id;
+  if(Data.universe?.themeUrl) return 'promo';
+  return null;
+}
+/* sağ panel müzik kutusu: marka / şov / promosyon temaları da */
+Info.musicBox = function(r){
+  const inRoom=new Set([...(r.match?.cids||[]),...(r.participants||[]),...(r.scene?.ai||[])]);
+  const chars=Store.chars().filter(c=>c.themeUrl).sort((a,b)=>(inRoom.has(b.id)-inRoom.has(a.id)));
+  const extra=[...(Data.universe?.themeUrl?[['promo',`🏢 ${Data.universe.name||'Promosyon'}`]]:[]),
+    ...Univ.brands().filter(b=>b.themeUrl).map(b=>['brand:'+b.id,`📺 ${b.name}`]),
+    ...Univ.shows().filter(s=>s.themeUrl).map(s=>['show:'+s.id,`🎬 ${s.name}`])];
+  if(!chars.length && !extra.length) return '';
+  return `<div class="box" style="padding:10px;gap:6px"><span class="lbl" style="margin:0">🎵 Müzik çal (odadaki herkes duyar)</span>
+    <div style="display:flex;gap:6px"><select id="mu-cue" style="flex:1">${chars.length?`<optgroup label="Karakterler">${chars.map(c=>`<option value="${c.id}">${inRoom.has(c.id)?'★ ':''}${esc(c.ringName)}</option>`).join('')}</optgroup>`:''}${extra.length?`<optgroup label="Promosyon / marka / şov">${extra.map(([k,l])=>`<option value="${esc(k)}">${esc(l)}</option>`).join('')}</optgroup>`:''}</select><button class="btn sm gold" id="mu-cue-go"><i class="fas fa-play"></i></button></div></div>`;
+};
+/* form alanları: tema şarkısı */
+const themeFields=o=>[
+  {id:'themeUrl',label:'Tema şarkısı (YouTube linki)',value:o.themeUrl||'',ph:'https://youtu.be/… · music.youtube.com/… · /shorts/…',hint:'Şov açılış ekranında çalar.'},
+  {id:'theme',label:'Şarkı adı',value:o.theme||'',half:true},{id:'themeStart',label:'Başlangıç saniyesi',type:'number',value:o.themeStart||0,min:0,half:true}];
+const themeVals=v=>({themeUrl:Music.ytId(v.themeUrl)?v.themeUrl.trim():'',theme:(v.theme||'').trim(),themeStart:Math.max(0,v.themeStart|0)});
+/* ════════════════════════════════════════════════════════════
+   ŞOV AÇILIŞ EKRANI — "Şovu başlat" → herkeste logo + kart + tema müziği
+════════════════════════════════════════════════════════════ */
+const Intro = {
+  cur:null, seen:new Set(),
+  html(ev){
+    const sh=Univ.show(ev.showId), b=Univ.brand(ev.brandId), u=Data.universe||{};
+    const big=showLogoHTML(sh,'in-logo')||(b?.logo?.url?Media.fitHTML(b.logo,{cls:'in-logo'}):'')||Promo.logoHTML('in-logo');
+    const segs=Univ.segs(ev.id);
+    const me=ev.preshow?.by===Me.id || Univ.isGM();
+    const key=eventThemeKey(ev), src=Music.src(key);
+    return `<div class="in-bg" style="--bc:${esc(b?.color||u.color||'#e3b341')}"></div>
+      <div class="in-box">
+        <div class="in-top">${Promo.logoHTML('in-plogo')}<span>${esc(u.name||'')}</span>${b?brandChip(b):''}</div>
+        ${big||`<div class="in-title-only">${esc(sh?.name||ev.title)}</div>`}
+        <div class="in-title">${esc(ev.title)}</div>
+        <div class="in-sub">${esc(Dt.nice(ev.date,{year:'numeric'}))}${sh?.venue?' · 📍 '+esc(sh.venue):''} · ${esc(STYLES[ev.style]?.tr||'')}</div>
+        ${src?`<div class="in-mu">♪ ${esc(src.theme||src.ringName)}</div>`:''}
+        <div class="in-card">${segs.map((s,i)=>{ const m=s.match; const t=m?.titleId&&Data.titles.get(m.titleId);
+          return `<div class="in-seg ${i===segs.length-1?'main':''}">${m?`${avaHTML(Data.char(m.cids[0]),'sm')}<b>${esc(Show.label(s))}</b>${avaHTML(Data.char(m.cids[1]),'sm')}${t?beltHTML(t,'belt-xs'):''}${m.ig?' ⚥':''}`:`<span class="muted">${esc(SEG_TYPES[s.segType]?.tr||'')}</span> <b>${esc(Show.label(s).split(': ')[1]||'')}</b>`}</div>`; }).join('')}</div>
+        <div class="in-act">${me?`<button class="btn" onclick="Intro.cancel('${ev.id}')">İptal</button><button class="btn gold" onclick="Intro.go('${ev.id}')"><i class="fas fa-play"></i> Başla</button>`:`<span class="muted">Şov birazdan başlıyor…</span><button class="btn" onclick="Intro.close()">Kapat</button>`}</div>
+      </div>`;
+  },
+  open(ev){
+    this.cur=ev.id; $('preshow').innerHTML=this.html(ev); $('preshow').classList.add('on');
+    const key=eventThemeKey(ev); if(key && Music.auto()) Music.enqueue(key,{interrupt:true,dur:60,why:'Şov açılışı'});
+  },
+  close(){ $('preshow').classList.remove('on'); this.cur=null; },
+  async go(id){
+    this.close();
+    await B.update('events/'+id,{preshow:null});
+    await Show.startNow(id);
+  },
+  async cancel(id){ this.close(); Music.fadeStop(); await B.update('events/'+id,{preshow:null}); },
+  /** tüm istemciler: etkinlik değişince açılış ekranını aç / kapat */
+  watch(){
+    if(!Me.id) return;
+    for(const ev of Univ.events()){
+      const p=ev.preshow;
+      if(p && ev.status==='planned'){
+        const k=ev.id+':'+p.at;
+        if(!this.seen.has(k) && p.at>Music.boot-5000 && Date.now()-p.at<10*60000){ this.seen.add(k); this.open(ev); }
+        else if(this.cur===ev.id) $('preshow').innerHTML=this.html(ev);
+      } else if(this.cur===ev.id) this.close();
+    }
+  },
+};
+Show.startNow = Show.start;
+Show.start = async function(eventId){
+  const ev=Univ.event(eventId); if(!ev) return;
+  const live=Univ.live(); if(live && live.id!==eventId){ toast(`Önce canlı şovu bitir: ${live.title}`,'err'); return; }
+  if(!Univ.segs(eventId).length){ toast('Kart boş — önce segment ekle ya da AI ile kur','err'); return; }
+  await B.update('events/'+eventId,{preshow:{at:Date.now(),by:Me.id}});
+};
+Bus.on('univ',()=>Intro.watch());
+
+/* ════════════════════════════════════════════════════════════
+   GÜNCELLEME KAYDI + EKSİK ALANLAR
+════════════════════════════════════════════════════════════ */
+function charGaps(c){
+  if(!c) return [];
+  const g=[], w=hasRole(c,'wrestler');
+  const basic=[['gimmick','Gimmick'],['voice','Üslup'],['bio','Kariyer'],['hometown','Memleket']].filter(([k])=>!String(c[k]||'').trim()).map(x=>x[1]);
+  if(!c.gender) basic.push('Cinsiyet');
+  if(basic.length) g.push(['basic',basic.join(', ')]);
+  if(w && Object.values(c.stats||{}).every(v=>v===60)) g.push(['stats','Statlar (hep varsayılan 60)']);
+  if(w){
+    const emp=['strike','grapple','signature','finisher'].filter(k=>!(c.moves?.[k]||[]).length);
+    if(emp.length) g.push(['moves','Hareket yok: '+emp.map(k=>CAT[k].tr).join(', ')]);
+    const nd=MOVE_CATS.reduce((n,k)=>n+(c.moves?.[k]||[]).filter((_,i)=>!String(c.movesDesc?.[k]?.[i]||'').trim()).length,0);
+    if(nd) g.push(['moves',`${nd} hareketin tarifi yok`]);
+  }
+  if(!(c.rels||[]).length && !(Data.char(c.id)?relsOf(c):[]).length) g.push(['rels','İlişki yok']);
+  const im=['render','banner','icon'].filter(k=>!c.media?.[k]?.url).map(k=>({render:'Render',banner:'Banner',icon:'İkon'})[k]);
+  if(im.length) g.push(['images',im.join(', ')]);
+  if(!c.themeUrl) g.push(['theme','Tema şarkısı']);
+  return g;
+}
+/** kayda ekle (karakter nesnesini değiştirir) */
+function logUpdate(c,via,parts=[],notes=''){
+  c.upd=[{at:Date.now(),by:Me.p?.name||'?',via,parts:(parts||[]).slice(0,24),notes:String(notes||'').slice(0,300)},...(c.upd||[])].slice(0,8);
+  return c;
+}
+function agoTR(ts){ const m=Math.round((Date.now()-ts)/60000); if(m<1) return 'az önce'; if(m<60) return m+' dk önce'; const h=Math.round(m/60); if(h<24) return h+' saat önce'; const d=Math.round(h/24); return d<30?d+' gün önce':new Date(ts).toLocaleDateString('tr-TR'); }
+function updHTML(c,{gaps=true}={}){
+  const u=(c?.upd||[]), last=u[0], gp=gaps?charGaps(c):[];
+  if(!last && !gp.length) return '';
+  const entry=e=>`<div class="up-e"><div><b>${esc(e.via)}</b> · ${esc(agoTR(e.at))} <span class="muted">(${new Date(e.at).toLocaleString('tr-TR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})})</span> · @${esc(e.by)}</div>
+    ${e.parts?.length?`<div class="up-chips">${e.parts.map(p=>`<span class="up-c ok">${esc(p)}</span>`).join('')}</div>`:'<div class="muted">Değişiklik yok</div>'}
+    ${e.notes?`<div class="muted" style="font-size:11.5px">${esc(e.notes)}</div>`:''}</div>`;
+  return `<div class="upd">
+    ${last?`<span class="lbl" style="margin:0">Son güncelleme</span>${entry(last)}`:'<span class="muted" style="font-size:12px">Henüz güncelleme kaydı yok.</span>'}
+    ${gp.length?`<div><span class="lbl" style="margin:4px 0 3px">Eksik / bulunamayan</span><div class="up-chips">${gp.map(([k,l])=>`<span class="up-c miss" title="${esc(Importer.REFRESH_OPTS[k]||'')}">${esc(l)}</span>`).join('')}</div></div>`:'<div class="up-chips"><span class="up-c ok">Eksik alan yok ✓</span></div>'}
+    ${u.length>1?`<details><summary class="muted" style="cursor:pointer;font-size:11.5px">Önceki güncellemeler (${u.length-1})</summary>${u.slice(1).map(entry).join('')}</details>`:''}
+  </div>`;
+}
+
+/* editör: kayıt bilgisi + kaydederken logla */
+{ const _render=Editor.render;
+  Editor.render=function(){ _render.call(this); const el=$('ed-upd'); if(el){ const h=this.isNew?'':updHTML(this.c); el.innerHTML=h; el.style.display=h?'':'none'; } };
+  const _save=Editor.save;
+  Editor.save=async function(){
+    // değişenleri hesapla ve kayda ekle (upsert'ten önce this.c'ye yazılır)
+    try{
+      if(this.tab==='json' && !this.applyJSON()) return;
+      const now=normalizeChar(this.c);
+      if(this.orig){ const parts=Importer.diffRows(normalizeChar(this.orig),now).map(r=>r[0]); if(parts.length) logUpdate(this.c,'Elle düzenleme',parts); }
+      else if(!this.c.upd?.length) logUpdate(this.c,'Manuel oluşturuldu',['Oluşturuldu']);
+    }catch(e){ console.warn(e); }
+    return _save.call(this);
+  };
+}
+/* importer: oluşturma ve güncellemelerde kayıt */
+{ const _gen=Importer.generate;
+  Importer.generate=async function(prompt,search,links={}){
+    const notes=[]; const _am=this.applyMedia;
+    this.applyMedia=(c,d,l,o={})=>_am.call(this,c,d,l,{...o,log:m=>notes.push(m)});
+    try{ const c=await _gen.call(this,prompt,search,links); c._notes=notes.join(', '); return c; } finally{ this.applyMedia=_am; }
+  };
+  const created=(c,via)=>{ const notes=c._notes; delete c._notes; const gp=charGaps(c).map(g=>g[1]); logUpdate(c,via,['Oluşturuldu'],[notes,gp.length?'Bulunamayan: '+gp.join('; '):''].filter(Boolean).join(' · ')); };
+  const _acc=Importer.accept;
+  Importer.accept=async function(){ if(this.last) created(this.last,'AI ile oluşturuldu'+(this.last.source?.includes('search')?' (arama)':'')); return _acc.call(this); };
+  // toplu oluşturma: generate edilen kartları kaydederken logla
+  const _bulk=Importer.bulk;
+  Importer.bulk=async function(){ const orig=Store.upsert; Store.upsert=function(c){ if(c?._notes!==undefined) created(c,'AI ile oluşturuldu (toplu)'); return orig.call(Store,c); }; try{ return await _bulk.call(this); } finally{ Store.upsert=orig; } };
+  // güncelleme: istenen bölümler + bulunamayanlar
+  const _one=Importer.refreshOne;
+  Importer.refreshOne=async function(old,o,links,note,search,log){
+    const gp=charGaps(old).filter(([k])=>o[k]).map(g=>g[1]);
+    const note2=[note,gp.length?`ÖZELLİKLE EKSİK OLANLAR (önce bunları bul): ${gp.join('; ')}`:''].filter(Boolean).join('\n');
+    const msgs=[]; const c=await _one.call(this,old,o,links,note2,search,m=>{ msgs.push(m); log?.(m); });
+    const parts=this.diffRows(normalizeChar(old),c).map(r=>r[0]);
+    const want=Object.entries(o).filter(([,v])=>v).map(([k])=>this.REFRESH_OPTS[k].split(' (')[0]);
+    const still=charGaps(c).map(g=>g[1]);
+    logUpdate(c,'AI güncelleme'+(search?' (arama)':''),parts,[`İstenen: ${want.join(', ')}`,msgs.join(', '),still.length?'Hâlâ eksik: '+still.join('; '):''].filter(Boolean).join(' · '));
+    return c;
+  };
+  // güncelleme ekranı: seçili karakter(ler)in kaydı + "eksikleri seç"
+  const _pick=Importer.renderPick;
+  Importer.renderPick=function(){
+    _pick.call(this);
+    $('imp-r-list').querySelectorAll('label.pick').forEach(el=>{ const id=el.querySelector('input')?.dataset.id; const c=Store.get(id); if(!c) return;
+      const g=charGaps(c).length, l=c.upd?.[0];
+      el.querySelector('small')?.insertAdjacentHTML('beforebegin',`<span class="pk-meta">${l?esc(agoTR(l.at)):''}${g?` <span class="up-c miss">${g} eksik</span>`:' <span class="up-c ok">tam</span>'}</span>`); });
+    this.renderInfo();
+  };
+  const _cnt=Importer.pickCount;
+  Importer.pickCount=function(){ _cnt.call(this); this.renderInfo?.(); };
+  Importer.renderInfo=function(){
+    const el=$('imp-r-info'); if(!el) return;
+    const ids=[...(this.sel||[])].filter(id=>Store.get(id));
+    if(!ids.length){ el.innerHTML=''; return; }
+    const gapKeys=new Set(ids.flatMap(id=>charGaps(Store.get(id)).map(g=>g[0])));
+    el.innerHTML=(ids.length===1?updHTML(Store.get(ids[0])):`<div class="upd"><span class="muted" style="font-size:12px">${ids.filter(id=>charGaps(Store.get(id)).length).length}/${ids.length} karakterde eksik alan var.</span></div>`)
+      +(gapKeys.size?`<button class="btn sm" id="imp-r-gaps"><i class="fas fa-crosshairs"></i> Sadece eksikleri güncelle</button>`:'');
+    $('imp-r-gaps')?.addEventListener('click',()=>{ document.querySelectorAll('#imp-r-opts input[data-o]').forEach(i=>{ i.checked=gapKeys.has(i.dataset.o); i.parentNode.classList.toggle('on',i.checked); }); toast('Sadece eksik bölümler seçildi'); });
+  };
+}
+/* tek karakter güncellemesini uygula: kayıt zaten refreshOne'da eklendi */
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
