@@ -656,6 +656,198 @@ body.ss .gmonly{display:none!important}
 .tw-accs{display:flex;flex-direction:column;gap:5px;max-height:420px;overflow-y:auto}
 .tw-acc{display:flex;gap:8px;align-items:center;font-size:12.5px;cursor:pointer}
 .tw-acc .muted{font-size:11px}
+
+/* ═══ KADRO v3 ═══ */
+#r-grid{grid-auto-rows:max-content}
+.rs-bar{border-bottom:1px solid var(--ln);background:var(--bg1);padding:10px 14px;display:flex;flex-direction:column;gap:9px;flex-shrink:0}
+.rs-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.rs-search{position:relative;flex:1;min-width:190px;display:flex}
+.rs-search i{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--t3);font-size:12px;pointer-events:none}
+.rs-search input{width:100%;padding-left:31px}
+.rs-n{background:var(--gold);color:#111;border-radius:9px;font-size:10px;padding:0 6px;font-family:var(--mono);line-height:16px}
+.rs-n:empty{display:none}
+.seg{display:inline-flex;border:1px solid var(--ln2);border-radius:var(--r);overflow:hidden;flex-shrink:0}
+.seg button{background:var(--bg3);border:none;color:var(--t2);padding:7px 10px;font-size:12px}
+.seg button+button{border-left:1px solid var(--ln2)}
+.seg button.on{background:var(--gold-d);color:var(--gold)}
+.rs-acts{display:flex;gap:6px;flex-wrap:wrap}
+.rs-filters{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;padding-top:2px}
+.rs-filters select{width:100%}
+.rs-chips{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:14px;border:1px solid var(--ln2);background:var(--bg2);color:var(--t1);font-size:11.5px;cursor:pointer;user-select:none;white-space:nowrap}
+.chip:hover{border-color:var(--t3)}
+.chip.on{border-color:rgba(227,179,65,.55);background:var(--gold-d);color:var(--gold)}
+.rs-sum{display:flex;gap:6px 14px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;color:var(--t2);letter-spacing:.04em;align-items:center}
+.rs-sum b{color:var(--t0);font-weight:600}
+.rs-sum .clr{margin-left:auto;color:var(--gold);cursor:pointer}
+#r-grid.v-grid{grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;padding:16px}
+#r-grid.v-poster{grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:12px;padding:16px}
+#r-grid.v-list{grid-template-columns:1fr;gap:4px;padding:12px 16px}
+.rs-gh{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:10px 2px 2px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--t1)}
+.rs-gh::after{content:'';flex:1;height:1px;background:var(--ln)}
+.rs-gh span{color:var(--t3)}
+.rs-gh:first-child{padding-top:0}
+/* kart */
+.rc{--ac:var(--tw);position:relative;background:var(--bg2);border:1px solid var(--ln);border-radius:12px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .12s,border-color .12s,box-shadow .12s;content-visibility:auto;contain-intrinsic-size:auto 330px}
+.rc:hover{border-color:color-mix(in srgb,var(--ac) 55%,transparent);transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.rc.al-face{--ac:var(--face)}.rc.al-heel{--ac:var(--heel)}
+.rc-hero{position:relative;height:150px;overflow:hidden;background:radial-gradient(120% 100% at 80% 100%,color-mix(in srgb,var(--ac) 30%,transparent),transparent 60%),linear-gradient(160deg,var(--bg3),var(--bg1))}
+.rc-hero .bnr{position:absolute;inset:0}
+.rc-hero .bnr::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.25) 55%,var(--bg2))}
+.rc-hero .rnd{position:absolute;right:4px;bottom:0;width:58%;height:96%}
+.rc-hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--ac);opacity:.85}
+.rc-blur{position:absolute;inset:-20px;background-size:cover;background-position:center 25%;filter:blur(18px) saturate(1.3);opacity:.45;transform:scale(1.1)}
+.rc-blur::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,var(--bg2))}
+.rc-ava{position:absolute;left:14px;bottom:12px}
+.rc-ava .ava{width:62px;height:62px;font-size:22px;box-shadow:0 0 0 3px var(--bg2)}
+.rc-big{position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:64px;color:color-mix(in srgb,var(--ac) 35%,transparent);letter-spacing:.04em;pointer-events:none}
+.rc-tl{position:absolute;left:10px;top:10px;display:flex;gap:5px;flex-wrap:wrap;max-width:60%}
+.rc-ovr{position:absolute;right:10px;top:10px;min-width:40px;text-align:center;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:3px 6px 2px;line-height:1}
+.rc-ovr b{display:block;font-family:var(--disp);font-size:20px;color:var(--t0)}
+.rc-ovr span{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--t2)}
+.rc-body{padding:10px 14px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.rc-nm{font-family:var(--disp);font-size:21px;letter-spacing:.02em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-sub{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:-3px}
+.rc-g{font-size:12px;color:var(--t1);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.9em}
+.rc-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:2px}
+.rc-bar span{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--t2);letter-spacing:.06em}
+.rc-bar span b{color:var(--t0);font-weight:600}
+.rc-bar i{display:block;height:4px;border-radius:2px;background:var(--bg4);margin-top:3px;overflow:hidden}
+.rc-bar i::before{content:'';display:block;height:100%;width:var(--v);background:var(--c,var(--ac));border-radius:2px}
+.rc-f{display:flex;gap:5px;padding:9px 14px;border-top:1px solid var(--ln);flex-wrap:wrap;align-items:center;margin-top:auto}
+.rc-f .own{margin-left:auto}
+/* poster */
+.rc.poster{contain-intrinsic-size:auto 290px}
+.rc.poster .rc-hero{height:auto;aspect-ratio:3/4}
+.rc.poster .rc-hero .rnd{left:0;right:0;width:100%;height:92%;margin:0 auto}
+.rc.poster .rc-ava{left:50%;top:42%;bottom:auto;transform:translate(-50%,-50%)}
+.rc.poster .rc-ava .ava{width:84px;height:84px;font-size:30px}
+.rc.poster .rc-cap{position:absolute;left:0;right:0;bottom:0;padding:34px 10px 9px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.88) 55%)}
+.rc.poster .rc-nm{font-size:18px;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.rc.poster .rc-sub{margin-top:1px;color:var(--t1)}
+.rc.poster .rc-tl{max-width:70%}
+.rc.poster .rc-rec{font-family:var(--mono);font-size:10px;color:var(--t1);margin-top:3px;display:flex;gap:8px}
+/* liste */
+.rl{display:grid;grid-template-columns:40px minmax(150px,1.6fr) minmax(90px,.9fr) 80px 110px 70px 64px 50px minmax(80px,.7fr);gap:10px;align-items:center;padding:7px 12px;background:var(--bg2);border:1px solid var(--ln);border-left:3px solid var(--ac,var(--tw));border-radius:8px;cursor:pointer;font-size:12.5px}
+.rl.al-face{--ac:var(--face)}.rl.al-heel{--ac:var(--heel)}
+.rl:hover{background:var(--bg3)}
+.rl .ava{width:36px;height:36px;font-size:13px}
+.rl-nm{min-width:0}.rl-nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rl-nm small{display:block;font-family:var(--mono);font-size:9.5px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rl .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t1)}
+.rl .n{font-family:var(--mono);text-align:right;color:var(--t0)}
+.rl-h{background:none;border:none;cursor:default;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--t3);text-transform:uppercase;padding-top:0;padding-bottom:2px}
+.rl-h:hover{background:none}
+.rl-h .n{color:var(--t3)}
+@media(max-width:1100px){.rl{grid-template-columns:40px minmax(140px,1.6fr) 80px 70px 64px 50px minmax(80px,.8fr)}.rl .x1,.rl .x3{display:none}}
+@media(max-width:760px){
+  .rs-bar{padding:10px}
+  .rs-row{gap:6px}
+  .rs-search{min-width:0;flex:1 1 100%}
+  .rs-row .btn .t,.rs-acts .btn .t{display:none}
+  .rs-acts{margin-left:auto}
+  #rs-sort{flex:1;min-width:0}
+  .rs-filters{grid-template-columns:1fr 1fr}
+  #r-grid.v-grid{grid-template-columns:1fr;padding:12px;gap:12px}
+  #r-grid.v-poster{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:10px}
+  #r-grid.v-list{padding:8px}
+  .rc-hero{height:120px}
+  .rc.poster .rc-hero{height:auto}
+  .rl{grid-template-columns:36px minmax(0,1fr) 52px 40px;gap:8px;padding:7px 9px}
+  .rl .x1,.rl .x2,.rl .x3,.rl .x4,.rl .x5{display:none}
+}
+/* ═══ PANEL v2 ═══ */
+.dz{max-width:1280px;margin:0 auto;padding:18px;display:flex;flex-direction:column;gap:16px}
+.dz-hero{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--ln);background:linear-gradient(120deg,color-mix(in srgb,var(--bc,var(--gold)) 22%,var(--bg2)),var(--bg2) 55%);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-height:230px}
+.dz-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 90% at 100% 0,color-mix(in srgb,var(--bc,var(--gold)) 18%,transparent),transparent 70%);pointer-events:none}
+.dz-hl{position:relative;padding:22px 24px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.dz-kick{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t2);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dz-kick .live{color:var(--heel);font-weight:700}
+.dz-kick .live::before{content:'●';margin-right:4px;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+.dz-title{font-family:var(--disp);font-size:44px;line-height:1;letter-spacing:.02em}
+.dz-meta{color:var(--t1);font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dz-cd{display:inline-flex;align-items:baseline;gap:5px;font-family:var(--disp);font-size:22px;color:var(--gold)}
+.dz-cd small{font-family:var(--mono);font-size:10px;color:var(--t2);letter-spacing:.1em}
+.dz-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.dz-hr{position:relative;padding:16px 18px;display:flex;flex-direction:column;gap:7px;justify-content:center;border-left:1px solid var(--ln);background:rgba(0,0,0,.18)}
+.dz-hr h4,.dz-card h3{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t2);font-weight:600;display:flex;align-items:center;gap:8px}
+.dz-card h3 a{margin-left:auto;color:var(--gold);cursor:pointer;letter-spacing:.06em;text-transform:none;font-size:11px}
+.dz-seg{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.035);border:1px solid var(--ln);min-width:0;cursor:pointer}
+.dz-seg:hover{background:rgba(255,255,255,.07)}
+.dz-seg .ic{width:22px;text-align:center;color:var(--t2);font-size:12px;flex-shrink:0}
+.dz-seg .avs{display:flex;flex-shrink:0}
+.dz-seg .avs .ava{width:26px;height:26px;font-size:10px;margin-left:-7px;box-shadow:0 0 0 2px var(--bg2)}
+.dz-seg .avs .ava:first-child{margin-left:0}
+.dz-seg .t{flex:1;min-width:0;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-seg .t small{color:var(--t2);font-family:var(--mono);font-size:9.5px;margin-left:6px}
+.dz-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.dz-kpi{background:var(--bg2);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;cursor:pointer;transition:border-color .12s}
+.dz-kpi:hover{border-color:var(--ln2)}
+.dz-kpi b{font-family:var(--disp);font-size:30px;line-height:1.05;letter-spacing:.02em}
+.dz-kpi span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--t2)}
+.dz-kpi small{font-size:11px;color:var(--t1)}
+.dz-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;align-items:start}
+.dz-card{background:var(--bg2);border:1px solid var(--ln);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:9px;min-width:0}
+.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}
+.dz-belts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.dz-belt{position:relative;border-radius:11px;border:1px solid rgba(227,179,65,.22);background:linear-gradient(160deg,rgba(227,179,65,.09),var(--bg3) 65%);padding:10px 12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0}
+.dz-belt:hover{border-color:rgba(227,179,65,.5)}
+.dz-belt .bimg{height:44px;display:flex;align-items:center}
+.dz-belt .bimg .belt-md{width:100px;height:44px}
+.dz-belt .nm{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-belt .hd{display:flex;align-items:center;gap:8px;min-width:0}
+.dz-belt .hd .ava{width:30px;height:30px;font-size:11px}
+.dz-belt .hd b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.dz-belt .hd small{font-family:var(--mono);font-size:9.5px;color:var(--t2)}
+.dz-belt .bc{position:absolute;right:10px;top:10px}
+.dz-row{display:flex;align-items:center;gap:10px;padding:7px 4px;border-bottom:1px solid var(--ln);min-width:0;cursor:pointer}
+.dz-row:last-child{border-bottom:none}
+.dz-row:hover{background:rgba(255,255,255,.025)}
+.dz-row .ava{width:32px;height:32px;font-size:12px;flex-shrink:0}
+.dz-row .m{flex:1;min-width:0}
+.dz-row .m b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-row .m small{font-size:11px;color:var(--t2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-row .r{font-family:var(--mono);font-size:11px;color:var(--t1);text-align:right;flex-shrink:0}
+.dz-rank{font-family:var(--disp);font-size:17px;color:var(--t3);width:22px;text-align:center;flex-shrink:0}
+.dz-pbar{height:4px;border-radius:2px;background:var(--bg4);margin-top:4px;overflow:hidden}
+.dz-pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f6d27a);border-radius:2px}
+.dz-feud{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;background:linear-gradient(90deg,var(--heel-d),transparent 50%,var(--heel-d));border:1px solid rgba(226,80,79,.18);cursor:pointer;min-width:0}
+.dz-feud .ava{width:34px;height:34px;font-size:12px;flex-shrink:0}
+.dz-feud .m{flex:1;min-width:0;text-align:center}
+.dz-feud .m b{font-size:12.5px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-feud .m small{font-size:10.5px;color:var(--t2);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-feud .hot{color:var(--heel);font-size:10px;letter-spacing:1px}
+.dz-brands{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.dz-brand{border-radius:12px;border:1px solid var(--ln);border-top:3px solid var(--bc);background:linear-gradient(180deg,color-mix(in srgb,var(--bc) 10%,var(--bg3)),var(--bg3));padding:12px;display:flex;flex-direction:column;gap:6px;cursor:pointer;min-width:0}
+.dz-brand .bn{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;min-width:0}
+.dz-brand .bn img{height:26px;max-width:70px;object-fit:contain}
+.dz-brand .st{display:flex;gap:12px;font-family:var(--mono);font-size:10px;color:var(--t2)}
+.dz-brand .st b{color:var(--t0);font-size:13px;font-family:var(--disp);letter-spacing:.03em;margin-right:3px}
+.dz-brand small{font-size:11px;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dz-quick{display:flex;gap:8px;flex-wrap:wrap}
+.dz-tw{padding:8px 4px;border-bottom:1px solid var(--ln);display:flex;gap:9px;min-width:0;cursor:pointer}
+.dz-tw:last-child{border-bottom:none}
+.dz-tw .ava{width:30px;height:30px;font-size:11px;flex-shrink:0}
+.dz-tw .m{min-width:0;flex:1;font-size:12.5px}
+.dz-tw .m small{color:var(--t2);font-size:11px}
+.dz-empty{color:var(--t3);font-size:12.5px;padding:6px 2px}
+@media(max-width:1100px){.dz-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.s4,.s5{grid-column:span 6}.s7,.s8{grid-column:span 12}}
+@media(max-width:760px){
+  .dz{padding:12px;gap:12px}
+  .dz-hero{grid-template-columns:1fr}
+  .dz-hr{border-left:none;border-top:1px solid var(--ln)}
+  .dz-hl{padding:18px}
+  .dz-title{font-size:34px}
+  .dz-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .dz-quick{flex-wrap:nowrap;overflow-x:auto;margin:0 -12px;padding:0 12px 2px}
+  .dz-quick .btn{flex-shrink:0}
+  .dz-kpi b{font-size:26px}
+  .dz-grid{grid-template-columns:1fr;gap:12px}
+  .dz-grid>*{grid-column:1/-1!important}
+  .dz-belts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dz-brands{grid-template-columns:1fr}
+}
 </style>
 </head>
 
@@ -6343,6 +6535,310 @@ Bus.on('tweets',()=>{ if(UI.page==='tw' && !document.querySelector('#tw-page .tw
 Bus.on('univ',()=>{ if(UI.page==='arch') Arch.render(); });
 // UI aşağıda tanımlanıyor → sayfa yüklenince bağla (boot'tan önce çalışır)
 document.addEventListener('DOMContentLoaded',()=>{ const _rp=UI.renderPage; UI.renderPage=function(){ _rp.call(this); if(this.page==='arch') Arch.render(); if(this.page==='tw') Tw.render(); }; });
+
+/* ════════════════════════════════════════════════════════════
+   KADRO v3 — büyük kartlar, poster / liste görünümü, sıralama,
+   gruplama, gelişmiş filtreler, mobil uyum
+════════════════════════════════════════════════════════════ */
+const RS = {
+  KEY:'ringrp_roster_ui',
+  d:{view:'grid',sort:'name',group:'',align:'',style:'',champ:false,theme:false,img:false,gaps:false,fopen:null},
+  load(){ try{ Object.assign(this.d,JSON.parse(localStorage.getItem(this.KEY)||'{}')); }catch(e){} if(this.d.fopen==null) this.d.fopen=innerWidth>760; if(!this.d.viewSet) this.d.view=innerWidth<=760?'poster':'grid'; },
+  save(){ try{ localStorage.setItem(this.KEY,JSON.stringify(this.d)); }catch(e){} },
+};
+RS.load();
+const ovrOf = c => { const s=c?.stats||{}; const v=Object.keys(STAT_TR).map(k=>+s[k]||50); return Math.round(v.reduce((a,b)=>a+b,0)/v.length); };
+const winPct = c => { const r=c?.record||{}; const n=(r.w||0)+(r.l||0)+(r.d||0); return n?Math.round((r.w||0)/n*100):null; };
+const RS_SORTS = {
+  name:['İsim (A-Z)',(a,b)=>a.ringName.localeCompare(b.ringName,'tr')],
+  pop:['Popülerlik',(a,b)=>(b.popularity||50)-(a.popularity||50)],
+  ovr:['Genel güç (OVR)',(a,b)=>ovrOf(b)-ovrOf(a)],
+  wins:['Galibiyet',(a,b)=>(b.record?.w||0)-(a.record?.w||0)||(a.record?.l||0)-(b.record?.l||0)],
+  pct:['Kazanma %',(a,b)=>(winPct(b)??-1)-(winPct(a)??-1)],
+  mic:['Mikrofon',(a,b)=>(b.stats?.mic||0)-(a.stats?.mic||0)],
+  upd:['Son güncellenen',(a,b)=>(b.updatedAt||0)-(a.updatedAt||0)],
+};
+const RS_GROUPS = {
+  '':'Gruplama yok', brand:'Markaya göre', promo:'Promosyona göre', role:'Role göre', align:'Face / Heel', gender:'Cinsiyete göre', style:'Stile göre', owner:'Oyuncuya göre',
+};
+const ALIGN_TR={face:'Face',heel:'Heel',tweener:'Tweener'};
+
+/* araç çubuğu yeniden kuruluyor (aynı id'ler korunuyor → eski dinleyiciler çalışmaya devam eder) */
+(function(){
+  const tb=document.querySelector('#p-roster .toolbar'); if(!tb) return;
+  const opt=(o,v)=>Object.entries(o).map(([k,l])=>`<option value="${k}" ${k===v?'selected':''}>${l}</option>`).join('');
+  const bar=document.createElement('div'); bar.className='rs-bar'; bar.id='rs-bar';
+  bar.innerHTML=`
+    <div class="rs-row">
+      <div class="rs-search"><i class="fas fa-magnifying-glass"></i><input id="r-search" placeholder="Ara: isim, lakap, gimmick, memleket…" autocomplete="off"></div>
+      <button class="btn" id="rs-ftog" title="Filtreler"><i class="fas fa-sliders"></i><span class="t"> Filtreler</span> <span class="rs-n" id="rs-fn"></span></button>
+      <select id="rs-sort" title="Sırala">${Object.entries(RS_SORTS).map(([k,[l]])=>`<option value="${k}" ${k===RS.d.sort?'selected':''}>↕ ${l}</option>`).join('')}</select>
+      <div class="seg" id="rs-view">
+        <button data-v="grid" title="Kart"><i class="fas fa-table-cells-large"></i></button>
+        <button data-v="poster" title="Poster"><i class="fas fa-id-badge"></i></button>
+        <button data-v="list" title="Liste"><i class="fas fa-list"></i></button>
+      </div>
+      <div class="rs-acts">
+        <button class="btn gold" onclick="Importer.open()" title="AI ile ekle"><i class="fas fa-wand-magic-sparkles"></i><span class="t"> AI ile Ekle</span></button>
+        <button class="btn" onclick="Importer.open('refresh')" title="Mevcut karakterleri AI ile güncelle / yeniden araştır"><i class="fas fa-rotate"></i><span class="t"> Güncelle</span></button>
+        <button class="btn gold" onclick="Editor.open()" title="Manuel ekle"><i class="fas fa-user-plus"></i><span class="t"> Manuel</span></button>
+        <button class="btn" onclick="Store.exportFile()" title="JSON indir"><i class="fas fa-download"></i></button>
+        <button class="btn" onclick="document.getElementById('imp-file').click()" title="JSON yükle"><i class="fas fa-upload"></i></button>
+        <input type="file" id="imp-file" accept=".json" style="display:none" onchange="Store.importFile(this)">
+      </div>
+    </div>
+    <div class="rs-filters ${RS.d.fopen?'':'hidden'}" id="rs-filters">
+      <select id="r-type"><option value="">Tüm roller</option>${Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join('')}</select>
+      <select id="r-gender"><option value="">Tüm cinsiyetler</option><option value="m">Erkek</option><option value="f">Kadın</option><option value="none">Belirtilmemiş</option></select>
+      <select id="r-promo"><option value="">Tüm promosyonlar</option></select>
+      <select id="r-brand"><option value="">Tüm markalar</option></select>
+      <select id="rs-align"><option value="">Face / Heel / Tweener</option>${opt(ALIGN_TR,RS.d.align)}</select>
+      <select id="rs-style"><option value="">Tüm stiller</option>${opt(STYLE_OPTS,RS.d.style)}</select>
+      <select id="r-own"><option value="">Herkes</option><option value="mine">Benimkiler</option><option value="taken">Oyuncuların</option><option value="free">Sahipsiz (AI)</option></select>
+      <select id="rs-group">${opt(RS_GROUPS,RS.d.group)}</select>
+      <div class="rs-chips">
+        <span class="chip" data-f="champ">🏆 Şampiyonlar</span>
+        <span class="chip" data-f="theme">♪ Tema şarkılı</span>
+        <span class="chip" data-f="img">🖼 Görselli</span>
+        <span class="chip" data-f="gaps">⚠ Eksik bilgili</span>
+      </div>
+    </div>
+    <div class="rs-sum" id="rs-sum"></div>`;
+  tb.replaceWith(bar);
+  const r=()=>Roster.render();
+  $('rs-ftog').onclick=()=>{ RS.d.fopen=!RS.d.fopen; RS.save(); $('rs-filters').classList.toggle('hidden',!RS.d.fopen); };
+  $('rs-sort').onchange=e=>{ RS.d.sort=e.target.value; RS.save(); r(); };
+  $('rs-group').onchange=e=>{ RS.d.group=e.target.value; RS.save(); r(); };
+  $('rs-align').onchange=e=>{ RS.d.align=e.target.value; RS.save(); r(); };
+  $('rs-style').onchange=e=>{ RS.d.style=e.target.value; RS.save(); r(); };
+  bar.querySelectorAll('#rs-view button').forEach(b=>b.onclick=()=>{ RS.d.view=b.dataset.v; RS.d.viewSet=true; RS.save(); r(); });
+  bar.querySelectorAll('.chip[data-f]').forEach(ch=>ch.onclick=()=>{ const k=ch.dataset.f; RS.d[k]=!RS.d[k]; RS.save(); r(); });
+})();
+
+Roster.clearFilters=function(){
+  ['r-search','r-type','r-gender','r-promo','r-brand','r-own'].forEach(id=>{ const el=$(id); if(el) el.value=''; });
+  Object.assign(RS.d,{align:'',style:'',champ:false,theme:false,img:false,gaps:false}); RS.save();
+  $('rs-align').value=''; $('rs-style').value=''; this.render();
+};
+
+Roster.heroHTML=function(c,poster=false){
+  const bn=Media.bannerHTML(c), rn=Media.renderHTML(c,{want:'left'});
+  const b=hasRole(c,'wrestler')?Univ.brand(c.brandId):null;
+  const belts=beltsMini(c.id);
+  const ic=Media.iconUrl(c);
+  const bg=bn||(ic?`<div class="rc-blur" style="background-image:url('${esc(ic).replace(/'/g,'%27')}')"></div>`:'');
+  return `<div class="rc-hero">${bg}${!bg&&!rn?`<div class="rc-big">${esc(initials(c.ringName||c.name))}</div>`:''}${rn}
+    ${rn||(!ic&&!poster)?'':`<div class="rc-ava">${avaHTML(c)}</div>`}
+    <div class="rc-tl">${b?brandChip(b):''}${belts?`<span class="beltrow">${belts}</span>`:''}</div>
+    ${hasRole(c,'wrestler')?`<div class="rc-ovr"><b>${ovrOf(c)}</b><span>OVR</span></div>`:''}
+    ${poster?`<div class="rc-cap"><div class="rc-nm">${esc(c.ringName)}</div><div class="rc-sub">${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</div>
+      ${hasRole(c,'wrestler')?`<div class="rc-rec"><span>${c.record.w}-${c.record.l}${c.record.d?'-'+c.record.d:''}</span><span>★ ${c.popularity||50}</span><span class="${'al-'+c.alignment}" style="background:none;border:none">${ALIGN_TR[c.alignment]||''}</span></div>`:''}</div>`:''}
+  </div>`;
+};
+Roster.cardHTML=function(c){
+  const w=hasRole(c,'wrestler'), s=c.stats||{};
+  const g=c.gender==='f'?'<span class="tag neutral" title="Kadın">♀</span>':c.gender==='m'?'<span class="tag neutral" title="Erkek">♂</span>':'';
+  const own=c.owner?`<span class="tag own" style="color:${esc(Data.player(c.owner)?.color||'var(--t1)')};border-color:currentColor">@${esc(Data.player(c.owner)?.name||'?')}</span>`:'<span class="tag neutral own">AI / NPC</span>';
+  const bar=(l,v,col)=>`<div class="rc-bar"><span>${l}<b>${v}</b></span><i style="--v:${clamp(v,0,100)}%${col?';--c:'+col:''}"></i></div>`;
+  const wp=winPct(c);
+  return `<div class="rc al-${c.alignment}" data-id="${c.id}">
+    ${this.heroHTML(c)}
+    <div class="rc-body">
+      <div class="rc-nm">${esc(c.ringName)}</div>
+      <div class="rc-sub">${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}${c.hometown?' · '+esc(c.hometown):''}</div>
+      <div class="rc-g">${esc(c.gimmick||c.bio||'—')}</div>
+      ${w?`<div class="rc-bars">${bar('POP',c.popularity||50,'var(--gold)')}${bar('GÜÇ',s.power||50)}${bar('MİK',s.mic||50,'var(--me)')}</div>`:''}
+    </div>
+    <div class="rc-f"><span class="tag al-${c.alignment}">${ALIGN_TR[c.alignment]||c.alignment}</span>${g}${w?`<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span><span class="tag neutral" title="Galibiyet-Mağlubiyet${wp!=null?` · %${wp}`:''}">${c.record.w}-${c.record.l}${c.record.d?'-'+c.record.d:''}</span>`:''}${c.themeUrl?'<span class="tag neutral" title="Tema şarkısı var">♪</span>':''}${own}</div>
+  </div>`;
+};
+Roster.posterHTML=function(c){ return `<div class="rc poster al-${c.alignment}" data-id="${c.id}">${this.heroHTML(c,true)}</div>`; };
+Roster.rowHTML=function(c){
+  const w=hasRole(c,'wrestler'), b=Univ.brand(c.brandId), p=c.owner?Data.player(c.owner):null;
+  return `<div class="rl al-${c.alignment}" data-id="${c.id}">${avaHTML(c)}
+    <div class="rl-nm"><b>${esc(c.ringName)} ${beltsMini(c.id)}</b><small>${esc(roleLabel(c))}${c.gender?' · '+(c.gender==='f'?'♀':'♂'):''}${c.hometown?' · '+esc(c.hometown):''}</small></div>
+    <div class="c x1">${b?brandChip(b):`<span class="muted">${esc(c.promotion||'—')}</span>`}</div>
+    <div class="c x2"><span class="tag al-${c.alignment}">${ALIGN_TR[c.alignment]||''}</span></div>
+    <div class="c x3">${w?esc(STYLE_OPTS[c.style]||c.style):'—'}</div>
+    <div class="n x4">${w?`${c.record.w}-${c.record.l}`:'—'}</div>
+    <div class="n">${w?`★${c.popularity||50}`:'—'}</div>
+    <div class="n"><b>${w?ovrOf(c):'—'}</b></div>
+    <div class="c x5">${p?`<span style="color:${esc(p.color)}">@${esc(p.name)}</span>`:'<span class="muted">AI</span>'}</div>
+  </div>`;
+};
+Roster.groupKey=function(c,g){
+  if(g==='brand') return hasRole(c,'wrestler')?(Univ.brand(c.brandId)?.name||'Markasız'):'Ekip (hakem, yorumcu, GM…)';
+  if(g==='promo') return c.promotion||'Promosyon yok';
+  if(g==='role') return roleLabel(c);
+  if(g==='align') return ALIGN_TR[c.alignment]||'—';
+  if(g==='gender') return GENDERS[c.gender]||'Belirtilmemiş';
+  if(g==='style') return hasRole(c,'wrestler')?(STYLE_OPTS[c.style]||c.style):'Ekip';
+  if(g==='owner') return c.owner?('@'+(Data.player(c.owner)?.name||'?')):'Sahipsiz (AI)';
+  return '';
+};
+Roster.render=function(){
+  if(!$('r-grid')) return;
+  const d=RS.d, q=$('r-search').value.trim().toLocaleLowerCase('tr'), t=$('r-type').value, p=$('r-promo').value, own=$('r-own').value, bf=$('r-brand').value, gf=$('r-gender').value;
+  $('r-brand').innerHTML='<option value="">Tüm markalar</option><option value="none" '+(bf==='none'?'selected':'')+'>Markasız</option>'+Univ.brands().map(b=>`<option value="${b.id}" ${bf===b.id?'selected':''}>${esc(b.name)}</option>`).join('');
+  const all=Store.chars();
+  const promos=[...new Set(all.map(c=>c.promotion).filter(Boolean))].sort();
+  $('r-promo').innerHTML='<option value="">Tüm promosyonlar</option>'+promos.map(x=>`<option ${x===p?'selected':''}>${esc(x)}</option>`).join('');
+  const champs=new Set(Univ.titles().map(x=>x.holder).filter(Boolean));
+  const list=all.filter(c=>(!t||hasRole(c,t))
+    &&(!gf||(gf==='none'?!c.gender:c.gender===gf))
+    &&(!p||c.promotion===p)
+    &&(!bf||(bf==='none'?!Univ.brand(c.brandId):c.brandId===bf))
+    &&(!own||(own==='mine'?c.owner===Me.id:own==='taken'?!!c.owner:!c.owner))
+    &&(!d.align||c.alignment===d.align)&&(!d.style||c.style===d.style)
+    &&(!d.champ||champs.has(c.id))&&(!d.theme||!!c.themeUrl)
+    &&(!d.img||!!(Media.hasRender(c)||c.media?.banner?.url||Media.iconUrl(c)))
+    &&(!d.gaps||charGaps(c).length>0)
+    &&(!q||[c.name,c.ringName,c.gimmick,c.promotion,c.hometown,c.social?.x,...(c.nicknames||[])].join(' ').toLocaleLowerCase('tr').includes(q)))
+    .sort((RS_SORTS[d.sort]||RS_SORTS.name)[1]);
+  // filtre sayısı + özet
+  const nF=[t,gf,p,bf,own,d.align,d.style].filter(Boolean).length+['champ','theme','img','gaps'].filter(k=>d[k]).length;
+  $('rs-fn').textContent=nF||'';
+  document.querySelectorAll('#rs-bar .chip[data-f]').forEach(ch=>ch.classList.toggle('on',!!d[ch.dataset.f]));
+  document.querySelectorAll('#rs-view button').forEach(b=>b.classList.toggle('on',b.dataset.v===d.view));
+  const W=all.filter(c=>hasRole(c,'wrestler'));
+  $('rs-sum').innerHTML=`<span><b>${list.length}</b> / ${all.length} gösteriliyor</span><span><b>${W.length}</b> superstar</span><span>♂ <b>${W.filter(c=>c.gender==='m').length}</b> · ♀ <b>${W.filter(c=>c.gender==='f').length}</b></span><span>Face <b>${W.filter(c=>c.alignment==='face').length}</b> · Heel <b>${W.filter(c=>c.alignment==='heel').length}</b></span>${(nF||q)?'<span class="clr" onclick="Roster.clearFilters()">✕ Filtreleri temizle</span>':''}`;
+  // görünüm
+  const g=$('r-grid'); g.className='grid v-'+d.view;
+  const item=c=>d.view==='poster'?this.posterHTML(c):d.view==='list'?this.rowHTML(c):this.cardHTML(c);
+  const head=d.view==='list'?`<div class="rl rl-h"><span></span><span>İsim</span><span class="x1">Marka</span><span class="x2">Taraf</span><span class="x3">Stil</span><span class="n x4">Rekor</span><span class="n">Pop</span><span class="n">OVR</span><span class="x5">Oyuncu</span></div>`:'';
+  let html='';
+  if(d.group){
+    const groups=new Map(); list.forEach(c=>{ const k=this.groupKey(c,d.group); if(!groups.has(k)) groups.set(k,[]); groups.get(k).push(c); });
+    const brandOrder=Univ.brands().map(b=>b.name);
+    const keys=[...groups.keys()].sort((a,b)=>d.group==='brand'?((brandOrder.indexOf(a)+1||99)-(brandOrder.indexOf(b)+1||99)):groups.get(b).length-groups.get(a).length||a.localeCompare(b,'tr'));
+    html=keys.map(k=>`<div class="rs-gh">${esc(k)} <span>${groups.get(k).length}</span></div>${head}${groups.get(k).map(item).join('')}`).join('');
+  } else html=head+list.map(item).join('');
+  g.innerHTML=list.length?html:`<div class="empty" style="grid-column:1/-1"><i class="fas fa-user-slash"></i><p>${all.length?'Bu filtrelere uyan karakter yok':'Kadro boş — "Manuel Ekle" ya da "AI ile Ekle" ile başla.'}</p>${all.length?'<button class="btn sm" onclick="Roster.clearFilters()">Filtreleri temizle</button>':''}</div>`;
+  g.querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>Roster.show(el.dataset.id));
+};
+
+/* ════════════════════════════════════════════════════════════
+   PANEL v2 — ana ekran: sahne (canlı / sıradaki şov), sayılar,
+   şampiyonlar, son maçlar, rekabetler, popülerlik, markalar, oyuncular
+════════════════════════════════════════════════════════════ */
+Dash.segRow=function(s){
+  const ids=Univ.segParticipants(s), cs=ids.map(id=>Data.char(id)).filter(Boolean);
+  const ic=SEG_TYPES[s.segType]?.ic||'fa-ring';
+  const title=s.segType==='match'&&s.match?(s.match.title?'🏆 ':'')+Show.label(s):Show.label(s);
+  const sub=s.segType==='match'&&s.match?(MT[s.match.type]?.tr||''):(SEG_TYPES[s.segType]?.tr||'');
+  const st=s.status==='done'?'✓':s.status==='live'?'<b style="color:var(--heel)">CANLI</b>':'';
+  return `<div class="dz-seg" onclick="${s.status==='pending'?`Ev.open('${s.eventId}')`:`Chat.open('${s.id}')`}"><i class="fas ${ic} ic"></i>
+    <div class="avs">${cs.slice(0,4).map(c=>avaHTML(c)).join('')}</div>
+    <div class="t">${esc(title)}<small>${esc(sub)}</small></div><span style="font-size:11px;color:var(--t2)">${st}</span></div>`;
+};
+Dash.render=function(){
+  $('dash-title').innerHTML=(Promo.logoHTML('dash-logo')||'')+`<span>${esc(Univ.name())}</span>`; $('dash-sub').textContent=Dt.nice(Univ.date(),{year:'numeric'});
+  const today=Univ.date(), live=Univ.live(), next=Univ.next(), gm=Univ.isGM(), star=Univ.star();
+  const ev=live||next, evs=Univ.events(), done=evs.filter(e=>e.status==='done');
+  const W=Store.chars('wrestler'), titles=Univ.titles(), hist=Data.history||[];
+  // ── sahne (hero)
+  let hero;
+  if(ev){
+    const b=Univ.brand(ev.brandId), segs=Univ.segs(ev.id).sort((a,c)=>(a.order||0)-(c.order||0));
+    const dd=Dt.diff(today,ev.date);
+    const when=ev.status==='live'?'<span class="live">CANLI</span>':dd>0?`<span class="dz-cd">${dd}<small>GÜN SONRA</small></span>`:dd===0?'<span class="dz-cd">BUGÜN</span>':'<span class="muted">tarihi geçti</span>';
+    const btns=ev.status==='live'
+      ?`<button class="btn gold" onclick="Ev.open('${ev.id}')"><i class="fas fa-tv"></i> Şova dön</button>`
+      :`<button class="btn gold" onclick="Ev.open('${ev.id}')"><i class="fas fa-list-check"></i> Kartı aç</button>${gm&&segs.length?`<button class="btn" onclick="Show.start('${ev.id}')"><i class="fas fa-play"></i> Şovu başlat</button>`:''}${gm&&!segs.length?`<button class="btn" onclick="Booker.build('${ev.id}')"><i class="fas fa-wand-magic-sparkles"></i> AI ile kart kur</button>`:''}${gm&&dd>0?`<button class="btn" onclick="Dash.advance()"><i class="fas fa-forward"></i> Şov gününe geç</button>`:''}`;
+    hero=`<div class="dz-hero" style="--bc:${esc(b?.color||'var(--gold)')}">
+      <div class="dz-hl">
+        <div class="dz-kick">${ev.status==='live'?'<span class="live">Canlı şov</span>':'Sıradaki şov'} ${brandChip(b)} <span>${esc(STYLES[ev.style]?.tr||'')}</span></div>
+        <div style="display:flex;gap:12px;align-items:center">${eventLogoHTML(ev,'sh-logo')}<div class="dz-title">${esc(ev.title)}</div></div>
+        <div class="dz-meta">${when}<span>${Dt.nice(ev.date,{year:'numeric'})}</span><span>· ${segs.length} segment</span></div>
+        <div class="dz-btns">${btns}</div>
+      </div>
+      <div class="dz-hr"><h4>Kart</h4>${segs.slice(0,6).map(s=>this.segRow(s)).join('')||`<div class="dz-empty">Kart henüz boş.${gm?' Şova girip maç / segment ekle ya da AI ile kur.':''}</div>`}${segs.length>6?`<div class="dz-empty">+${segs.length-6} segment daha</div>`:''}</div>
+    </div>`;
+  } else {
+    hero=`<div class="dz-hero"><div class="dz-hl"><div class="dz-kick">${esc(Univ.name())}</div><div class="dz-title">${Dt.nice(today,{year:'numeric'})}</div>
+      <div class="dz-meta">Takvimde planlı şov yok.</div>
+      <div class="dz-btns">${gm?`<button class="btn gold" onclick="Cal.fill(4)"><i class="fas fa-wand-magic-sparkles"></i> 4 haftalık takvimi doldur</button>`:''}<button class="btn" onclick="MatchSetup.open()"><i class="fas fa-bell"></i> Serbest maç</button></div></div>
+      <div class="dz-hr"><h4>Başlarken</h4><div class="dz-empty">1) Markalar & Şovlar'dan haftalık şovları ayarla · 2) Takvimi doldur · 3) Şova girip "AI ile kart kur" · 4) Şovu başlat.</div></div></div>`;
+  }
+  // ── kariyer (süperstar modu)
+  let starCard='';
+  if(!gm){
+    if(!star) starCard=`<div class="dz-card s12"><h3>Süperstar modu</h3><div class="dz-empty">Sol üstten oynayacağın güreşçiyi seç.</div></div>`;
+    else {
+      const mine=evs.filter(e=>e.status!=='done').flatMap(e=>Univ.segs(e.id).filter(s=>Univ.segParticipants(s).includes(star.id))).slice(0,5);
+      const held=titlesOf(star.id);
+      starCard=`<div class="dz-card s12" style="flex-direction:row;flex-wrap:wrap;gap:16px;align-items:center">
+        <div style="display:flex;gap:12px;align-items:center;min-width:240px;flex:1">${avaHTML(star,'lg')}<div style="min-width:0"><div class="dz-title" style="font-size:30px">${esc(star.ringName)}</div>
+          <div class="muted">${esc(Univ.brand(star.brandId)?.name||'Markasız')} · ${star.record.w}G-${star.record.l}M · OVR ${ovrOf(star)} · Pop ${star.popularity||50}</div>${held.length?`<div style="margin-top:4px">${beltsMini(star.id)}</div>`:''}</div></div>
+        <div style="flex:1.4;min-width:260px;display:flex;flex-direction:column;gap:6px"><h3 style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--t2)">SIRADAKİ BOOKİNGLERİN</h3>
+          ${mine.map(s=>this.segRow(s)).join('')||'<div class="dz-empty">Henüz bir şovda yer almıyorsun. GM\'in kartına bağlı.</div>'}</div></div>`;
+    }
+  }
+  // ── sayılar
+  const ratings=done.map(e=>e.rating).filter(x=>x!=null);
+  const avg=ratings.length?(ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(2):'—';
+  const held=titles.filter(t=>t.holder&&Data.char(t.holder)).length;
+  const kpi=(v,l,s,on)=>`<div class="dz-kpi" onclick="${on}"><span>${l}</span><b>${v}</b><small>${s}</small></div>`;
+  const kpis=`<div class="dz-kpis">
+    ${kpi(W.length,'Superstar',`♂ ${W.filter(c=>c.gender==='m').length} · ♀ ${W.filter(c=>c.gender==='f').length}`,"UI.show('roster')")}
+    ${kpi(`${held}/${titles.length}`,'Kemer',`${titles.length-held} boş`,"UI.show('titles')")}
+    ${kpi(done.length,'Şov',`${evs.filter(e=>e.status==='planned').length} planlı`,"UI.show('cal')")}
+    ${kpi(avg,'Ort. reyting',ratings.length?`en iyi ${Math.max(...ratings)}★`:'henüz yok',"UI.show('hist')")}
+    ${kpi(hist.length,'Maç',hist.length?`son: ${esc(hist[0].method||'')}`:'henüz yok',"UI.show('hist')")}
+    ${kpi(Data.online().length,'Çevrimiçi',`${Data.players.size} oyuncu`,"")}
+  </div>`;
+  // ── şampiyonlar
+  const belts=titles.filter(t=>t.active!==false).map(t=>{ const c=Data.char(t.holder); const days=t.since?Dt.diff(t.since,today):null;
+    return `<div class="dz-belt" onclick="${c?`Roster.show('${c.id}')`:"UI.show('titles')"}"><div class="bc">${t.brandId?brandChip(Univ.brand(t.brandId)):''}</div>
+      <div class="bimg">${beltHTML(t,'belt-md')}</div><div class="nm">${esc(t.name)}</div>
+      <div class="hd">${c?avaHTML(c):'<div class="ava">—</div>'}<div style="min-width:0"><b>${c?esc(c.ringName):'BOŞ'}</b><small>${c?`${days!=null?days+' gün':''}${t.defenses?` · ${t.defenses} savunma`:''}`:'turnuva / maç bekliyor'}</small></div></div></div>`; }).join('');
+  // ── son maçlar
+  const lastM=hist.slice(0,7).map(m=>{ const wc=Data.char(m.winnerId);
+    return `<div class="dz-row" onclick="UI.show('hist')">${wc?avaHTML(wc):'<div class="ava">—</div>'}<div class="m"><b>${esc([m.a,m.b].filter(Boolean).join(' vs '))}</b><small>${m.winner?'🏆 '+esc(m.winner)+' · ':''}${esc(m.method||'')}${m.typeTr&&m.typeTr!=='Standart Maç'?' · '+esc(m.typeTr):''}${m.titleChange?' · <b style="color:var(--gold)">YENİ ŞAMPİYON</b>':''}</small></div><div class="r">${m.rating!=null?starsHTML(m.rating):''}</div></div>`; }).join('');
+  // ── popülerlik
+  const top=[...W].sort((a,b)=>(b.popularity||50)-(a.popularity||50)).slice(0,8).map((c,i)=>`<div class="dz-row" onclick="Roster.show('${c.id}')"><span class="dz-rank">${i+1}</span>${avaHTML(c)}<div class="m"><b>${esc(c.ringName)} ${beltsMini(c.id)}</b><div class="dz-pbar"><i style="width:${c.popularity||50}%"></i></div></div><div class="r">${c.popularity||50}</div></div>`).join('');
+  // ── sıcak rekabetler (feud / enemy / betrayal, seviye yüksek olanlar, tekrar yok)
+  const seen=new Set(), feuds=[];
+  for(const c of W) for(const r of (c.rels||[])){ if(!['feud','enemy','betrayed','betrayer'].includes(r.type)) continue; const o=Data.char(r.id); if(!o||!hasRole(o,'wrestler')) continue;
+    const k=[c.id,o.id].sort().join('|'); if(seen.has(k)) continue; seen.add(k); feuds.push({a:c,b:o,r,score:(r.lvl||3)*10+((c.popularity||50)+(o.popularity||50))/10}); }
+  feuds.sort((x,y)=>y.score-x.score);
+  const feudHTML=feuds.slice(0,4).map(({a,b,r})=>`<div class="dz-feud" onclick="Roster.show('${a.id}')">${avaHTML(a)}<div class="m"><b>${esc(a.ringName)} <span class="muted">vs</span> ${esc(b.ringName)}</b><small>${esc(r.note||REL_TYPES[r.type]?.tr||'')}</small><span class="hot">${'🔥'.repeat(Math.min(5,r.lvl||3))}</span></div>${avaHTML(b)}</div>`).join('');
+  // ── yaklaşan şovlar
+  const up=evs.filter(e=>e.status!=='done'&&e.id!==ev?.id).slice(0,5).map(e=>{ const b=Univ.brand(e.brandId); const dd=Dt.diff(today,e.date);
+    return `<div class="dz-row" onclick="Ev.open('${e.id}')"><div class="ava" style="border-color:${esc(b?.color||'var(--ln2)')};font-size:10px">${esc(Dt.parse(e.date).getUTCDate())}</div><div class="m"><b>${esc(e.title)}</b><small>${Dt.nice(e.date)} · ${esc(STYLES[e.style]?.tr||'')} · ${Univ.segs(e.id).length} segment</small></div><div class="r">${dd>0?dd+' gün':dd===0?'bugün':''}</div></div>`; }).join('');
+  // ── markalar
+  const brands=Univ.brands().map(b=>{ const r=W.filter(c=>c.brandId===b.id); const nx=evs.find(e=>e.brandId===b.id&&e.status!=='done'); const ch=titles.filter(t=>t.brandId===b.id&&t.holder).map(t=>Data.char(t.holder)?.ringName).filter(Boolean);
+    return `<div class="dz-brand" style="--bc:${esc(b.color||'#888')}" onclick="Roster.filterBrand('${b.id}')"><div class="bn">${b.logo?.url?`<img src="${esc(b.logo.url)}" alt="" onerror="this.remove()">`:''}<span style="color:${esc(b.color||'#888')}">${esc(b.name)}</span></div>
+      <div class="st"><span><b>${r.length}</b>kadro</span><span><b>${r.filter(c=>c.gender==='f').length}</b>kadın</span><span><b>${r.filter(c=>c.owner).length}</b>oyuncu</span></div>
+      <small>${ch.length?'🏆 '+esc(ch.join(', ')):'Şampiyon yok'}</small><small>${nx?'▶ '+esc(nx.title)+' · '+Dt.nice(nx.date):'Planlı şov yok'}</small></div>`; }).join('');
+  const unb=W.filter(c=>!Univ.brand(c.brandId)).length;
+  // ── oyuncular
+  const online=new Set(Data.online().map(p=>p.id));
+  const players=[...Data.players.values()].sort((a,b)=>(online.has(b.id)-online.has(a.id))||(a.createdAt||0)-(b.createdAt||0)).map(p=>{ const cs=Store.chars().filter(c=>c.owner===p.id);
+    return `<div class="dz-row" onclick="Roster.filterOwner('${p.id}')"><div class="ava" style="border-color:${esc(p.color)};color:${esc(p.color)}">${esc(initials(p.name))}</div><div class="m"><b>${esc(p.name)} ${online.has(p.id)?'<span style="color:var(--gn);font-size:10px">● çevrimiçi</span>':''}</b><small>${cs.length?esc(cs.map(c=>c.ringName).join(', ')):'Karakter yok'}</small></div><div class="r">${cs.length}</div></div>`; }).join('');
+  // ── son tweetler
+  const tws=(Data.tweets||[]).filter(t=>!t.replyTo).slice(0,4).map(t=>{ const a=Tw.acc(t.by); if(!a) return '';
+    return `<div class="dz-tw" onclick="UI.show('tw')">${a.ava}<div class="m"><b>${esc(a.name)}</b> <small>@${esc(a.handle)}</small><div>${esc(t.text)}</div></div></div>`; }).join('');
+  const quick=`<div class="dz-quick"><button class="btn" onclick="MatchSetup.open()"><i class="fas fa-bell"></i> Serbest maç</button><button class="btn" onclick="UI.show('roster')"><i class="fas fa-users"></i> Kadro</button><button class="btn" onclick="UI.show('cal')"><i class="fas fa-calendar-days"></i> Takvim</button><button class="btn" onclick="UI.show('titles')"><i class="fas fa-trophy"></i> Kemerler</button><button class="btn" onclick="UI.show('tw')"><i class="fab fa-twitter"></i> Twitter</button><button class="btn" onclick="UI.show('arch')"><i class="fas fa-box-archive"></i> Arşiv</button></div>`;
+  $('dash-body').className='dz';
+  $('dash-body').innerHTML=`${hero}${starCard}${quick}${kpis}
+    <div class="dz-grid">
+      <div class="dz-card s8"><h3>Şampiyonlar <a onclick="UI.show('titles')">Tümü →</a></h3>${belts?`<div class="dz-belts">${belts}</div>`:'<div class="dz-empty">Kemer yok.</div>'}</div>
+      <div class="dz-card s4"><h3>🔥 Sıcak rekabetler</h3>${feudHTML||'<div class="dz-empty">Aktif feud yok. Karakter ilişkilerine "feud" ekleyince burada görünür.</div>'}</div>
+      <div class="dz-card s7"><h3>Son maçlar <a onclick="UI.show('hist')">Geçmiş →</a></h3>${lastM||'<div class="dz-empty">Henüz maç yapılmadı.</div>'}</div>
+      <div class="dz-card s5"><h3>Popülerlik <a onclick="Roster.sortBy('pop')">Kadro →</a></h3>${top||'<div class="dz-empty">Kadro boş.</div>'}</div>
+      <div class="dz-card s12"><h3>Markalar${unb?` <span style="color:var(--am);text-transform:none;letter-spacing:0">· ${unb} superstar markasız</span>`:''} <a onclick="UI.show('brands')">Yönet →</a></h3>${brands?`<div class="dz-brands">${brands}</div>`:'<div class="dz-empty">Marka yok.</div>'}</div>
+      <div class="dz-card s4"><h3>Yaklaşan şovlar <a onclick="UI.show('cal')">Takvim →</a></h3>${up||'<div class="dz-empty">Başka planlı şov yok.</div>'}</div>
+      <div class="dz-card s4"><h3>Oyuncular</h3>${players||'<div class="dz-empty">—</div>'}</div>
+      <div class="dz-card s4"><h3>Gündem <a onclick="UI.show('tw')">Twitter →</a></h3>${tws||'<div class="dz-empty">Henüz tweet yok.</div>'}</div>
+    </div>`;
+};
+/* panelden kadroya hızlı geçişler */
+Roster.filterBrand=function(id){ UI.show('roster'); $('r-brand').innerHTML+=`<option value="${id}"></option>`; $('r-brand').value=id; this.render(); };
+Roster.filterOwner=function(pid){ UI.show('roster'); if(pid===Me.id){ $('r-own').value='mine'; } else { $('r-own').value='taken'; $('r-search').value=''; } this.render(); };
+Roster.sortBy=function(k){ RS.d.sort=k; RS.save(); if($('rs-sort')) $('rs-sort').value=k; UI.show('roster'); this.render(); };
+Bus.on('history',()=>{ if(UI.page==='dash') Dash.render(); });
+Bus.on('tweets',()=>{ if(UI.page==='dash') Dash.render(); });
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
