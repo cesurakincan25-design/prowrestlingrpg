@@ -661,7 +661,7 @@ body.ss .gmonly{display:none!important}
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
-let rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
+const rnd = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 const pick = arr => arr[Math.floor(Math.random()*arr.length)];
 const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,8);
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
@@ -808,7 +808,7 @@ const Prefs = {
 };
 
 
-/* ═══ SCHEMA + SEED (orijinal kurgu karakterler) ═══ */
+/* ═══ SCHEMA ═══ */
 
 const TYPES = {wrestler:'Güreşçi',referee:'Hakem',commentator:'Yorumcu',interviewer:'Röportajcı',announcer:'Spiker',manager:'Menajer',gm:'GM / Otorite'};
 const CAT = {
@@ -832,39 +832,6 @@ function blankChar(){
     moves:{strike:[],grapple:[],aerial:[],submission:[],signature:[],finisher:[]},
     voice:'',image:'',source:'custom',popularity:50,record:{w:0,l:0,d:0}};
 }
-function mk(o){ const c=blankChar(); return Object.assign(c,o,{stats:Object.assign(c.stats,o.stats||{}),moves:Object.assign(c.moves,o.moves||{})}); }
-const SEED = [
-  mk({id:'s_kaan',name:'Kaan Demir',ringName:'Kaan "Kasırga" Demir',promotion:'APW',brand:'Pazartesi',alignment:'face',style:'high-flyer',
-    gimmick:'İzmirli, kalabalığın sevgilisi hızlı high-flyer. Hiç pes etmeyen underdog.',hometown:'İzmir',height:"1.78",weight:'82 kg',
-    nicknames:['Kasırga','Ege Rüzgârı'],catchphrases:['Rüzgâr kimseyi beklemez!'],entrance:'Işıklar maviye döner, ring kenarından ikinci ipe zıplar.',
-    stats:{power:52,technique:68,speed:90,stamina:78,toughness:62,charisma:80,mic:65},
-    moves:{strike:['Dropkick','Enzuigiri','Superkick'],grapple:['Hurricanrana','Tornado DDT'],aerial:['Suicide Dive','Moonsault','Springboard Crossbody'],submission:['Crossface'],signature:['Kasırga Kick (Spinning heel kick)'],finisher:['Ege Dalgası (Shooting Star Press)']},
-    voice:'Enerjik, samimi, Ege şivesi hafif.'}),
-  mk({id:'s_viktor',name:'Viktor Kron',ringName:'Viktor Kron',promotion:'APW',brand:'Pazartesi',alignment:'heel',style:'powerhouse',
-    gimmick:'Soğukkanlı Doğu Avrupalı dev. Seyirciyi aşağılar, "zayıfları" temizlemeyi misyon sayar.',hometown:'Bilinmiyor',height:'1.98',weight:'138 kg',
-    nicknames:['Demir Perde'],catchphrases:['Zayıflık bir hastalıktır. Tedavisi benim.'],entrance:'Kırmızı ışık, yavaş yürüyüş, ringe girerken ipleri koparırcasına çeker.',
-    stats:{power:94,technique:58,speed:38,stamina:70,toughness:90,charisma:66,mic:58},
-    moves:{strike:['Big Boot','Forearm Smash','Headbutt'],grapple:['Chokeslam','Powerbomb','Belly-to-belly Suplex'],aerial:[],submission:['Bear Hug'],signature:['Demir Perde (Pumphandle Slam)'],finisher:['Kron Bomb (Sitout Powerbomb)']},
-    voice:'Kısa, soğuk, tehditkâr cümleler. Aksanlı Türkçe.'}),
-  mk({id:'s_mira',name:'Mira Vale',ringName:'Mira Vale',promotion:'APW',brand:'Cuma',alignment:'tweener',style:'technician',
-    gimmick:'Eski amatör güreş şampiyonu, kurallara takıntılı, kazanmak için gerekirse kuralları büker.',hometown:'Ankara',height:'1.70',weight:'62 kg',
-    nicknames:['Satranç Ustası'],catchphrases:['Her hamle bir önceki hamlenin cevabıdır.'],entrance:'Sessiz, analitik; rakibini ringden izler.',
-    stats:{power:55,technique:94,speed:72,stamina:82,toughness:70,charisma:70,mic:76},
-    moves:{strike:['European Uppercut','Knee Strike'],grapple:['German Suplex','Northern Lights Suplex','Dragon Screw'],aerial:['Missile Dropkick'],submission:['Armbar','Figure-Four','Crossface'],signature:['Üç Hamle (Triple German Suplex)'],finisher:['Şah Mat (Bridging Dragon Suplex / Crossface kombinasyonu)']},
-    voice:'Keskin, zeki, alaycı.'}),
-  mk({id:'s_brutus',name:'Brutus Oakes',ringName:'"Kasap" Brutus Oakes',promotion:'APW',brand:'Cuma',alignment:'heel',style:'brawler',
-    gimmick:'Barlardan gelen hardcore kavgacı. Kural tanımaz, sandalyeyi sever.',hometown:'Detroit',height:'1.88',weight:'120 kg',
-    nicknames:['Kasap'],catchphrases:['Temiz maç mı? Ben temizlik yapmam.'],entrance:'Çöp tenekesiyle gelir, seyirciyle kavga eder.',
-    stats:{power:84,technique:50,speed:48,stamina:74,toughness:92,charisma:72,mic:70},
-    moves:{strike:['Clothesline','Brass-knuckle Punch','Running Knee'],grapple:['Spinebuster','Piledriver','Side Slam'],aerial:['Senton'],submission:['Rear Naked Choke'],signature:['Mezbaha (Lariat)'],finisher:['Son Durak (Package Piledriver)']},
-    voice:'Kaba, kısa, esprili-tehditkâr.'}),
-  mk({id:'s_ref',type:'referee',name:'Tolga Aras',ringName:'Hakem Tolga Aras',promotion:'APW',alignment:'face',gimmick:'Kurallara sadık, sert ama adil kıdemli hakem. Arada dikkati dağılır.',stats:{power:40,technique:60,speed:60,stamina:70,toughness:50,charisma:50,mic:40},voice:'Net, kısa komutlar.'}),
-  mk({id:'s_c1',type:'commentator',name:'Selim Tan',ringName:'Selim Tan',promotion:'APW',alignment:'face',gimmick:'Play-by-play yorumcu. Heyecanlı, hamle isimlerini bilir, face\'leri tutar.',voice:'Coşkulu, anlatıcı: "İnanılmaz! İnanılmaz!"'}),
-  mk({id:'s_c2',type:'commentator',name:'Rıza Karaca',ringName:'Rıza "Reis" Karaca',promotion:'APW',alignment:'heel',gimmick:'Eski güreşçi, renk yorumcusu. Heel\'leri savunur, hileyi "strateji" diye över.',voice:'Alaycı, iğneleyici, kendini beğenmiş.'}),
-  mk({id:'s_int',type:'interviewer',name:'Deniz Yıldız',ringName:'Deniz Yıldız',promotion:'APW',alignment:'face',gimmick:'Backstage röportajcı. Profesyonel ama zor sorular sormaktan çekinmez.',voice:'Kibar, soğukkanlı.'}),
-  mk({id:'s_ann',type:'announcer',name:'Ece Kaya',ringName:'Ece Kaya',promotion:'APW',alignment:'face',gimmick:'Ring spikeri. Girişleri uzatarak, coşkuyla anons eder.',voice:'Resmî, görkemli anonslar.'}),
-  mk({id:'s_gm',type:'gm',name:'Hakan Başar',ringName:'GM Hakan Başar',promotion:'APW',alignment:'tweener',gimmick:'Genel menajer. Reyting için kaos sever, maç yapmakla tehdit eder.',voice:'Otoriter, iş adamı dili.'}),
-];
 
 
 function normalizeChar(c){
@@ -893,7 +860,7 @@ const Data = {
     B.watchCol('players',{},docs=>{ this.players=new Map(docs.map(d=>[d.id,d])); this.ready.players=true; Bus.emit('players'); });
     B.watchCol('chars',{},docs=>{ this.chars=new Map(docs.map(d=>[d.id,normalizeChar(d)])); this.ready.chars=true; Bus.emit('chars'); });
     B.watchCol('rooms',{},docs=>{ this.rooms=new Map(docs.map(d=>[d.id,d])); this.ready.rooms=true; Bus.emit('rooms'); });
-    B.watchCol('presence',{},docs=>{ this.presence=new Map(docs.map(d=>[d.id,d])); Bus.emit('presence'); });
+    B.watchCol('presence',{},docs=>{ this.presence=new Map(docs.map(d=>[d.id,d])); this.ready.presence=true; Bus.emit('presence'); });
     B.watchCol('matches',{orderBy:['date','desc'],limit:100},docs=>{ this.history=docs; Bus.emit('history'); });
   },
   char(id){ return id ? this.chars.get(id) : null; },
@@ -1011,24 +978,9 @@ const AI = {
 };
 
 /* ════════════════════════════════════════════════════════════
-   SEED — boş veritabanına bir kere: örnek karakterler + varsayılan kanallar
+   SEED — boş veritabanına bir kere: varsayılan kanallar + evren iskeleti (karakter yok)
 ════════════════════════════════════════════════════════════ */
-const Seed = {
-  async ensure(){
-    const meta=await B.getDoc('meta/app');
-    if(meta?.seeded) return;
-    const got=await B.txn('meta/app',cur=>cur?.seeded?null:{seeded:true,at:Date.now(),v:2});
-    if(!got) return;
-    for(const c of SEED) await B.set('chars/'+c.id, {...normalizeChar(c),owner:null});
-    const now=Date.now();
-    const rooms=[
-      {id:'genel',name:'genel-ooc',topic:'OOC sohbet, duyurular, booking',scene:{type:'free',ctx:'',ai:[],auto:false}},
-      {id:'backstage',name:'backstage',topic:'Koridorlar, soyunma odaları, röportajlar',scene:{type:'backstage',ctx:'Şov gecesi, arena koridorları.',ai:['s_int','s_gm'],auto:true}},
-      {id:'ring',name:'ring-promo',topic:'Ring ortasında mikrofon — seyirci tepki verir',scene:{type:'promo',ctx:'Canlı yayın, dolu arena.',ai:['s_ann'],auto:true}},
-    ];
-    for(const [i,r] of rooms.entries()) await B.set('rooms/'+r.id,{...r,kind:'channel',createdAt:now+i,lastAt:now+i,lastText:'',createdBy:null});
-  },
-};
+const Seed = {};   // ensure() aşağıda (Seed v4) tanımlı
 
 
 /* ═══ ENGINE — saf mekanik ═══ */
@@ -1063,8 +1015,9 @@ const Engine = {
     if(cat==='weapon' && M.type==='standard' && !M.refDown) notes.push('DQ riski');
     return {chance:clamp(Math.round(ch),5,95), notes};
   },
-  /** Mekanik çözümleme. quality: AI'ın emote değerlendirmesi (-2..+2), dmShift: AI'ın kademe kaydırması */
-  resolve(M,actorIdx,cat,moveName,text,{quality=0,aiTier=null,dmPower=1}={}){
+  /** Mekanik çözümleme. quality: AI'ın emote değerlendirmesi (-2..+2), aiTier: AI'ın önerdiği kademe,
+   *  roll: önceden atılmış zar (AI'a gösterilen zarla aynı olsun diye; yoksa burada atılır) */
+  resolve(M,actorIdx,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,roll=null}={}){
     const A=M.f[actorIdx], D=M.f[1-actorIdx], ca=M.c[actorIdx], cd=M.c[1-actorIdx], k=CAT[cat];
     const out={actorIdx,cat,move:moveName,text,events:[],tier:null,roll:null,chance:null,win:null};
     A.counter=false;
@@ -1073,7 +1026,7 @@ const Engine = {
     if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,100); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
     if(cat==='counter'){ A.counter=true; A.st=clamp(A.st+4,0,100); A.downed=false; out.tier='hit'; return this._end(M,out,D); }
     if(cat==='taunt'){
-      const ch=this.chance(M,actorIdx,'strike',text); out.chance=ch.chance; out.roll=rnd(1,100);
+      const ch=this.chance(M,actorIdx,'strike',text); out.chance=ch.chance; out.roll=roll??rnd(1,100);
       const risky = !D.downed;
       const score = ch.chance-out.roll+quality*8+(D.downed?20:0);
       out.tier=this.tierFromScore(score);
@@ -1085,7 +1038,7 @@ const Engine = {
     if(cat==='pin') return this._pin(M,actorIdx,out,quality);
     // Attacks
     const c=this.chance(M,actorIdx,cat,text); out.chance=c.chance; out.notes=c.notes;
-    out.roll=rnd(1,100);
+    out.roll=roll??rnd(1,100);
     const margin=c.chance-out.roll;
     let tier=this.tierFromScore(margin+quality*8);
     if(aiTier && TIERS.includes(aiTier) && dmPower>0){
@@ -1887,9 +1840,9 @@ JSON: {"announcer":"spikerin anonsu","entrances":["A girişi 1-2 cümle","B giri
       await Msgs.post(roomId,{k:'act',text:emote,cid:c.id,pid:byAI?null:Me.id,meta:{cat,move:mv}},{touch:false});
       const pre = CAT[cat].base>0 ? Engine.chance(M,idx,cat,emote) : null;
       const dmPower=parseInt(M.dm??1);
-      let ai=null;
+      let ai=null, preRoll=null;
       if(!['rest','counter'].includes(cat)){
-        const preRoll=_rnd(1,100); Match._fixedRoll=preRoll;
+        preRoll=pre?rnd(1,100):null;
         const margin=pre?pre.chance-preRoll:null, baseTier=pre?Engine.tierFromScore(margin):null;
         const recent=await Msgs.recent(roomId,10);
         const r=await AI.ask({system:this.sys(M),json:true,temperature:0.85,
@@ -1910,9 +1863,8 @@ JSON: {"quality":0,"reason":"kısa gerekçe","tier":"hit","narration":"...","com
       }
       const q=clamp(parseInt(ai?.quality)||0,-2,2);
       const _before=M.f[1-idx].lastBig;
-      const out=Engine.resolve(M,idx,cat,mv,emote,{quality:q,aiTier:ai?.tier||null,dmPower});
+      const out=Engine.resolve(M,idx,cat,mv,emote,{quality:q,aiTier:ai?.tier||null,dmPower,roll:preRoll});
       Univ.track(M,out,_before,q);
-      Match._fixedRoll=null;
       const narr=(ai?.narration && (!ai.tier || ai.tier===out.tier || cat==='pin' || cat==='taunt')) ? ai.narration : Offline.narr(M,out);
       const dice = pre ? `şans %${out.chance} · zar ${out.roll} · emote ${q>=0?'+':''}${q}${ai?.reason?' ('+ai.reason+')':''}${out.dmg?` · ${out.dmg} hasar → ${out.limb}`:''}` : (out.pinRoll?`kick-out şansı %${out.pinRoll.kick} · zar ${out.pinRoll.r}`:'');
       await Msgs.post(roomId,{k:'narr',text:narr,pid:null,meta:{tier:out.tier,cat,dice}},{touch:false});
@@ -1933,7 +1885,6 @@ JSON: {"quality":0,"reason":"kısa gerekçe","tier":"hit","narration":"...","com
       return true;
     }catch(e){ console.error(e); toast('Hamle hatası: '+e.message,'err'); return false; }
     finally{
-      Match._fixedRoll=null;
       if(!saved) await B.txn('rooms/'+roomId,cur=>cur?.match?{match:{...cur.match,pending:null}}:null).catch(()=>{});
     }
   },
@@ -1946,24 +1897,7 @@ JSON: {"quality":0,"reason":"kısa gerekçe","tier":"hit","narration":"...","com
     }
     if(n<3) await Msgs.post(roomId,{k:'sys',pid:null,text:n===2?`${M.c[1-out.actorIdx].ringName} omzunu kaldırdı!${out.nearFall?' 2.9!':''}`:'Erken kick-out.'},{touch:false});
   },
-  async finish(roomId,M,out){
-    const w=Store.get(M.result.winner)||M.c[out.win.idx], l=Store.get(M.result.loser)||M.c[1-out.win.idx];
-    await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:w.ringName,method:M.result.method}},{touch:false});
-    const w2={...w,record:{...w.record,w:(w.record?.w||0)+1},popularity:clamp((w.popularity||50)+3,0,100)};
-    const l2={...l,record:{...l.record,l:(l.record?.l||0)+1}};
-    await Store.upsert(w2); await Store.upsert(l2);
-    const recent=await Msgs.recent(roomId,14);
-    const r=await AI.ask({system:this.sys(M),json:true,temperature:0.8,
-      prompt:`Maç bitti: ${w.ringName} ${M.result.method} ile kazandı. Son akış:\n${Msgs.log(recent)}\nRing spikeri kazananı anonsun, yorumcular maç sonrası birer cümle, arşiv için 2 cümlelik maç özeti.
-JSON: {"announcer":"...","commentary":[{"speaker":"","line":""}],"summary":"..."}`,
-      offline:()=>({announcer:`Bu maçın galibi… ${w.ringName}!`,commentary:[],summary:`${w.ringName}, ${l.ringName}'ı ${M.result.method} ile yendi.`})});
-    const d=r.data||{};
-    if(d.announcer) await Msgs.post(roomId,{k:'com',text:d.announcer,cid:M.staff.ann?.id||null,pid:null,meta:M.staff.ann?{}:{name:'Spiker'}},{touch:false});
-    await this.postCom(roomId,M,d.commentary);
-    M.result.summary=d.summary||'';
-    await B.set('matches/'+roomId,{roomId,date:Date.now(),show:M.show||'',type:M.type,title:M.title||'',a:M.c[0].ringName,b:M.c[1].ringName,
-      winner:w.ringName,winnerId:w.id,method:M.result.method,rounds:M.round,summary:M.result.summary});
-  },
+  // finish() aşağıda (MatchCtl.finish) tanımlı
   async aiTakeTurn(roomId,force=false){
     if(this.running.has(roomId)) return;
     const room=Data.rooms.get(roomId); const m=room?.match;
@@ -1988,20 +1922,28 @@ JSON: {"category":"...","move":"hareket adı","emote":"3. şahıs emote, 1-2 cü
       await this.act(roomId,idx,category,move||Engine.moveFor(c,category),String(emote||'').replace(/^\*|\*$/g,''),{byAI:true});
     }finally{ this.running.delete(roomId); }
   },
-  /** Host döngüsü: rooms değiştikçe, host olduğum maçlarda AI sırasını oynat */
+  /** Host döngüsü: rooms değiştikçe (ve 30 sn'de bir), host olduğum maçlarda AI sırasını oynat.
+   *  Host çevrimdışı kaldıysa (presence 150 sn+ sessiz) çevrimiçi oyunculardan ID'si en küçük olan hostluğu devralır. */
   hostTick(){
     if(!Me.id || Prefs.d.autoai===false) return;
+    const online=Data.online().map(p=>p.id);
+    const heir=[...new Set([...online,Me.id])].sort()[0];   // herkes aynı sonucu hesaplar → tek kişi devralır
     for(const r of Data.rooms.values()){
       const m=r.match;
-      if(r.kind!=='match'||!m||!m.started||m.over||m.host!==Me.id||m.ctl[m.turn]!=='ai'||m.pending||this.running.has(r.id)) continue;
+      if(r.kind!=='match'||!m||!m.started||m.over) continue;
+      if(m.host!==Me.id){
+        if(Data.ready.presence && m.host && !online.includes(m.host) && heir===Me.id) this.claimHost(r.id,m.host);
+        continue;
+      }
+      if(m.ctl[m.turn]!=='ai'||m.pending||this.running.has(r.id)) continue;
       setTimeout(()=>this.aiTakeTurn(r.id),900);
     }
   },
+  async claimHost(roomId,oldHost){
+    const got=await B.txn('rooms/'+roomId,cur=>cur?.match&&!cur.match.over&&cur.match.host===oldHost?{match:{...cur.match,host:Me.id}}:null).catch(()=>null);
+    if(got) await Msgs.post(roomId,{k:'sys',pid:null,text:`Host çevrimdışı — ${Me.p.name} maçın hostluğunu devraldı.`},{touch:false}).catch(()=>{});
+  },
 };
-// Motorun zarını AI'a gösterilen zarla aynı yapmak için
-const Match = { _fixedRoll:null };
-const _rnd=rnd;
-rnd = function(a,b){ if(a===1&&b===100&&Match._fixedRoll!=null){ const v=Match._fixedRoll; Match._fixedRoll=null; return v; } return _rnd(a,b); };
 
 const MatchSetup = {
   open(){
@@ -2402,23 +2344,27 @@ MatchCtl.finish = async function(roomId,M,out,{quick=false}={}){
   const w=Store.get(M.result.winner)||M.c[wi], l=Store.get(M.result.loser)||M.c[1-wi];
   const rating=Rating.match(M); M.result.rating=rating;
   await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:w.ringName,method:M.result.method,rating}},{touch:false});
-  await Store.upsert({...w,record:{...w.record,w:(w.record?.w||0)+1},popularity:clamp((w.popularity||50)+2+Math.round(rating/2),0,100)});
-  await Store.upsert({...l,record:{...l.record,l:(l.record?.l||0)+1},popularity:clamp((l.popularity||50)+(rating>=4?1:-1),0,100)});
-  // kemer
+  // Rekor + popülerlik: güncel belge üzerinden transaction (aynı anda biten maçlar birbirini ezmesin)
+  const bump=(id,fn)=>B.txn('chars/'+id,cur=>cur?{...fn(normalizeChar(cur)),updatedAt:Date.now()}:null).catch(e=>toast('Rekor yazılamadı: '+e.message,'err'));
+  await bump(w.id,c=>({record:{...c.record,w:(c.record.w||0)+1},popularity:clamp((c.popularity||50)+2+Math.round(rating/2),0,100)}));
+  await bump(l.id,c=>({record:{...c.record,l:(c.record.l||0)+1},popularity:clamp((c.popularity||50)+(rating>=4?1:-1),0,100)}));
+  // kemer — güncel şampiyon transaction içinde okunur
   if(M.titleId){
-    const t=Data.titles.get(M.titleId);
-    if(t){
-      const valid=!['DQ','No Contest'].includes(M.result.method);
+    const valid=!['DQ','No Contest'].includes(M.result.method);
+    let res=null;
+    await B.txn('titles/'+M.titleId,t=>{
+      if(!t){ res=null; return null; }
       if(valid && t.holder!==w.id){
-        await B.update('titles/'+t.id,{holder:w.id,since:Univ.date(),defenses:0,
-          history:[...(t.history||[]),{holder:t.holder||null,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:w.id}].slice(-60)});
-        await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 VE YENİİİ! ${w.ringName} yeni ${t.name}!`},{touch:false});
-        M.result.titleChange=true;
-      } else if(t.holder===w.id){
-        await B.update('titles/'+t.id,{defenses:(t.defenses||0)+1});
-        await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 ${w.ringName} kemerini korudu! (${(t.defenses||0)+1}. savunma)`},{touch:false});
-      } else await Msgs.post(roomId,{k:'sys',pid:null,text:`Kemer ${M.result.method} ile el değiştirmez — ${Data.char(t.holder)?.ringName||'şampiyon'} hâlâ şampiyon.`},{touch:false});
-    }
+        res={kind:'new',name:t.name};
+        return {holder:w.id,since:Univ.date(),defenses:0,
+          history:[...(t.history||[]),{holder:t.holder||null,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:w.id}].slice(-60)};
+      }
+      if(t.holder===w.id){ res={kind:'def',name:t.name,n:(t.defenses||0)+1}; return {defenses:(t.defenses||0)+1}; }
+      res={kind:'kept',name:t.name,holder:t.holder}; return null;
+    }).catch(e=>{ res=null; toast('Kemer güncellenemedi: '+e.message,'err'); });
+    if(res?.kind==='new'){ await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 VE YENİİİ! ${w.ringName} yeni ${res.name}!`},{touch:false}); M.result.titleChange=true; }
+    else if(res?.kind==='def') await Msgs.post(roomId,{k:'sys',pid:null,text:`🏆 ${w.ringName} kemerini korudu! (${res.n}. savunma)`},{touch:false});
+    else if(res?.kind==='kept') await Msgs.post(roomId,{k:'sys',pid:null,text:`Kemer ${M.result.method} ile el değiştirmez — ${Data.char(res.holder)?.ringName||'şampiyon'} hâlâ şampiyon.`},{touch:false});
   }
   let d={};
   if(!quick){
@@ -2806,19 +2752,7 @@ const BrandsPage = {
   },
 };
 
-/* ── Seed v3: evren verisi (mevcut veritabanını da yükseltir) ── */
-const SEED_V3_CHARS = [
-  mk({id:'s_yusuf',name:'Yusuf Aksoy',ringName:'Yusuf "Tosun" Aksoy',promotion:'APW',brandId:'b_mon',alignment:'face',style:'powerhouse',gimmick:'Konyalı eski pehlivan; güçlü, sade, halkın adamı.',hometown:'Konya',voice:'Az ve öz konuşur, atasözü sever.',catchphrases:['Er meydanında konuşulmaz!'],stats:{power:90,technique:62,speed:45,stamina:80,toughness:88,charisma:70,mic:55},moves:{strike:['Clothesline','Shoulder Tackle'],grapple:['Belly-to-belly Suplex','Military Press Slam'],aerial:[],submission:['Bear Hug'],signature:['Pehlivan Kündesi (Fallaway Slam)'],finisher:['Tosun Bomb (Powerbomb)']}}),
-  mk({id:'s_dante',name:'Dante Vance',ringName:'Dante Vance',promotion:'APW',brandId:'b_mon',alignment:'heel',style:'showman',gimmick:'Kendini süperstar sanan kibirli Hollywood yakışıklısı. Aynasız ringe çıkmaz.',hometown:'Los Angeles',voice:'Kibirli, alaycı, İngilizce kelimeler serpiştirir.',catchphrases:['Beni izlemek bir ayrıcalık, darling.'],stats:{power:64,technique:70,speed:74,stamina:70,toughness:60,charisma:92,mic:90},moves:{strike:['Superkick','Jab Combo'],grapple:['Neckbreaker','Swinging DDT'],aerial:['Springboard Elbow'],submission:['Sleeper Hold'],signature:['Hollywood Ending (Rolling Cutter)'],finisher:['Final Cut (Jumping Cutter)']}}),
-  mk({id:'s_luna',name:'Luna Reyes',ringName:'Luna Reyes',promotion:'APW',brandId:'b_fri',alignment:'face',style:'luchador',gimmick:'Meksikalı maskeli luchadora; ailesinin maskesini onurla taşıyor.',hometown:'Guadalajara',voice:'Tutkulu, İspanyolca ünlemler.',catchphrases:['¡Por la máscara!'],stats:{power:48,technique:74,speed:93,stamina:76,toughness:60,charisma:84,mic:68},moves:{strike:['Dropkick','Handspring Kick'],grapple:['Hurricanrana','Tilt-a-whirl DDT'],aerial:['Tope Suicida','Moonsault','450 Splash'],submission:['La Mística'],signature:['Luna Llena (Springboard Moonsault)'],finisher:['Eclipse (Phoenix Splash)']}}),
-  mk({id:'s_selin',name:'Selin Kara',ringName:'Selin "Zehir" Kara',promotion:'APW',brandId:'b_fri',alignment:'heel',style:'technician',gimmick:'Soğuk, hesapçı tekniker; rakiplerinin kolunu kırmakla övünür.',hometown:'İzmit',voice:'Fısıltı gibi sakin, tehditkâr.',catchphrases:['Acı geçicidir. Zehir kalıcı.'],stats:{power:55,technique:92,speed:70,stamina:80,toughness:68,charisma:74,mic:78},moves:{strike:['Knee Strike','Kick to the Arm'],grapple:['Dragon Screw','German Suplex'],aerial:[],submission:['Fujiwara Armbar','Crossface','Kimura'],signature:['Panzehir (Octopus Stretch)'],finisher:['Zehir (Cross Armbreaker)']}}),
-  mk({id:'s_ada',name:'Ada Stone',ringName:'Ada Stone',promotion:'APW',brandId:'b_fri',alignment:'tweener',style:'powerhouse',gimmick:'İskoç demirci ailesinden; kimseye yaranmaya çalışmayan sert kadın.',hometown:'Glasgow',voice:'Kaba, esprili, İskoç aksanı.',catchphrases:['Örs gibi. Kırılmam.'],stats:{power:86,technique:60,speed:50,stamina:78,toughness:86,charisma:72,mic:64},moves:{strike:['Lariat','Headbutt'],grapple:['Spinebuster','Powerslam'],aerial:[],submission:['Torture Rack'],signature:['Demirci (Pumphandle Driver)'],finisher:['Örs (Sitout Powerbomb)']}}),
-  mk({id:'s_kenji',name:'Kenji Mori',ringName:'Kenji Mori',promotion:'APW',brandId:'b_dev',alignment:'tweener',style:'strong-style',gimmick:'Japonya\'dan gelen strong style ustası; saygı ister, saygı gösterir.',hometown:'Osaka',voice:'Kısa, onurlu, Japonca kelimeler.',catchphrases:['Güç, saygıdan doğar.'],stats:{power:74,technique:84,speed:70,stamina:88,toughness:86,charisma:70,mic:55},moves:{strike:['Forearm Smash','Kitchen Sink Knee','Rolling Elbow'],grapple:['Brainbuster','Saito Suplex'],aerial:[],submission:['STF'],signature:['Kaminari (Lariat)'],finisher:['Mori Driver (Burning Hammer)']}}),
-  mk({id:'s_ozan',name:'Ozan Yıldırım',ringName:'Ozan Yıldırım',promotion:'APW',brandId:'b_dev',alignment:'face',style:'allrounder',gimmick:'Ankaralı genç yetenek; ailesi için güreşiyor, asla vazgeçmiyor.',hometown:'Ankara',voice:'Samimi, heyecanlı, mütevazı.',catchphrases:['Yıldırım iki kez düşer!'],stats:{power:66,technique:72,speed:78,stamina:82,toughness:70,charisma:78,mic:62},moves:{strike:['Dropkick','Running Knee'],grapple:['Northern Lights Suplex','Tornado DDT'],aerial:['Diving Crossbody'],submission:['Crossface'],signature:['Şimşek (Springboard Cutter)'],finisher:['Yıldırım Düşüşü (Frog Splash)']}}),
-  mk({id:'s_rex',name:'Rex Hollow',ringName:'Rex Hollow',promotion:'APW',brandId:'b_dev',alignment:'heel',style:'hardcore',gimmick:'Terk edilmiş bir fabrikada büyümüş, acıdan zevk alan hardcore canavar.',hometown:'Detroit',voice:'Boğuk, ürkütücü, bilmeceli.',catchphrases:['Acı bir öğretmendir.'],stats:{power:80,technique:52,speed:56,stamina:74,toughness:95,charisma:72,mic:66},moves:{strike:['Headbutt','Stomp'],grapple:['Piledriver','Side Slam'],aerial:['Senton'],submission:['Mandible Claw'],signature:['Fabrika (Uranage)'],finisher:['Hollow Point (Sister Abigail tarzı DDT)']}}),
-  mk({id:'s_ref2',type:'referee',name:'Can Öztürk',ringName:'Hakem Can Öztürk',promotion:'APW',alignment:'face',gimmick:'Genç ve hızlı hakem; sayımları çok hızlı yapmasıyla bilinir.',voice:'Enerjik.'}),
-  mk({id:'s_c3',type:'commentator',name:'Mert Aslan',ringName:'Mert Aslan',promotion:'APW',alignment:'face',gimmick:'Gelişim şovunun genç yorumcusu; istatistik meraklısı.',voice:'Hızlı, bilgili.'}),
-];
+/* ── Seed: evren iskeleti (markalar, şovlar, boş kemerler). Hazır karakter yok — kadroyu siz kurarsınız. ── */
 const SEED_BRANDS = {
   b_mon:{name:'MAYHEM',color:'#e2504f',desc:'Pazartesi gecesi amiral gemisi.',order:1},
   b_fri:{name:'SHOWDOWN',color:'#4a9fe8',desc:'Cuma gecesi aksiyonu.',order:2},
@@ -2830,34 +2764,59 @@ const SEED_SHOWS = {
   sh_show:{name:'Friday Showdown',brandId:'b_fri',style:'tv',freq:'weekly',day:4,matches:4,promos:2,order:3},
   sh_ple:{name:'Kıyamet Gecesi',brandId:null,style:'ple',freq:'monthly',day:6,matches:6,promos:1,order:4},
 };
+// Eski sürümlerin eklediği hazır karakterler — v4 geçişinde (sahipsizse) silinir
+const OLD_SEED_IDS=['s_kaan','s_viktor','s_mira','s_brutus','s_ref','s_c1','s_c2','s_int','s_ann','s_gm',
+  's_yusuf','s_dante','s_luna','s_selin','s_ada','s_kenji','s_ozan','s_rex','s_ref2','s_c3'];
 Seed.ensure = async function(){
   let meta=await B.getDoc('meta/app');
   if(!meta?.seeded){
     const got=await B.txn('meta/app',cur=>cur?.seeded?null:{seeded:true,at:Date.now(),v:2});
     if(got){
-      for(const c of SEED) await B.set('chars/'+c.id,{...normalizeChar(c),owner:null});
       const now=Date.now();
       const rooms=[
         {id:'genel',name:'genel-ooc',topic:'OOC sohbet, duyurular, booking',scene:{type:'free',ctx:'',ai:[],auto:false}},
-        {id:'backstage',name:'serbest-backstage',topic:'Şov dışı serbest RP — koridorlar, soyunma odaları',scene:{type:'backstage',ctx:'Arena koridorları.',ai:['s_int','s_gm'],auto:true}},
+        {id:'backstage',name:'serbest-backstage',topic:'Şov dışı serbest RP — koridorlar, soyunma odaları',scene:{type:'backstage',ctx:'Arena koridorları.',ai:[],auto:true}},
       ];
       for(const [i,r] of rooms.entries()) await B.set('rooms/'+r.id,{...r,kind:'channel',createdAt:now+i,lastAt:now+i,lastText:'',createdBy:null});
     }
     meta=await B.getDoc('meta/app');
   }
-  if((meta?.v||0)>=3) return;
-  const up=await B.txn('meta/app',cur=>(cur?.v||0)<3?{v:3,v3at:Date.now()}:null);
-  if(!up) return;
-  const brandOf={s_kaan:'b_mon',s_viktor:'b_mon',s_mira:'b_fri',s_brutus:'b_fri'};
-  for(const [id,b] of Object.entries(brandOf)){ const c=await B.getDoc('chars/'+id); if(c&&!c.brandId) await B.update('chars/'+id,{brandId:b}); }
-  for(const c of SEED_V3_CHARS){ if(!(await B.getDoc('chars/'+c.id))) await B.set('chars/'+c.id,{...normalizeChar(c),owner:null}); }
-  for(const [id,b] of Object.entries(SEED_BRANDS)) await B.set('brands/'+id,b,true);
-  for(const [id,s] of Object.entries(SEED_SHOWS)) await B.set('shows/'+id,{...s,staff:{ref:'s_ref',c1:'s_c1',c2:'s_c2',ann:'s_ann'}},true);
-  const d0=(()=>{ let d=Dt.today(); while(Dt.dow(d)!==0) d=Dt.add(d,1); return d; })();
-  await B.set('titles/t_world',{name:'APW Dünya Şampiyonluğu',brandId:'b_mon',holder:'s_viktor',since:Dt.add(d0,-60),defenses:3,history:[],order:1},true);
-  await B.set('titles/t_uni',{name:'APW Evrensel Şampiyonluk',brandId:'b_fri',holder:'s_mira',since:Dt.add(d0,-30),defenses:1,history:[],order:2},true);
-  await B.set('titles/t_rise',{name:'RISE Şampiyonluğu',brandId:'b_dev',holder:'s_kenji',since:Dt.add(d0,-14),defenses:0,history:[],order:3},true);
-  if(!(await B.getDoc('meta/universe'))) await B.set('meta/universe',{name:'APW Evreni',date:d0});
+  if((meta?.v||0)<3){
+    const up=await B.txn('meta/app',cur=>(cur?.v||0)<3?{v:3,v3at:Date.now()}:null);
+    if(up){
+      for(const [id,b] of Object.entries(SEED_BRANDS)) await B.set('brands/'+id,b,true);
+      for(const [id,s] of Object.entries(SEED_SHOWS)) await B.set('shows/'+id,{...s,staff:{ref:null,c1:null,c2:null,ann:null}},true);
+      const d0=(()=>{ let d=Dt.today(); while(Dt.dow(d)!==0) d=Dt.add(d,1); return d; })();
+      await B.set('titles/t_world',{name:'APW Dünya Şampiyonluğu',brandId:'b_mon',holder:null,since:null,defenses:0,history:[],order:1},true);
+      await B.set('titles/t_uni',{name:'APW Evrensel Şampiyonluk',brandId:'b_fri',holder:null,since:null,defenses:0,history:[],order:2},true);
+      await B.set('titles/t_rise',{name:'RISE Şampiyonluğu',brandId:'b_dev',holder:null,since:null,defenses:0,history:[],order:3},true);
+      if(!(await B.getDoc('meta/universe'))) await B.set('meta/universe',{name:'APW Evreni',date:d0});
+    }
+    meta=await B.getDoc('meta/app');
+  }
+  if((meta?.v||0)<4){
+    // v4: hazır (seed) karakterleri kaldır. Bir oyuncunun sahiplendiği karakterlere dokunulmaz.
+    const up=await B.txn('meta/app',cur=>(cur?.v||0)<4?{v:4,v4at:Date.now()}:null);
+    if(!up) return;
+    const removed=new Set(), gone=new Set();   // removed: bu geçişte silinen · gone: artık olmayan (referansları temizlenecek)
+    for(const id of OLD_SEED_IDS){
+      const c=await B.getDoc('chars/'+id);
+      if(c && c.owner) continue;
+      if(c){ await B.del('chars/'+id); removed.add(id); }
+      gone.add(id);
+    }
+    for(const t of await B.getCol('titles')) if(gone.has(t.holder)) await B.update('titles/'+t.id,{holder:null,since:null,defenses:0});
+    for(const s of await B.getCol('shows')){
+      const st={...(s.staff||{})}; let ch=false;
+      for(const k of Object.keys(st)) if(gone.has(st[k])){ st[k]=null; ch=true; }
+      if(ch) await B.update('shows/'+s.id,{staff:st});
+    }
+    for(const r of await B.getCol('rooms')){
+      const ai=r.scene?.ai||[];
+      if(ai.some(id=>gone.has(id))) await B.update('rooms/'+r.id,{scene:{...r.scene,ai:ai.filter(id=>!gone.has(id))}});
+    }
+    console.info('[seed v4] kaldırılan hazır karakterler:',[...removed]);
+  }
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -3055,6 +3014,7 @@ const App = {
     Bus.on('history',()=>{ if(UI.page==='hist') History.render(); });
     Bus.on('aibusy',n=>{ const el=$('typing'); if(n>0 && !el.textContent) el.textContent='🤖 AI düşünüyor…'; else if(!n) Chat.typing(); });
     setInterval(()=>{ Chat.typing(); },5000);
+    setInterval(()=>MatchCtl.hostTick(),30000);   // host düşerse devralma kontrolü (presence değişikliği event üretmez)
     Mode.apply(); UI.show(Prefs.d.lastPage&&$('p-'+Prefs.d.lastPage)?Prefs.d.lastPage:'dash');
     MatchCtl.hostTick();
     if(!AI.enabled()) setTimeout(()=>toast('AI kapalı (offline şablon). APP_CONFIG.workerUrl ya da Ayarlar\'dan bağla.'),900);
