@@ -354,7 +354,28 @@ body.ss .gmonly{display:none!important}
 #ed-body .checks{display:flex;flex-wrap:wrap;gap:6px}
 .ck{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;padding:5px 10px;border:1px solid var(--ln2);border-radius:16px;background:var(--bg3);cursor:pointer;color:var(--t1)}
 .ck.on{border-color:rgba(227,179,65,.5);color:var(--gold);background:var(--gold-d)}
-.ck input{accent-color:var(--gold)}
+.ck input{accent-color:var(--gold);width:auto!important;padding:0}
+#imp-r-opts{display:flex;flex-wrap:wrap;gap:6px}
+.ck:has(input:not(:checked)){border-color:var(--ln2);color:var(--t1);background:var(--bg3)}
+.imp-links{border:1px solid var(--ln);border-radius:10px;padding:8px 12px;background:var(--bg1)}
+.imp-links summary{cursor:pointer;font-size:12.5px;color:var(--t1);padding:2px 0}
+.imp-links[open] summary{margin-bottom:8px}
+.imp-links .ff{margin-bottom:8px}
+.picklist{max-height:210px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:5px;margin:8px 0}
+.pick{display:flex;gap:8px;align-items:center;padding:4px 6px;border-radius:6px;cursor:pointer;font-size:13px}
+.pick:hover{background:var(--bg3)}
+.pick.on{background:var(--gold-d)}
+.pick small{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick input{accent-color:var(--gold)}
+#imp-refresh{display:flex;flex-direction:column;gap:8px}
+#imp-refresh[style*="none"]{display:none!important}
+.diff{display:flex;flex-direction:column;gap:3px;max-height:340px;overflow-y:auto}
+.drow{display:grid;grid-template-columns:110px 1fr 1fr;gap:8px;font-size:12px;padding:5px 7px;background:var(--bg3);border-radius:6px;align-items:start}
+.drow .dk{font-family:var(--mono);font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.drow .da{color:var(--t2);text-decoration:line-through;text-decoration-color:rgba(226,80,79,.5);overflow-wrap:anywhere}
+.drow .db{color:var(--gn);overflow-wrap:anywhere}
+@media(max-width:640px){.drow{grid-template-columns:1fr}}
+.warnbox{font-size:12.5px;padding:8px 10px;border:1px solid rgba(232,167,74,.45);background:var(--am-d);border-radius:8px;color:var(--am)}
 .ck small{font-family:var(--mono);font-size:9px;opacity:.8}
 .rng{display:flex;align-items:center;gap:10px}
 .rng .rl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--t2);width:96px;flex-shrink:0}
@@ -595,6 +616,7 @@ body.ss .gmonly{display:none!important}
       <select id="r-brand"><option value="">Tüm markalar</option></select>
       <select id="r-own"><option value="">Herkes</option><option value="mine">Benimkiler</option><option value="free">Sahipsiz (AI)</option></select>
       <button class="btn gold" onclick="Importer.open()"><i class="fas fa-wand-magic-sparkles"></i> AI ile Ekle</button>
+      <button class="btn" onclick="Importer.open('refresh')" title="Mevcut karakterleri AI ile güncelle / yeniden araştır"><i class="fas fa-rotate"></i> Güncelle</button>
       <button class="btn gold" onclick="Editor.open()"><i class="fas fa-user-plus"></i> Manuel Ekle</button>
       <button class="btn" onclick="Store.exportFile()" title="JSON indir"><i class="fas fa-download"></i></button>
       <button class="btn" onclick="document.getElementById('imp-file').click()" title="JSON yükle"><i class="fas fa-upload"></i></button>
@@ -678,13 +700,14 @@ body.ss .gmonly{display:none!important}
 </div></div>
 
 <div class="mbd" id="md-imp"><div class="mbox" style="max-width:620px">
-  <div class="mhd"><span class="mti">AI ile Karakter Ekle</span><button class="mcl" onclick="UI.close('md-imp')">✕</button></div>
+  <div class="mhd"><span class="mti" id="imp-title">AI ile Karakter Ekle</span><button class="mcl" onclick="UI.close('md-imp')">✕</button></div>
   <div class="mbdy">
     <div class="chips" id="imp-modes">
       <button class="chip on" data-m="single">Tek karakter</button>
       <button class="chip" data-m="bulk">Toplu</button>
       <button class="chip" data-m="paste">Metin yapıştır</button>
       <button class="chip" data-m="custom">Custom fikir</button>
+      <button class="chip" data-m="refresh"><i class="fas fa-rotate"></i> Güncelle / yeniden araştır</button>
     </div>
     <div id="imp-single">
       <div class="row2">
@@ -708,6 +731,31 @@ body.ss .gmonly{display:none!important}
     <div id="imp-custom" style="display:none">
       <div class="ff"><span class="lbl">Karakter fikrini anlat</span><textarea id="imp-idea" rows="5" style="width:100%" placeholder="Örn: Karadenizli, eski milli güreşçi, sert tekniker bir heel…"></textarea></div>
     </div>
+    <div id="imp-refresh" style="display:none">
+      <div style="display:flex;gap:6px;align-items:center"><input id="imp-r-q" placeholder="Karakter ara…" style="flex:1" oninput="Importer.renderPick()">
+        <button class="btn sm" onclick="Importer.pickAll(true)">Tümü</button><button class="btn sm" onclick="Importer.pickAll(false)">Temizle</button><span class="hint" id="imp-r-count"></span></div>
+      <div class="picklist" id="imp-r-list"></div>
+      <div class="ff"><span class="lbl">Neler güncellensin?</span><div class="checks" id="imp-r-opts">
+        <label class="ck on"><input type="checkbox" data-o="basic" checked>Temel bilgiler</label>
+        <label class="ck on"><input type="checkbox" data-o="stats" checked>Statlar</label>
+        <label class="ck on"><input type="checkbox" data-o="moves" checked>Move-set + tarifler</label>
+        <label class="ck on"><input type="checkbox" data-o="rels" checked>Yeni ilişkiler</label>
+        <label class="ck on"><input type="checkbox" data-o="images" checked>Görseller (boşları doldur)</label>
+        <label class="ck on"><input type="checkbox" data-o="theme" checked>Tema şarkısı (yoksa bul)</label>
+      </div><div class="hint">Sahip, rekor, marka ve mevcut ilişkiler korunur. Tek karakterde önce değişiklikleri görürsün; çokluda hepsi uygulanır ama tek tıkla geri alınabilir.</div></div>
+      <div class="ff"><span class="lbl">Not / son gelişmeler (isteğe bağlı)</span><textarea id="imp-r-note" rows="2" style="width:100%" placeholder="Örn: Geçen hafta heel turn yaptı, artık The Bloodline'da. / Finisher'ı değişti: …"></textarea></div>
+      <label style="display:flex;gap:8px;align-items:center;font-size:12.5px"><input type="checkbox" id="imp-r-search" checked> İnternette ara (güncel bilgi, giriş müziği, render)</label>
+      <div class="prog"><div id="imp-r-prog"></div></div>
+      <div class="log-mini" id="imp-r-log"></div>
+      <button class="btn red hidden" id="imp-r-undo" onclick="Importer.undoLast()" style="align-self:flex-start"><i class="fas fa-rotate-left"></i> Son güncellemeyi geri al</button>
+    </div>
+    <details class="imp-links" id="imp-links"><summary><i class="fas fa-link"></i> Linkler (isteğe bağlı — yazdıkların AI'ınkinden önceliklidir)</summary>
+      <div class="ff" id="imp-l-srcrow"><span class="lbl">Kaynak sayfa (Wikipedia, Cagematch, Fandom… — AI bu sayfayı okur)</span><input id="imp-l-src" placeholder="https://www.cagematch.net/?id=2&nr=…"></div>
+      <div class="row2"><div class="ff"><span class="lbl">PNG render (direkt link)</span><input id="imp-l-render" placeholder="https://i.imgur.com/….png"></div>
+        <div class="ff"><span class="lbl">Banner (direkt link)</span><input id="imp-l-banner" placeholder="https://i.imgur.com/….jpg"></div></div>
+      <div class="row2"><div class="ff"><span class="lbl">İkon (direkt link)</span><input id="imp-l-icon" placeholder="https://i.imgur.com/….png"></div>
+        <div class="ff"><span class="lbl">Tema şarkısı (YouTube)</span><input id="imp-l-theme" placeholder="https://youtu.be/…"></div></div>
+    </details>
     <div id="imp-preview"></div>
   </div>
   <div class="mft">
@@ -1093,20 +1141,22 @@ const AI = {
     if(a<1e9&&b>a){ try{ return JSON.parse(t.slice(a,b+1)); }catch(e){} }
     throw new Error('AI geçerli JSON döndürmedi');
   },
-  async worker({system,prompt,json,search,temperature}){
+  async worker({system,prompt,json,search,urls,temperature}){
     const c=this.cfg(); if(!c.workerUrl) throw new Error('Worker adresi yok (APP_CONFIG.workerUrl)');
     const res=await fetch(c.workerUrl.replace(/\/$/,'')+'/generate',{method:'POST',
       headers:{'Content-Type':'application/json',...(c.appToken?{'X-App-Token':c.appToken}:{})},
-      body:JSON.stringify({model:c.gmodel,system,prompt,json,search,temperature})});
+      body:JSON.stringify({model:c.gmodel,system,prompt,json,search,urls,temperature})});
     const d=await res.json().catch(()=>({}));
     if(!res.ok) throw new Error(`Worker ${res.status}: ${d.error||''} ${d.detail||''}`.trim());
     return {text:d.text||'',sources:d.sources||[]};
   },
-  async gemini({system,prompt,json,search,temperature}){
+  async gemini({system,prompt,json,search,urls,temperature}){
     const c=this.cfg(); if(!c.gkey) throw new Error('Gemini key yok (Ayarlar)');
     const body={ system_instruction:{parts:[{text:system||''}]}, contents:[{role:'user',parts:[{text:prompt}]}],
       generationConfig:{temperature:temperature??0.8, maxOutputTokens:4096} };
-    if(search) body.tools=[{google_search:{}}]; else if(json) body.generationConfig.responseMimeType='application/json';
+    // search → Google Search, urls → prompt'taki linkleri okur (url_context). Araç varken JSON modu kapalı; JSON metinden ayrıştırılır.
+    const tools=[]; if(search) tools.push({google_search:{}}); if(urls) tools.push({url_context:{}});
+    if(tools.length) body.tools=tools; else if(json) body.generationConfig.responseMimeType='application/json';
     const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(c.gmodel)}:generateContent`,
       {method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':c.gkey},body:JSON.stringify(body)});
     if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(`Gemini ${res.status}: ${e.error?.message||res.statusText}`); }
@@ -3093,6 +3143,7 @@ Roster.show = function(id){
     +(Univ.isGM()&&hasRole(c,'wrestler')?`<div class="ff"><span class="lbl">Marka (GM)</span><select id="mc-brand"><option value="">— markasız —</option>${Univ.brands().map(b=>`<option value="${b.id}" ${c.brandId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div>`:'')
     +(Me.admin?`<div class="ff"><span class="lbl">Sahibini ata (yönetici)</span><select id="mc-owner"><option value="">— AI / NPC —</option>${[...Data.players.values()].map(p=>`<option value="${p.id}" ${c.owner===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div>`:'');
   $('mc-foot').innerHTML=`${canEdit?`<button class="btn red" id="mc-del"><i class="fas fa-trash"></i></button>`:''}<div style="flex:1"></div>
+    ${canEdit?'<button class="btn" id="mc-ai"><i class="fas fa-rotate"></i> AI ile güncelle</button>':''}
     ${!c.owner?'<button class="btn gold" id="mc-claim"><i class="fas fa-hand"></i> Bu karakteri oyna</button>':''}
     ${mine?'<button class="btn" id="mc-free"><i class="fas fa-hand-point-left"></i> Bırak</button>':''}
     ${canEdit?'<button class="btn" id="mc-edit"><i class="fas fa-pen"></i> Düzenle</button>':''}
@@ -3103,6 +3154,7 @@ Roster.show = function(id){
   $('mc-owner')&&($('mc-owner').onchange=e=>setOwner(e.target.value));
   $('mc-brand')&&($('mc-brand').onchange=async e=>{ await Store.upsert({...Store.get(c.id),brandId:e.target.value||null}); toast('Marka güncellendi','ok'); });
   $('mc-edit')&&($('mc-edit').onclick=()=>{ UI.close('md-char'); Editor.open(Store.get(c.id)); });
+  $('mc-ai')&&($('mc-ai').onclick=()=>{ UI.close('md-char'); Importer.openRefresh(c.id); });
   $('mc-del')&&($('mc-del').onclick=async()=>{ if(confirm('Silinsin mi?')){ await Store.remove(c.id); UI.close('md-char'); } });
   UI.open('md-char');
 };
@@ -3282,6 +3334,24 @@ const Music = {
 /* ════════════════════════════════════════════════════════════
    KARAKTER EDİTÖRÜ — sekmeli form (JSON yerine)
 ════════════════════════════════════════════════════════════ */
+/** ilişkileri karşı tarafa yansıt (yeni/değişen → ekle/güncelle, silinen → karşılığını da sil). before: kayıttan önceki rels */
+async function syncMirrorRels(c,before=[]){
+  const was=new Map((before||[]).map(r=>[r.id,r]));
+  const now=new Map((c.rels||[]).map(r=>[r.id,r]));
+  for(const id of new Set([...was.keys(),...now.keys()])){
+    const o=Store.get(id); if(!o) continue;
+    const rels=[...(o.rels||[])], i=rels.findIndex(r=>r.id===c.id);
+    const nr=now.get(id), br=was.get(id);
+    if(nr){
+      const mt=REL_TYPES[nr.type]?.mirror; if(!mt) continue;
+      const want={id:c.id,type:mt,lvl:nr.lvl,note:i>=0?rels[i].note:nr.note};
+      if(i>=0 && rels[i].type===mt && rels[i].lvl===nr.lvl) continue;
+      if(i>=0) rels[i]=want; else rels.push(want);
+    } else if(br && i>=0 && rels[i].type===REL_TYPES[br.type]?.mirror) rels.splice(i,1);
+    else continue;
+    await Store.upsert({...o,rels});
+  }
+}
 const STYLE_OPTS={powerhouse:'Powerhouse',technician:'Tekniker',['high-flyer']:'High-flyer',brawler:'Brawler',giant:'Dev',allrounder:'All-rounder',submission:'Submission uzmanı',hardcore:'Hardcore',showman:'Showman',luchador:'Luchador',['strong-style']:'Strong Style'};
 const STAT_TR={power:'Güç',technique:'Teknik',speed:'Hız',stamina:'Kondisyon',toughness:'Dayanım',charisma:'Karizma',mic:'Mikrofon'};
 const MOVE_CATS=['strike','grapple','aerial','submission','signature','finisher'];
@@ -3476,29 +3546,12 @@ const Editor = {
     c.moves=Object.fromEntries(Object.entries(c.moves).map(([k,v])=>{ const keep=v.map((n,i)=>[String(n).trim(),c.movesDesc[k]?.[i]||'']).filter(([n])=>n); c.movesDesc[k]=keep.map(x=>x[1].trim()); return [k,keep.map(x=>x[0])]; }));
     const seen=new Set(); c.rels=c.rels.filter(r=>r.id!==c.id&&!seen.has(r.id)&&seen.add(r.id));
     await Store.upsert(c);
-    if(Prefs.d.relMirror!==false) await this.mirrorRels(c);
+    if(Prefs.d.relMirror!==false) await syncMirrorRels(c,this.orig?.rels||[]);
     UI.close('md-edit'); Roster.render();
     if(Importer.last && Importer.last.id===c.id){ Importer.last=null; $('imp-preview').innerHTML=''; }
     toast(this.isNew?`${c.ringName} kadroya eklendi`:'Kaydedildi','ok');
   },
-  /** ilişkileri karşı tarafa yansıt (yeni/değişen → ekle/güncelle, silinen → karşılığını da sil) */
-  async mirrorRels(c){
-    const before=new Map((this.orig?.rels||[]).map(r=>[r.id,r]));
-    const now=new Map(c.rels.map(r=>[r.id,r]));
-    for(const id of new Set([...before.keys(),...now.keys()])){
-      const o=Store.get(id); if(!o) continue;
-      const rels=[...(o.rels||[])], i=rels.findIndex(r=>r.id===c.id);
-      const nr=now.get(id), br=before.get(id);
-      if(nr){
-        const mt=REL_TYPES[nr.type]?.mirror; if(!mt) continue;
-        const want={id:c.id,type:mt,lvl:nr.lvl,note:i>=0?rels[i].note:nr.note};
-        if(i>=0 && rels[i].type===mt && rels[i].lvl===nr.lvl) continue;
-        if(i>=0) rels[i]=want; else rels.push(want);
-      } else if(br && i>=0 && rels[i].type===REL_TYPES[br.type]?.mirror) rels.splice(i,1);
-      else continue;
-      await Store.upsert({...o,rels});
-    }
-  },
+
 };
 
 /* ════════════════════════════════════════════════════════════
@@ -3617,6 +3670,319 @@ EV_K.push('card');
     $('mv-move').onchange=show; show();
   };
 }
+
+/* ════════════════════════════════════════════════════════════
+   AI İMPORT v2 — yeni alanlar (rol, cinsiyet, ilişki, görsel, tema, hareket tarifi)
+   + elle link alanları + mevcut karakterleri güncelle / yeniden araştır
+════════════════════════════════════════════════════════════ */
+const CHAR_SCHEMA_V2 = CHAR_SCHEMA.replace(/\n}\n/, `,
+ "rels":[{"name":"KADRODAKİ bir karakterin adı (aşağıdaki listeden AYNEN)","type":"${Object.keys(REL_TYPES).join('|')}","lvl":"1-5 yoğunluk","note":"kısa Türkçe açıklama"}],
+ "themeUrl":"giriş müziğinin YouTube linki — SADECE aramada gerçekten gördüysen, yoksa boş",
+ "images":{"render":"şeffaf arka planlı tam boy PNG render'ın DİREKT resim linki — sadece gördüysen","banner":"yatay kapak görseli direkt linki","icon":"yüz / kare portre direkt linki"}
+}
+`);
+const REL_HELP = 'İlişki okunuşu: {"name":"X","type":"mentor"} = "X, bu karakterin akıl hocası". feud=aktif rekabet, rival=saygılı rakip, ally=müttefik, tag=tag partneri, stable=aynı grup, romance=sevgili/eş, crush=bu karakterin platonik aşkı, admirer=ona platonik aşık, ex=eski sevgili, family=aile, mentor=onun akıl hocası, protege=onun öğrencisi, manager=onun menajeri, client=menajerliğini yaptığı, betrayed=ihanet ettiği kişi, betrayer=ona ihanet eden, enemy=düşman, friend=arkadaş.';
+
+const Links = {
+  ids:{src:'imp-l-src',render:'imp-l-render',banner:'imp-l-banner',icon:'imp-l-icon',theme:'imp-l-theme'},
+  read(){ const o={}; for(const [k,id] of Object.entries(this.ids)) o[k]=($(id)?.value||'').trim(); return o; },
+  fill(o={}){ for(const [k,id] of Object.entries(this.ids)) if($(id)) $(id).value=o[k]||''; },
+  clear(){ this.fill({}); },
+  any(l){ return Object.values(l).some(Boolean); },
+};
+
+/** bir görselin gerçekten açıldığını kontrol et (CORS gerekmez) */
+function checkImage(url,ms=9000){
+  return new Promise(res=>{ if(!/^https?:\/\//i.test(url||'')) return res(false);
+    const i=new Image(); const t=setTimeout(()=>{ i.src=''; res(false); },ms);
+    i.onload=()=>{ clearTimeout(t); res(i.naturalWidth>40&&i.naturalHeight>40); }; i.onerror=()=>{ clearTimeout(t); res(false); }; i.src=url; });
+}
+/** YouTube videosu var mı? (küçük resmi yoksa / 120px yer tutucuysa geçersiz) */
+function checkYouTube(url){
+  const id=Music.ytId(url); if(!id) return Promise.resolve(false);
+  return new Promise(res=>{ const i=new Image(); const t=setTimeout(()=>res(false),8000);
+    i.onload=()=>{ clearTimeout(t); res(i.naturalWidth>120); }; i.onerror=()=>{ clearTimeout(t); res(false); };
+    i.src=`https://i.ytimg.com/vi/${id}/mqdefault.jpg`; });
+}
+
+Object.assign(Importer, {
+  undo:null,
+  open(mode){
+    this.last=null; this.diff=null; $('imp-preview').innerHTML=''; Links.clear();
+    UI.open('md-imp'); this.setMode(mode||(this.mode==='refresh'?'single':this.mode));
+  },
+  /** profilden: tek karakteri güncelle */
+  openRefresh(id){
+    this.open('refresh'); this.sel=new Set([id]); this.renderPick();
+    const c=Store.get(id); if(c) Links.fill({render:c.media?.render?.url,banner:c.media?.banner?.url,icon:c.media?.icon?.url,theme:c.themeUrl});
+    this.syncLinks();
+  },
+  setMode(m){
+    this.mode=m;
+    document.querySelectorAll('#imp-modes .chip').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+    ['single','bulk','paste','custom','refresh'].forEach(k=>$('imp-'+k).style.display=k===m?(k==='refresh'?'flex':'block'):'none');
+    $('imp-go').innerHTML = m==='bulk'?'<i class="fas fa-layer-group"></i> Hepsini oluştur'
+      : m==='refresh'?'<i class="fas fa-rotate"></i> Güncelle':'<i class="fas fa-wand-magic-sparkles"></i> Oluştur';
+    $('imp-title').textContent = m==='refresh'?'AI ile Karakter Güncelle':'AI ile Karakter Ekle';
+    if(m==='refresh'){ this.sel ||= new Set(); this.renderPick(); }
+    this.syncLinks();
+  },
+  /** link alanları: tek karakter modlarında görünür (güncellemede sadece 1 karakter seçiliyse) */
+  syncLinks(){
+    const show = ['single','paste','custom'].includes(this.mode) || (this.mode==='refresh' && this.sel?.size===1);
+    $('imp-links').style.display=show?'block':'none';
+    $('imp-l-srcrow').style.display=this.mode==='custom'?'none':'';
+  },
+  // ── güncelleme: karakter seçici ──
+  renderPick(){
+    const q=($('imp-r-q')?.value||'').toLowerCase();
+    const list=Store.chars().filter(c=>!q||[c.ringName,c.name,c.promotion].join(' ').toLowerCase().includes(q));
+    $('imp-r-list').innerHTML=list.map(c=>`<label class="pick ${this.sel.has(c.id)?'on':''}"><input type="checkbox" data-id="${c.id}" ${this.sel.has(c.id)?'checked':''}>${avaHTML(c,'sm')}<span>${esc(c.ringName)}</span><small>${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</small></label>`).join('')||'<div class="muted">Kadro boş.</div>';
+    $('imp-r-list').querySelectorAll('input[data-id]').forEach(el=>el.onchange=()=>{ el.checked?this.sel.add(el.dataset.id):this.sel.delete(el.dataset.id); el.parentNode.classList.toggle('on',el.checked); this.pickCount(); this.syncLinks(); });
+    this.pickCount();
+  },
+  pickCount(){ $('imp-r-count').textContent=`${this.sel.size} seçili`; },
+  pickAll(on){ const q=($('imp-r-q')?.value||'').toLowerCase(); Store.chars().filter(c=>!q||[c.ringName,c.name,c.promotion].join(' ').toLowerCase().includes(q)).forEach(c=>on?this.sel.add(c.id):this.sel.delete(c.id)); this.renderPick(); this.syncLinks(); },
+  opts(){ const o={}; document.querySelectorAll('#imp-r-opts input[data-o]').forEach(el=>o[el.dataset.o]=el.checked); return o; },
+
+  // ── AI ──
+  sys(extra=''){
+    const roster=Store.chars().map(c=>c.ringName).slice(0,200);
+    return `Profesyonel güreş veritabanı editörüsün. Verilen kişiyi/karakteri aşağıdaki şemaya göre JSON karakter kartına dönüştürürsün. Sadece JSON döndür, başka metin yok.
+Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketlerini kullan; emin olmadığın bilgiyi uydurma, boş bırak. Hareket isimleri İngilizce (yaygın adlarıyla), movesDesc tarifleri Türkçe. Statları kariyerine ve stiline göre gerçekçi ver (sıradan orta kart ≈ 55-70, elit ≈ 85-95). Hakem/yorumcu/spiker gibi rollerde moves boş kalabilir; voice ve gimmick alanlarını özellikle iyi doldur. Bir kişi hem güreşçi hem GM/menajer/yorumcu ise roles'a hepsini yaz. gender: m (erkek) / f (kadın).
+LİNKLER: themeUrl ve images alanlarına ASLA link uydurma — sadece arama sonuçlarında ya da verilen sayfada gerçekten gördüğün tam adresleri yaz; göremediysen boş bırak. Resim linkleri doğrudan resim dosyasına gitmeli (.png/.jpg/.webp).
+İLİŞKİLER: sadece aşağıdaki KADRO listesindeki karakterlerle olan GERÇEK/kanonik ilişkileri yaz (feud, tag partneri, stable, sevgili, aile, akıl hocası, ihanet…). Listede olmayan kimseyi yazma. ${REL_HELP}
+KADRO: ${roster.join(', ')||'(boş)'}
+${extra}
+ŞEMA:\n${CHAR_SCHEMA_V2}`;
+  },
+  async ask(prompt,{search=false,urls=false,sys=''}={}){
+    const cfg=AI.cfg();
+    if(cfg.primary==='offline'&&cfg.fallback==='offline') throw new Error('AI kapalı — Ayarlar\'dan Gemini veya Ollama bağla');
+    let r=await AI.ask({system:this.sys(sys),prompt,json:true,search,urls,temperature:0.3});
+    if(r.provider==='offline' && urls){   // url_context desteklenmiyorsa linksiz tekrar dene
+      r=await AI.ask({system:this.sys(sys),prompt,json:true,search,temperature:0.3});
+    }
+    if(r.provider==='offline') throw new Error(r.error||'AI yanıt vermedi');
+    let d=r.data; if(Array.isArray(d)) d=d[0];
+    if(!d||typeof d!=='object') throw new Error('AI geçerli kart döndürmedi');
+    return {d,sources:r.sources||[],provider:r.provider};
+  },
+  /** AI verisinden ilişkileri kadrodaki id'lere çevir */
+  mapRels(raw,selfId,selfName){
+    const out=[]; const pool=Store.chars().filter(c=>c.id!==selfId);
+    for(const r of (Array.isArray(raw)?raw:[])){
+      const o=Data.findCharByName(String(r?.name||''),pool);
+      if(!o || (selfName && o.ringName===selfName) || out.some(x=>x.id===o.id)) continue;
+      out.push({id:o.id,type:REL_TYPES[r.type]?r.type:'rival',lvl:clamp(parseInt(r.lvl)||3,1,5),note:String(r.note||'').slice(0,200)});
+    }
+    return out;
+  },
+  /** görsel + tema: elle link > AI'ın bulduğu (doğrulanmış) > mevcut. only: sadece boş slotları doldur */
+  async applyMedia(c,ai,links,{images=true,theme=true,onlyEmpty=false,log=null}={}){
+    const note=[];
+    if(images){
+      for(const k of ['render','banner','icon']){
+        const manual=links[k]?Media.fixUrl(links[k]):'';
+        const cur=c.media[k].url;
+        let url=manual;
+        if(!url && ai?.images?.[k] && !(onlyEmpty&&cur)){
+          const cand=Media.fixUrl(String(ai.images[k]));
+          if(cand!==cur){ if(await checkImage(cand)){ url=cand; note.push(`${k} bulundu`); } else note.push(`${k} linki açılmadı`); }
+        }
+        if(!url || url===cur) continue;
+        c.media[k]={...blankChar().media[k],url};
+        if(k==='icon') c.image=url;
+        if(k==='render'){ try{ const f=await Media.autoFit(url); Object.assign(c.media.render,{trim:f.trim,ar:f.ar}); }catch(e){} }
+      }
+    }
+    if(theme){
+      const manual=links.theme||'';
+      if(manual){ if(Music.ytId(manual)) c.themeUrl=manual; }
+      else if(ai?.themeUrl && !(onlyEmpty&&c.themeUrl) && ai.themeUrl!==c.themeUrl){
+        if(await checkYouTube(ai.themeUrl)){ c.themeUrl=String(ai.themeUrl); note.push('tema bulundu'); } else note.push('tema linki geçersiz');
+      }
+    }
+    if(log&&note.length) log(note.join(', '));
+    return c;
+  },
+  srcLine(links){ return links.src?`\nKAYNAK SAYFA: ${links.src}\nBu sayfayı oku ve bilgileri öncelikle oradan al.`:''; },
+
+  // ── oluştur ──
+  async generate(prompt,search,links={}){
+    const {d,sources,provider}=await this.ask(prompt+this.srcLine(links),{search,urls:!!links.src});
+    const c=normalizeChar({...d,source:provider+(search?'+search':'')});
+    c.rels=this.mapRels(d.rels,c.id,c.ringName);
+    await this.applyMedia(c,d,links);
+    c.sources=[...(links.src?[links.src]:[]),...sources];
+    return c;
+  },
+  async run(){
+    const btn=$('imp-go'); btn.disabled=true;
+    try{
+      if(this.mode==='bulk') return await this.bulk();
+      if(this.mode==='refresh') return await this.refresh();
+      const links=Links.read();
+      let prompt, search=false;
+      if(this.mode==='single'){
+        const n=$('imp-name').value.trim(); if(!n && !links.src) throw new Error('İsim ya da kaynak link yaz');
+        const p=$('imp-promo').value.trim(); search=$('imp-search').checked && AI.canSearch();
+        prompt=`Karakter: ${n||'(kaynak sayfadaki kişi)'}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları; giriş müziği için YouTube; render için resmi site / fandom) ve ':''}kartını oluştur.`;
+      } else if(this.mode==='paste'){
+        const t=$('imp-text').value.trim(); if(t.length<40) throw new Error('Daha uzun bir metin yapıştır');
+        prompt=`Aşağıdaki profil metnini karta dönüştür. Metinde olmayan hareketleri yaygın bilgine göre tamamlayabilirsin.\n---\n${t.slice(0,12000)}`;
+      } else {
+        const t=$('imp-idea').value.trim(); if(t.length<10) throw new Error('Fikri biraz anlat');
+        prompt=`Tamamen ORİJİNAL, kurgusal bir güreş karakteri yarat (gerçek kişilere dayanmasın). Fikir: ${t}. İsim de uydur. source alanı "custom". Kadrodaki karakterlerle mantıklı 0-2 ilişki önerebilirsin. themeUrl ve images boş kalsın.`;
+      }
+      $('imp-preview').innerHTML='<div class="muted"><i class="fas fa-spinner fa-spin"></i> AI kartı hazırlıyor…</div>';
+      const c=await this.generate(prompt,search,this.mode==='custom'?{...links,src:''}:links);
+      if(this.mode==='custom') c.source='custom-ai';
+      const dup=Store.chars().find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase());
+      this.last=c; this.preview(c,dup);
+      setTimeout(()=>$('imp-preview').scrollIntoView({behavior:'smooth',block:'start'}),50);
+    }catch(e){ $('imp-preview').innerHTML=`<div class="toast err" style="position:static">${esc(e.message)}</div>`; }
+    finally{ btn.disabled=false; }
+  },
+  preview(c,dup){
+    $('imp-preview').innerHTML=`<div class="box" style="gap:8px">${Roster.detailHTML(c)}
+      ${dup?`<div class="warnbox">⚠️ Kadroda zaten <b>${esc(dup.ringName)}</b> var. Yeni kart olarak eklersen iki tane olur — mevcut kartı güncellemek için "Güncelle" sekmesini kullan.</div>`:''}
+      ${c.sources?.length?`<div class="muted" style="font-size:11px">Kaynaklar: ${c.sources.slice(0,5).map(s=>`<a href="${esc(s)}" target="_blank" rel="noopener" style="color:var(--face)">link</a>`).join(' · ')}</div>`:''}
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="Editor.open(Importer.last)"><i class="fas fa-pen"></i> Düzenle</button><button class="btn gold" onclick="Importer.accept()"><i class="fas fa-check"></i> Kadroya ekle</button></div></div>`;
+  },
+  async accept(){
+    if(!this.last) return; const c=this.last; this.last=null;
+    await Store.upsert(c);
+    if(Prefs.d.relMirror!==false && c.rels?.length) await syncMirrorRels(c,[]);
+    Roster.render(); toast(`${c.ringName} eklendi`,'ok'); $('imp-preview').innerHTML='';
+  },
+  async bulk(){
+    const lines=$('imp-list').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    if(!lines.length) throw new Error('Liste boş');
+    const log=$('imp-log'), bar=$('imp-prog'); log.innerHTML='';
+    const search=AI.canSearch();
+    let ok=0;
+    for(let i=0;i<lines.length;i++){
+      const [name,promo,role]=lines[i].split('|').map(s=>s?.trim());
+      const line=document.createElement('div'); line.textContent=`⏳ ${name}…`; log.appendChild(line); log.scrollTop=log.scrollHeight;
+      try{
+        const c=await this.generate(`Karakter: ${name}${promo?` (${promo})`:''}${role?`, rolü: ${role}`:''}. ${search?'Güncel bilgisini internette ara ve ':''}kartını oluştur.`,search);
+        const dup=Store.d.chars.find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase());
+        if(dup){ line.textContent=`↷ ${c.ringName} zaten kadroda — atlandı (güncellemek için "Güncelle" sekmesi)`; line.style.color='var(--t2)'; }
+        else { await Store.upsert(c); if(Prefs.d.relMirror!==false && c.rels.length) await syncMirrorRels(c,[]); ok++;
+          line.textContent=`✅ ${c.ringName} (${c.promotion||'-'})${c.rels.length?` · ${c.rels.length} ilişki`:''}${c.themeUrl?' · ♪':''}${c.media.render.url?' · render':''}`; }
+      }catch(e){ line.textContent=`❌ ${name}: ${e.message}`; line.style.color='var(--heel)'; }
+      bar.style.width=Math.round((i+1)/lines.length*100)+'%';
+      Roster.render();
+      await sleep(1200);
+    }
+    toast(`${ok}/${lines.length} karakter eklendi`,'ok');
+  },
+
+  // ── güncelle / yeniden araştır ──
+  REFRESH_OPTS:{basic:'Temel bilgiler (gimmick, promosyon, taraf, üslup…)',stats:'Statlar',moves:'Move-set + tarifler',rels:'İlişkiler (sadece yenileri ekler)',images:'Görseller (boş olanları doldurur)',theme:'Tema şarkısı (yoksa bulur)'},
+  /** AI sonucunu mevcut karta birleştir — sahip, rekor, marka, id korunur */
+  async merge(old,d,o,links,log){
+    const c=normalizeChar(JSON.parse(JSON.stringify(old)));
+    const n=normalizeChar({...d,id:old.id});
+    const has=v=>Array.isArray(v)?v.length>0:(v!==undefined&&v!==null&&String(v).trim()!=='');
+    if(o.basic){
+      for(const k of ['name','ringName','promotion','brand','alignment','style','gimmick','bio','hometown','height','weight','entrance','theme','voice']) if(has(d[k])) c[k]=n[k];
+      for(const k of ['nicknames','catchphrases']) if(has(d[k])) c[k]=n[k];
+      if(has(d.gender)&&n.gender) c.gender=n.gender;
+      if(has(d.roles)||has(d.type)){ c.roles=[...new Set([...c.roles,...n.roles])]; c.type=c.roles[0]; }
+    }
+    if(o.stats && d.stats) for(const k of Object.keys(STAT_TR)){ const v=parseInt(d.stats[k]); if(v>0) c.stats[k]=clamp(v,1,100); }
+    if(o.moves && d.moves){
+      for(const k of MOVE_CATS){
+        const nm=n.moves[k]||[]; if(!nm.length) continue;
+        const oldDesc=Object.fromEntries((c.moves[k]||[]).map((x,i)=>[x.toLowerCase(),c.movesDesc?.[k]?.[i]||'']));
+        c.moves[k]=nm; c.movesDesc[k]=nm.map((x,i)=>n.movesDesc[k]?.[i]||oldDesc[x.toLowerCase()]||'');
+      }
+    }
+    if(o.rels){
+      const add=this.mapRels(d.rels,c.id,c.ringName).filter(r=>!c.rels.some(x=>x.id===r.id));
+      c.rels=[...c.rels,...add];
+    }
+    // AI'ın bulduğu görsel/tema sadece BOŞ slotları doldurur; elle yazılan link her zaman geçerli
+    await this.applyMedia(c,d,links,{images:o.images||['render','banner','icon'].some(k=>links[k]),theme:o.theme||!!links.theme,onlyEmpty:true,log});
+    return c;
+  },
+  diffRows(a,b){
+    const rows=[]; const s=v=>Array.isArray(v)?v.join(', '):String(v??'');
+    const L={ringName:'Ring adı',name:'Gerçek ad',promotion:'Promosyon',brand:'Brand',alignment:'Taraf',style:'Stil',gimmick:'Gimmick',bio:'Kariyer',hometown:'Memleket',height:'Boy',weight:'Kilo',entrance:'Giriş',theme:'Şarkı adı',voice:'Üslup',nicknames:'Lakaplar',catchphrases:'Sloganlar',gender:'Cinsiyet'};
+    for(const [k,l] of Object.entries(L)) if(s(a[k])!==s(b[k])) rows.push([l,s(a[k]),s(b[k])]);
+    if(roleLabel(a)!==roleLabel(b)) rows.push(['Roller',roleLabel(a),roleLabel(b)]);
+    const st=Object.keys(STAT_TR).filter(k=>a.stats[k]!==b.stats[k]); if(st.length) rows.push(['Statlar',st.map(k=>`${STAT_TR[k]} ${a.stats[k]}`).join(', '),st.map(k=>`${STAT_TR[k]} ${b.stats[k]}`).join(', ')]);
+    for(const k of MOVE_CATS){ const x=s(a.moves[k]), y=s(b.moves[k]); if(x!==y) rows.push([CAT[k].tr,x||'—',y||'—']); else if(s(a.movesDesc[k])!==s(b.movesDesc[k])) rows.push([CAT[k].tr+' tarifleri','','güncellendi']); }
+    const nr=b.rels.filter(r=>!a.rels.some(x=>x.id===r.id)); if(nr.length) rows.push(['Yeni ilişkiler','',nr.map(r=>`${Data.char(r.id)?.ringName} (${REL_TYPES[r.type]?.tr})`).join(', ')]);
+    for(const k of ['render','banner','icon']) if(a.media[k].url!==b.media[k].url) rows.push([{render:'Render',banner:'Banner',icon:'İkon'}[k],a.media[k].url?'var':'—',b.media[k].url?`<img src="${esc(b.media[k].url)}" style="height:44px;border-radius:4px;vertical-align:middle">`:'—',true]);
+    if(a.themeUrl!==b.themeUrl) rows.push(['Tema linki',a.themeUrl||'—',b.themeUrl||'—']);
+    return rows;
+  },
+  async refreshOne(old,o,links,note,search,log){
+    const keep=JSON.parse(JSON.stringify(old)); delete keep.media; delete keep.owner; delete keep.record; delete keep.rels; delete keep.sources; delete keep.updatedAt;
+    const want=Object.entries(o).filter(([,v])=>v).map(([k])=>this.REFRESH_OPTS[k]).join(', ');
+    const prompt=`MEVCUT KART (güncellenecek):\n${JSON.stringify(keep).slice(0,6000)}
+Mevcut ilişkileri: ${relLine(old)||'-'}
+${search?'İnternette bu kişinin/karakterin EN GÜNCEL durumunu ara (son gimmick değişimi, promosyon, turn, kemer, hareketler, giriş müziği). ':''}Kartı güncelle. Güncellenecek bölümler: ${want}.
+Değişmeyen alanları AYNEN koru; bilmediğin şeyi silme ya da uydurma. Kurgusal/custom bir karakterse sadece tutarlılığı ve eksikleri tamamla, kimliğini değiştirme.${note?`\nKULLANICI NOTU (öncelikli, buna göre güncelle): ${note}`:''}${this.srcLine(links)}`;
+    const {d,sources}=await this.ask(prompt,{search,urls:!!links.src});
+    const c=await this.merge(old,d,o,links,log);
+    c.sources=[...new Set([...(links.src?[links.src]:[]),...sources])].slice(0,8);
+    return c;
+  },
+  async refresh(){
+    const ids=[...(this.sel||[])].filter(id=>Store.get(id)); if(!ids.length) throw new Error('Güncellenecek karakter seç');
+    const o=this.opts(); if(!Object.values(o).some(Boolean)) throw new Error('En az bir bölüm seç');
+    const search=$('imp-r-search').checked && AI.canSearch();
+    const note=$('imp-r-note').value.trim();
+    const logEl=$('imp-r-log'), bar=$('imp-r-prog'); logEl.innerHTML=''; bar.style.width='0%';
+    // tek karakter → önizleme + onay
+    if(ids.length===1){
+      const old=Store.get(ids[0]); const links=Links.read();
+      $('imp-preview').innerHTML=`<div class="muted"><i class="fas fa-spinner fa-spin"></i> ${esc(old.ringName)} yeniden araştırılıyor…</div>`;
+      const msgs=[]; const c=await this.refreshOne(old,o,links,note,search,m=>msgs.push(m));
+      this.last=c; this.lastBefore=old;
+      const rows=this.diffRows(normalizeChar(old),c);
+      setTimeout(()=>$('imp-preview').scrollIntoView({behavior:'smooth',block:'start'}),50);
+      $('imp-preview').innerHTML=`<div class="box" style="gap:8px"><span class="lbl" style="margin:0">${esc(old.ringName)} — değişiklikler</span>
+        ${rows.length?`<div class="diff">${rows.map(([l,a,b,html])=>`<div class="drow"><span class="dk">${esc(l)}</span><span class="da">${html?a:esc(a).slice(0,300)}</span><span class="db">${html?b:esc(b).slice(0,400)}</span></div>`).join('')}</div>`:'<div class="muted">AI yeni bir şey bulamadı — kart zaten güncel görünüyor.</div>'}
+        ${msgs.length?`<div class="muted" style="font-size:11px">${esc(msgs.join(' · '))}</div>`:''}
+        ${c.sources?.length?`<div class="muted" style="font-size:11px">Kaynaklar: ${c.sources.slice(0,5).map(s=>`<a href="${esc(s)}" target="_blank" rel="noopener" style="color:var(--face)">link</a>`).join(' · ')}</div>`:''}
+        <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="$('imp-preview').innerHTML=''">Vazgeç</button><button class="btn" onclick="Editor.open(Importer.last)"><i class="fas fa-pen"></i> Düzenleyerek uygula</button>${rows.length?`<button class="btn gold" onclick="Importer.applyOne()"><i class="fas fa-check"></i> Uygula</button>`:''}</div></div>`;
+      return;
+    }
+    // çoklu → sırayla uygula, geri alınabilir
+    if(!confirm(`${ids.length} karakter AI ile güncellenecek (${Object.entries(o).filter(([,v])=>v).map(([k])=>this.REFRESH_OPTS[k].split(' (')[0]).join(', ')}). Devam?`)) return;
+    const backup=[]; let ok=0;
+    for(let i=0;i<ids.length;i++){
+      const old=Store.get(ids[i]); if(!old) continue;
+      const line=document.createElement('div'); line.textContent=`⏳ ${old.ringName}…`; logEl.appendChild(line); logEl.scrollTop=logEl.scrollHeight;
+      try{
+        const msgs=[]; const c=await this.refreshOne(old,o,{},note,search,m=>msgs.push(m));
+        const rows=this.diffRows(normalizeChar(old),c);
+        if(rows.length){ backup.push(JSON.parse(JSON.stringify(old))); await Store.upsert(c); if(Prefs.d.relMirror!==false) await syncMirrorRels(c,old.rels||[]); ok++; }
+        line.textContent=`${rows.length?'✅':'•'} ${old.ringName}: ${rows.length?rows.map(r=>r[0]).join(', '):'değişiklik yok'}${msgs.length?' · '+msgs.join(', '):''}`;
+      }catch(e){ line.textContent=`❌ ${old.ringName}: ${e.message}`; line.style.color='var(--heel)'; }
+      bar.style.width=Math.round((i+1)/ids.length*100)+'%';
+      await sleep(1200);
+    }
+    this.undo=backup.length?backup:null; $('imp-r-undo').classList.toggle('hidden',!this.undo);
+    Roster.render(); toast(`${ok}/${ids.length} karakter güncellendi`,'ok');
+  },
+  async applyOne(){
+    const c=this.last, before=this.lastBefore; if(!c) return;
+    await Store.upsert(c); if(Prefs.d.relMirror!==false) await syncMirrorRels(c,before?.rels||[]);
+    this.undo=before?[before]:null; $('imp-r-undo').classList.toggle('hidden',!this.undo);
+    this.last=null; $('imp-preview').innerHTML=''; Roster.render(); toast(`${c.ringName} güncellendi`,'ok');
+  },
+  async undoLast(){
+    if(!this.undo?.length) return;
+    for(const c of this.undo) await Store.upsert(c);
+    toast(`${this.undo.length} karakter eski haline döndü`,'ok'); this.undo=null; $('imp-r-undo').classList.add('hidden'); Roster.render();
+  },
+});
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI

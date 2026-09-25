@@ -14,7 +14,7 @@
  *
  * Endpoint'ler:
  *   GET  /health     → {ok:true}
- *   POST /generate   → body: {model?, system?, prompt? | contents?, json?, search?, temperature?, maxOutputTokens?}
+ *   POST /generate   → body: {model?, system?, prompt? | contents?, json?, search?, urls?, temperature?, maxOutputTokens?}
  *                      yanıt: {text, sources[], model, usage}
  */
 
@@ -64,7 +64,11 @@ function buildGeminiBody(b) {
   };
   if (b.system) body.system_instruction = { parts: [{ text: String(b.system) }] };
   // Google Search grounding ile JSON modu her modelde birlikte çalışmıyor → search varsa JSON'u istemci metinden ayrıştırır
-  if (b.search) body.tools = [{ google_search: {} }];
+  // search → Google Search, urls → istemin içindeki linkleri okur (url_context)
+  const tools = [];
+  if (b.search) tools.push({ google_search: {} });
+  if (b.urls) tools.push({ url_context: {} });
+  if (tools.length) body.tools = tools;
   else if (b.json) body.generationConfig.responseMimeType = 'application/json';
   return body;
 }
