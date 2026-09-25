@@ -848,6 +848,48 @@ body.ss .gmonly{display:none!important}
   .dz-belts{grid-template-columns:repeat(2,minmax(0,1fr))}
   .dz-brands{grid-template-columns:1fr}
 }
+/* ═══ DRAFT ═══ */
+.dr-pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dr-opt{background:var(--bg2);border:1px solid var(--ln);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.dr-opt>i{font-size:22px;color:var(--gold)}
+.dr-opt b{font-size:15px}
+.dr-opt span{font-size:12.5px;color:var(--t1)}
+.dr-sc{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+.dr-prog{height:4px;border-radius:2px;background:var(--bg4);overflow:hidden;margin-bottom:12px}
+.dr-prog i{display:block;height:100%;background:var(--gold);transition:width .2s}
+.dr-card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;align-items:start}
+.dr-vis.rc{cursor:default;content-visibility:visible}
+.dr-vis.rc:hover{transform:none;box-shadow:none}
+.dr-vis .rc-hero{height:auto;aspect-ratio:3/4}
+.dr-vis .rc-hero .rnd{left:0;right:0;width:100%;height:92%;margin:0 auto}
+.dr-vis .rc-ava{left:50%;top:45%;bottom:auto;transform:translate(-50%,-50%)}
+.dr-vis .rc-ava .ava{width:90px;height:90px;font-size:30px}
+.dr-vis .rc-cap,.dr-vis .rc-ovr{display:none}
+.dr-info .rc-sub{white-space:normal}
+.dr-info{display:flex;flex-direction:column;gap:8px;min-width:0}
+.dr-g{font-size:13px;color:var(--t1);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.dr-rels{display:flex;flex-wrap:wrap;gap:5px}
+.dr-rel{font-size:11.5px;padding:2px 8px;border-radius:10px;background:var(--bg3);border:1px solid var(--ln);color:var(--t1)}
+.dr-rel i{font-style:normal;font-size:10.5px}
+.dr-brands{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.dr-b{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:12px 12px 10px;border-radius:11px;border:1px solid var(--ln2);border-top:3px solid var(--bc,var(--t3));background:linear-gradient(180deg,color-mix(in srgb,var(--bc,#888) 12%,var(--bg3)),var(--bg3));color:var(--t0);text-align:left;transition:transform .08s,border-color .12s}
+.dr-b:hover{transform:translateY(-2px);border-color:var(--bc,var(--t2))}
+.dr-b b{font-size:15px;color:var(--bc,var(--t0))}
+.dr-b small{font-size:11px;color:var(--t2)}
+.dr-b img{height:24px;max-width:90px;object-fit:contain}
+.dr-b kbd{position:absolute;right:8px;top:6px;font-family:var(--mono);font-size:10px;color:var(--t3);border:1px solid var(--ln2);border-radius:4px;padding:0 5px}
+.dr-b.hint{box-shadow:0 0 0 2px var(--gold)}
+.dr-b.cur{outline:1px dashed var(--t2);outline-offset:2px}
+.dr-b.none{--bc:var(--t3)}
+@media(max-width:760px){
+  .dr-pick{grid-template-columns:1fr}
+  .dr-card{grid-template-columns:110px minmax(0,1fr);gap:10px}
+  .dr-card .rc-nm{font-size:22px!important}
+  .dr-vis .rc-ava .ava{width:60px;height:60px;font-size:20px}
+  .dr-g{-webkit-line-clamp:3;font-size:12px}
+  .dr-brands{grid-template-columns:1fr 1fr}
+  #dr-foot .muted,.dr-b kbd{display:none}
+}
 </style>
 </head>
 
@@ -6839,6 +6881,156 @@ Roster.filterOwner=function(pid){ UI.show('roster'); if(pid===Me.id){ $('r-own')
 Roster.sortBy=function(k){ RS.d.sort=k; RS.save(); if($('rs-sort')) $('rs-sort').value=k; UI.show('roster'); this.render(); };
 Bus.on('history',()=>{ if(UI.page==='dash') Dash.render(); });
 Bus.on('tweets',()=>{ if(UI.page==='dash') Dash.render(); });
+
+/* ════════════════════════════════════════════════════════════
+   TEK TEK DRAFT — GM her superstarı alfabetik sırayla bir markaya atar
+════════════════════════════════════════════════════════════ */
+const Draft = {
+  st:null,
+  ask(){
+    const brands=Univ.brands(); if(!brands.length){ toast('Önce marka ekle','err'); return; }
+    const W=Store.chars('wrestler'), unb=W.filter(c=>!Univ.brand(c.brandId)).length;
+    $('dr-title').textContent='Draft';
+    $('dr-body').innerHTML=`<div class="dr-pick">
+      <div class="dr-opt" data-m="one"><i class="fas fa-hand-pointer"></i><b>Tek tek draft</b><span>Superstarlar alfabetik sırayla gelir, her birine sen marka seçersin. Her seçim anında kaydedilir; yarıda bırakıp sonra devam edebilirsin.</span>
+        <div class="dr-sc"><button class="btn gold sm" data-s="free">Markasızlar (${unb})</button><button class="btn sm" data-s="all">Tüm kadro (${W.length}) — yeniden draft</button></div></div>
+      <div class="dr-opt"><i class="fas fa-shuffle"></i><b>Otomatik draft</b><span>Markasız ${unb} güreşçiyi markalar arasında rastgele ve dengeli dağıtır.</span>
+        <div class="dr-sc"><button class="btn sm" id="dr-auto" ${unb?'':'disabled'}>Otomatik dağıt</button></div></div></div>`;
+    $('dr-foot').innerHTML=`<button class="btn" onclick="UI.close('md-draft')">Kapat</button>`;
+    $('dr-body').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>this.start(b.dataset.s));
+    $('dr-auto').onclick=async()=>{ UI.close('md-draft'); await BrandsPage.draft(); };
+    UI.open('md-draft');
+  },
+  start(scope){
+    const list=Store.chars('wrestler').filter(c=>scope==='all'||!Univ.brand(c.brandId)).sort((a,b)=>a.ringName.localeCompare(b.ringName,'tr')).map(c=>c.id);
+    if(!list.length){ toast('Draft edilecek superstar yok'); return; }
+    this.st={list,i:0,hist:[],scope,done:0};
+    if(!this._keys){ this._keys=true; document.addEventListener('keydown',e=>this.key(e)); }
+    this.render();
+  },
+  cur(){ const s=this.st; return s?Data.char(s.list[s.i]):null; },
+  /** dosyadaki "brand" yazısı ya da promosyon bir markayla eşleşiyorsa öneri */
+  hint(c){
+    const txt=[c.brand,c.promotion].filter(Boolean).map(x=>String(x).toLocaleLowerCase('tr'));
+    return Univ.brands().find(b=>txt.some(t=>t===b.name.toLocaleLowerCase('tr')||t.includes(b.name.toLocaleLowerCase('tr'))))?.id||null;
+  },
+  render(){
+    const s=this.st, c=this.cur();
+    if(!c){ return this.finish(); }
+    const brands=Univ.brands(), W=Store.chars('wrestler'), hint=this.hint(c), curB=Univ.brand(c.brandId);
+    const pct=Math.round(s.i/s.list.length*100);
+    $('dr-title').textContent=`Draft · ${s.i+1} / ${s.list.length}`;
+    const rels=(Data.char(c.id)?relsOf(c):[]).filter(r=>['tag','stable','ally','feud','manager','client','romance','family'].includes(r.type)).slice(0,6)
+      .map(r=>{ const o=Data.char(r.id); if(!o) return ''; const b=Univ.brand(o.brandId); return `<span class="dr-rel">${REL_TYPES[r.type]?.ic||'•'} ${esc(o.ringName)}${b?` <i style="color:${esc(b.color)}">● ${esc(b.name)}</i>`:''}</span>`; }).join('');
+    $('dr-body').innerHTML=`<div class="dr-prog"><i style="width:${pct}%"></i></div>
+      <div class="dr-card">
+        <div class="dr-vis rc poster al-${c.alignment}">${Roster.heroHTML(c,true)}</div>
+        <div class="dr-info">
+          <div class="rc-nm" style="font-size:30px;color:var(--${c.alignment==='heel'?'heel':c.alignment==='face'?'face':'tw'})">${esc(c.ringName)}</div>
+          <div class="rc-sub">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(c.promotion||'')}${c.brand?` · dosyada: <b style="color:var(--t0)">${esc(c.brand)}</b>`:''}</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span class="tag al-${c.alignment}">${ALIGN_TR[c.alignment]||''}</span>${c.gender?`<span class="tag neutral">${c.gender==='f'?'♀ Kadın':'♂ Erkek'}</span>`:''}<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span><span class="tag neutral">OVR ${ovrOf(c)}</span><span class="tag neutral">POP ${c.popularity||50}</span><span class="tag neutral">${c.record.w}-${c.record.l}</span>${beltsMini(c.id)}</div>
+          <div class="dr-g">${esc(c.gimmick||c.bio||'')}</div>
+          ${rels?`<div class="dr-rels">${rels}</div>`:''}
+          ${curB?`<div class="muted" style="font-size:12px">Şu anki markası: <b style="color:${esc(curB.color)}">${esc(curB.name)}</b></div>`:''}
+        </div>
+      </div>
+      <div class="dr-brands">${brands.map((b,k)=>{ const r=W.filter(x=>x.brandId===b.id);
+        return `<button class="dr-b ${hint===b.id?'hint':''} ${curB?.id===b.id?'cur':''}" style="--bc:${esc(b.color||'#888')}" data-b="${b.id}">
+          <kbd>${k+1}</kbd>${b.logo?.url?`<img src="${esc(b.logo.url)}" alt="" onerror="this.remove()">`:''}<b>${esc(b.name)}</b>
+          <small>${r.length} kişi · ♀ ${r.filter(x=>x.gender==='f').length}${hint===b.id?' · öneri':''}</small></button>`; }).join('')}
+        <button class="dr-b none" data-b=""><kbd>0</kbd><b>Markasız</b><small>serbest / ortak</small></button>
+      </div>`;
+    $('dr-foot').innerHTML=`<span class="muted" style="margin-right:auto;font-size:11.5px">Klavye: 1-${brands.length} marka · 0 markasız · S atla · ⌫ geri al</span>
+      <button class="btn" id="dr-undo" ${s.hist.length?'':'disabled'}><i class="fas fa-rotate-left"></i> Geri al</button>
+      <button class="btn" id="dr-skip">Atla <i class="fas fa-forward"></i></button>
+      <button class="btn gold" id="dr-end">Bitir</button>`;
+    $('dr-body').querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>this.pick(b.dataset.b));
+    $('dr-undo').onclick=()=>this.undo(); $('dr-skip').onclick=()=>this.skip(); $('dr-end').onclick=()=>this.finish();
+    UI.open('md-draft');
+  },
+  async pick(bid){
+    const s=this.st, c=this.cur(); if(!c||this._busy) return; this._busy=true;
+    try{
+      s.hist.push({id:c.id,prev:c.brandId||null,i:s.i});
+      const nb=bid||null;
+      if((c.brandId||null)!==nb){ await Store.upsert({...Store.get(c.id),brandId:nb}); s.done++; }
+      s.i++; this.render();
+    } finally { this._busy=false; }
+  },
+  skip(){ const s=this.st; if(!s) return; s.hist.push({id:null,i:s.i}); s.i++; this.render(); },
+  async undo(){
+    const s=this.st, h=s?.hist.pop(); if(!h) return;
+    if(h.id){ const c=Store.get(h.id); if(c && (c.brandId||null)!==h.prev){ await Store.upsert({...c,brandId:h.prev}); s.done=Math.max(0,s.done-1); } }
+    s.i=h.i; this.render();
+  },
+  finish(){
+    const s=this.st; this.st=null; UI.close('md-draft');
+    if(s) toast(`Draft bitti — ${s.done} superstar markaya atandı`,'ok');
+    if(UI.page==='brands') BrandsPage.render(); if(UI.page==='dash') Dash.render();
+  },
+  key(e){
+    if(!this.st || !$('md-draft').classList.contains('on') || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    const brands=Univ.brands();
+    if(/^[1-9]$/.test(e.key) && brands[+e.key-1]){ e.preventDefault(); this.pick(brands[+e.key-1].id); }
+    else if(e.key==='0'){ e.preventDefault(); this.pick(''); }
+    else if(e.key==='s'||e.key==='S'){ e.preventDefault(); this.skip(); }
+    else if(e.key==='Backspace'){ e.preventDefault(); this.undo(); }
+    else if(e.key==='Escape'){ this.finish(); }
+  },
+};
+(function(){
+  const d=document.createElement('div'); d.className='mbd'; d.id='md-draft';
+  d.innerHTML=`<div class="mbox" style="max-width:860px"><div class="mhd"><span class="mti" id="dr-title">Draft</span><button class="mcl" onclick="Draft.finish()">✕</button></div>
+    <div class="mbdy" id="dr-body"></div><div class="mft" id="dr-foot"></div></div>`;
+  document.body.appendChild(d);
+})();
+/* "Draft" butonu artık seçim ekranını açar (otomatik dağıtım da orada) */
+document.addEventListener('DOMContentLoaded',()=>{
+  const _r=BrandsPage.render;
+  BrandsPage.render=function(){ _r.apply(this,arguments);
+    document.querySelectorAll('button[onclick="BrandsPage.draft()"]').forEach(b=>{ b.setAttribute('onclick','Draft.ask()'); b.innerHTML=b.innerHTML.replace('fa-shuffle','fa-people-arrows'); }); };
+});
+
+/* ════════════════════════════════════════════════════════════
+   X (TWITTER) KULLANICI ADLARINI DOLDUR
+   Elle girilmiş kullanıcı adına dokunmaz; boş olanlara ring adından üretir:
+   "Cody Rhodes" → CodyRhodes · 'Seth "Freakin" Rollins' → SethRollins · "Finn Bálor" → FinnBalor · "Hiroshi Tanahashi" → Tanahashi
+════════════════════════════════════════════════════════════ */
+function handleFromName(name){
+  const tr={ı:'i',İ:'I',ş:'s',Ş:'S',ğ:'g',Ğ:'G',ç:'c',Ç:'C',ö:'o',Ö:'O',ü:'u',Ü:'U',ß:'ss',ø:'o',Ø:'O',æ:'ae',Æ:'AE',ł:'l',Ł:'L',đ:'d',Đ:'D'};
+  let n=String(name||'').replace(/["“”«»][^"“”«»]*["“”«»]/g,' ')   // tırnaklı lakabı at
+    .replace(/[ıİşŞğĞçÇöÖüÜßøØæÆłŁđĐ]/g,ch=>tr[ch]).normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/&/g,' and ').replace(/[^A-Za-z0-9_ .'-]/g,' ');
+  const words=n.split(/[\s.'-]+/).filter(Boolean).map(w=>w[0].toUpperCase()+w.slice(1));
+  const cl=x=>x.replace(/[^A-Za-z0-9_]/g,'');
+  const cands=[words.join(''),words.length>2?words[0]+words[words.length-1]:'',words[words.length-1]||''].map(cl).filter(Boolean);
+  return (cands.find(x=>x.length<=15)||cands[0]||'').slice(0,15);   // tam ad → ad+soyad → soyad (X sınırı 15)
+}
+const XFill = {
+  plan(){
+    const all=Store.chars(), used=new Set(all.map(c=>(c.social?.x||'').toLowerCase()).filter(Boolean));
+    const todo=[];
+    for(const c of Store.chars('wrestler').filter(c=>!c.social?.x)){
+      let h=handleFromName(c.ringName||c.name); if(!h) continue;
+      let k=2, base=h; while(used.has(h.toLowerCase())){ const suf=String(k++); h=base.slice(0,15-suf.length)+suf; }
+      used.add(h.toLowerCase()); todo.push({c,h});
+    }
+    return todo;
+  },
+  async run(){
+    if(!Univ.isGM()){ toast('Bu işlem GM modunda yapılır','err'); return; }
+    const todo=this.plan(), keep=Store.chars('wrestler').filter(c=>c.social?.x).length;
+    if(!todo.length){ toast(`Tüm superstarların X kullanıcı adı zaten dolu (${keep})`,'ok'); return; }
+    const ex=todo.slice(0,6).map(x=>`${x.c.ringName} → @${x.h}`).join('\n');
+    if(!confirm(`${todo.length} superstara X kullanıcı adı yazılacak (elle girilmiş ${keep} tanesine dokunulmayacak).\n\nÖrnek:\n${ex}${todo.length>6?'\n…':''}\n\nDevam edilsin mi?`)) return;
+    let n=0; for(const {c,h} of todo){ await Store.upsert({...Store.get(c.id),social:{...(c.social||{}),x:h,xAuto:true}}); n++; }
+    toast(`${n} superstarın X kullanıcı adı dolduruldu`,'ok'); Roster.render();
+  },
+};
+/* kadro araç çubuğuna GM butonu */
+(function(){ const acts=document.querySelector('#rs-bar .rs-acts'); if(!acts) return;
+  const b=document.createElement('button'); b.className='btn gmonly'; b.title='Boş X (Twitter) kullanıcı adlarını ring adından doldur'; b.innerHTML='<b style="font-size:13px">𝕏</b><span class="t"> Adları doldur</span>';
+  b.onclick=()=>XFill.run(); acts.insertBefore(b,acts.querySelector('[title="JSON indir"]')); })();
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
