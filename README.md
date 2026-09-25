@@ -63,6 +63,17 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
   **Kalanı simüle et** tüm şovu bitirir. Markalar & Şovlar sayfasından brand, şov, draft; Kemerler'den şampiyonlar.
 - **Süperstar modu:** Sol üstten bir güreşçi seç → sadece onunla yazarsın, maçlarında sıra sana gelince hamle çubuğu açılır.
   Panelde kariyerin (rekor, kemer, popülerlik) ve sıradaki bookinglerin görünür.
+- **Maç formatları:** 1v1, 2v2 … 5v5, handikap (1v2, 1v5, 3v5…), Triple Threat, Fatal 4-Way, 6-Pack, takım triple threat,
+  Battle Royal, **Royal Rumble (30)** — her şey. Maç kurucuda hazır formatlar + "Taraf ekle / Üye ekle" + "Rastgele doldur".
+  Takımlı maçlarda **tag kuralları** (her takımdan bir legal güreşçi, diğerleri apronda, "Tag at" / hot tag) ya da **Tornado** (herkes legal).
+  Çok kişili maçta hamle yaparken **hedef rakibi** seçersin; başkaları tuşu / tutuşu bozabilir.
+- **Maç türleri:** Standart, No DQ, No Holds Barred, Street Fight, Extreme Rules, Hardcore, Falls Count Anywhere, Submission,
+  "I Quit", Last Man Standing, Tables, Ladder, TLC, Money in the Bank, Steel Cage (kafesten kaçış), Hell in a Cell, Iron Man,
+  Survivor Series Elimination, Elimination Chamber, Gauntlet, WarGames, Battle Royal, Royal Rumble. Hem serbest maçlarda hem şovlarda
+  (şov sayfasında "Maç" butonu); AI booker da bu türleri ve formatları kullanır. Kalabalık maçlarda "Hızlı AI turları" açık gelir.
+  Takım kemerleri: takım kazanırsa kemer tüm üyelere geçer.
+- **Serbest maçlar:** yan panelde her maçın üstüne gelince **arşive gönder / tamamen sil**; "süpürge" biten maçları topluca arşivler,
+  kutu simgesi arşivi açar (geri al / sil). Tamamen silmek odayı, mesajları ve Geçmiş kaydını siler; rekorlar değişmez.
 - **Segment tipleri:**
   - *Maç* → canlı motor: can, dayanıklılık, momentum, uzuv hasarı, imza/finisher, pin sayımı (2.9!), submission, DQ, LMS.
     Script zar atar, AI (hakem/DM) emote'u puanlar ve sonucu en fazla ±1-2 kademe kaydırır, yorumcular ve seyirci anlatır.
