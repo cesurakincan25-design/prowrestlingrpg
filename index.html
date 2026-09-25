@@ -553,6 +553,54 @@ body.ss .gmonly{display:none!important}
 .pk-meta{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--t2);white-space:nowrap}
 .pick small{margin-left:8px!important}
 .xh{text-decoration:none;cursor:pointer;text-transform:none;letter-spacing:0}.xh:hover{color:var(--t0);border-color:var(--t2)}
+/* ── çok kişilik maçlar ── */
+#mb-body .erow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+#mb-body .ff{display:flex;flex-direction:column;flex:1 1 100%;min-width:0}
+#mb-body .ff.half{flex:1 1 180px}
+#mb-body .hint{margin-top:3px;color:var(--t2)}
+#mb-body .chips{max-height:92px;overflow-y:auto}
+.mb-fmt{font-family:var(--mono);font-size:11px;color:var(--t1);padding:6px 10px;background:var(--bg1);border-radius:8px;border:1px solid var(--ln)}
+.mb-fmt b{color:var(--gold);font-size:13px}
+.mb-sides{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
+.mb-side{flex:1 1 220px;min-width:200px;background:var(--bg1);border:1px solid var(--ln);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:5px}
+.mb-sides.big .mb-side{flex-basis:100%}
+.mb-sides.big .mb-side{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:5px}
+.mb-sides.big .mb-sh,.mb-sides.big [data-addm]{grid-column:1/-1}
+.mb-sh{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--t1)}
+.mb-row{display:flex;gap:4px;align-items:center}
+.mb-row select{flex:1;min-width:0;font-size:12px;padding:5px 6px}
+.mb-row .mb-ctl{flex:0 0 110px}
+.mb-no{font-family:var(--mono);font-size:10px;color:var(--t2);width:18px;text-align:right}
+.mf{display:flex;gap:7px;align-items:center;padding:4px 5px;border-radius:7px;border:1px solid transparent}
+.mf.turn{border-color:var(--gold);background:var(--gold-d)}
+.mf.out{opacity:.45}.mf.wait{opacity:.65}
+.mf-b{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mf-n{font-size:12.5px;font-weight:600;display:flex;gap:5px;align-items:center;white-space:nowrap;overflow:hidden}
+.mf-n small{font-family:var(--mono);font-size:9px;color:var(--t2);font-weight:400}
+.mf .mbar,.ms .mbar{height:3px}
+.mstrip{display:flex;gap:6px;width:100%;overflow-x:auto;align-items:stretch}
+.ms{flex:1;min-width:90px;border:1px solid var(--ln);border-top:2px solid var(--sc);border-radius:7px;padding:4px 7px;display:flex;flex-direction:column;gap:2px;background:var(--bg2)}
+.ms.turn{border-color:var(--gold)}
+.ms .n{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chip.sp{border-color:rgba(176,126,232,.5);color:var(--tw)}
+.vs-card.multi .vs-stage{height:220px}
+.vs-side.m{clip-path:none;margin:0;display:flex;justify-content:center;position:relative}
+.vs-mem{position:absolute;bottom:0;height:100%;width:calc(100% / var(--n) + 30%);left:calc((100% - (100% / var(--n) + 30%)) * var(--i) / max(1, var(--n) - 1))}
+.vs-mem:only-child{left:0;width:100%}
+.vs-mem .vs-r{position:absolute;inset:6% 0 0 0}
+.vs-x.sm{position:relative;left:auto;top:auto;transform:skewX(-8deg);align-self:center;font-size:30px;flex:0 0 auto;margin:0 -4px}
+.vs-names.m{display:flex;justify-content:space-around;gap:8px;text-align:center}
+.vs-names.m .vs-n b{font-size:15px}
+.vs-crowd{padding:14px;text-align:center}
+.vs-bigt{font-family:var(--disp);font-size:34px;letter-spacing:.04em;color:var(--gold);text-shadow:0 0 22px rgba(227,179,65,.45)}
+.vs-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.vs-g{position:relative}
+.vs-g small{position:absolute;right:-3px;bottom:-3px;font-family:var(--mono);font-size:8px;background:var(--bg0);border-radius:6px;padding:0 3px;color:var(--t2)}
+.room .rm-act{display:none;gap:7px;margin-left:auto;font-size:10.5px;color:var(--t2)}
+.room:hover .rm-act{display:inline-flex}
+.room .rm-act i:hover{color:var(--heel)}
+.sb-sec span button{background:none;border:none;color:var(--t2);cursor:pointer}
+@media(max-width:640px){.vs-card.multi .vs-stage{height:170px}.mb-row .mb-ctl{flex-basis:90px}}
 </style>
 </head>
 
@@ -602,7 +650,7 @@ body.ss .gmonly{display:none!important}
     <div id="sb-live"></div>
     <div class="sb-sec">Kanallar <button onclick="RoomNew.open()" title="Kanal aç"><i class="fas fa-plus"></i></button></div>
     <div id="sb-channels"></div>
-    <div class="sb-sec">Serbest maçlar <button onclick="MatchSetup.open()" title="Şov dışı maç"><i class="fas fa-plus"></i></button></div>
+    <div class="sb-sec">Serbest maçlar <span style="display:flex;gap:2px"><button onclick="Rooms.archiveDone()" title="Biten serbest maçları arşive gönder"><i class="fas fa-broom"></i></button><button onclick="Rooms.openArchive()" title="Arşiv"><i class="fas fa-box-archive"></i><span id="sb-arch-n" style="font-size:9px;margin-left:2px"></span></button><button onclick="MatchSetup.open()" title="Şov dışı maç"><i class="fas fa-plus"></i></button></span></div>
     <div id="sb-matches"></div>
     <div class="sb-sec">Mesajlar <button onclick="RoomNew.openDM()" title="Yeni DM"><i class="fas fa-plus"></i></button></div>
     <div id="sb-dms"></div>
@@ -632,7 +680,7 @@ body.ss .gmonly{display:none!important}
         <div id="composer">
           <div id="movebar" class="hidden">
             <div class="cmp-top"><span class="mt" id="mv-title">SIRA SENDE</span><div style="flex:1"></div><div class="chips" id="mv-cats"></div></div>
-            <div class="cmp-top"><select id="mv-move" style="flex:1;min-width:160px"></select><span class="hint dk">Aşağıya emote'unu yaz → <b>Hamle</b></span></div>
+            <div class="cmp-top"><select id="mv-tgt" style="max-width:220px;display:none"></select><select id="mv-move" style="flex:1;min-width:160px"></select><span class="hint dk">Aşağıya emote'unu yaz → <b>Hamle</b></span></div>
             <div class="mv-desc" id="mv-desc"></div>
           </div>
           <div class="cmp-top" id="cmp-asrow">
@@ -894,6 +942,16 @@ body.ss .gmonly{display:none!important}
   <div class="mft"><span id="fm-extra" style="margin-right:auto"></span><button class="btn" onclick="UI.close('md-form')">İptal</button><button class="btn gold" id="fm-go"><i class="fas fa-check"></i> Kaydet</button></div>
 </div></div>
 
+<div class="mbd" id="md-mb"><div class="mbox" style="max-width:820px">
+  <div class="mhd"><span class="mti" id="mb-title">Maç kur</span><button class="mcl" onclick="UI.close('md-mb')">✕</button></div>
+  <div class="mbdy" id="mb-body"></div>
+  <div class="mft"><button class="btn" onclick="UI.close('md-mb')">İptal</button><button class="btn gold" id="mb-go" onclick="MatchBuilder.go()">Başlat</button></div>
+</div></div>
+<div class="mbd" id="md-arch"><div class="mbox" style="max-width:640px">
+  <div class="mhd"><span class="mti">Serbest maç arşivi</span><button class="mcl" onclick="UI.close('md-arch')">✕</button></div>
+  <div class="mbdy" id="arch-body"></div>
+  <div class="mft"><button class="btn" onclick="UI.close('md-arch')">Kapat</button></div>
+</div></div>
 <div id="toast"></div>
 <div id="preshow"></div>
 <div id="music">
@@ -2810,7 +2868,9 @@ Kemerler: ${titles.map(t=>`${t.name} [${TITLE_DIV[t.division||'open']}, ${TITLE_
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
 Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Intergender (erkek vs kadın) maç yapabilirsin ama nadir olsun ve hikâye gerekçesi olsun (ör. feud, menajer, karma rekabet); öyle bir maçta "intergender":true yaz. Kemer maçlarında kemerin bölümüne (Erkekler / Kadınlar / Açık) uy. Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
-JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|nodq|submission|lms","title":"kemer adı ya da boş","intergender":false,"note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
+Maç türleri: ${Object.entries(MT).map(([k,v])=>`${k} (${v.tr})`).join(', ')}.
+Formatlar "sides" ile: her iç liste bir taraf. Ör: tekli [["A"],["B"]], tag 2v2 [["A","B"],["C","D"]], triple threat [["A"],["B"],["C"]], handikap [["A"],["B","C"]]. battle / rumble için herkes ayrı taraf. TV'de çoğunlukla tekli ve tag, arada triple threat / handikap; PLE'de büyük maçlar (ladder, cage, hiac, tlc, chamber, mitb, wargames, rumble…) kullan. Takım kemerlerini tag maçlarında ver.
+JSON: {"segments":[{"type":"match","sides":[["isim"],["isim"]],"matchType":"standard","title":"kemer adı ya da boş","intergender":false,"note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
       offline:()=>this.offline(ev,roster,titles,nm,np,staffPool)});
     let segs=(r.data?.segments||[]).slice(0,12);
     for(const s of existing){ await B.del('rooms/'+s.id); Data.rooms.delete(s.id); }
@@ -2818,13 +2878,21 @@ JSON: {"segments":[{"type":"match","a":"isim","b":"isim","matchType":"standard|n
     for(const s of segs){
       try{
         if(s.type==='match'){
-          const a=Data.findCharByName(s.a,roster), b=Data.findCharByName(s.b,roster);
-          if(!a||!b||a.id===b.id||used.has(a.id)||used.has(b.id)) continue;
+          const raw=Array.isArray(s.sides)&&s.sides.length?s.sides:[[s.a],[s.b]];
+          const seen=new Set();
+          const sides=raw.map(x=>(Array.isArray(x)?x:[x]).map(n=>Data.findCharByName(String(n||''),roster)).filter(c=>c&&!seen.has(c.id)&&!used.has(c.id)&&seen.add(c.id))).filter(x=>x.length);
+          const mtype=MT[s.matchType]?s.matchType:'standard';
+          if(sides.flat().length<2 || (sides.length<2 && !MT[mtype].over)) continue;
+          const all=sides.flat();
           let t=titles.find(x=>s.title&&x.name.toLowerCase()===String(s.title).toLowerCase())||(s.title?titles.find(x=>String(s.title).toLowerCase().includes(x.name.toLowerCase().split(' ').pop())):null);
-          if(isIG(a,b) && !confirm(`AI bir INTERGENDER maç önerdi:\n\n${a.ringName} vs ${b.ringName}${t?` (${t.name})`:''}${s.note?`\n"${s.note}"`:''}\n\nKarta eklensin mi?`)) continue;
-          if(t && (!titleEligible(t,a)||!titleEligible(t,b))) t=null;   // bölüme uymayan kemer maçı → kemersiz
-          used.add(a.id); used.add(b.id);
-          await Show.addSeg(eventId,{type:'match',a:a.id,b:b.id,mtype:MTYPES[s.matchType]?s.matchType:'standard',titleId:t&&[a.id,b.id].includes(t.holder)?t.id:(t&&!t.holder?t.id:null),note:s.note||''});
+          const lbl=sides.map(x=>x.map(c=>c.ringName).join(' & ')).join(' vs ');
+          const ig=sides.some((x,i)=>sides.some((y,j)=>i!==j&&x.some(a=>y.some(b=>isIG(a,b)))));
+          if(ig && !confirm(`AI bir INTERGENDER maç önerdi:\n\n${lbl}${t?` (${t.name})`:''}${s.note?`\n"${s.note}"`:''}\n\nKarta eklensin mi?`)) continue;
+          if(t && all.some(c=>!titleEligible(t,c))) t=null;   // bölüme uymayan kemer maçı → kemersiz
+          const holders=t?(t.holders?.length?t.holders:[t.holder]).filter(Boolean):[];
+          if(t && holders.length && !all.some(c=>holders.includes(c.id))) t=null;   // şampiyon maçta değilse kemer yok
+          all.forEach(c=>used.add(c.id));
+          await Show.addSeg(eventId,{type:'match',sides:sides.map(x=>x.map(c=>({cid:c.id}))),mtype,titleId:t?.id||null,note:s.note||''});
         } else if(SEG_TYPES[s.type]){
           const ps=(s.participants||[]).map(x=>Data.findCharByName(x,[...roster,...staffPool])).filter(Boolean).map(c=>c.id);
           if(!ps.length) continue;
@@ -2966,8 +3034,8 @@ const Ev = {
     const st=ev.staff||{};
     const act=[];
     if(gm){
-      if(ev.status==='planned'){ act.push(`<button class="btn gold" onclick="Booker.build('${ev.id}')"><i class="fas fa-wand-magic-sparkles"></i> AI ile kart kur</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn gold" onclick="Show.start('${ev.id}')"><i class="fas fa-play"></i> Şovu başlat</button>`,`<button class="btn" onclick="Ev.staffForm()"><i class="fas fa-user-tie"></i> Ekip</button>`,`<button class="btn red sm" onclick="Ev.del()"><i class="fas fa-trash"></i></button>`); }
-      if(ev.status==='live'){ act.push(`<button class="btn gold" onclick="Show.next('${ev.id}')"><i class="fas fa-forward-step"></i> Sıradaki segment</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn" onclick="Show.simRest('${ev.id}')"><i class="fas fa-forward"></i> Kalanı simüle et</button>`,`<button class="btn red" onclick="Show.finishEvent('${ev.id}')"><i class="fas fa-flag-checkered"></i> Şovu bitir</button>`); }
+      if(ev.status==='planned'){ act.push(`<button class="btn gold" onclick="Booker.build('${ev.id}')"><i class="fas fa-wand-magic-sparkles"></i> AI ile kart kur</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn gold" onclick="Show.start('${ev.id}')"><i class="fas fa-play"></i> Şovu başlat</button>`,`<button class="btn" onclick="Ev.staffForm()"><i class="fas fa-user-tie"></i> Ekip</button>`,`<button class="btn red sm" onclick="Ev.del()"><i class="fas fa-trash"></i></button>`); }
+      if(ev.status==='live'){ act.push(`<button class="btn gold" onclick="Show.next('${ev.id}')"><i class="fas fa-forward-step"></i> Sıradaki segment</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn" onclick="Show.simRest('${ev.id}')"><i class="fas fa-forward"></i> Kalanı simüle et</button>`,`<button class="btn red" onclick="Show.finishEvent('${ev.id}')"><i class="fas fa-flag-checkered"></i> Şovu bitir</button>`); }
     }
     $('ev-body').innerHTML=`
       <div class="tile">
@@ -4558,6 +4626,991 @@ function updHTML(c,{gaps=true}={}){
 /* tek karakter güncellemesini uygula: kayıt zaten refreshOne'da eklendi */
 
 /* ════════════════════════════════════════════════════════════
+   MAÇ MOTORU v2 — çok taraflı maçlar (1v1 … 5v5, handikap, triple threat,
+   battle royal, Royal Rumble 30…) + WWE maç türleri
+   Veri: match.cids (düz liste) · match.sides [[katılımcı index…]…] · match.ctl (katılımcı başına)
+         match.tag (tag kuralları) · match.legal [taraf → ringdeki index] · match.entry (sırayla giriş)
+════════════════════════════════════════════════════════════ */
+const MT = {
+  standard:{tr:'Standart Maç',d:'Pinfall / submission ile kazanılır; obje ve hile DQ.',pins:1,subs:1,dq:1},
+  nodq:{tr:'No Disqualification',d:'Diskalifiye yok, her şey serbest.',pins:1,subs:1},
+  nohb:{tr:'No Holds Barred',d:'Kural yok; pinfall / submission.',pins:1,subs:1},
+  street:{tr:'Street Fight',d:'Sokak kavgası; obje serbest, pinfall / submission her yerde.',pins:1,subs:1},
+  extreme:{tr:'Extreme Rules',d:'Ekstrem kurallar; DQ yok.',pins:1,subs:1},
+  hardcore:{tr:'Hardcore Match',d:'Hardcore; çöp tenekesi, sandalye, her şey serbest.',pins:1,subs:1},
+  fca:{tr:'Falls Count Anywhere',d:'Tuş arenanın her yerinde sayılır; DQ yok.',pins:1,subs:1},
+  submission:{tr:'Submission Match',d:'Sadece submission ile kazanılır.',subs:1,dq:1},
+  iquit:{tr:'"I Quit" Match',d:'Rakip mikrofona "I Quit" demeden bitmez.',subs:1,quit:1},
+  lms:{tr:'Last Man Standing',d:'10 sayıma kadar kalkamayan kaybeder.',ko:1},
+  tables:{tr:'Tables Match',d:'Rakibini masadan geçiren kazanır.',table:1},
+  ladder:{tr:'Ladder Match',d:'Merdivene tırmanıp asılı olanı (kemer / çanta) indiren kazanır.',climb:1},
+  tlc:{tr:'TLC: Tables, Ladders & Chairs',d:'Masa, merdiven, sandalye serbest; asılı olanı indiren kazanır.',climb:1,tableDmg:1},
+  mitb:{tr:'Money in the Bank Ladder Match',d:'Çok kişili merdiven maçı; çantayı indiren kazanır.',climb:1},
+  cage:{tr:'Steel Cage Match',d:'Kafes; pinfall, submission ya da kafesten kaçarak kazanılır.',pins:1,subs:1,escape:1},
+  hiac:{tr:'Hell in a Cell',d:'Hücre maçı; DQ yok, pinfall / submission.',pins:1,subs:1},
+  ironman:{tr:'Iron Man Match',d:'Süre boyunca en çok düşüşü alan kazanır.',pins:1,subs:1,dq:1,iron:1},
+  survivor:{tr:'Survivor Series Elimination',d:'Takım eleme maçı; pinlenen / tap eden elenir, son kalan takım kazanır.',pins:1,subs:1,dq:1,elim:1},
+  chamber:{tr:'Elimination Chamber',d:'İkisi başlar, diğerleri kapsüllerden aralıklarla girer; eleme maçı.',pins:1,subs:1,elim:1,stagger:1},
+  gauntlet:{tr:'Gauntlet Match',d:'Arka arkaya maçlar; kaybeden çıkar, sıradaki girer.',pins:1,subs:1,dq:1,elim:1,gauntlet:1},
+  wargames:{tr:'WarGames',d:'İki ring, kafes; takımlar sırayla girer, herkes aynı anda legal.',pins:1,subs:1,stagger:1,noTag:1},
+  battle:{tr:'Battle Royal',d:'Herkes ringde; ipin üstünden atılan elenir, son kalan kazanır.',over:1,elim:1,noTag:1},
+  rumble:{tr:'Royal Rumble',d:'İkisi başlar, diğerleri aralıklarla girer; ipin üstünden atılan elenir.',over:1,elim:1,stagger:1,noTag:1},
+};
+const MT_GROUPS=[['Temel',['standard','nodq','nohb','street','extreme','hardcore','fca','submission','iquit','lms']],
+  ['Özel',['tables','ladder','tlc','cage','hiac','ironman']],['Çok kişi / eleme',['mitb','survivor','chamber','gauntlet','wargames','battle','rumble']]];
+Object.assign(CAT,{
+  tag:{tr:'Tag at',base:0,cost:-6,diff:0},
+  climb:{tr:'Tırman',base:0,cost:8,diff:0},
+  overTop:{tr:'İpten at',base:0,cost:9,diff:0},
+  table:{tr:'Masadan geçir',base:12,cost:8,diff:6,stat:['power','technique']},
+});
+const SPECIAL_CATS=['tag','climb','overTop'];
+/* MTYPES / MTYPE_TR eski kodda kullanılıyor → yeni listeyle doldur */
+Object.keys(MTYPES).forEach(k=>delete MTYPES[k]); Object.entries(MT).forEach(([k,v])=>{ MTYPES[k]=v.tr; MTYPE_TR[k]=v.tr; });
+
+const MV = {
+  rules(M){ return MT[M?.type]||MT.standard; },
+  /** eski (2 kişilik) maçları ve eksik alanları tamamla */
+  norm(m){
+    if(!m) return m;
+    if(!Array.isArray(m.sides)||!m.sides.length) m.sides=(m.cids||[]).map((_,i)=>[i]);
+    (m.f||[]).forEach(f=>{ if(f.elim===undefined) f.elim=false; if(f.entered===undefined) f.entered=true; if(f.climb===undefined) f.climb=0; });
+    if(!Array.isArray(m.legal)) m.legal=m.sides.map(s=>s.find(i=>m.f[i]?.entered&&!m.f[i]?.elim)??s[0]);
+    m.elimLog ||= []; if(!Array.isArray(m.falls)) m.falls=m.sides.map(()=>0);
+    if(!Array.isArray(m.ctl)) m.ctl=(m.cids||[]).map(()=>'ai');
+    return m;
+  },
+  sideOf(M,i){ return M.sides.findIndex(s=>s.includes(i)); },
+  active(M,i){ const f=M.f[i]; return !!f && f.entered && !f.elim; },
+  inRing(M,i){ return this.active(M,i) && (!M.tag || M.legal[this.sideOf(M,i)]===i); },
+  opponents(M,i){ const s=this.sideOf(M,i); return M.c.map((_,j)=>j).filter(j=>this.sideOf(M,j)!==s && this.inRing(M,j)); },
+  apron(M,i){ if(!M.tag) return []; const s=this.sideOf(M,i); return M.sides[s].filter(j=>j!==i && this.active(M,j)); },
+  alive(M){ return M.sides.map((_,k)=>k).filter(k=>M.sides[k].some(i=>!M.f[i].elim)); },
+  isMulti(M){ return M.sides.length>2 || M.sides.some(s=>s.length>1); },
+  sideName(M,k){ return M.sides[k].map(i=>M.c[i]?.ringName||'?').join(' & '); },
+  title(M){ const n=M.c.length; return (M.sides.length>6)?`${this.rules(M).tr} (${n})`:M.sides.map((_,k)=>this.sideName(M,k)).join(' vs '); },
+  cats(M,i){
+    const R=this.rules(M);
+    const l=ACTION_ORDER.filter(k=>k!=='pin'||R.pins);
+    if(R.table||R.tableDmg) l.splice(l.indexOf('signature'),0,'table');
+    if(R.climb||R.escape) l.push('climb');
+    if(R.over) l.push('overTop');
+    if(M.tag && this.inRing(M,i) && this.apron(M,i).length) l.push('tag');
+    return l;
+  },
+  catLabel(M,k){ if(k==='climb') return this.rules(M).escape?'Kafesten kaç':'Tırman'; return CAT[k]?.tr||k; },
+  /** AI / otomatik hedef seçimi: yerdeki, yorgun, feud'lu rakip öncelikli */
+  pickTarget(M,i){
+    const o=this.opponents(M,i); if(!o.length) return null; if(o.length===1) return o[0];
+    const me=M.c[i];
+    const w=o.map(j=>{ const f=M.f[j]; let s=10+(100-f.hp)*0.25+(f.downed?12:0);
+      const r=relBetween(me,M.c[j]); if(r&&['feud','enemy','rival','betrayed','betrayer'].includes(r.type)) s+=10*(r.lvl||3)/3;
+      return [j,s]; });
+    let t=w.reduce((a,[,s])=>a+s,0)*Math.random();
+    for(const [j,s] of w){ t-=s; if(t<=0) return j; } return o[0];
+  },
+  nextTurn(M,cur){
+    if(M.tag){
+      const n=M.sides.length, s=this.sideOf(M,cur);
+      for(let k=1;k<=n;k++){ const side=(s+k)%n, j=M.legal[side]; if(j!=null && this.active(M,j) && this.opponents(M,j).length) return j; }
+      return cur;
+    }
+    const act=M.c.map((_,j)=>j).filter(j=>this.active(M,j));
+    if(!act.length) return cur;
+    return act.find(j=>j>cur) ?? act[0];
+  },
+  enter(M,i,out){ const f=M.f[i]; if(f.entered) return; f.entered=true; (out.entered ||= []).push(i);
+    const s=this.sideOf(M,i); if(M.tag && (M.legal[s]==null || !this.active(M,M.legal[s]))) M.legal[s]=i; },
+  entries(M,out){
+    if(!M.entry) return;
+    const pool=M.c.map((_,j)=>j).filter(j=>!M.f[j].entered && !M.f[j].elim);
+    if(!pool.length) return;
+    const actN=M.c.map((_,j)=>j).filter(j=>this.active(M,j)).length;
+    if(this.rules(M).gauntlet){ if(actN<2) this.enter(M,pool[0],out); return; }
+    if(M.round>=M.entry.next || actN<2){ this.enter(M,pool[0],out); M.entry.next=M.round+(M.entry.every||2); }
+  },
+  eliminate(M,v,by,method,out){
+    const f=M.f[v]; if(!f||f.elim) return;
+    f.elim=true; f.downed=false;
+    M.elimLog.push({i:v,by,method,round:M.round+1});
+    (out.elims ||= []).push({v,by,method});
+    const s=this.sideOf(M,v);
+    if(M.tag && M.legal[s]===v){ const nx=M.sides[s].find(j=>this.active(M,j)); M.legal[s]=nx??v; }
+    const alive=this.alive(M);
+    if(alive.length<=1){
+      const ws=alive[0];
+      M.over=true;
+      M.result={winners:ws!=null?M.sides[ws].map(i=>M.c[i].id):[],losers:M.c.map((_,j)=>j).filter(j=>this.sideOf(M,j)!==ws).map(j=>M.c[j].id),
+        survivors:ws!=null?M.sides[ws].filter(i=>!M.f[i].elim).map(i=>M.c[i].id):[],method,round:M.round+1,side:ws};
+      M.result.winner=M.result.winners[0]||null; M.result.loser=M.c[v].id;
+    }
+  },
+  applyWin(M,out){
+    const R=this.rules(M), w=out.win, v=w.victim;
+    if(R.iron){
+      const s=this.sideOf(M,w.idx); M.falls[s]=(M.falls[s]||0)+1;
+      if(v!=null){ const f=M.f[v]; f.hp=clamp(f.hp+22,0,100); f.st=clamp(f.st+15,0,100); f.downed=false; f.lastBig=null; }
+      out.fall={side:s,method:w.method}; out.win=null; return;
+    }
+    if(R.elim){ if(v!=null) this.eliminate(M,v,w.idx,w.method,out); out.win=null; return; }
+    const ws=this.sideOf(M,w.idx), ls=v!=null?this.sideOf(M,v):null;
+    M.over=true;
+    M.result={winners:M.sides[ws].map(i=>M.c[i].id),losers:(ls!=null?M.sides[ls]:M.c.map((_,j)=>j).filter(j=>this.sideOf(M,j)!==ws)).map(i=>M.c[i].id),
+      method:w.method,round:M.round+1,side:ws,victim:v!=null?M.c[v].id:null};
+    M.result.winner=M.result.winners[0]; M.result.loser=M.result.victim||M.result.losers[0]||null;
+  },
+  ironEnd(M){
+    const best=Math.max(...M.falls), tops=M.falls.map((n,k)=>n===best?k:-1).filter(k=>k>=0);
+    M.over=true;
+    if(tops.length>1){ M.result={winners:[],losers:[],draw:true,method:`Berabere (${M.falls.join('-')})`,round:M.round}; return; }
+    const ws=tops[0];
+    M.result={winners:M.sides[ws].map(i=>M.c[i].id),losers:M.c.map((_,j)=>j).filter(j=>this.sideOf(M,j)!==ws).map(j=>M.c[j].id),method:`Iron Man (${M.falls.join('-')})`,round:M.round,side:ws};
+    M.result.winner=M.result.winners[0]; M.result.loser=M.result.losers[0];
+  },
+  /** yeni maç nesnesi — serbest maç ve şov segmenti ortak */
+  build(cfg){
+    const rows=(cfg.sides||[]).map(s=>s.filter(x=>x&&Store.get(x.cid||x)));
+    const sides=[], cids=[], ctl=[];
+    rows.forEach(s=>{ const idx=[]; s.forEach(x=>{ const cid=x.cid||x; if(cids.includes(cid)) return; idx.push(cids.length); cids.push(cid); ctl.push(x.ctl||Univ.ctlFor(cid)); }); if(idx.length) sides.push(idx); });
+    if(sides.length<2 && !(MT[cfg.type]?.over && cids.length>=2)) throw new Error('En az iki taraf gerekli');
+    let type=MT[cfg.type]?cfg.type:'standard'; const R=MT[type];
+    // battle royal / rumble: herkes kendi başına (taraf başına 1 kişi)
+    let S=sides; if(R.over && S.some(s=>s.length>1)) S=cids.map((_,i)=>[i]);
+    const f=cids.map(id=>Engine.newFighter(Store.get(id)));
+    const tag=S.some(s=>s.length>1) && !R.noTag && !cfg.tornado;
+    const every=Math.max(1,parseInt(cfg.every)||({rumble:2,chamber:4,wargames:3}[type]||0));
+    let entry=null;
+    if(R.stagger||R.gauntlet){
+      f.forEach(x=>x.entered=false);
+      let first;
+      if(type==='wargames'){ // her takımdan biri başlar, sonra sırayla
+        first=S.map(s=>s[0]);
+        const order=[]; const mx=Math.max(...S.map(s=>s.length)); for(let r=1;r<mx;r++) S.forEach(s=>{ if(s[r]!=null) order.push(s[r]); });
+        entry={every,next:every,order};
+      } else { first=[0,1]; entry={every,next:every}; }
+      first.forEach(i=>{ if(f[i]) f[i].entered=true; });
+      if(entry.order) entry.rank=Object.fromEntries(entry.order.map((j,k)=>[j,k]));   // WarGames: takımlar sırayla
+    }
+    const legal=S.map(s=>s.find(i=>f[i].entered)??s[0]);
+    const inRing=cids.map((_,i)=>i).filter(i=>f[i].entered&&(!tag||legal.includes(i)));
+    const M={type,show:cfg.show||'',story:cfg.story||'',title:cfg.title||'',titleId:cfg.titleId||null,dm:cfg.dm??1,style:cfg.style||null,
+      cids,ctl,sides:S,tag,legal,f,turn:pick(inRing.length?inRing:[0]),round:0,crowd:cfg.crowd||50,refDown:false,
+      entry,elimLog:[],falls:S.map(()=>0),limit:R.iron?(parseInt(cfg.limit)||40):null,tornado:!!cfg.tornado,
+      fast:cfg.fast??(cids.length>6),over:false,result:null,host:cfg.host??null,pending:null,v:0,started:false,
+      sids:cfg.sids||{ref:null,c1:null,c2:null,ann:null}};
+    M.ig=cids.some((a,i)=>cids.some((b,j)=>MV.sideOf(M,i)!==MV.sideOf(M,j)&&isIG(Store.get(a),Store.get(b))));
+    return M;
+  },
+};
+/* wargames giriş sırası: entries() havuzunu rank'a göre sırala */
+{ const _en=MV.entries; MV.entries=function(M,out){ if(M.entry?.rank){ const pool=M.c.map((_,j)=>j).filter(j=>!M.f[j].entered&&!M.f[j].elim).sort((a,b)=>(M.entry.rank[a]??99)-(M.entry.rank[b]??99));
+    if(!pool.length) return; const actN=M.c.map((_,j)=>j).filter(j=>this.active(M,j)).length;
+    if(M.round>=M.entry.next||actN<2){ this.enter(M,pool[0],out); M.entry.next=M.round+(M.entry.every||2); } return; } return _en.call(this,M,out); }; }
+
+/* ── motor ── */
+Engine.newFighter=c=>({id:c.id,hp:100,st:100,mom:15,limbs:{head:0,body:0,arms:0,legs:0},downed:false,counter:false,lastBig:null,dazed:0,elim:false,entered:true,climb:0});
+Engine.T=(M,a)=>M.tgt!=null?M.tgt:(M.c.length===2?1-a:MV.pickTarget(M,a));
+Engine.chance=function(M,a,cat,text){
+  const t=this.T(M,a); const A=M.f[a], D=t!=null?M.f[t]:null, ca=M.c[a], cd=t!=null?M.c[t]:null, k=CAT[cat];
+  const notes=[];
+  if(!D) return {chance:60,notes};
+  const atk = k.stat ? (ca.stats[k.stat[0]]+ca.stats[k.stat[1]])/2 : 60;
+  const def = (cd.stats.speed+cd.stats.technique+cd.stats.toughness)/3;
+  let ch = 58 + (atk-def)*0.4 + (A.mom-D.mom)*0.15 - (k.diff||0);
+  if(A.st<35){ ch -= (35-A.st)*0.7; notes.push('yorgun'); }
+  if(D.downed && cat!=='pin'){ ch += 12; notes.push('rakip yerde'); }
+  if(D.counter){ ch -= 14; notes.push('rakip kontra pozisyonunda'); }
+  if(A.dazed){ ch -= 10; notes.push('sersem'); }
+  if(k.needMom && A.mom<k.needMom){ ch -= (k.needMom-A.mom)*0.6; notes.push('momentum yetersiz'); }
+  if(cat==='aerial' && !D.downed){ ch -= 5; }
+  if(cat==='weapon' && MV.rules(M).dq && !M.refDown) notes.push('DQ riski');
+  const others=MV.opponents(M,a).filter(j=>j!==t&&!M.f[j].downed).length; if(others) { ch-=others*2; notes.push(`${others} rakip daha ringde`); }
+  return {chance:clamp(Math.round(ch),5,95), notes};
+};
+Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,roll=null}={}){
+  const R=MV.rules(M), t=(cat==='tag'||cat==='climb'||cat==='rest'||cat==='counter')?null:this.T(M,a);
+  const A=M.f[a], D=t!=null?M.f[t]:null, ca=M.c[a], cd=t!=null?M.c[t]:null, k=CAT[cat];
+  const out={actorIdx:a,tgt:t,cat,move:moveName,text,events:[],tier:null,roll:null,chance:null,win:null};
+  A.counter=false; if(A.dazed) A.dazed--;
+  if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,100); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
+  if(cat==='counter'){ A.counter=true; A.st=clamp(A.st+4,0,100); A.downed=false; out.tier='hit'; return this._end(M,out,D); }
+  if(cat==='tag'){
+    const ap=MV.apron(M,a); const p=M.tagTo!=null&&ap.includes(M.tagTo)?M.tagTo:ap.sort((x,y)=>M.f[y].hp+M.f[y].st-M.f[x].hp-M.f[x].st)[0];
+    if(p==null){ out.tier='partial'; return this._end(M,out,D); }
+    const hot=A.hp<40, s=MV.sideOf(M,a); M.legal[s]=p; A.downed=false; A.st=clamp(A.st+6,0,100);
+    M.f[p].mom=clamp(M.f[p].mom+(hot?25:10),0,100); M.crowd=clamp(M.crowd+(hot?12:3),0,100);
+    out.tier='hit'; out.events.push(hot?'hot_tag':'tag'); out.tagTo=p; return this._end(M,out,D);
+  }
+  if(cat==='climb'){
+    const opp=MV.opponents(M,a), up=opp.filter(j=>!M.f[j].downed).length;
+    const pen=R.escape?16:10;   // ayakta kalan (en fazla 2) rakip tırmanışı zorlaştırır; kafesten kaçış daha zor
+    const crowdB=opp.length>1?20:0;   // kalabalık merdiven maçında herkes birbirini meşgul eder
+    const ch=clamp(Math.round(20+crowdB+ca.stats.speed/6+A.climb*15+(up?-Math.min(up,2)*pen:30)-(A.hp<20?8:0)-(A.st<20?6:0)+quality*6),6,92);
+    const r=roll??rnd(1,100); out.chance=ch; out.roll=r; A.st=clamp(A.st-8,0,100);
+    if(r<=ch*0.5 && A.climb>=(up||R.escape?2:1)){ out.tier='clean'; out.win={idx:a,victim:null,method:R.escape?'Kafesten kaçtı':(M.type==='mitb'?'Çantayı indirdi':'Merdivenden indirdi')}; out.events.push('climb_win'); }
+    else if(r<=ch){ A.climb++; out.tier='hit'; out.events.push('climb_up'); M.crowd=clamp(M.crowd+4,0,100); }
+    else { A.climb=Math.max(0,A.climb-1); A.hp=clamp(A.hp-7,0,100); A.downed=true; out.tier='countered'; out.events.push('climb_fail');
+      const puller=opp.filter(j=>!M.f[j].downed); if(puller.length){ out.tgt=pick(puller); M.f[out.tgt].mom=clamp(M.f[out.tgt].mom+8,0,100); } }
+    return this._end(M,out,D);
+  }
+  if(cat==='overTop'){
+    if(!D){ out.tier='partial'; return this._end(M,out,D); }
+    const ch=clamp(Math.round(34+(ca.stats.power-cd.stats.toughness)/3+(100-D.hp)*0.35+(A.mom-D.mom)*0.1-(D.downed?8:0)-(D.st>70?8:0)+quality*6),5,90);
+    const r=roll??rnd(1,100); out.chance=ch; out.roll=r; A.st=clamp(A.st-(k.cost||9),0,100);
+    if(r<=ch){ out.tier='clean'; out.elimVictim=t; out.elimMethod='İpin üstünden atıldı'; M.crowd=clamp(M.crowd+6,0,100); }
+    else if(r>ch+40 && A.hp<45){ out.tier='botch'; out.elimVictim=a; out.elimMethod='Kontra — kendisi ipten uçtu'; out.events.push('backfire'); }
+    else { out.tier='partial'; D.st=clamp(D.st-6,0,100); out.events.push('hangs_on'); }
+    return this._end(M,out,D);
+  }
+  if(cat==='taunt'){
+    const ch=this.chance(M,a,'strike',text); out.chance=ch.chance; out.roll=roll??rnd(1,100);
+    const risky=D?!D.downed:false;
+    const score=ch.chance-out.roll+quality*8+(D?.downed?20:0);
+    out.tier=this.tierFromScore(score);
+    if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,100); out.events.push('taunt_punished'); }
+    else { A.mom=clamp(A.mom+12+quality*3,0,100); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
+    A.st=clamp(A.st-k.cost,0,100); A.downed=false;
+    return this._end(M,out,D);
+  }
+  if(!D){ out.tier='partial'; return this._end(M,out,D); }
+  if(cat==='pin') return this._pin(M,a,out,quality);
+  const c=this.chance(M,a,cat,text); out.chance=c.chance; out.notes=c.notes;
+  out.roll=roll??rnd(1,100);
+  let tier=this.tierFromScore(c.chance-out.roll+quality*8);
+  if(aiTier && TIERS.includes(aiTier) && dmPower>0){ const diff=TIERS.indexOf(aiTier)-TIERS.indexOf(tier); tier=this.shiftTier(tier,clamp(diff,-dmPower,dmPower)); }
+  out.tier=tier;
+  const limb=this.limbFrom(moveName+' '+text,cat);
+  let dmg=k.base*(1+(ca.stats.power-60)/200)*(1-(cd.stats.toughness-60)/250);
+  if(cat==='table'&&!R.table) dmg*=1.25;
+  if(cat==='finisher'||cat==='signature'){ A.mom=20; }
+  A.st=clamp(A.st-k.cost,0,100);
+  if(cat==='weapon'){
+    out.events.push('weapon');
+    if(R.dq){ const seen=!M.refDown && Math.random()<0.65;
+      if(seen && tier!=='botch'){ out.win={idx:t,victim:a,method:'DQ'}; out.events.push('dq'); }
+      else if(!seen) out.events.push('ref_missed'); }
+  }
+  const mult={clean:1.3,hit:1,partial:0.5,countered:0,botch:0}[tier];
+  if(mult>0){
+    const d=Math.round(dmg*mult);
+    D.hp=clamp(D.hp-d,0,100); D.limbs[limb]=clamp(D.limbs[limb]+Math.round(d*(cat==='submission'?2.2:1.1)),0,100);
+    D.st=clamp(D.st-Math.round(d/3),0,100);
+    A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,100);
+    D.mom=clamp(D.mom-(tier==='partial'?2:6),0,100);
+    M.crowd=clamp(M.crowd+(cat==='aerial'||cat==='finisher'?10:cat==='signature'||cat==='table'?7:3),0,100);
+    if(['grapple','aerial','signature','finisher','weapon','table'].includes(cat) && tier!=='partial') D.downed=true;
+    if(cat==='finisher' && tier!=='partial'){ D.lastBig='finisher'; D.dazed=1; out.keepTurn=true; }
+    else if(cat==='signature' && tier!=='partial'){ D.lastBig='signature'; if(tier==='clean') out.keepTurn=true; }
+    if(cat==='table' && tier!=='partial'){ out.events.push('table_break'); if(R.table && (D.hp<50||(D.downed&&D.hp<70)) && !out.win) out.win={idx:a,victim:t,method:'Masadan geçirdi'}; }
+    out.dmg=d; out.limb=limb; A.downed=false;
+    if(cat==='submission' && tier!=='partial'){
+      const tapCh=clamp(D.limbs[limb]*0.55+(100-D.hp)*0.35-D.st*0.2-cd.stats.toughness*0.15+(tier==='clean'?10:0),0,90);
+      const r=rnd(1,100); out.tapRoll={r,tapCh:Math.round(tapCh)};
+      if(r<=tapCh && R.subs){ out.win={idx:a,victim:t,method:R.quit?'"I QUIT!"':'Submission'}; out.events.push('tap'); }
+      else if(r<=tapCh){ D.st=clamp(D.st-15,0,100); D.downed=true; out.events.push('escaped'); }
+      else if(Math.random()<0.5) out.events.push('rope_break'); else out.events.push('escaped');
+      // çok kişili maçta başkası tutuşu bozabilir
+      if(out.events.includes('tap') && MV.isMulti(M)){ const br=MV.opponents(M,t).concat(MV.apron(M,t)).filter(j=>j!==a&&!M.f[j].downed&&MV.active(M,j)); if(br.length && Math.random()<0.35){ out.win=null; out.events=out.events.filter(e=>e!=='tap'); out.events.push('sub_broken'); out.broken=pick(br); } }
+    }
+  } else if(tier==='countered'){
+    const back=Math.round(k.base*0.55); A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,100); A.mom=clamp(A.mom-6,0,100); A.downed=cat!=='strike'; D.downed=false;
+    out.backDmg=back; M.crowd=clamp(M.crowd+5,0,100);
+  } else { const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,100); A.downed=true; out.selfDmg=self; M.crowd=clamp(M.crowd-4,0,100); out.events.push('botch'); }
+  if(R.ko && D.downed && D.hp<30 && !out.win){
+    const up=D.hp*1.6+D.st*0.3+cd.stats.toughness*0.3-(D.lastBig==='finisher'?25:0);
+    const r=rnd(1,100); out.lmsRoll={r,up:Math.round(up)};
+    if(r>up){ out.win={idx:a,victim:t,method:'10 Sayım (LMS)'}; out.events.push('lms_ko'); } else out.events.push('lms_up');
+  }
+  return this._end(M,out,D);
+};
+Engine._pin=function(M,a,out,quality){
+  const R=MV.rules(M), t=out.tgt, A=M.f[a], D=M.f[t], cd=M.c[t];
+  A.st=clamp(A.st-3,0,100);
+  if(!R.pins){ out.tier='partial'; out.events.push('pin_invalid'); return this._end(M,out,D); }
+  let kick=18+D.hp*0.62+D.st*0.12+D.mom*0.08+cd.stats.toughness*0.1-quality*4;
+  if(D.lastBig==='finisher') kick-=32; else if(D.lastBig==='signature') kick-=14;
+  if(D.downed) kick-=8; else kick+=25;
+  if(D.counter) kick+=20;
+  kick=clamp(Math.round(kick),3,98);
+  const r=rnd(1,100); out.pinRoll={r,kick};
+  let count=r<=kick*0.45?1:r<=kick?2:3;
+  if(count===3 && MV.isMulti(M)){   // tuşu bozma
+    const br=M.c.map((_,j)=>j).filter(j=>j!==a&&j!==t&&MV.active(M,j)&&!M.f[j].downed&&(MV.inRing(M,j)||MV.sideOf(M,j)===MV.sideOf(M,t)));
+    const mate=br.some(j=>MV.sideOf(M,j)===MV.sideOf(M,t));
+    if(br.length && Math.random()<(mate?0.55:0.35)){ count=2; out.broken=pick(br); out.events.push('pin_broken'); }
+  }
+  out.count=count; out.nearFall=count===2 && (r>kick*0.85 || out.broken!=null);
+  out.tier=count===3?'clean':count===2?'hit':'partial';
+  if(count===3) out.win={idx:a,victim:t,method:'Pinfall'};
+  else { D.mom=clamp(D.mom+(count===2?8:4),0,100); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
+  return this._end(M,out,D);
+};
+Engine._end=function(M,out,D){
+  const a=out.actorIdx, A=M.f[a];
+  A.lastBig=null;
+  if(D && !['finisher','signature'].includes(out.cat)) D.lastBig=null;
+  if(out.elimVictim!=null) MV.eliminate(M,out.elimVictim,out.elimVictim===a?out.tgt:a,out.elimMethod,out);
+  if(out.win && !M.over) MV.applyWin(M,out);
+  M.round++;
+  if(!M.over){
+    MV.entries(M,out);
+    if(out.tagTo!=null) M.turn=out.tagTo;
+    else if(!out.keepTurn || !MV.active(M,a)) M.turn=MV.nextTurn(M,a);
+    M.c.forEach((_,j)=>{ if(j===M.turn||!MV.active(M,j)) return; const f=M.f[j]; if(MV.inRing(M,j)) f.st=clamp(f.st+2,0,100); else { f.st=clamp(f.st+4,0,100); f.hp=clamp(f.hp+1,0,100); } });
+    if(MV.rules(M).iron && M.limit && M.round>=M.limit) MV.ironEnd(M);
+  }
+  M.tgt=null; M.tagTo=null;
+  return out;
+};
+Engine.autoChoose=function(M,i){
+  const R=MV.rules(M), A=M.f[i], c=M.c[i];
+  const t=MV.pickTarget(M,i); M.tgt=t; const D=t!=null?M.f[t]:null;
+  const has=cat=>(c.moves[cat]||[]).length>0;
+  if(M.tag && MV.inRing(M,i) && MV.apron(M,i).length && (A.hp<35||A.st<25) && Math.random()<0.65) return 'tag';
+  if((R.climb||R.escape) && (MV.opponents(M,i).every(j=>M.f[j].downed) ? Math.random()<0.7 : Math.random()<(R.escape?0.03+A.climb*0.08:(MV.opponents(M,i).length>1?0.14:0.06)+A.climb*0.15))) return 'climb';
+  if(!D) return 'rest';
+  if(R.over && (D.downed||D.hp<55) && Math.random()<0.45) return 'overTop';
+  if(R.over && Math.random()<0.12) return 'overTop';
+  if(R.table && (D.hp<55||(D.downed&&D.hp<75)) && Math.random()<0.45) return 'table';
+  if(R.pins && D.downed && (D.lastBig==='finisher'||(D.hp<35&&Math.random()<0.7))) return 'pin';
+  if(A.mom>=75 && has('finisher') && D.hp<60) return 'finisher';
+  if(A.mom>=45 && has('signature') && Math.random()<0.45) return 'signature';
+  if(A.st<25) return Math.random()<0.6?'rest':'strike';
+  if(R.subs && !R.pins && has('submission') && Math.random()<0.5) return 'submission';
+  if(!R.dq && Math.random()<(['hardcore','street','extreme','tlc','hiac','fca'].includes(M.type)?0.2:0.08)) return 'weapon';
+  if(R.dq && c.alignment==='heel' && A.hp<D.hp-25 && Math.random()<0.1) return 'weapon';
+  if(D.downed && has('aerial') && Math.random()<0.4) return 'aerial';
+  if(Math.random()<0.08) return 'taunt';
+  if(Math.random()<0.06) return 'counter';
+  const pool=['strike','strike','grapple','grapple']; if(has('aerial')) pool.push('aerial'); if(has('submission')) pool.push('submission');
+  return pick(pool);
+};
+{ const _mf=Engine.moveFor; Engine.moveFor=function(c,cat,M){ if(cat==='tag') return 'Tag'; if(cat==='climb') return MV.rules(M).escape?'Kafese tırmanır':'Merdivene tırmanır'; if(cat==='overTop') return 'İpin üstünden atma'; if(cat==='table') return (c.moves.grapple||[])[0]?`${c.moves.grapple[0]} (masaya)`:'Masaya Powerbomb'; return _mf.call(this,c,cat); }; }
+
+/* ── offline anlatım: hedef + özel hamleler ── */
+{ const _n=Offline.narr;
+  Offline.narr=function(M,out){
+    const a=M.c[out.actorIdx]?.ringName, d=out.tgt!=null?M.c[out.tgt]?.ringName:'rakibi';
+    if(out.cat==='tag'){ const p=M.c[out.tagTo]?.ringName; return out.events.includes('hot_tag')?`${a} son gücüyle köşesine sürünüyor… ve TAG! ${p} ringe fırtına gibi giriyor!`:`${a} elini uzatıyor, tag: ${p} ringe giriyor.`; }
+    if(out.cat==='climb'){ const w=MV.rules(M).escape?'kafese':'merdivene';
+      return out.events.includes('climb_win')?`${a} en tepeye ulaştı… ${MV.rules(M).escape?'ve kafesten atlıyor!':'VE İNDİRDİ!'}`:out.events.includes('climb_up')?`${a} ${w} tırmanıyor, basamak basamak yükseliyor!`:`${a} ${w} tırmanırken ${out.tgt!=null?M.c[out.tgt].ringName+' onu aşağı çekiyor':'dengesini kaybedip düşüyor'}!`; }
+    if(out.cat==='overTop'){ if(out.events.includes('backfire')) return `${a}, ${d}'ı atmaya çalışırken ters köşeye yattı — kendisi ipin üstünden uçtu!`;
+      return out.elimVictim!=null?`${a}, ${d}'ı ipin üstünden fırlattı! ${d} elendi!`:`${a}, ${d}'ı ipin üstüne kaldırdı ama ${d} ayaklarıyla ipe tutunup kurtuldu!`; }
+    const cM={...M,c:M.c}; const orig=M.c; // eski anlatıcı 1-actorIdx kullanıyor → geçici 2'li görünüm
+    const view={...M,c:[orig[out.actorIdx],out.tgt!=null?orig[out.tgt]:orig[out.actorIdx]]};
+    let s=_n.call(this,view,{...out,actorIdx:0});
+    if(out.events.includes('pin_broken')&&out.broken!=null) s+=` ${M.c[out.broken].ringName} son anda tuşu bozuyor!`;
+    if(out.events.includes('sub_broken')&&out.broken!=null) s+=` ${M.c[out.broken].ringName} araya girip tutuşu bozuyor!`;
+    return s;
+  };
+}
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ AKIŞI (MatchCtl) — çok taraflı
+════════════════════════════════════════════════════════════ */
+MatchCtl.hydrate=function(room){
+  const m=JSON.parse(JSON.stringify(room.match));
+  m.c=m.cids.map(id=>Data.char(id)||normalizeChar({id,name:'Silinmiş karakter'}));
+  const s=m.sids||{}; m.staff={ref:Data.char(s.ref),c1:Data.char(s.c1),c2:Data.char(s.c2),ann:Data.char(s.ann)};
+  return MV.norm(m);
+};
+MatchCtl.create=async function(cfg){
+  if(!cfg.sides && cfg.a && cfg.b) cfg.sides=[[{cid:cfg.a,ctl:cfg.actl}],[{cid:cfg.b,ctl:cfg.bctl}]];
+  const match=MV.build({...cfg,host:Me.id,sids:{ref:cfg.ref||null,c1:cfg.c1||null,c2:cfg.c2||null,ann:cfg.ann||null}});
+  const id='m_'+uid(), now=Date.now(); const name=MV.title(this.hydrate({match}));
+  await B.set('rooms/'+id,{name,kind:'match',topic:cfg.show||'',createdBy:Me.id,createdAt:now,lastAt:now,lastText:'',match});
+  Data.rooms.set(id,{id,name,kind:'match',match,createdAt:now,lastAt:now});
+  Chat.open(id); this.intro(id);
+};
+MatchCtl.sys=function(M){
+  const R=MV.rules(M), big=M.c.length>8;
+  const mv=(c,k)=>(c.moves[k]||[]).map((n,i)=>c.movesDesc?.[k]?.[i]?`${n} [${c.movesDesc[k][i]}]`:n).join(', ');
+  const sheet=c=>big?`- ${c.ringName} (${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) Finisher: ${(c.moves.finisher||[]).join(', ')||'-'}`
+    :`- ${c.ringName} (${c.alignment}, ${c.style}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) | Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Lakap: ${(c.nicknames||[]).join(', ')} | Finisher: ${mv(c,'finisher')} | İmza: ${mv(c,'signature')}`;
+  const champ=c=>titlesOf(c.id).map(t=>t.name).join(', ');
+  const rels=[]; if(!big) M.c.forEach((c,i)=>M.c.forEach((d,j)=>{ if(j<=i) return; const r=relBetween(c,d); if(r) rels.push(`${d.ringName}, ${c.ringName}'in ${REL_TYPES[r.type]?.tr||r.type}${r.note?' ('+r.note+')':''}`); }));
+  const st=M.staff;
+  const fmt=M.sides.length===2&&M.sides.every(s=>s.length===1)?'Tekli':M.sides.every(s=>s.length===1)?`${M.sides.length} kişilik (herkes kendisi için)`:M.sides.map(s=>s.length).join(' vs ')+(M.tag?' (tag kuralları: her takımdan bir legal güreşçi, diğerleri apronda)':M.tornado?' (tornado: herkes legal)':'');
+  return `Sen bir profesyonel güreş (WWE/AEW tarzı) metin rol oyununun Dungeon Master'ısın. Aynı anda hakemi, yorumcuları, ring spikerini ve seyirciyi oynarsın.
+DİL: Her şey TÜRKÇE. Hamle isimleri İngilizce kalabilir.
+TON: Canlı TV yayını. Kısa, sinematik, akıcı. Kayfabe'yi bozma.
+MAÇ: ${R.tr} — ${R.d} · Format: ${fmt}${M.title?' · Kemer: '+M.title:''}
+HİKÂYE: ${M.story||'-'}${M.c.map(c=>champ(c)?`\nŞAMPİYON: ${c.ringName} — ${champ(c)}`:'').join('')}${M.ig?'\nBu maçta INTERGENDER karşılaşmalar var: anlatımı sporcu gözüyle, saygılı ve rekabetçi yap.':''}${rels.length?`\nİLİŞKİLER: ${rels.join('; ')}. Anlatıda ve yorumlarda bunu hissettir.`:''}
+${M.sides.map((s,k)=>`${M.sides.length>2||s.length>1?`TARAF ${k+1}:`:''}\n${s.map(i=>sheet(M.c[i])).join('\n')}`).join('\n')}
+HAKEM: ${st.ref?`${st.ref.ringName} — ${st.ref.gimmick}`:'Hakem'}
+YORUMCULAR: ${[st.c1,st.c2].filter(Boolean).map(c=>`${c.ringName} (${c.alignment}) — ${c.gimmick} Üslup: ${c.voice||'-'}`).join(' | ')||'Yorumcu'}
+SPİKER: ${st.ann?.ringName||'Spiker'}
+KURAL: Mekanik sonucu (hasar, sayım, eleme, kazanan) oyun motoru belirler; sen anlatırsın. Oyuncuların karakterlerine senin uydurduğun replikler söyletme. Yorumcular karakterlerine göre taraf tutar; "speaker" alanına yorumcunun tam adını yaz.`;
+};
+MatchCtl.stateLine=function(M){
+  const act=M.c.map((_,i)=>i).filter(i=>MV.active(M,i));
+  const line=i=>{ const c=M.c[i], f=M.f[i]; return `${c.ringName}${MV.isMulti(M)?` [T${MV.sideOf(M,i)+1}${M.tag?(MV.inRing(M,i)?', legal':', apronda'):''}]`:''}: can ${f.hp}, dayanıklılık ${f.st}, momentum ${f.mom}${f.downed?', YERDE':''}${f.counter?', kontra pozisyonunda':''}${f.climb?`, tırmanış ${f.climb}`:''}${M.c.length<=4?`, uzuv hasarı ${JSON.stringify(f.limbs)}`:''}`; };
+  const pend=M.c.filter((_,i)=>!M.f[i].entered&&!M.f[i].elim).length, el=M.elimLog.length;
+  return act.map(line).join(' || ')+` || Seyirci ${M.crowd}/100${pend?` || Girmeyi bekleyen ${pend}`:''}${el?` || Elenen ${el}`:''}${MV.rules(M).iron?` || Düşüşler ${M.falls.join('-')} (${M.round}/${M.limit} tur)`:''}`;
+};
+MatchCtl.autoEmote=function(c,cat,mv,M,t){
+  const d=t!=null&&M?M.c[t]?.ringName:'rakibi';
+  return ({pin:`${c.ringName}, ${d}'ın üstüne kapanıp bacağını kavrar.`,rest:`${c.ringName} köşeye çekilip nefeslenir.`,counter:`${c.ringName} dizlerini kırar, rakibini okumaya çalışır.`,taunt:`${c.ringName} seyirciye döner ve kollarını açar.`,
+    tag:`${c.ringName} köşesine uzanıp partnerinin eline vurur.`,climb:`${c.ringName} ${mv.toLowerCase().includes('kafes')?'kafese':'merdivene'} tırmanmaya başlar.`,overTop:`${c.ringName}, ${d}'ı ipin üstünden atmaya çalışır.`})[cat] || `${c.ringName}, ${d}'a ${mv} dener.`;
+};
+MatchCtl.intro=async function(roomId){
+  const room=Data.rooms.get(roomId); if(!room?.match||room.match.started) return;
+  const got=await B.txn('rooms/'+roomId,cur=>cur?.match&&!cur.match.started&&!cur.match.intro?{match:{...cur.match,intro:Me.id,host:cur.match.host||Me.id},...(cur.eventId?{status:'live'}:{})}:null);
+  if(!got) return;
+  const M=this.hydrate({match:got.match}); const R=MV.rules(M);
+  const first=M.c.map((_,i)=>i).filter(i=>M.f[i].entered).slice(0,6);
+  try{
+    await Msgs.post(roomId,{k:'card',pid:null,text:'',meta:{sides:M.sides.map(s=>s.map(i=>M.cids[i])),a:M.cids[0],b:M.cids[M.sides[1]?.[0]??1],type:M.type,title:M.title||'',titleId:M.titleId||null,show:M.show||''}},{touch:false});
+    await Msgs.post(roomId,{k:'sys',pid:null,text:`${M.show||'Canlı Şov'} — ${R.tr}${M.title?' · '+M.title:''}${M.c.length>2?` · ${M.c.length} güreşçi`:''}`},{touch:false});
+    const names=M.sides.map((s,k)=>MV.sideName(M,k));
+    const r=await AI.ask({system:this.sys(M),json:true,temperature:0.9,
+      prompt:`Maç başlıyor (${R.tr}). ${M.entry?`Sadece ilk girenler ringe geliyor: ${first.map(i=>M.c[i].ringName).join(', ')}. Diğerleri aralıklarla girecek.`:''} Ring spikeri maçı ve ${M.c.length>8?'kuralları':'tarafları'} takdim etsin, ${first.length<=4?'ilk girenlerin girişlerini':'ringe gelenleri'} karakterlerine uygun kısa ve görkemli anlat (en fazla ${Math.min(first.length,4)} giriş), yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
+Taraflar: ${names.join(' vs ')}
+JSON: {"announcer":"spikerin anonsu","entrances":["giriş 1-2 cümle", "..."],"commentary":[{"speaker":"isim","line":"..."}],"crowd":"seyirci"}`,
+      offline:()=>({announcer:`Bu karşılaşma bir ${R.tr}! ${names.slice(0,6).join('! Karşısında ')}!`,entrances:first.slice(0,4).map(i=>M.c[i].entrance||`${M.c[i].ringName} ringe geliyor.`),commentary:[],crowd:'Salon dolu, atmosfer elektrikli.'})});
+    const d=r.data||{};
+    if(d.announcer) await Msgs.post(roomId,{k:'com',text:d.announcer,cid:M.staff.ann?.id||null,pid:null,meta:M.staff.ann?{}:{name:'Spiker'}},{touch:false});
+    for(const [n,e] of (d.entrances||[]).slice(0,4).entries()){ const who=M.c[first[n]];
+      await Msgs.post(roomId,{k:'narr',text:e,pid:null,meta:who?.themeUrl?{theme:who.id,mt:'entrance'}:{}},{touch:false}); }
+    await this.postCom(roomId,M,d.commentary);
+    if(d.crowd) await Msgs.post(roomId,{k:'crowd',text:d.crowd,pid:null},{touch:false});
+    await Msgs.post(roomId,{k:'ref',pid:null,cid:M.staff.ref?.id||null,text:`${M.staff.ref?.ringName||'Hakem'} kontrolleri yapıyor ve zili çaldırıyor. DING DING!`},{touch:false});
+    if(M.tag) await Msgs.post(roomId,{k:'sys',pid:null,text:`Legal: ${M.legal.map(i=>M.c[i].ringName).join(' vs ')} · diğerleri apronda`},{touch:false});
+    await Msgs.post(roomId,{k:'sys',pid:null,text:`${M.c[M.turn].ringName} ilk hamleyi yapacak`},{touch:false});
+  }finally{
+    await B.txn('rooms/'+roomId,cur=>cur?.match?{match:{...cur.match,started:true,host:cur.match.host||Me.id},...(cur.eventId?{status:'live'}:{}),lastAt:Date.now(),lastText:'Maç başladı!'}:null);
+  }
+};
+/** olay mesajları: eleme, giriş, düşüş, tag */
+MatchCtl.postEvents=async function(roomId,M,out){
+  for(const e of (out.elims||[])){ const left=M.c.filter((_,j)=>!M.f[j].elim).length;
+    await Msgs.post(roomId,{k:'sys',pid:null,text:`❌ ${M.c[e.v].ringName} ELENDİ — ${e.method}${e.by!=null&&e.by!==e.v?` (${M.c[e.by].ringName})`:''} · kalan ${left}`},{touch:false}); }
+  for(const i of (out.entered||[])){ const no=M.c.filter((_,j)=>M.f[j].entered).length; const c=M.c[i];
+    await Msgs.post(roomId,{k:'sys',pid:null,text:`🔔 ${M.entry?`#${no} `:''}${c.ringName} ringe giriyor!`,meta:c.themeUrl?{theme:c.id,mt:'entrance'}:{}},{touch:false}); }
+  if(out.fall) await Msgs.post(roomId,{k:'sys',pid:null,text:`⚡ DÜŞÜŞ: ${MV.sideName(M,out.fall.side)} (${out.fall.method}) · Skor ${M.falls.join(' - ')} · ${M.round}/${M.limit} tur`},{touch:false});
+  if(out.tagTo!=null) await Msgs.post(roomId,{k:'sys',pid:null,text:`${out.events.includes('hot_tag')?'🔥 HOT TAG! ':'🤝 Tag: '}${M.c[out.tagTo].ringName} artık legal`},{touch:false});
+};
+MatchCtl.pinCount=async function(roomId,M,out){
+  const n=out.count, v=M.c[out.tgt];
+  for(let i=1;i<=Math.min(n,3);i++){ await sleep(600); const last=i===n&&n<3;
+    await Msgs.post(roomId,{k:'count',pid:null,text:last?(out.nearFall&&i===2?'İ K İ . . . !':'KICK-OUT!'):['BİR!','İKİ!','ÜÇ!'][i-1]},{touch:false}); }
+  if(n<3) await Msgs.post(roomId,{k:'sys',pid:null,text:out.broken!=null?`${M.c[out.broken].ringName} tuşu bozdu!`:n===2?`${v?.ringName||''} omzunu kaldırdı!${out.nearFall?' 2.9!':''}`:'Erken kick-out.'},{touch:false});
+};
+MatchCtl.act=async function(roomId,idx,cat,mv,emote,{byAI=false,target=null}={}){
+  const lock=await B.txn('rooms/'+roomId,cur=>{
+    const m=cur?.match; if(!m||!m.started||m.over||m.turn!==idx) return null;
+    if(m.pending && Date.now()-m.pending.at<120000) return null;
+    if(byAI ? m.ctl[idx]!=='ai' : m.ctl[idx]!==Me.id) return null;
+    return {match:{...m,pending:{by:Me.id,at:Date.now()}}};
+  }).catch(e=>{ toast('Kilit alınamadı: '+e.message,'err'); return null; });
+  if(!lock){ if(!byAI) toast('Şu an hamle yapılamıyor — sıra değişmiş ya da başka bir hamle işleniyor.'); return false; }
+  const M=this.hydrate({match:lock.match}); const c=M.c[idx]; let saved=false;
+  try{
+    if(!MV.cats(M,idx).includes(cat)) cat=Engine.autoChoose(M,idx);
+    const needT=!['rest','counter','tag','climb'].includes(cat);
+    const opp=MV.opponents(M,idx);
+    M.tgt=needT?(opp.includes(target)?target:(M.tgt!=null&&opp.includes(M.tgt)?M.tgt:MV.pickTarget(M,idx))):null;
+    const t=M.tgt;
+    if(!mv) mv=Engine.moveFor(c,cat,M);
+    if(!emote) emote=this.autoEmote(c,cat,mv,M,t);
+    const fast=byAI && M.fast;
+    await Msgs.post(roomId,{k:'act',text:emote,cid:c.id,pid:byAI?null:Me.id,meta:{cat,move:mv,tgt:t!=null?M.cids[t]:null}},{touch:false});
+    let out, ai=null, q=0;
+    const recentLog=async()=>Msgs.log(await Msgs.recent(roomId,M.c.length>6?6:10));
+    if(SPECIAL_CATS.includes(cat) || fast){
+      const _before=t!=null?M.f[t].lastBig:null;
+      out=Engine.resolve(M,idx,cat,mv,emote,{quality:0,dmPower:0});
+      Univ.track(M,out,_before,0);
+      if(!fast && cat!=='tag'){
+        const r=await AI.ask({system:this.sys(M),json:true,temperature:0.85,
+          prompt:`HAMLE: ${c.ringName} → "${MV.catLabel(M,cat)}"${t!=null?`, hedef ${M.c[t].ringName}`:''}. Emote: ${emote}
+SONUÇ (motor belirledi, değiştirme): ${Offline.narr(M,out)}
+Son akış:\n${await recentLog()}
+Bu sonucu canlı yayın diliyle 1-2 cümle anlat, 1 yorumcu satırı ve seyirci tepkisi ver.
+JSON: {"narration":"...","commentary":[{"speaker":"isim","line":"..."}],"crowd":"..."}`,offline:()=>null});
+        ai=r.data;
+      }
+    } else {
+      const pre=CAT[cat].base>0?Engine.chance(M,idx,cat,emote):null;
+      const dmPower=parseInt(M.dm??1);
+      let preRoll=null;
+      if(!['rest','counter'].includes(cat)){
+        preRoll=pre?rnd(1,100):null;
+        const margin=pre?pre.chance-preRoll:null, baseTier=pre?Engine.tierFromScore(margin):null;
+        const r=await AI.ask({system:this.sys(M),json:true,temperature:0.85,
+          prompt:`HAMLE: ${c.ringName} → kategori "${CAT[cat].tr}", hareket "${mv}"${t!=null?`, hedef: ${M.c[t].ringName}`:''}.${moveDesc(c,cat,mv)?` Hareketin tarifi: ${moveDesc(c,cat,mv)}`:''}
+Emote: ${emote}
+Durum (hamle öncesi): ${this.stateLine(M)}
+Son akış:
+${await recentLog()}
+${pre?`MOTOR: başarı şansı %${pre.chance}, zar ${preRoll}, fark ${margin}. Notlar: ${pre.notes.join(', ')||'-'}. Emote nötr sayılırsa sonuç: "${baseTier}".`:''}
+GÖREVİN:
+1) Emote'u değerlendir (quality -2..+2): karaktere uygunluk, mantık, ring gerçekçiliği, yaratıcılık. Powergaming (rakibin tepkisini yazmak, "her şeyi yaparım") = -1/-2. Kısa/otomatik emote = 0.
+2) ${dmPower>0&&pre?`DM olarak final "tier" seç (clean/hit/partial/countered/botch). Temel: skor = fark + quality*8 → ≥20 clean, ≥0 hit, ≥-15 partial, ≥-35 countered, altı botch. Hikâye gerekiyorsa en fazla ${dmPower} kademe kaydırabilirsin.`:'tier alanını boş bırak.'}
+3) Sonucu anlat ("narration", 1-3 cümle, canlı yayın dili). Pin ise sayımı anlatma, sadece pine gidişi. Submission ise tutuşun kurulmasını anlat.
+4) 1-2 yorumcu satırı, seyirci tepkisi, gerekiyorsa hakem notu.
+JSON: {"quality":0,"reason":"kısa gerekçe","tier":"hit","narration":"...","commentary":[{"speaker":"isim","line":"..."}],"crowd":"...","referee":null}`,
+          offline:()=>null});
+        ai=r.data;
+      }
+      q=clamp(parseInt(ai?.quality)||0,-2,2);
+      const _before=t!=null?M.f[t].lastBig:null;
+      out=Engine.resolve(M,idx,cat,mv,emote,{quality:q,aiTier:ai?.tier||null,dmPower,roll:preRoll});
+      Univ.track(M,out,_before,q);
+      out._pre=pre;
+    }
+    const special=SPECIAL_CATS.includes(cat);
+    const narr=(ai?.narration && (special || !ai.tier || ai.tier===out.tier || cat==='pin' || cat==='taunt')) ? ai.narration : Offline.narr(M,out);
+    const dice=out.chance!=null&&out.roll!=null?`şans %${out.chance} · zar ${out.roll}${!special?` · emote ${q>=0?'+':''}${q}${ai?.reason?' ('+ai.reason+')':''}`:''}${out.dmg?` · ${out.dmg} hasar → ${out.limb}`:''}`:(out.pinRoll?`kick-out şansı %${out.pinRoll.kick} · zar ${out.pinRoll.r}`:'');
+    await Msgs.post(roomId,{k:'narr',text:narr,pid:null,meta:{tier:out.tier,cat,dice}},{touch:false});
+    if(cat==='pin' && out.count) await this.pinCount(roomId,M,out);
+    if(out.tapRoll) await Msgs.post(roomId,{k:'sys',pid:null,text:out.events.includes('tap')?(MV.rules(M).quit?'"I QUIT!"':'TAP OUT!'):out.events.includes('sub_broken')?'Tutuş bozuldu!':out.events.includes('rope_break')?'İp! Tutuş bozuldu.':'Kurtuldu!'},{touch:false});
+    if(!fast) await this.postCom(roomId,M,ai?.commentary?.length?ai.commentary:Offline.com(M,out).map(x=>({speaker:x.speaker,line:x.line})));
+    const crowd=ai?.crowd||(fast?'':Offline.crowd(out)); if(crowd) await Msgs.post(roomId,{k:'crowd',text:crowd,pid:null},{touch:false});
+    const refId=M.staff.ref?.id||null;
+    if(ai?.referee) await Msgs.post(roomId,{k:'ref',text:ai.referee,cid:refId,pid:null},{touch:false});
+    const vName=t!=null?M.c[t].ringName:'';
+    if(out.events.includes('dq')) await Msgs.post(roomId,{k:'ref',cid:refId,pid:null,text:`${M.staff.ref?.ringName||'Hakem'} kollarını sallıyor: DİSKALİFİYE!`},{touch:false});
+    if(out.events.includes('lms_up')) await Msgs.post(roomId,{k:'ref',cid:refId,pid:null,text:`Hakem sayıyor… 1… 5… 8… ${vName} 9'da ayağa kalkıyor!`},{touch:false});
+    if(out.events.includes('lms_ko')) await Msgs.post(roomId,{k:'ref',cid:refId,pid:null,text:`…8… 9… 10! ${vName} kalkamıyor!`},{touch:false});
+    await this.postEvents(roomId,M,out);
+    if(out.keepTurn && !M.over && M.turn===idx) await Msgs.post(roomId,{k:'sys',pid:null,text:`${c.ringName} avantajı bırakmıyor — takip hakkı!`},{touch:false});
+    if(M.over) await this.finish(roomId,M,out);
+    const _seg=Data.rooms.get(roomId)?.eventId&&M.over?{status:'done',rating:M.result?.rating??null,summary:M.result?.summary||''}:{};
+    await B.update('rooms/'+roomId,{match:{...this.serialize(M),pending:null,v:(M.v||0)+1},lastAt:Msgs.ts(),lastText:`${c.ringName}: ${mv}`,..._seg});
+    saved=true; return true;
+  }catch(e){ console.error(e); toast('Hamle hatası: '+e.message,'err'); return false; }
+  finally{ if(!saved) await B.txn('rooms/'+roomId,cur=>cur?.match?{match:{...cur.match,pending:null}}:null).catch(()=>{}); }
+};
+MatchCtl.aiTakeTurn=async function(roomId,force=false){
+  if(this.running.has(roomId)) return;
+  const room=Data.rooms.get(roomId); const m=room?.match;
+  if(!m||!m.started||m.over||m.ctl[m.turn]!=='ai'||(m.pending&&Date.now()-m.pending.at<120000)) return;
+  if(!force && m.host!==Me.id) return;
+  this.running.add(roomId);
+  try{
+    const M=this.hydrate(room), idx=M.turn, c=M.c[idx];
+    const opp=MV.opponents(M,idx), cats=MV.cats(M,idx);
+    let category, move, emote, target=null;
+    if(M.fast){ category=Engine.autoChoose(M,idx); target=M.tgt; }
+    else {
+      const r=await AI.ask({system:this.sys(M),json:true,temperature:0.95,
+        prompt:`Şimdi ${c.ringName} sırası (AI kontrolünde). Onu karakterine uygun oyna: kategori, hedef, hareket ve emote seç.
+Durum: ${this.stateLine(M)}
+Son akış:
+${Msgs.log(await Msgs.recent(roomId,10))}
+Rakipler (hedef seçebileceklerin): ${opp.map(j=>M.c[j].ringName).join(', ')||'-'}
+Kategoriler: ${cats.map(k=>`${k} (${MV.catLabel(M,k)})`).join(', ')} (finisher için momentum 75+, signature için 45+ önerilir; rakip yerdeyken pin mantıklı${M.tag?'; yorgunsan "tag" ile partnerine geçebilirsin':''}${MV.rules(M).over?'; "overTop" = ipin üstünden atıp elemek':''}${MV.rules(M).climb||MV.rules(M).escape?'; "climb" = tırman (rakipler yerdeyken)':''}).
+Moveset: ${JSON.stringify(Object.fromEntries(Object.entries(c.moves).map(([k,v])=>[k,v.map((n,i)=>c.movesDesc?.[k]?.[i]?`${n} (${c.movesDesc[k][i]})`:n)])))}
+JSON: {"category":"...","target":"rakibin tam adı","move":"hareket adı","emote":"3. şahıs emote, 1-2 cümle, Türkçe, yıldızsız"}`,
+        offline:()=>{ const cat=Engine.autoChoose(M,idx); return {category:cat,target:M.tgt!=null?M.c[M.tgt].ringName:'',move:Engine.moveFor(c,cat,M),emote:''}; }});
+      ({category,move,emote}=r.data||{});
+      const tc=Data.findCharByName(String(r.data?.target||''),opp.map(j=>M.c[j])); target=tc?opp.find(j=>M.c[j].id===tc.id):null;
+    }
+    if(!cats.includes(category)) { category=Engine.autoChoose(M,idx); target=target??M.tgt; }
+    await this.act(roomId,idx,category,move||Engine.moveFor(c,category,M),String(emote||'').replace(/^\*|\*$/g,''),{byAI:true,target});
+  }finally{ this.running.delete(roomId); }
+};
+MatchCtl.finish=async function(roomId,M,out,{quick=false}={}){
+  const room=Data.rooms.get(roomId), R=M.result;
+  const W=(R.winners||[]).map(id=>Store.get(id)||M.c.find(c=>c.id===id)).filter(Boolean);
+  const L=(R.losers||[]).map(id=>Store.get(id)||M.c.find(c=>c.id===id)).filter(Boolean);
+  const rating=Rating.match(M); R.rating=rating;
+  const wName=W.map(c=>c.ringName).join(' & ')||'Berabere';
+  await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:wName,method:R.method,rating,...(W[0]?.themeUrl?{theme:W[0].id,mt:'win'}:{})}},{touch:false});
+  const bump=(id,fn)=>B.txn('chars/'+id,cur=>cur?{...fn(normalizeChar(cur)),updatedAt:Date.now()}:null).catch(e=>toast('Rekor yazılamadı: '+e.message,'err'));
+  if(R.draw){ for(const c of M.c) await bump(c.id,x=>({record:{...x.record,d:(x.record.d||0)+1}})); }
+  for(const c of W) await bump(c.id,x=>({record:{...x.record,w:(x.record.w||0)+1},popularity:clamp((x.popularity||50)+2+Math.round(rating/2),0,100)}));
+  for(const c of L) await bump(c.id,x=>({record:{...x.record,l:(x.record.l||0)+1},popularity:clamp((x.popularity||50)+(rating>=4?1:-1),0,100)}));
+  if(M.titleId && W.length){
+    const valid=!['DQ','No Contest'].includes(R.method);
+    let res=null; const wIds=W.map(c=>c.id);
+    await B.txn('titles/'+M.titleId,t=>{
+      if(!t){ res=null; return null; }
+      const cur=t.holders?.length?t.holders:(t.holder?[t.holder]:[]);
+      if(cur.some(id=>wIds.includes(id))){ res={kind:'def',name:t.name,n:(t.defenses||0)+1}; return {defenses:(t.defenses||0)+1}; }
+      if(valid){ res={kind:'new',name:t.name};
+        return {holder:wIds[0],holders:wIds.length>1?wIds:null,since:Univ.date(),defenses:0,
+          history:[...(t.history||[]),{holder:t.holder||null,holders:t.holders||null,from:t.since||null,to:Univ.date(),defenses:t.defenses||0,lostTo:wIds[0]}].slice(-60)}; }
+      res={kind:'kept',name:t.name,holder:t.holder}; return null;
+    }).catch(e=>{ res=null; toast('Kemer güncellenemedi: '+e.message,'err'); });
+    if(res?.kind==='new'){ await Msgs.post(roomId,{k:'sys',pid:null,text:`VE YENİİİ! ${wName} yeni ${res.name}!`,meta:{titleId:M.titleId,tc:'new'}},{touch:false}); R.titleChange=true; }
+    else if(res?.kind==='def') await Msgs.post(roomId,{k:'sys',pid:null,text:`${wName} kemerini korudu! (${res.n}. savunma)`,meta:{titleId:M.titleId,tc:'def'}},{touch:false});
+    else if(res?.kind==='kept') await Msgs.post(roomId,{k:'sys',pid:null,text:`Kemer ${R.method} ile el değiştirmez — ${Data.char(res.holder)?.ringName||'şampiyon'} hâlâ şampiyon.`},{touch:false});
+  }
+  let d={};
+  if(!quick){
+    const r=await AI.ask({system:this.sys(M),json:true,temperature:0.8,
+      prompt:`Maç bitti: ${R.draw?'BERABERE':`${wName} ${R.method} ile kazandı`}${R.titleChange?' ve YENİ ŞAMPİYON oldu':''}.${M.elimLog.length?` Eleme sırası: ${M.elimLog.map(e=>M.c[e.i].ringName).join(', ')}.`:''} Son akış:\n${Msgs.log(await Msgs.recent(roomId,14))}\nRing spikeri kazananı anonsun, yorumcular maç sonrası birer cümle, arşiv için 2 cümlelik maç özeti.
+JSON: {"announcer":"...","commentary":[{"speaker":"","line":""}],"summary":"..."}`,
+      offline:()=>({announcer:R.draw?'Maç berabere bitti!':`Bu maçın galibi… ${wName}!`,commentary:[],summary:R.draw?`${MV.title(M)} berabere bitti.`:`${wName}, ${R.method} ile kazandı (${MV.rules(M).tr}).`})});
+    d=r.data||{};
+    if(d.announcer) await Msgs.post(roomId,{k:'com',text:d.announcer,cid:M.staff.ann?.id||null,pid:null,meta:M.staff.ann?{}:{name:'Spiker'}},{touch:false});
+    await this.postCom(roomId,M,d.commentary);
+  }
+  R.summary=d.summary||R.summary||(R.draw?`${MV.title(M)} berabere.`:`${wName}, ${R.method} ile kazandı.`);
+  const sn=M.sides.map((_,k)=>MV.sideName(M,k));
+  await B.set('matches/'+roomId,{roomId,eventId:room?.eventId||null,date:Date.now(),udate:Univ.date(),show:M.show||'',type:M.type,typeTr:MV.rules(M).tr,title:M.title||'',
+    a:M.sides.length>6?MV.title(M):sn[0],b:M.sides.length>6?'':sn.slice(1).join(' vs '),winner:wName,winnerId:W[0]?.id||null,loserId:L[0]?.id||null,winners:W.map(c=>c.id),n:M.c.length,
+    method:R.method,rounds:M.round,rating,titleChange:!!R.titleChange,summary:R.summary});
+};
+MatchCtl.sim=async function(roomId){
+  let lock=null;
+  for(let i=0;i<40&&!lock;i++){
+    const cur=Data.rooms.get(roomId)?.match; if(!cur||cur.over) break;
+    lock=await B.txn('rooms/'+roomId,cur=>{ const m=cur?.match; if(!m||m.over) return null; if(m.pending&&Date.now()-m.pending.at<120000) return null;
+      return {match:{...m,pending:{by:Me.id,at:Date.now(),sim:true},started:true,host:m.host||Me.id},...(cur.eventId?{status:'live'}:{})}; }).catch(()=>null);
+    if(!lock) await sleep(500);
+  }
+  if(!lock){ toast('Simülasyon başlatılamadı (başka bir hamle işleniyor olabilir)','err'); return false; }
+  const room=Data.rooms.get(roomId); const M=this.hydrate({match:lock.match}); let saved=false;
+  try{
+    await Msgs.post(roomId,{k:'sys',pid:null,text:'⏩ Hızlı simülasyon'},{touch:false});
+    const moments=[]; let g=0; const cap=Math.max(400,M.c.length*80);
+    while(!M.over && g<cap){
+      const idx=M.turn; const cat=Engine.autoChoose(M,idx); const t=M.tgt; const before=t!=null?M.f[t].lastBig:null; const mv=Engine.moveFor(M.c[idx],cat,M);
+      const out=Engine.resolve(M,idx,cat,mv,'',{}); Univ.track(M,out,before,0);
+      const nm=M.c[idx].ringName;
+      for(const e of (out.elims||[])) moments.push(`${M.c[e.v].ringName} elendi (${e.method}${e.by!=null&&e.by!==e.v?', '+M.c[e.by].ringName:''})`);
+      for(const i of (out.entered||[])) if(M.c.length<=12) moments.push(`${M.c[i].ringName} ringe girdi`);
+      if(out.fall) moments.push(`Düşüş: ${MV.sideName(M,out.fall.side)} (${out.fall.method})`);
+      if(out.events.includes('hot_tag')) moments.push(`${nm} hot tag → ${M.c[out.tagTo].ringName}`);
+      if((['finisher','signature'].includes(cat)&&['clean','hit'].includes(out.tier))||out.nearFall||out.win||out.tier==='botch'||out.events.includes('pin_broken'))
+        moments.push(`${nm} — ${mv}${t!=null?' → '+M.c[t].ringName:''}: ${TIER_TR[out.tier]||''}${out.nearFall?' (2.9!)':''}${out.events.includes('pin_broken')?' (tuş bozuldu)':''}`);
+      g++;
+    }
+    if(!M.over){
+      if(MV.rules(M).iron) MV.ironEnd(M);
+      else { const alive=MV.alive(M); const score=k=>M.sides[k].filter(i=>!M.f[i].elim).reduce((s,i)=>s+M.f[i].hp,0);
+        const ws=alive.sort((a,b)=>score(b)-score(a))[0]??0; M.over=true;
+        M.result={winners:M.sides[ws].map(i=>M.c[i].id),losers:M.c.map((_,j)=>j).filter(j=>MV.sideOf(M,j)!==ws).map(j=>M.c[j].id),method:'Hakem kararı',round:M.round,side:ws};
+        M.result.winner=M.result.winners[0]; M.result.loser=M.result.losers[0]; }
+    }
+    const wn=(M.result.winners||[]).map(id=>M.c.find(c=>c.id===id)?.ringName).join(' & ');
+    const r=await AI.ask({system:this.sys(M),json:true,temperature:0.85,
+      prompt:`Bu maç hızlı simüle edildi (${M.round} tur, ${MV.rules(M).tr}). Önemli anlar:\n${moments.slice(-18).join('\n')}\nSonuç: ${M.result.draw?'Berabere':`${wn}, ${M.result.method} ile kazandı`}.
+Maçı 4-6 cümlelik canlı yayın özetiyle anlat, 1-2 yorumcu satırı ve seyirci tepkisi ekle. Sonucu değiştirme.
+JSON: {"narration":"...","commentary":[{"speaker":"","line":""}],"crowd":"..."}`,
+      offline:()=>({narration:moments.slice(-6).join(' · ')||`${wn} maçı kazandı.`,commentary:[],crowd:''})});
+    const d=r.data||{};
+    if(M.elimLog.length) await Msgs.post(roomId,{k:'sys',pid:null,text:`Eleme sırası: ${M.elimLog.map((e,n)=>`${n+1}. ${M.c[e.i].ringName}`).join(' · ')}`},{touch:false});
+    if(d.narration) await Msgs.post(roomId,{k:'narr',pid:null,text:d.narration,meta:{dice:`${M.round} tur · ${M.stats?.nearFalls||0} near-fall · ${M.stats?.finishers||0} finisher${M.elimLog.length?` · ${M.elimLog.length} eleme`:''}`}},{touch:false});
+    await this.postCom(roomId,M,d.commentary);
+    if(d.crowd) await Msgs.post(roomId,{k:'crowd',pid:null,text:d.crowd},{touch:false});
+    await this.finish(roomId,M,null,{quick:true});
+    await B.update('rooms/'+roomId,{match:{...this.serialize(M),pending:null,v:(M.v||0)+1},lastAt:Msgs.ts(),lastText:'Maç bitti (sim)',
+      ...(room?.eventId?{status:'done',rating:M.result.rating,summary:M.result.summary}:{})});
+    saved=true; return true;
+  }catch(e){ console.error(e); toast('Sim hatası: '+e.message,'err'); return false; }
+  finally{ if(!saved) await B.txn('rooms/'+roomId,cur=>cur?.match?{match:{...cur.match,pending:null}}:null).catch(()=>{}); }
+};
+Rating.match=function(M){
+  const s=M.stats||{}; const pop=M.c.reduce((a,c)=>a+(c.popularity||50),0)/Math.max(1,M.c.length);
+  const avgQ=s.moves?clamp((s.quality||0)/s.moves,-2,2):0;
+  const n=M.c.length, len=M.round/Math.max(1,Math.sqrt(n));
+  let r=1.3+Math.min(s.nearFalls||0,6)*0.4+Math.min(s.bigKickouts||0,3)*0.6+Math.min(s.reversals||0,8)*0.1
+    +(M.crowd-50)/40+(pop-50)/40+avgQ*0.3+(len>=10&&len<=36?0.4:len<7?-0.6:0)+(M.title?0.3:0)+(M.result?.method==='DQ'?-0.8:0)
+    +(STYLES[M.style]?.crowd||0)/40+(n>=6?0.3:0)+(['rumble','chamber','wargames','hiac','tlc','ladder','mitb','ironman'].includes(M.type)?0.35:0);
+  return clamp(Math.round(r*4)/4,0.5,5);
+};
+
+/* ── şov segmenti: maç kurma (çok taraflı) ── */
+{ const _add=Show.addSeg;
+  Show.addSeg=async function(eventId,s){
+    if(s.type!=='match') return _add.call(this,eventId,s);
+    const ev=Univ.event(eventId); if(!ev) return;
+    const sides=s.sides||[[{cid:s.a,ctl:s.actl}],[{cid:s.b,ctl:s.bctl}]];
+    const t=Data.titles.get(s.titleId);
+    const match=MV.build({sides,type:s.mtype||'standard',show:ev.title,story:s.note||'',title:t?.name||'',titleId:t?.id||null,dm:s.dm??1,style:ev.style,
+      crowd:50+(STYLES[ev.style]?.crowd||0),sids:{...(ev.staff||{})},tornado:s.tornado,every:s.every,limit:s.limit,fast:s.fast});
+    const order=Math.max(0,...Univ.segs(eventId).map(x=>x.order||0))+1, id='s_'+uid(), now=Date.now();
+    const room={eventId,order,segType:'match',status:'pending',topic:s.note||'',createdBy:Me.id,createdAt:now,lastAt:now,lastText:'',kind:'match',name:MV.title(MatchCtl.hydrate({match})),match};
+    await B.set('rooms/'+id,room); Data.rooms.set(id,{...room,id}); return id;
+  };
+  Show.label=function(r){
+    if(r.segType==='match'&&r.match){ try{ return MV.title(MatchCtl.hydrate(r)); }catch(e){ return r.name||'Maç'; } }
+    const ps=(r.participants||[]).map(id=>Data.char(id)?.ringName).filter(Boolean);
+    return `${SEG_TYPES[r.segType]?.tr||'Segment'}${ps.length?': '+ps.join(', '):''}`;
+  };
+  const _sf=Show.segForm;
+  Show.segForm=function(eventId,room){
+    if(room?.segType==='match') return MatchBuilder.open({mode:'seg',eventId,room});
+    const _open=Form.open;
+    Form.open=function(cfg){ Form.open=_open;
+      cfg.fields=cfg.fields.filter(f=>!['a','b','actl','bctl','mtype','titleId'].includes(f.id)).map(f=>f.id==='type'?{...f,options:f.options.filter(o=>o[0]!=='match'),value:f.value==='match'?'promo':f.value}:f);
+      const oc=cfg.onChange; cfg.onChange=(v,show)=>show('participants',true);
+      cfg.extra=`<button class="btn gold sm" onclick="UI.close('md-form');MatchBuilder.open({mode:'seg',eventId:'${eventId}'})"><i class="fas fa-ring"></i> Onun yerine maç ekle</button>`+(cfg.extra||'');
+      return _open.call(Form,cfg); };
+    try{ return _sf.call(this,eventId,room); } finally{ Form.open=_open; }
+  };
+}
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ KURUCU (serbest maç + şov segmenti)
+════════════════════════════════════════════════════════════ */
+const MB_PRESETS=[
+  ['1v1','standard',[1,1]],['2v2 Tag','standard',[2,2]],['3v3','standard',[3,3]],['4v4','standard',[4,4]],['5v5','standard',[5,5]],
+  ['Triple Threat','standard',[1,1,1]],['Fatal 4-Way','standard',[1,1,1,1]],['6-Pack Challenge','standard',[1,1,1,1,1,1]],
+  ['Handikap 1v2','standard',[1,2]],['Handikap 1v3','standard',[1,3]],['Handikap 2v3','standard',[2,3]],['Handikap 1v5','standard',[1,5]],['Handikap 3v5','standard',[3,5]],
+  ['Tag Triple Threat','standard',[2,2,2]],['Survivor Series 5v5','survivor',[5,5]],['WarGames 4v4','wargames',[4,4]],['WarGames 5v5','wargames',[5,5]],
+  ['Ladder (1v1)','ladder',[1,1]],['Money in the Bank (8)','mitb',Array(8).fill(1)],['Elimination Chamber (6)','chamber',Array(6).fill(1)],
+  ['Gauntlet (5)','gauntlet',Array(5).fill(1)],['Battle Royal (10)','battle',Array(10).fill(1)],['Battle Royal (20)','battle',Array(20).fill(1)],['Royal Rumble (30)','rumble',Array(30).fill(1)],
+];
+const MatchBuilder = {
+  st:null,
+  open({mode='free',eventId=null,room=null}={}){
+    const w=Store.chars('wrestler'); if(w.length<2){ toast('En az 2 güreşçi gerekli','err'); return; }
+    let st={mode,eventId,roomId:room?.id||null,type:'standard',sides:[[{cid:'',ctl:''}],[{cid:'',ctl:''}]],titleId:'',show:'',story:'',dm:1,tornado:false,every:2,limit:40,fast:null,ref:'',c1:'',c2:'',ann:''};
+    if(room?.match){ const m=MV.norm(JSON.parse(JSON.stringify(room.match)));
+      st={...st,type:m.type,sides:m.sides.map(s=>s.map(i=>({cid:m.cids[i],ctl:m.ctl[i]}))),titleId:m.titleId||'',story:m.story||'',dm:m.dm??1,tornado:!!m.tornado,every:m.entry?.every||2,limit:m.limit||30}; }
+    else { const mine=w.find(c=>c.owner===Me.id); st.sides[0][0].cid=(mine||w[0]).id; st.sides[1][0].cid=w.find(c=>c.id!==st.sides[0][0].cid)?.id||''; }
+    if(mode==='free'){ const cs=Store.chars('commentator'); st.ref=Store.chars('referee')[0]?.id||''; st.c1=cs[0]?.id||''; st.c2=cs[1]?.id||''; st.ann=Store.chars('announcer')[0]?.id||''; }
+    this.st=st; this.render(); UI.open('md-mb');
+  },
+  total(){ return this.st.sides.reduce((a,s)=>a+s.length,0); },
+  preset(k){ const p=MB_PRESETS[k]; if(!p) return; const [,type,shape]=p; const old=this.st.sides.flat().map(x=>x.cid).filter(Boolean);
+    this.st.type=type; this.st.sides=shape.map(n=>Array.from({length:n},()=>({cid:'',ctl:''})));
+    const flat=this.st.sides.flat(); old.slice(0,flat.length).forEach((cid,i)=>flat[i].cid=cid);
+    this.render(); },
+  fill(){ const used=new Set(this.st.sides.flat().map(x=>x.cid).filter(Boolean)); const first=Store.get(this.st.sides.flat().find(x=>x.cid)?.cid);
+    const pool=Store.chars('wrestler').filter(c=>!used.has(c.id)).sort(()=>Math.random()-0.5);
+    const same=pool.filter(c=>!first?.gender||!c.gender||c.gender===first.gender), rest=pool.filter(c=>!same.includes(c));
+    const q=[...same,...rest]; let miss=0;
+    this.st.sides.flat().forEach(x=>{ if(!x.cid){ const c=q.shift(); if(c) x.cid=c.id; else miss++; } });
+    if(miss) toast(`Kadroda yeterli güreşçi yok — ${miss} boş yer kaldı`,'err');
+    this.render(); },
+  render(){
+    const st=this.st, R=MT[st.type], tot=this.total(), big=tot>10;
+    const w=Store.chars('wrestler'); const used=st.sides.flat().map(x=>x.cid);
+    const copt=sel=>`<option value="">— seç —</option>`+w.map(c=>`<option value="${c.id}" ${c.id===sel?'selected':''} ${c.id!==sel&&used.includes(c.id)?'disabled':''}>${esc(c.ringName)}${c.gender==='f'?' ♀':''}${c.owner?' · @'+esc(Data.player(c.owner)?.name||''):''}</option>`).join('');
+    const ctlOpt=sel=>`<option value="">Oto (sahibi / AI)</option><option value="ai" ${sel==='ai'?'selected':''}>🤖 AI</option>`+[...Data.players.values()].map(p=>`<option value="${p.id}" ${sel===p.id?'selected':''}>🎮 ${esc(p.name)}</option>`).join('');
+    const tOpts='<option value="">— kemer yok —</option>'+Univ.titles().map(t=>`<option value="${t.id}" ${st.titleId===t.id?'selected':''}>${esc(t.name)}${t.holder?` · ${esc(Data.char(t.holder)?.ringName||'')}`:' · boş'}</option>`).join('');
+    const warn=[]; const cs=st.sides.map(s=>s.map(x=>Store.get(x.cid)).filter(Boolean));
+    if(cs.some((s,i)=>cs.some((o,j)=>i!==j&&s.some(a=>o.some(b=>isIG(a,b)))))) warn.push('⚥ Intergender maç');
+    const t=Data.titles.get(st.titleId); if(t && cs.flat().some(c=>!titleEligible(t,c))) warn.push(`Kemer bölümü "${TITLE_DIV[t.division]}" — bazı güreşçiler uymuyor`);
+    if(st.sides.flat().some(x=>!x.cid)) warn.push(`${st.sides.flat().filter(x=>!x.cid).length} boş yer var — "Rastgele doldur" ya da seç`);
+    const tagOn=st.sides.some(s=>s.length>1)&&!R.noTag&&!R.over&&!st.tornado;
+    if(R.over && st.sides.some(s=>s.length>1)) st.sides=st.sides.flat().map(x=>[x]);   // battle royal / rumble: herkes tek
+    const flat=st.sides.length>4 && st.sides.every(s=>s.length===1);
+    $('mb-title').textContent=st.mode==='seg'?(st.roomId?'Maçı düzenle':'Şova maç ekle'):'Serbest maç kur';
+    $('mb-body').innerHTML=`
+      <div class="ff"><span class="lbl">Hazır format</span><div class="chips">${MB_PRESETS.map((p,k)=>`<button class="chip" data-pre="${k}">${esc(p[0])}</button>`).join('')}</div></div>
+      <div class="erow"><div class="ff half"><span class="lbl">Maç türü</span><select id="mb-type">${MT_GROUPS.map(([g,ks])=>`<optgroup label="${g}">${ks.map(k=>`<option value="${k}" ${st.type===k?'selected':''}>${esc(MT[k].tr)}</option>`).join('')}</optgroup>`).join('')}</select><div class="hint">${esc(R.d)}</div></div>
+        <div class="ff half"><span class="lbl">Kemer (kazanan şampiyon olur)</span><select id="mb-title">${tOpts}</select></div></div>
+      <div class="mb-fmt"><b>${st.sides.length>4&&st.sides.every(s=>s.length===1)?`${tot} kişi`:st.sides.map(s=>s.length).join(' vs ')}</b> · ${tot} güreşçi${tagOn?' · tag kuralları':st.sides.some(s=>s.length>1)?' · herkes legal':''}${R.stagger||R.gauntlet?' · sırayla giriş':''}</div>
+      ${flat?`<div class="mb-sides big"><div class="mb-side"><div class="mb-sh"><b>Katılımcılar — herkes kendisi için${R.stagger||R.gauntlet?' (numara = giriş sırası)':''}</b></div>
+          ${st.sides.map((s,k)=>`<div class="mb-row">${`<span class="mb-no">${k+1}</span>`}<select data-c="${k}|0">${copt(s[0].cid)}</select>${!big?`<select data-t="${k}|0" class="mb-ctl">${ctlOpt(s[0].ctl)}</select>`:''}${st.sides.length>2?`<button class="btn sm" data-rmside="${k}">−</button>`:''}</div>`).join('')}
+          <button class="btn sm" data-addside="1"><i class="fas fa-plus"></i> Katılımcı</button></div></div>`:
+      `<div class="mb-sides ${big?'big':''}">${st.sides.map((s,k)=>`<div class="mb-side"><div class="mb-sh"><b>${R.over?'Katılımcılar':`Taraf ${k+1}`}</b>${!R.over&&st.sides.length>2?`<button class="btn sm" data-rmside="${k}" title="Tarafı sil">✕</button>`:''}</div>
+          ${s.map((x,i)=>`<div class="mb-row">${R.stagger||R.gauntlet?`<span class="mb-no">${st.sides.slice(0,k).reduce((a,y)=>a+y.length,0)+i+1}</span>`:''}<select data-c="${k}|${i}">${copt(x.cid)}</select>${!big?`<select data-t="${k}|${i}" class="mb-ctl">${ctlOpt(x.ctl)}</select>`:''}${s.length>1||st.sides.length>2?`<button class="btn sm" data-rm="${k}|${i}">−</button>`:''}</div>`).join('')}
+          <button class="btn sm" data-addm="${k}"><i class="fas fa-plus"></i> ${R.over?'Katılımcı':'Üye'}</button></div>`).join('')}
+        ${!R.over?`<button class="btn" data-addside="1" style="align-self:flex-start"><i class="fas fa-plus"></i> Taraf ekle</button>`:''}</div>`}
+      <div class="erow"><button class="btn" id="mb-fill"><i class="fas fa-shuffle"></i> Rastgele doldur</button>
+        ${st.sides.some(s=>s.length>1)&&!R.over&&!R.noTag?`<label class="ck ${st.tornado?'on':''}"><input type="checkbox" id="mb-tornado" ${st.tornado?'checked':''}> Tornado (herkes aynı anda legal)</label>`:''}
+        ${R.stagger?`<div class="ff half" style="max-width:190px"><span class="lbl">Giriş aralığı (tur)</span><input type="number" id="mb-every" min="1" max="10" value="${st.every}"></div>`:''}
+        ${R.iron?`<div class="ff half" style="max-width:190px"><span class="lbl">Süre (tur)</span><input type="number" id="mb-limit" min="10" max="80" value="${st.limit}"></div>`:''}</div>
+      ${warn.length?`<div class="warnbox">${warn.map(esc).join('<br>')}</div>`:''}
+      ${st.mode==='free'?`<div class="erow"><div class="ff half"><span class="lbl">Şov / etkinlik adı</span><input id="mb-show" value="${esc(st.show)}" placeholder="örn. Monday Night Mayhem #1"></div>
+        <div class="ff half"><span class="lbl">AI (DM) yetkisi</span><select id="mb-dm"><option value="0" ${st.dm==0?'selected':''}>Sadece anlatır</option><option value="1" ${st.dm==1?'selected':''}>1 kademe kaydırabilir</option><option value="2" ${st.dm==2?'selected':''}>2 kademe</option></select></div></div>
+        <div class="erow">${[['ref','referee','Hakem'],['c1','commentator','Yorumcu 1'],['c2','commentator','Yorumcu 2'],['ann','announcer','Spiker']].map(([k,r,l])=>`<div class="ff half"><span class="lbl">${l}</span><select id="mb-${k}"><option value="">— yok —</option>${Store.chars(r).map(c=>`<option value="${c.id}" ${st[k]===c.id?'selected':''}>${esc(c.ringName)}</option>`).join('')}</select></div>`).join('')}</div>`:''}
+      <div class="ff"><span class="lbl">Hikâye / not (AI okur)</span><textarea id="mb-story" rows="2">${esc(st.story)}</textarea></div>
+      ${tot>6?`<label class="ck ${st.fast??true?'on':''}" style="align-self:flex-start"><input type="checkbox" id="mb-fast" ${(st.fast??true)?'checked':''}> Hızlı AI turları (kalabalık maçta AI güreşçiler her hamlede yapay zekâya sormaz — çok daha hızlı)</label>`:''}`;
+    $('mb-go').innerHTML=st.mode==='seg'?(st.roomId?'<i class="fas fa-check"></i> Kaydet':'<i class="fas fa-plus"></i> Karta ekle'):'<i class="fas fa-bell"></i> Maçı başlat';
+    this.wire();
+  },
+  read(){ const st=this.st; const g=id=>$(id);
+    if(g('mb-show')) st.show=g('mb-show').value; if(g('mb-story')) st.story=g('mb-story').value; if(g('mb-dm')) st.dm=+g('mb-dm').value;
+    ['ref','c1','c2','ann'].forEach(k=>{ if(g('mb-'+k)) st[k]=g('mb-'+k).value; });
+    if(g('mb-every')) st.every=+g('mb-every').value||2; if(g('mb-limit')) st.limit=+g('mb-limit').value||30; if(g('mb-fast')) st.fast=g('mb-fast').checked; },
+  wire(){
+    const b=$('mb-body'), st=this.st, rr=()=>{ this.read(); this.render(); };
+    b.querySelectorAll('[data-pre]').forEach(x=>x.onclick=()=>{ this.read(); this.preset(+x.dataset.pre); });
+    $('mb-type').onchange=e=>{ this.read(); st.type=e.target.value; this.render(); };
+    $('mb-title').onchange=e=>{ st.titleId=e.target.value; rr(); };
+    b.querySelectorAll('[data-c]').forEach(x=>x.onchange=()=>{ const [k,i]=x.dataset.c.split('|').map(Number); st.sides[k][i].cid=x.value; rr(); });
+    b.querySelectorAll('[data-t]').forEach(x=>x.onchange=()=>{ const [k,i]=x.dataset.t.split('|').map(Number); st.sides[k][i].ctl=x.value; });
+    b.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ const [k,i]=x.dataset.rm.split('|').map(Number); st.sides[k].splice(i,1); if(!st.sides[k].length) st.sides.splice(k,1); rr(); });
+    b.querySelectorAll('[data-rmside]').forEach(x=>x.onclick=()=>{ st.sides.splice(+x.dataset.rmside,1); rr(); });
+    b.querySelectorAll('[data-addm]').forEach(x=>x.onclick=()=>{ st.sides[+x.dataset.addm].push({cid:'',ctl:''}); rr(); });
+    b.querySelector('[data-addside]')?.addEventListener('click',()=>{ st.sides.push([{cid:'',ctl:''}]); rr(); });
+    $('mb-fill').onclick=()=>{ this.read(); this.fill(); };
+    $('mb-tornado')&&($('mb-tornado').onchange=e=>{ st.tornado=e.target.checked; rr(); });
+  },
+  async go(){
+    this.read(); const st=this.st, R=MT[st.type];
+    const sides=st.sides.map(s=>s.filter(x=>x.cid)).filter(s=>s.length);
+    const n=sides.flat().length;
+    if(n<2 || (sides.length<2 && !R.over)){ toast('En az iki taraf ve iki güreşçi seç','err'); return; }
+    if(R.over && n<3){ toast(`${R.tr} için en az 3 güreşçi seç`,'err'); return; }
+    const t=Data.titles.get(st.titleId);
+    const cfg={sides,type:st.type,titleId:t?.id||null,title:t?.name||'',story:st.story.trim(),dm:st.dm,tornado:st.tornado,every:st.every,limit:st.limit,fast:st.fast??(n>6)};
+    UI.close('md-mb');
+    if(st.mode==='seg'){
+      const payload={type:'match',sides,mtype:st.type,titleId:cfg.titleId,note:cfg.story,dm:st.dm,tornado:st.tornado,every:st.every,limit:st.limit,fast:cfg.fast};
+      if(st.roomId){ const old=Data.rooms.get(st.roomId); await B.del('rooms/'+st.roomId); Data.rooms.delete(st.roomId); const id=await Show.addSeg(st.eventId,payload); await B.update('rooms/'+id,{order:old?.order}); }
+      else await Show.addSeg(st.eventId,payload);
+      Ev.render(); toast('Maç karta eklendi','ok');
+    } else {
+      await MatchCtl.create({...cfg,show:st.show.trim(),ref:st.ref,c1:st.c1,c2:st.c2,ann:st.ann});
+    }
+  },
+};
+MatchSetup.open=()=>MatchBuilder.open({mode:'free'});
+
+/* ════════════════════════════════════════════════════════════
+   ARAYÜZ — panel, üst şerit, hamle çubuğu, VS kartı (çok taraflı)
+════════════════════════════════════════════════════════════ */
+Info.miniFighter=function(M,i){
+  const c=M.c[i], f=M.f[i], legal=MV.inRing(M,i), me=M.turn===i&&!M.over&&M.started;
+  const badge=f.elim?'<span class="tag al-heel">ELENDİ</span>':!f.entered?'<span class="tag neutral">BEKLİYOR</span>':M.tag&&!legal?'<span class="tag neutral">APRON</span>':f.downed?'<span class="tag al-heel">YERDE</span>':'';
+  const bar=(v,col)=>`<div class="mbar"><div style="width:${v}%;background:${col}"></div></div>`;
+  return `<div class="mf ${me?'turn':''} ${f.elim?'out':''} ${!f.entered?'wait':''}">${avaHTML(c,'sm')}<div class="mf-b"><div class="mf-n">${esc(c.ringName)} <small>${M.ctl[i]==='ai'?'AI':'@'+esc(Data.player(M.ctl[i])?.name||'?')}</small>${badge}</div>
+    ${f.entered&&!f.elim?`${bar(f.hp,'var(--gn)')}${bar(f.st,'var(--face)')}${bar(f.mom,'var(--gold)')}`:''}</div>${c.themeUrl?`<button class="ibtn" data-cue="${c.id}" title="Müziğini çal">♪</button>`:''}</div>`;
+};
+{ const _mh=Info.matchHTML;
+  Info.matchHTML=function(r){
+    const M=MatchCtl.hydrate(r); if(!MV.isMulti(M)) return _mh.call(this,r);
+    const R=MV.rules(M), host=Data.player(M.host), hostStale=!Data.online().some(p=>p.id===M.host);
+    const canRun=!M.over&&M.started&&M.ctl[M.turn]==='ai'&&M.host===Me.id;
+    const pend=M.c.map((_,i)=>i).filter(i=>!M.f[i].entered&&!M.f[i].elim);
+    const big=M.c.length>8;
+    const groups=big?`<div class="box" style="padding:8px;gap:4px"><span class="lbl" style="margin:0">Ringde (${M.c.filter((_,i)=>MV.active(M,i)).length})</span>${M.c.map((_,i)=>i).filter(i=>MV.active(M,i)).map(i=>this.miniFighter(M,i)).join('')}</div>
+        ${pend.length?`<div class="box" style="padding:8px;gap:4px"><span class="lbl" style="margin:0">Girmeyi bekleyen (${pend.length})${M.entry?` · sıradaki ${Math.max(0,M.entry.next-M.round)} tur sonra`:''}</span><div class="muted" style="font-size:12px">${pend.slice(0,12).map(i=>esc(M.c[i].ringName)).join(', ')}${pend.length>12?'…':''}</div></div>`:''}
+        ${M.elimLog.length?`<div class="box" style="padding:8px;gap:2px"><span class="lbl" style="margin:0">Elenenler (${M.elimLog.length})</span>${[...M.elimLog].reverse().slice(0,12).map((e,n)=>`<div class="muted" style="font-size:11.5px">${M.elimLog.length-n}. ${esc(M.c[e.i].ringName)} — ${esc(e.method)}${e.by!=null&&e.by!==e.i?` (${esc(M.c[e.by].ringName)})`:''}</div>`).join('')}</div>`:''}`
+      : M.sides.map((s,k)=>`<div class="box mside" style="padding:8px;gap:4px"><span class="lbl" style="margin:0">${M.sides.length>2||s.length>1?`Taraf ${k+1}`:''}${R.iron?` · ${M.falls[k]||0} düşüş`:''}${s.every(i=>M.f[i].elim)?' · ELENDİ':''}</span>${s.map(i=>this.miniFighter(M,i)).join('')}</div>`).join('')
+        +(pend.length&&M.entry?`<div class="muted" style="font-size:11.5px">Sıradaki giriş: ${esc(M.c[[...pend].sort((a,b)=>(M.entry.rank?.[a]??a)-(M.entry.rank?.[b]??b))[0]].ringName)} · ${Math.max(0,M.entry.next-M.round)} tur sonra</div>`:'');
+    return `${!M.started||M.over?MatchCard.fromMatch(M,'side'):''}${groups}
+      <div class="box" style="padding:10px;gap:0">
+        <div class="info-row"><span>Maç</span><span>${esc(R.tr)}</span></div>
+        <div class="info-row"><span>Format</span><span>${M.sides.length>4&&M.sides.every(s=>s.length===1)?`${M.c.length} kişi · herkes kendisi için`:M.sides.map(s=>s.length).join(' vs ')}${M.tag?' · tag':M.tornado?' · tornado':''}</span></div>
+        <div class="info-row"><span>Seyirci</span><span style="color:var(--am);font-weight:700">${M.crowd}/100</span></div>
+        <div class="info-row"><span>Tur</span><span>${M.round}${R.iron?' / '+M.limit:''}</span></div>
+        <div class="info-row"><span>Hakem</span><span>${esc(M.staff.ref?.ringName||'-')}</span></div>
+        <div class="info-row"><span>Host</span><span>${esc(host?.name||'?')}${hostStale?' <span class="muted">(çevrimdışı)</span>':''}</span></div>
+        ${M.title?`<div class="info-row"><span>Kemer</span><span>${esc(M.title)}</span></div>`:''}
+        ${M.fast?`<div class="info-row"><span>AI turları</span><span>hızlı</span></div>`:''}
+        ${M.over?`<div class="info-row"><span>Sonuç</span><span style="color:var(--gold)">${esc((M.result?.winners||[]).map(id=>Data.char(id)?.ringName).join(' & ')||'Berabere')} · ${esc(M.result?.method||'')}</span></div>`:''}
+      </div>
+      ${!M.started&&(M.host===Me.id||Me.admin)?`<button class="btn gold" data-a="start"><i class="fas fa-bell"></i> Maçı başlat</button>`:''}
+      ${canRun?`<button class="btn gold" data-a="aiturn"><i class="fas fa-robot"></i> AI turunu oynat</button>`:''}
+      ${!M.over&&M.host!==Me.id?`<button class="btn" data-a="host"><i class="fas fa-crown"></i> Host'u devral</button>`:''}
+      ${this.roomAdmin(r)}${this.musicBox(r)}`;
+  };
+}
+{ const _st=Chat.strip;
+  Chat.strip=function(){
+    const r=this.R, s=$('strip');
+    if(!r||r.kind!=='match'||!r.match){ return _st.call(this); }
+    const M=MatchCtl.hydrate(r); if(!MV.isMulti(M)) return _st.call(this);
+    s.classList.remove('hidden');
+    const ids=M.c.map((_,i)=>i).filter(i=>MV.inRing(M,i)).slice(0,8);
+    s.innerHTML=`<div class="mstrip">${ids.map(i=>{ const f=M.f[i]; return `<div class="ms ${M.turn===i&&!M.over&&M.started?'turn':''}" style="--sc:${['var(--face)','var(--heel)','var(--gn)','var(--tw)','var(--am)','var(--gold)'][MV.sideOf(M,i)%6]}"><div class="n">${esc(M.c[i].ringName)}</div><div class="mbar"><div style="width:${f.hp}%;background:var(--gn)"></div></div><div class="mbar"><div style="width:${f.mom}%;background:var(--gold)"></div></div></div>`; }).join('')}
+      <div class="sf-mid"><b>${M.crowd}</b>seyirci<br>tur ${M.round}${M.elimLog.length?`<br>${M.c.filter((_,i)=>!M.f[i].elim).length} kaldı`:''}</div></div>`;
+  };
+}
+{ const _rm=Composer.renderMoves;
+  Composer.renderMoves=function(){
+    const r=Chat.R, M=MatchCtl.hydrate(r), idx=M.turn, c=M.c[idx], f=M.f[idx];
+    const cats=MV.cats(M,idx); if(!cats.includes(this.cat)) this.cat='strike';
+    $('mv-title').textContent=`SIRA SENDE — ${c.ringName}`;
+    $('mv-cats').innerHTML=cats.map(k=>{ const need=CAT[k].needMom, lock=need&&f.mom<need;
+      return `<button class="chip ${this.cat===k?'on':''} ${lock?'lock':''} ${SPECIAL_CATS.includes(k)||k==='table'?'sp':''}" data-cat="${k}" title="${lock?`Momentum ${need}+ önerilir`:''}">${esc(MV.catLabel(M,k))}</button>`; }).join('');
+    $('mv-cats').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ this.cat=b.dataset.cat; this.renderMoves(); });
+    const opp=MV.opponents(M,idx), needT=!['rest','counter','tag','climb'].includes(this.cat);
+    const tg=$('mv-tgt'); const prev=tg.value;
+    if(this.cat==='tag'){ const ap=MV.apron(M,idx); tg.innerHTML=ap.map(j=>`<option value="${j}">→ ${esc(M.c[j].ringName)} (can ${M.f[j].hp})</option>`).join(''); tg.style.display=ap.length>1?'':'none'; }
+    else { tg.innerHTML=opp.map(j=>`<option value="${j}" ${String(j)===prev?'selected':''}>🎯 ${esc(M.c[j].ringName)} · can ${M.f[j].hp}${M.f[j].downed?' · yerde':''}</option>`).join(''); tg.style.display=needT&&opp.length>1?'':'none'; }
+    const list=c.moves?.[this.cat]||[];
+    $('mv-move').innerHTML=(CAT[this.cat].base>0||this.cat==='weapon')?(list.length?list:[Engine.moveFor(c,this.cat,M)]).map(m=>`<option>${esc(m)}</option>`).join(''):`<option>${esc(Engine.moveFor(c,this.cat,M))}</option>`;
+    const show=()=>{ const d=moveDesc(c,this.cat,$('mv-move').value); $('mv-desc').textContent=d?'↳ '+d:''; };
+    $('mv-move').onchange=show; show();
+  };
+  Composer.move=async function(){
+    const r=Chat.R; if(!r||!this.isMyTurn()) return;
+    const M=MatchCtl.hydrate(r);
+    const emote=$('cmp-inp').value.replace(/^\/me\s+/i,'').trim();
+    const mv=$('mv-move').value||Engine.moveFor(M.c[M.turn],this.cat,M);
+    const tv=$('mv-tgt').value; const target=tv!==''&&tv!=null?+tv:null;
+    $('cmp-inp').value='';
+    const ok=await MatchCtl.act(r.id,M.turn,this.cat,mv,emote,{target:this.cat==='tag'?null:target,tagTo:this.cat==='tag'?target:null});
+    if(!ok && emote) $('cmp-inp').value=emote;
+  };
+}
+/* tag hedefi: act'e tagTo aktar */
+{ const _act=MatchCtl.act;
+  MatchCtl.act=async function(roomId,idx,cat,mv,emote,o={}){
+    if(cat==='tag' && o.tagTo!=null){ const _r=Engine.resolve; Engine.resolve=function(M,...a){ M.tagTo=o.tagTo; return _r.call(this,M,...a); }; try{ return await _act.call(this,roomId,idx,cat,mv,emote,o); } finally{ Engine.resolve=_r; } }
+    return _act.call(this,roomId,idx,cat,mv,emote,o);
+  };
+}
+/* VS kartı: çok taraflı */
+MatchCard.multi=function(o,cls=''){
+  const sides=(o.sides||[]).map(s=>s.map(x=>typeof x==='string'?Data.char(x):x).filter(Boolean)).filter(s=>s.length);
+  const tot=sides.flat().length, R=MT[o.type]||MT.standard;
+  const t=(o.titleId&&Data.titles.get(o.titleId))||null;
+  const ev=Univ.events().find(e=>e.title===o.show); const lg=ev?eventLogoHTML(ev,'vs-logo'):'';
+  const top=`<div class="vs-top">${lg}<span>${esc(o.show||'')}</span>${o.title?`<span class="vs-belt">🏆 ${esc(o.title)}</span>`:''}</div>`;
+  if(tot>8 || sides.length>4){
+    return `<div class="vs-card multi ${cls}">${top}<div class="vs-crowd"><div class="vs-bigt">${esc(R.tr.toUpperCase())}</div>${t?`<div style="display:flex;justify-content:center">${beltHTML(t,'belt-vs')}</div>`:''}
+      <div class="vs-grid">${sides.flat().map((c,n)=>`<div class="vs-g" title="${esc(c.ringName)}">${avaHTML(c,'sm')}${R.stagger||R.gauntlet?`<small>${n+1}</small>`:''}</div>`).join('')}</div>
+      <div class="vs-mt" style="margin:8px auto 0;display:inline-block">${tot} GÜREŞÇİ</div></div></div>`;
+  }
+  const col=c=>c?.alignment==='heel'?'var(--heel)':c?.alignment==='face'?'var(--face)':'var(--tw)';
+  return `<div class="vs-card multi ${cls}">${top}<div class="vs-stage">${sides.map((s,k)=>`<div class="vs-side m" style="--al:${col(s[0])}">${s.map((c,i)=>`<div class="vs-mem" style="--n:${s.length};--i:${i}">${Media.hasRender(c)?Media.renderHTML(c,{want:k<sides.length/2?'right':'left',cls:'vs-r'}):`<div class="vs-ph">${avaHTML(c,s.length>2?'lg':'xl')}</div>`}</div>`).join('')}</div>`).join('<div class="vs-x sm">VS</div>')}
+      ${t?`<div class="vs-beltimg">${beltHTML(t,'belt-vs')}</div>`:''}</div>
+    <div class="vs-names m">${sides.map(s=>`<div class="vs-n"><b>${s.map(c=>esc(c.ringName)).join(' & ')}</b>${s.some(c=>titlesOf(c.id).some(x=>x.id===o.titleId))?'<span class="vs-champ">ŞAMPİYON</span>':''}</div>`).join('<div class="vs-mt">VS</div>')}</div>
+    <div style="text-align:center;padding:0 0 8px"><span class="vs-mt">${esc(R.tr)}${o.ig?' · ⚥':''}</span></div></div>`;
+};
+{ const _h=MatchCard.html;
+  MatchCard.html=function(o,cls=''){ if(o?.sides && (o.sides.length>2 || o.sides.some(s=>s.length>1))) return this.multi(o,cls); return _h.call(this,o,cls); };
+  MatchCard.fromMatch=function(M,cls=''){ return this.html({sides:M.sides.map(s=>s.map(i=>M.c[i])),a:M.c[0],b:M.c[M.sides[1]?.[0]??1],type:M.type,title:M.title,titleId:M.titleId,show:M.show,ig:M.ig},cls); };
+}
+/* takım kemerleri: holders */
+titlesOf=function(cid){ return cid?Univ.titles().filter(t=>t.holder===cid||(t.holders||[]).includes(cid)):[]; };
+
+/* ════════════════════════════════════════════════════════════
+   SERBEST MAÇLAR — arşive gönder / tamamen sil / arşiv
+════════════════════════════════════════════════════════════ */
+const Rooms = {
+  async archive(id,silent){ await B.update('rooms/'+id,{archived:true,archivedAt:Date.now()}); if(Chat.room===id){ Chat.room=null; App.openDefault(); } if(!silent) toast('Arşive gönderildi','ok'); },
+  async restore(id){ await B.update('rooms/'+id,{archived:false}); toast('Arşivden çıkarıldı','ok'); this.list(); },
+  async purge(id,ask=true){
+    const r=Data.rooms.get(id); if(!r) return;
+    if(ask && !confirm(`"${r.name||'Maç'}" tamamen silinsin mi?\n\nOda, tüm mesajları ve Geçmiş'teki maç kaydı silinir. Güreşçilerin galibiyet/mağlubiyet rekorları değişmez. Geri alınamaz.`)) return;
+    try{ const ms=await B.getCol(`rooms/${id}/messages`,{}); for(const m of ms) await B.del(`rooms/${id}/messages/${m.id}`); }catch(e){ console.warn(e); }
+    await B.del('rooms/'+id); await B.del('matches/'+id).catch(()=>{}); Data.rooms.delete(id);
+    if(Chat.room===id){ Chat.room=null; App.openDefault(); }
+    Side.render(); toast('Maç silindi','ok'); if($('md-arch')?.classList.contains('on')) this.list();
+  },
+  free(){ return [...Data.rooms.values()].filter(r=>r.kind==='match'&&!r.eventId); },
+  async archiveDone(){ const l=this.free().filter(r=>!r.archived&&r.match?.over); if(!l.length){ toast('Biten serbest maç yok'); return; } for(const r of l) await this.archive(r.id,true); toast(`${l.length} maç arşive gönderildi`,'ok'); },
+  list(){
+    const l=this.free().filter(r=>r.archived).sort((a,b)=>(b.lastAt||0)-(a.lastAt||0));
+    $('arch-body').innerHTML=l.map(r=>`<div class="listrow"><i class="fas fa-ring" style="opacity:.5"></i><div class="mid"><b style="font-size:13px">${esc(r.name||'Maç')}</b><div class="muted">${r.match?.over?`${esc((r.match.result?.winners||[r.match.result?.winner]).map(id=>Data.char(id)?.ringName).filter(Boolean).join(' & ')||'Berabere')} · ${esc(r.match.result?.method||'')}`:'bitmedi'} · ${new Date(r.lastAt||r.createdAt||0).toLocaleDateString('tr-TR')}</div></div>
+      <button class="btn sm" onclick="Chat.open('${r.id}');UI.close('md-arch')">Aç</button><button class="btn sm" onclick="Rooms.restore('${r.id}')">Geri al</button><button class="btn sm red" onclick="Rooms.purge('${r.id}')"><i class="fas fa-trash"></i></button></div>`).join('')||'<div class="muted">Arşiv boş.</div>';
+  },
+  openArchive(){ this.list(); UI.open('md-arch'); },
+};
+Info.roomAdmin=function(r){
+  if(r.kind!=='match'||r.eventId) return '';
+  return `<div class="box" style="padding:10px;gap:6px"><span class="lbl" style="margin:0">Serbest maç</span><div style="display:flex;gap:6px;flex-wrap:wrap">
+    ${r.archived?`<button class="btn sm" onclick="Rooms.restore('${r.id}')"><i class="fas fa-box-open"></i> Arşivden çıkar</button>`:`<button class="btn sm" onclick="Rooms.archive('${r.id}')"><i class="fas fa-box-archive"></i> Arşive gönder</button>`}
+    <button class="btn sm red" onclick="Rooms.purge('${r.id}')"><i class="fas fa-trash"></i> Tamamen sil</button></div></div>`;
+};
+{ const _mh=Info.matchHTML;   // 1v1 panelinde de arşiv/sil
+  Info.matchHTML=function(r){ const h=_mh.call(this,r); return h.includes('Serbest maç</span>')?h:h+this.roomAdmin(r); }; }
+{ const _item=Side.item;
+  Side.item=function(r){ let h=_item.call(this,r);
+    if(r.kind==='match'&&!r.eventId) h=h.replace(/<\/div>$/,`<span class="rm-act"><i class="fas fa-box-archive" data-arch="${r.id}" title="Arşive gönder"></i><i class="fas fa-trash" data-purge="${r.id}" title="Tamamen sil"></i></span></div>`);
+    return h; };
+  const _sr=Side.render;
+  Side.render=function(){ _sr.call(this);
+    document.querySelectorAll('#sb [data-arch]').forEach(el=>el.onclick=e=>{ e.stopPropagation(); Rooms.archive(el.dataset.arch); });
+    document.querySelectorAll('#sb [data-purge]').forEach(el=>el.onclick=e=>{ e.stopPropagation(); Rooms.purge(el.dataset.purge); });
+    const n=Rooms.free().filter(r=>r.archived).length; const a=$('sb-arch-n'); if(a) a.textContent=n?`(${n})`:''; };
+}
+
+/* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
 ════════════════════════════════════════════════════════════ */
 const History = {
@@ -4570,7 +5623,7 @@ const History = {
       <div class="box"><h3><i class="fas fa-tv"></i> Şov Reytingleri</h3>
         ${Univ.events().filter(e=>e.status==='done').reverse().map(e=>`<div class="hist-item" style="cursor:pointer" onclick="Ev.open('${e.id}')">${brandChip(Univ.brand(e.brandId))}<div style="flex:1;min-width:0"><div style="font-weight:700">${esc(e.title)}</div><div class="muted">${Dt.nice(e.date)} · ${e.viewers||'-'}M izleyici${e.headline?' · '+esc(e.headline):''}</div></div>${starsHTML(e.rating)}</div>`).join('')||'<span class="muted">Henüz şov bitmedi.</span>'}</div>
       <div class="box"><h3><i class="fas fa-clock-rotate-left"></i> Maç Arşivi</h3>
-        ${ms.map(m=>`<div class="hist-item"><div style="flex:1;min-width:0"><div style="font-weight:700">${esc(m.a)} vs ${esc(m.b)}</div>
+        ${ms.map(m=>`<div class="hist-item"><div style="flex:1;min-width:0"><div style="font-weight:700">${esc(m.a)}${m.b?' vs '+esc(m.b):''}${m.typeTr&&m.type!=='standard'?` <span class="muted" style="font-weight:400;font-size:11px">· ${esc(m.typeTr)}</span>`:''}</div>
           <div class="muted">${new Date(m.date).toLocaleString('tr-TR')} · ${esc(m.show||'Şov')} · Kazanan: <b style="color:var(--gold)">${esc(m.winner)}</b> (${esc(m.method)}, ${m.rounds} tur)${m.titleChange?' · 🏆 YENİ ŞAMPİYON':''} ${m.rating!=null?starsHTML(m.rating):''}</div>
           ${m.summary?`<div style="font-size:12.5px;margin-top:3px">${esc(m.summary)}</div>`:''}</div>
           ${Data.rooms.get(m.roomId)?`<button class="btn sm" onclick="Chat.open('${esc(m.roomId)}')"><i class="fas fa-eye"></i></button>`:''}</div>`).join('')||'<span class="muted">Arşiv boş.</span>'}</div>`;
