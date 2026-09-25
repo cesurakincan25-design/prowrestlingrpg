@@ -102,6 +102,13 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
   otomatik şampiyon olur, savunmalar sayılır. Şampiyonlar profilde, kadro kartında, VS kartında ve maç panelinde kemerleriyle görünür.
 - **Intergender maçlar:** manuel maç kurarken serbest (uyarı gösterilir); AI booker da önerebilir ama her intergender maçı karta
   eklemeden önce sorar. Kemer bölümüne uymayan güreşçiyle AI kemer maçı kurmaz.
+- **Şov sonrası (hafıza):** şov bitince AI tüm segmentleri okur → **şov sonuçları** (madde madde) + **hafıza notu** + **değişiklik önerileri**
+  (ilişki kur / değiştir / bitir, turn, popülerlik, güreşçi hafızasına not). Her öneri gerekçesiyle **onay kutusu** olarak gelir; seçtiklerini
+  script uygular ve en sonda uygulananları listeler. Hafıza notları sonraki maç / promo / booker istemlerine girer ("Son gelişmeler").
+- **Şov Arşivi:** biten şovlar; manşet, sonuçlar, hafıza, segment sonuçları ve özetleri, her segmentin **tam dökümü**; metin ya da HTML indir.
+- **Twitter:** güreşçi (sahiplendiğin), marka ve promosyon hesaplarıyla tweet / yanıt / beğeni. AI **fan hesapları** üretir; şov bitince haber
+  hesabı sonuçları paylaşır (script), AI güreşçiler ve fanlar tepki verir. AI'ın oynadığı bir güreşçiyi @ ile etiketlersen karakterine göre
+  cevap verir (feud'lu rakibe laf sokar). "Gündem üret" ile yeni tweetler; seni etiketleyenler menüde sayı olarak görünür.
 - **Puan & reyting:** her maça / segmente yıldız, şova toplam yıldız + izlenme (M). Kemerler el değiştirir (DQ'da değiştirmez), savunmalar sayılır.
 - **Kontrol:** her köşe/katılımcı "AI" ya da bir oyuncu. AI güreşçilerin turlarını şovu yürüten (host) cihaz oynatır.
 - **Komutlar:** `/me` · `/do` · `/s` bağır · `/l` alçak · `/b` veya `((…))` OOC · `*eylem*` = /me

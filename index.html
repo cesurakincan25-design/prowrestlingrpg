@@ -610,6 +610,52 @@ body.ss .gmonly{display:none!important}
 .seg-beats li.now{color:var(--gold);font-weight:600}
 .seg-turn{font-size:12.5px}
 .seg-tools{display:flex;flex-wrap:wrap;gap:5px}
+/* ── şov sonrası / arşiv ── */
+.af-res{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:13px}
+.af-g{display:flex;flex-direction:column;gap:4px}
+.af-g>b{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.af-p{display:flex;gap:9px;align-items:flex-start;padding:6px 8px;background:var(--bg1);border:1px solid var(--ln);border-radius:8px;cursor:pointer;font-size:13px}
+.af-p input{width:auto!important;margin-top:3px;accent-color:var(--gold)}
+.af-p>span{display:flex;flex-direction:column;gap:2px}
+.af-p small{color:var(--t2);font-size:11.5px}
+.arch-i:hover{border-color:var(--ln2)}
+#arch-page>.btn{align-self:flex-start}
+.arch-log{max-height:420px;overflow-y:auto;background:var(--bg1);border-radius:8px;padding:8px 10px;margin-top:6px;display:flex;flex-direction:column;gap:3px;font-size:12.5px}
+.arch-log .al.k-narr{border-left:2px solid var(--gold);padding-left:6px}
+.arch-log .al.k-sys{color:var(--t2);font-family:var(--mono);font-size:11px}
+.arch-log .al.k-crowd{color:var(--am);font-style:italic}
+.arch-log .al.k-me,.arch-log .al.k-act{color:var(--me);font-style:italic}
+/* ── twitter ── */
+.tw-wrap{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:14px;align-items:start}
+@media(max-width:900px){.tw-wrap{grid-template-columns:1fr}.tw-side{order:-1;position:static}.tw-accs-t{display:none}.tw-side .tile{flex-direction:row;flex-wrap:wrap}.tw-side h3{width:100%}}
+.tw-main{display:flex;flex-direction:column;gap:10px}
+.tw-side{display:flex;flex-direction:column;gap:10px;position:sticky;top:0}
+.tw-side .tile{gap:6px}
+.tw-feed{display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--ln);border-radius:12px;overflow:hidden}
+.tw{display:flex;gap:10px;padding:11px 13px;border-bottom:1px solid var(--ln)}
+.tw.rep{padding:9px 0 0;border-bottom:none}
+.tw-a{cursor:pointer}
+.tw-b{flex:1;min-width:0}
+.tw-hd{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:13px}
+.tw-hd b{cursor:pointer}
+.tw-v{color:var(--face);font-size:11px}
+.tw-t{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;margin:2px 0 4px}
+.tw-m{color:var(--face);cursor:pointer}
+.tw-h{color:var(--face)}
+.tw-act{display:flex;gap:18px}
+.tw-act button{background:none;border:none;color:var(--t2);font-size:12px;display:flex;gap:5px;align-items:center;padding:2px 0}
+.tw-act button:hover{color:var(--t0)}
+.tw-act button.on{color:#e85a9b}
+.tw-reps{border-left:2px solid var(--ln2);padding-left:10px;margin-top:6px}
+.tw-c{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.tw-c textarea{width:100%;resize:vertical}
+.tw-news{background:var(--gold-d);font-size:14px}
+.tw-fan{color:var(--tw);border-color:var(--tw)}
+.tw-logo{padding:2px;background:var(--bg1)}
+.tw-lg{width:100%;height:100%}
+.tw-accs{display:flex;flex-direction:column;gap:5px;max-height:420px;overflow-y:auto}
+.tw-acc{display:flex;gap:8px;align-items:center;font-size:12.5px;cursor:pointer}
+.tw-acc .muted{font-size:11px}
 </style>
 </head>
 
@@ -653,6 +699,8 @@ body.ss .gmonly{display:none!important}
       <button data-p="titles"><i class="fas fa-trophy"></i> Kemerler</button>
       <button data-p="brands" class="gmonly"><i class="fas fa-layer-group"></i> Markalar & Şovlar</button>
       <button data-p="hist"><i class="fas fa-chart-line"></i> Geçmiş & Reyting</button>
+      <button data-p="arch"><i class="fas fa-box-archive"></i> Şov Arşivi</button>
+      <button data-p="tw"><i class="fab fa-twitter"></i> Twitter <span class="nb" id="nav-tw"></span></button>
       <button data-p="set"><i class="fas fa-cog"></i> Ayarlar</button>
     </div>
     <div class="sb-sec">Canlı şov <span id="sb-live-t" class="muted" style="text-transform:none;letter-spacing:0;font-weight:500"></span></div>
@@ -768,6 +816,14 @@ body.ss .gmonly{display:none!important}
   </section>
 
   <!-- HISTORY -->
+  <section class="page" id="p-arch">
+    <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Şov Arşivi</span><span class="s">Biten şovlar, sonuçlar ve tüm dökümler</span></div>
+    <div class="scroll-page"><div class="wide" id="arch-page"></div></div>
+  </section>
+  <section class="page" id="p-tw">
+    <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Twitter</span><span class="s">Güreşçiler, markalar, fanlar</span></div>
+    <div class="scroll-page"><div class="wide" id="tw-page"></div></div>
+  </section>
   <section class="page" id="p-hist">
     <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Geçmiş & Sıralama</span></div>
     <div class="scroll-page"><div class="panel" id="h-panel"></div></div>
@@ -960,6 +1016,11 @@ body.ss .gmonly{display:none!important}
   <div class="mhd"><span class="mti">Serbest maç arşivi</span><button class="mcl" onclick="UI.close('md-arch')">✕</button></div>
   <div class="mbdy" id="arch-body"></div>
   <div class="mft"><button class="btn" onclick="UI.close('md-arch')">Kapat</button></div>
+</div></div>
+<div class="mbd" id="md-after"><div class="mbox" style="max-width:720px">
+  <div class="mhd"><span class="mti" id="af-title">Şov sonrası</span><button class="mcl" onclick="UI.close('md-after')">✕</button></div>
+  <div class="mbdy" id="af-body"></div>
+  <div class="mft" id="af-foot"></div>
 </div></div>
 <div id="toast"></div>
 <div id="preshow"></div>
@@ -2369,7 +2430,7 @@ const Scene = {
       const recent=await Msgs.recent(roomId,18);
       const playerChars=[...new Set(recent.filter(m=>m.pid&&m.cid).map(m=>m.cid))].map(id=>Data.char(id)).filter(c=>c&&!(sc.ai||[]).includes(c.id));
       const inScene=[...aiChars,...playerChars];
-      const sheet=(c,tag)=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}]${tag} Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,inScene)?` | İlişkiler: ${relLine(c,inScene)}`:''}`;
+      const sheet=(c,tag)=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}]${tag} Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,inScene)?` | İlişkiler: ${relLine(c,inScene)}`:''}${memLine(c)?` | Son gelişmeler: ${memLine(c)}`:''}`;
       const r=await AI.ask({json:true,temperature:0.95,
         system:`Profesyonel güreş metin RP'sinde Dungeon Master'sın. Dil TÜRKÇE. Sadece AI kontrolündeki karakterleri oynarsın; OYUNCU karakterleri adına ASLA konuşma, eylem veya düşünce yazma. Kayfabe'yi koru, üsluplara sadık kal. Replikler kısa ve TV'ye uygun olsun. Eylemleri "emote" alanına 3. şahıs yaz (GTA World /me gibi, yıldızsız).
 Sahne: ${!sc.type||sc.type==='free'?'Serbest sahne.':(SEG_META[sc.type]?.d||'')}
@@ -2850,7 +2911,7 @@ Scene.sim = async function(id){
   const res=await AI.ask({json:true,temperature:0.95,
     system:`Profesyonel güreş TV yazarısın. Türkçe. Şov tonu: ${STYLES[ev?.style]?.tone||''}. Karakterlerin gimmick ve üsluplarına sadık kal.`,
     prompt:`Segment: ${SEG_TYPES[r.segType]?.tr}. Şov: ${ev?.title||''}. Not: ${r.topic||'-'}.
-Karakterler:\n${ps.map(c=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}] ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,ps)?` | İlişkiler: ${relLine(c,ps)}`:''}`).join('\n')}
+Karakterler:\n${ps.map(c=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}] ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,ps)?` | İlişkiler: ${relLine(c,ps)}`:''}${memLine(c)?` | Son gelişmeler: ${memLine(c)}`:''}`).join('\n')}
 Şimdiye kadar:\n${Msgs.log(recent)||'-'}
 ${Seg.promptBits(r)}Segmenti baştan sona (veya kaldığı yerden) 5-8 satırda yaz ve bitir; plan varsa ona uy. Sonra puanla (0.5-5) ve tek cümle özetle. Segmentten açıkça üstün çıkan biri varsa "winner" alanına tam adını yaz, yoksa null.
 JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3,"summary":"...","winner":null}`,
@@ -2885,10 +2946,11 @@ const Booker = {
     const r=await AI.ask({json:true,temperature:0.9,
       system:'Deneyimli bir güreş bookerısın (WWE GM modu). Hikâyeleri, kemer yarışlarını ve rekabetleri ilerleten mantıklı bir şov kartı kurarsın. Sadece JSON döndür. İsimleri AYNEN listeden kullan.',
       prompt:`Şov: ${ev.title} · ${STYLES[ev.style]?.tr} · ${Dt.nice(ev.date)}
-Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}`).join('\n')}
+Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}${memLine(c,1)?' | hafıza: '+memLine(c,1):''}`).join('\n')}
 Kemerler: ${titles.map(t=>`${t.name} [${TITLE_DIV[t.division||'open']}, ${TITLE_TIER[t.tier||'mid']}] (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
+Son şovların hafızası: ${Univ.events().filter(e=>e.aftermath?.memory).sort((a,b)=>(b.endedAt||0)-(a.endedAt||0)).slice(0,3).map(e=>`${e.title}: ${e.aftermath.memory}`).join(' | ')||'-'}
 Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Intergender (erkek vs kadın) maç yapabilirsin ama nadir olsun ve hikâye gerekçesi olsun (ör. feud, menajer, karma rekabet); öyle bir maçta "intergender":true yaz. Kemer maçlarında kemerin bölümüne (Erkekler / Kadınlar / Açık) uy. Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
 Maç türleri: ${Object.entries(MT).map(([k,v])=>`${k} (${v.tr})`).join(', ')}.
 Formatlar "sides" ile: her iç liste bir taraf. Ör: tekli [["A"],["B"]], tag 2v2 [["A","B"],["C","D"]], triple threat [["A"],["B"],["C"]], handikap [["A"],["B","C"]]. battle / rumble için herkes ayrı taraf. TV'de çoğunlukla tekli ve tag, arada triple threat / handikap; PLE'de büyük maçlar (ladder, cage, hiac, tlc, chamber, mitb, wargames, rumble…) kullan. Takım kemerlerini tag maçlarında ver.
@@ -5874,6 +5936,386 @@ Object.assign(SEG_TYPES,{
   const _ty=Chat.typing;
   Chat.typing=function(){ _ty.call(this); const r=this.R; if(Seg.live(r)&&Seg.plan(r).mode==='turns'&&!$('typing').textContent){ const c=Data.char(Seg.turnCid(r)); if(c) $('typing').textContent=c.owner===Me.id?'🎤 Sıra sende!':`🎤 Sıra: ${c.ringName}${Seg.isAI(r,c.id)?' (AI)':''}`; } };
 }
+
+/* ════════════════════════════════════════════════════════════
+   ŞOV SONRASI — AI sonuç özeti + hafıza + onaylı değişiklikler (checkbox, script uygular)
+   events/{id}.aftermath = {at, results[], memory, proposals[], status:'pending'|'applied'|'skipped', applied[], appliedLines[]}
+   karakter hafızası: c.log = [{at, ev, date, text}]  (son 15)
+════════════════════════════════════════════════════════════ */
+function memLine(c,n=2){ return (c?.log||[]).slice(0,n).map(l=>`${l.ev?l.ev+': ':''}${l.text}`).join(' / '); }
+const After = {
+  async msgs(roomId){ try{ return await B.getCol(`rooms/${roomId}/messages`,{orderBy:['ts','asc']}); }catch(e){ return []; } },
+  segResult(s){
+    const m=s.match; if(!m) return s.summary||'';
+    const r=m.result; if(!r) return 'bitmedi';
+    const w=(r.winners||[r.winner]).map(id=>Data.char(id)?.ringName).filter(Boolean).join(' & ');
+    return r.draw?`Berabere (${r.method})`:`${w} kazandı — ${r.method}${r.titleChange?' · YENİ ŞAMPİYON':''}`;
+  },
+  async generate(eventId){
+    const ev=Univ.event(eventId); if(!ev) return null;
+    const segs=Univ.segs(eventId).map(s=>Data.rooms.get(s.id)||s);
+    const cast=new Map();
+    const blocks=[];
+    for(const [i,s] of segs.entries()){
+      const ids=Univ.segParticipants(s); ids.forEach(id=>{ const c=Data.char(id); if(c) cast.set(c.id,c); });
+      const ms=await this.msgs(s.id);
+      const ic=ms.filter(m=>['say','me','do','shout','low','ai','narr','act','win','sys'].includes(m.k)).slice(-22);
+      blocks.push(`#${i+1} ${SEG_TYPES[s.segType]?.tr||''}: ${Show.label(s)}${s.match?` (${MT[s.match.type]?.tr||''})`:''}${s.status!=='done'?' [oynanmadı]':''}
+Sonuç: ${this.segResult(s)} ${s.rating!=null?`· ${s.rating}★`:''}${s.plan?.goal?`\nPlan: ${s.plan.goal}`:''}${s.summary?`\nÖzet: ${s.summary}`:''}
+Akıştan: ${Msgs.log(ic).slice(-1400)}`);
+    }
+    const people=[...cast.values()];
+    const sheet=people.map(c=>`- ${c.ringName} [${c.alignment}, pop ${c.popularity||50}, ${c.record.w}-${c.record.l}] İlişkiler: ${relLine(c,people)||'-'}${memLine(c)?` | Önceki hafıza: ${memLine(c)}`:''}`).join('\n');
+    const R=Object.keys(REL_TYPES).join('|');
+    const res=await AI.ask({json:true,temperature:0.5,
+      system:'Profesyonel güreş evreninin hikâye editörü ve arşivcisisin. Türkçe yaz. Sadece gerçekten olanlara dayan, uydurma.',
+      prompt:`ŞOV: ${ev.title} (${Dt.nice(ev.date)}) · ${ev.rating}★ · ${ev.viewers}M izleyici
+KARAKTERLER (şu anki durum):\n${sheet}
+SEGMENTLER:\n${blocks.join('\n\n')}
+
+GÖREV:
+1) "results": şov sonuçlarını madde madde yaz (her maç / önemli segment 1 satır; kim kazandı, kemer değişti mi, ne oldu).
+2) "memory": bu şovun evrene etkisini 2-4 cümlede özetle (sonraki şovları kurarken hatırlanacak).
+3) "changes": şovda olanların GEREKTİRDİĞİ değişiklikleri öner (en fazla 14). Türler:
+   {"kind":"rel","a":"isim","b":"isim","type":"${R}","lvl":1-5,"note":"kısa","why":"gerekçe"}  → ilişki kur / değiştir ("b, a'nın <type>'ı" okunuşu)
+   {"kind":"rel_end","a":"isim","b":"isim","why":"..."} → ilişki bitti (ör. barıştılar, takım dağıldı)
+   {"kind":"align","who":"isim","to":"face|heel|tweener","why":"..."} → turn
+   {"kind":"pop","who":"isim","delta":-10..10,"why":"..."} → popülerlik değişimi (maç sonuçları zaten otomatik işlendi; sadece ekstra etki için)
+   {"kind":"log","who":"isim","text":"karakterin hafızasına 1 cümle (başarı, yenilgi, ihanet, kazanılan / kaybedilen kemer…)"}
+   Her önemli katılımcı için 1 "log" yaz. İlişkiyi sadece segmentte gerçekten değişen bir şey olduysa değiştir; nötr olanları yazma.
+JSON: {"results":["..."],"memory":"...","changes":[...]}`,
+      offline:()=>({results:segs.filter(s=>s.status==='done').map(s=>`${Show.label(s)}: ${this.segResult(s)}`),memory:ev.recap||'',
+        changes:segs.filter(s=>s.match?.result&&!s.match.result.draw).flatMap(s=>{ const r=s.match.result; const W=(r.winners||[r.winner]).map(id=>Data.char(id)).filter(Boolean), L=(r.losers||[r.loser]).map(id=>Data.char(id)).filter(Boolean);
+          return [...W.map(c=>({kind:'log',who:c.ringName,text:`${ev.title}: ${L.map(x=>x.ringName).join(' & ')||'rakibini'} ${r.method} ile yendi${r.titleChange?' ve şampiyon oldu':''}.`})),
+            ...L.map(c=>({kind:'log',who:c.ringName,text:`${ev.title}: ${W.map(x=>x.ringName).join(' & ')}'a ${r.method} ile kaybetti.`}))]; })})});
+    const d=res.data||{};
+    const find=n=>Data.findCharByName(String(n||''),people)||Data.findCharByName(String(n||''),Store.chars());
+    const props=[]; let k=0;
+    for(const x of (Array.isArray(d.changes)?d.changes:[]).slice(0,24)){
+      const id='p'+(k++), why=String(x.why||'').slice(0,200);
+      if(x.kind==='rel'){ const a=find(x.a), b=find(x.b); if(!a||!b||a.id===b.id||!REL_TYPES[x.type]) continue;
+        const cur=(a.rels||[]).find(r=>r.id===b.id); if(cur && cur.type===x.type) continue;
+        props.push({id,kind:'rel',a:a.id,b:b.id,type:x.type,lvl:clamp(parseInt(x.lvl)||3,1,5),note:String(x.note||'').slice(0,160),why,
+          label:`${a.ringName} için ${b.ringName}: ${REL_TYPES[x.type].ic} ${REL_TYPES[x.type].tr}${cur?` (önce: ${REL_TYPES[cur.type]?.tr||cur.type})`:''}`}); }
+      else if(x.kind==='rel_end'){ const a=find(x.a), b=find(x.b); if(!a||!b) continue; const cur=relBetween(a,b); if(!cur) continue;
+        props.push({id,kind:'rel_end',a:a.id,b:b.id,why,label:`${a.ringName} ↔ ${b.ringName} ilişkisi bitiyor (${REL_TYPES[cur.type]?.tr||cur.type})`}); }
+      else if(x.kind==='align'){ const c=find(x.who); if(!c||!['face','heel','tweener'].includes(x.to)||c.alignment===x.to) continue;
+        props.push({id,kind:'align',c:c.id,to:x.to,why,label:`${c.ringName}: ${c.alignment} → ${x.to.toUpperCase()} (turn)`}); }
+      else if(x.kind==='pop'){ const c=find(x.who), dl=clamp(parseInt(x.delta)||0,-10,10); if(!c||!dl) continue;
+        props.push({id,kind:'pop',c:c.id,delta:dl,why,label:`${c.ringName}: popülerlik ${dl>0?'+':''}${dl} (${c.popularity||50} → ${clamp((c.popularity||50)+dl,0,100)})`}); }
+      else if(x.kind==='log'){ const c=find(x.who); const t=String(x.text||'').trim(); if(!c||!t) continue;
+        props.push({id,kind:'log',c:c.id,text:t.slice(0,240),why:'',label:`${c.ringName} hafızasına: "${t.slice(0,240)}"`}); }
+    }
+    const am={at:Date.now(),by:Me.id,results:(Array.isArray(d.results)?d.results:[]).map(String).slice(0,20),memory:String(d.memory||'').slice(0,800),proposals:props,status:'pending'};
+    await B.update('events/'+eventId,{aftermath:am});
+    return am;
+  },
+  open(eventId){
+    const ev=Univ.event(eventId), am=ev?.aftermath; if(!am) return;
+    const groups=[['rel','İlişki'],['rel_end','Biten ilişki'],['align','Turn (taraf)'],['pop','Popülerlik'],['log','Hafıza notu']];
+    const pend=am.status==='pending';
+    $('af-title').textContent=`${ev.title} — şov sonrası`;
+    $('af-body').innerHTML=`
+      ${am.results?.length?`<div class="box" style="gap:6px"><span class="lbl" style="margin:0">Şov sonuçları</span><ul class="af-res">${am.results.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+      ${am.memory?`<div class="box" style="gap:6px"><span class="lbl" style="margin:0">Hafıza (sonraki şovlarda AI hatırlar)</span><div style="font-size:13px">${esc(am.memory)}</div></div>`:''}
+      ${pend?`<div class="box" style="gap:8px"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="lbl" style="margin:0">AI'ın önerdiği değişiklikler — uygulanacakları seç</span>
+          <span style="display:flex;gap:6px"><button class="btn sm" onclick="After.all(true)">Tümü</button><button class="btn sm" onclick="After.all(false)">Hiçbiri</button></span></div>
+        ${am.proposals.length?groups.map(([k,l])=>{ const ps=am.proposals.filter(p=>p.kind===k); return ps.length?`<div class="af-g"><b>${l}</b>${ps.map(p=>`<label class="af-p"><input type="checkbox" data-pid="${p.id}" checked><span><span>${esc(p.label)}</span>${p.why?`<small>${esc(p.why)}</small>`:''}</span></label>`).join('')}</div>`:''; }).join(''):'<div class="muted">AI değişiklik önermedi.</div>'}
+        <label class="af-p"><input type="checkbox" id="af-tw" checked><span><span>🐦 Twitter'a şov sonuçlarını haber olarak gönder, güreşçi ve fan tepkileri üretilsin</span></span></label></div>`
+      :`<div class="box" style="gap:6px"><span class="lbl" style="margin:0">${am.status==='applied'?'Uygulanan değişiklikler':'Değişiklik uygulanmadı'}</span>${(am.appliedLines||[]).map(x=>`<div style="font-size:12.5px">✓ ${esc(x)}</div>`).join('')||'<span class="muted">—</span>'}</div>`}`;
+    $('af-foot').innerHTML=pend?`<button class="btn" onclick="After.redo('${eventId}')"><i class="fas fa-rotate"></i> AI'ı yeniden çalıştır</button><div style="flex:1"></div>
+      <button class="btn" onclick="After.apply('${eventId}',[])">Hiçbirini uygulama</button><button class="btn gold" onclick="After.applySel('${eventId}')"><i class="fas fa-check"></i> Seçilenleri uygula</button>`
+      :`<div style="flex:1"></div><button class="btn" onclick="UI.close('md-after')">Kapat</button>`;
+    UI.open('md-after');
+  },
+  all(on){ document.querySelectorAll('#af-body [data-pid]').forEach(i=>i.checked=on); },
+  async redo(eventId){ $('af-body').innerHTML='<div class="muted"><i class="fas fa-spinner fa-spin"></i> AI şovu yeniden inceliyor…</div>'; await this.generate(eventId); await sleep(150); this.open(eventId); },
+  applySel(eventId){ const ids=[...document.querySelectorAll('#af-body [data-pid]:checked')].map(i=>i.dataset.pid); return this.apply(eventId,ids,$('af-tw')?.checked); },
+  async apply(eventId,ids,tweet=false){
+    const ev=Univ.event(eventId), am=ev?.aftermath; if(!am) return;
+    const sel=am.proposals.filter(p=>ids.includes(p.id)); const lines=[];
+    const edits=new Map();   // karakter id → {c, before, parts:Set}
+    const E=id=>{ if(!edits.has(id)){ const c=Store.get(id); if(!c) return null; edits.set(id,{c:JSON.parse(JSON.stringify(c)),before:JSON.parse(JSON.stringify(c.rels||[])),parts:new Set()}); } return edits.get(id); };
+    for(const p of sel){
+      if(p.kind==='rel'){ const e=E(p.a); if(!e||!Store.get(p.b)) continue; const rels=e.c.rels.filter(r=>r.id!==p.b); rels.push({id:p.b,type:p.type,lvl:p.lvl,note:p.note}); e.c.rels=rels; e.parts.add('İlişki'); }
+      else if(p.kind==='rel_end'){ for(const [x,y] of [[p.a,p.b],[p.b,p.a]]){ const e=E(x); if(!e) continue; e.c.rels=e.c.rels.filter(r=>r.id!==y); e.parts.add('İlişki'); } }
+      else if(p.kind==='align'){ const e=E(p.c); if(!e) continue; e.c.alignment=p.to; e.parts.add('Taraf'); }
+      else if(p.kind==='pop'){ const e=E(p.c); if(!e) continue; e.c.popularity=clamp((e.c.popularity||50)+p.delta,0,100); e.parts.add('Popülerlik'); }
+      else if(p.kind==='log'){ const e=E(p.c); if(!e) continue; e.c.log=[{at:Date.now(),ev:ev.title,date:ev.date,text:p.text},...(e.c.log||[])].slice(0,15); e.parts.add('Hafıza'); }
+      lines.push(p.label);
+    }
+    for(const e of edits.values()){ logUpdate(e.c,`Şov sonrası: ${ev.title}`,[...e.parts]); await Store.upsert(e.c); }
+    // karşı tarafa yansıtma EN SON (yoksa sonra kaydedilen eski kopya yansımayı ezer)
+    if(Prefs.d.relMirror!==false) for(const e of edits.values()) if(e.parts.has('İlişki')) await syncMirrorRels(Store.get(e.c.id),e.before);
+    await B.update('events/'+eventId,{aftermath:{...am,status:ids.length?'applied':'skipped',applied:ids,appliedLines:lines,appliedAt:Date.now()}});
+    toast(ids.length?`${lines.length} değişiklik uygulandı`:'Değişiklik uygulanmadı','ok');
+    if(tweet) Tw.showNews(eventId).catch(e=>console.warn(e));
+    await sleep(150); this.open(eventId);
+  },
+};
+/* şov bitince: sonuçları üret ve onay penceresini aç (şovu bitiren istemcide) */
+{ const _fe=Show.finishEvent;
+  Show.finishEvent=async function(eventId,force){
+    await _fe.call(this,eventId,force);
+    const ev=Univ.event(eventId); if(ev?.status!=='done' || ev.aftermath) return;
+    toast('AI şovun sonuçlarını çıkarıyor…');
+    try{ await After.generate(eventId); await sleep(150); After.open(eventId); }catch(e){ console.error(e); toast('Şov sonrası analiz başarısız: '+e.message,'err'); }
+  };
+}
+/* hafıza → AI istemleri: maç sistemi */
+{ const _sys=MatchCtl.sys;
+  MatchCtl.sys=function(M){ const mem=M.c.filter(c=>c.log?.length).slice(0,10).map(c=>`- ${c.ringName}: ${memLine(c)}`);
+    return _sys.call(this,M)+(mem.length?`\nSON GELİŞMELER (hafıza — anlatıda ve yorumlarda gönderme yapabilirsin):\n${mem.join('\n')}`:''); };
+}
+
+/* ════════════════════════════════════════════════════════════
+   ŞOV ARŞİVİ
+════════════════════════════════════════════════════════════ */
+const Arch = {
+  cur:null,
+  render(){
+    const el=$('arch-page'); if(!el) return;
+    if(this.cur && Univ.event(this.cur)) return this.detail(this.cur);
+    const list=Univ.events().filter(e=>e.status==='done').sort((a,b)=>(b.endedAt||0)-(a.endedAt||0)||b.date.localeCompare(a.date));
+    el.innerHTML=list.map(e=>`<div class="tile arch-i" onclick="Arch.open('${e.id}')" style="cursor:pointer">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${eventLogoHTML(e,'sh-logo')}${brandChip(Univ.brand(e.brandId))}<b style="font-size:15px">${esc(e.title)}</b><span class="muted">${Dt.nice(e.date)}</span><span style="margin-left:auto">${starsHTML(e.rating)}</span></div>
+        ${e.headline?`<div style="font-weight:600">${esc(e.headline)}</div>`:''}
+        <div class="muted" style="font-size:12px">${e.viewers||'-'}M izleyici · ${Univ.segs(e.id).length} segment${e.aftermath?.status==='pending'?' · <span style="color:var(--am)">değişiklikler onay bekliyor</span>':e.aftermath?.status==='applied'?' · değişiklikler uygulandı':''}</div></div>`).join('')
+      ||'<div class="empty"><i class="fas fa-box-archive"></i><p>Henüz biten şov yok.</p></div>';
+  },
+  open(id){ this.cur=id; UI.show('arch'); },
+  back(){ this.cur=null; this.render(); },
+  detail(id){
+    const e=Univ.event(id), am=e.aftermath, segs=Univ.segs(id).map(s=>Data.rooms.get(s.id)||s);
+    $('arch-page').innerHTML=`<button class="btn sm" onclick="Arch.back()"><i class="fas fa-arrow-left"></i> Tüm şovlar</button>
+      <div class="tile">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">${eventLogoHTML(e,'ev-logo')}${brandChip(Univ.brand(e.brandId))}<span class="tag neutral">${esc(STYLES[e.style]?.tr||'')}</span><span class="muted">${Dt.nice(e.date,{year:'numeric'})}</span><span style="margin-left:auto">${starsHTML(e.rating)} <span class="muted">${e.viewers||'-'}M</span></span></div>
+        <div class="big" style="font-size:24px">${esc(e.title)}</div>
+        ${e.headline?`<div style="font-size:17px;font-weight:700">${esc(e.headline)}</div>`:''}${e.recap?`<div style="color:var(--t1);font-size:13.5px">${esc(e.recap)}</div>`:''}
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn sm" onclick="Arch.export('${id}','txt')"><i class="fas fa-file-lines"></i> Metin indir</button>
+          <button class="btn sm" onclick="Arch.export('${id}','html')"><i class="fas fa-file-code"></i> HTML indir</button>
+          ${am?`<button class="btn sm ${am.status==='pending'?'gold':''}" onclick="After.open('${id}')"><i class="fas fa-list-check"></i> ${am.status==='pending'?'Değişiklikleri onayla':'Şov sonrası'}</button>`:Univ.isGM()?`<button class="btn sm" onclick="After.generate('${id}').then(()=>After.open('${id}'))"><i class="fas fa-wand-magic-sparkles"></i> AI sonuçlarını çıkar</button>`:''}
+          <button class="btn sm" onclick="Ev.open('${id}')"><i class="fas fa-tv"></i> Şov sayfası</button></div>
+      </div>
+      ${am?.results?.length?`<div class="tile"><h3>Şov sonuçları</h3><ul class="af-res">${am.results.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${am.memory?`<div class="muted" style="font-size:12.5px">🧠 ${esc(am.memory)}</div>`:''}</div>`:''}
+      ${segs.map((s,i)=>`<div class="tile arch-seg"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="muted" style="font-family:var(--mono)">#${i+1}</span><i class="fas ${SEG_TYPES[s.segType]?.ic||'fa-circle'}" style="opacity:.6"></i>
+          <b>${esc(Show.label(s))}</b><span class="muted">${esc(SEG_TYPES[s.segType]?.tr||'')}${s.match?' · '+esc(MT[s.match.type]?.tr||''):''}</span><span style="margin-left:auto">${s.rating!=null?starsHTML(s.rating):'<span class="muted">oynanmadı</span>'}</span></div>
+        ${s.match?.result?`<div style="color:var(--gold);font-size:13px">${esc(After.segResult(s))}</div>`:''}
+        ${s.summary?`<div style="font-size:13px;color:var(--t1)">${esc(s.summary)}</div>`:''}
+        <details data-room="${s.id}"><summary class="muted" style="cursor:pointer">Tüm dökümü göster</summary><div class="arch-log">Yükleniyor…</div></details>
+        <div><button class="btn sm" onclick="Chat.open('${s.id}')"><i class="fas fa-comments"></i> Odaya git</button></div></div>`).join('')}`;
+    $('arch-page').querySelectorAll('details[data-room]').forEach(d=>d.addEventListener('toggle',async()=>{ if(!d.open||d.dataset.done) return; d.dataset.done=1;
+      const ms=await After.msgs(d.dataset.room); d.querySelector('.arch-log').innerHTML=ms.map(m=>this.lineHTML(m)).join('')||'<span class="muted">Mesaj yok</span>'; }));
+  },
+  lineText(m){ const a=Msgs.author(m).name; const t=Msgs.line(m)||(m.k==='sys'?`— ${m.text} —`:m.k==='count'?m.text:m.k==='ooc'?`(( ${Data.player(m.pid)?.name||'?'}: ${m.text} ))`:''); return t; },
+  lineHTML(m){ const t=this.lineText(m); if(!t) return ''; return `<div class="al k-${m.k}"><span class="muted">${timeStr(m.ts)}</span> ${esc(t)}</div>`; },
+  async export(id,fmt){
+    const e=Univ.event(id); const segs=Univ.segs(id).map(s=>Data.rooms.get(s.id)||s); const am=e.aftermath;
+    const parts=[]; for(const [i,s] of segs.entries()) parts.push({s,i,ms:await After.msgs(s.id)});
+    const name=`${e.title.replace(/[^\p{L}\p{N}]+/gu,'_')}_${e.date}`;
+    let blob;
+    if(fmt==='txt'){
+      const txt=[`${e.title} — ${Dt.nice(e.date,{year:'numeric'})}`,`${e.rating}★ · ${e.viewers}M izleyici`,e.headline||'',e.recap||'','',
+        ...(am?.results?.length?['ŞOV SONUÇLARI',...am.results.map(x=>'• '+x),'',am.memory?'Hafıza: '+am.memory:'','']:[]),
+        ...parts.flatMap(({s,i,ms})=>[`════ #${i+1} ${SEG_TYPES[s.segType]?.tr}: ${Show.label(s)} ${s.rating!=null?`(${s.rating}★)`:''}`,s.match?.result?'Sonuç: '+After.segResult(s):'',s.summary?'Özet: '+s.summary:'','',...ms.map(m=>this.lineText(m)).filter(Boolean),''])].join('\n');
+      blob=new Blob([txt],{type:'text/plain;charset=utf-8'});
+    } else {
+      const html=`<!doctype html><html lang="tr"><meta charset="utf-8"><title>${esc(e.title)}</title><style>body{font:15px/1.55 system-ui,sans-serif;max-width:820px;margin:30px auto;padding:0 16px;background:#0e0e12;color:#e8e8ee}h1{margin:0}h2{border-top:1px solid #333;padding-top:14px;margin-top:28px}.m{color:#999;font-size:13px}.r{color:#e3b341}.k-narr{border-left:2px solid #e3b341;padding-left:8px}.k-sys{color:#888;font-family:monospace;font-size:12px}.k-crowd{color:#e8a74a;font-style:italic}.k-me,.k-act{color:#c9a5f5;font-style:italic}</style>
+<h1>${esc(e.title)}</h1><div class="m">${esc(Dt.nice(e.date,{year:'numeric'}))} · ${e.rating}★ · ${e.viewers}M izleyici</div>${e.headline?`<h3>${esc(e.headline)}</h3>`:''}<p>${esc(e.recap||'')}</p>
+${am?.results?.length?`<h2>Şov sonuçları</h2><ul>${am.results.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${am.memory?`<p class="m">${esc(am.memory)}</p>`:''}`:''}
+${parts.map(({s,i,ms})=>`<h2>#${i+1} ${esc(SEG_TYPES[s.segType]?.tr||'')}: ${esc(Show.label(s))} ${s.rating!=null?`<span class="r">${s.rating}★</span>`:''}</h2>${s.match?.result?`<p class="r">${esc(After.segResult(s))}</p>`:''}${s.summary?`<p class="m">${esc(s.summary)}</p>`:''}${ms.map(m=>{ const t=this.lineText(m); return t?`<div class="k-${m.k}">${esc(t)}</div>`:''; }).join('')}`).join('')}</html>`;
+      blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    }
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${name}.${fmt}`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+  },
+};
+
+/* ════════════════════════════════════════════════════════════
+   MİNİ TWITTER
+   tweets/{id} = {by:'c:ID'|'b:ID'|'p'|'f:ID'|'news', text, ts, replyTo, root, mentions[], likes[], pid, ai, depth, eventId}
+   fans/{id}   = {name, handle, bio, fav, tone}
+════════════════════════════════════════════════════════════ */
+Object.assign(Data,{tweets:[],fans:new Map()});
+{ const _st=Data.start;
+  Data.start=function(){ _st.call(this);
+    B.watchCol('tweets',{orderBy:['ts','desc'],limit:400},d=>{ this.tweets=d; Bus.emit('tweets'); });
+    B.watchCol('fans',{},d=>{ this.fans=new Map(d.map(x=>[x.id,x])); Bus.emit('tweets'); });
+  };
+}
+const slugH=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ı/g,'i').replace(/[^A-Za-z0-9_]/g,'').slice(0,15)||'hesap';
+const Tw = {
+  filter:'all', replyOpen:null,
+  acc(key){
+    if(!key) return null;
+    if(key==='news') return {key,name:`${Data.universe?.short||'Güreş'} Gündem`,handle:`${slugH(Data.universe?.short||'gures')}_gundem`,kind:'news',ava:`<div class="ava sm tw-news">📰</div>`,verified:true};
+    if(key==='p'){ const u=Data.universe||{}; return {key,name:u.name||'Promosyon',handle:slugH(u.short||u.name),kind:'promo',ava:u.logo?.url?`<div class="ava sm tw-logo">${Media.fitHTML(u.logo,{cls:'tw-lg'})}</div>`:`<div class="ava sm">🏢</div>`,verified:true}; }
+    if(key.startsWith('b:')){ const b=Univ.brand(key.slice(2)); if(!b) return null; return {key,name:b.name,handle:slugH(b.name),kind:'brand',ava:b.logo?.url?`<div class="ava sm tw-logo" style="border-color:${esc(b.color)}">${Media.fitHTML(b.logo,{cls:'tw-lg'})}</div>`:`<div class="ava sm" style="border-color:${esc(b.color)};color:${esc(b.color)}">${esc(initials(b.name))}</div>`,verified:true}; }
+    if(key.startsWith('f:')){ const f=Data.fans.get(key.slice(2)); if(!f) return null; return {key,name:f.name,handle:f.handle,kind:'fan',ava:`<div class="ava sm tw-fan">${esc(initials(f.name))}</div>`,fan:f}; }
+    if(key.startsWith('c:')){ const c=Data.char(key.slice(2)); if(!c) return null; return {key,name:c.ringName,handle:c.social?.x||slugH(c.ringName),kind:'char',ava:avaHTML(c,'sm'),c,verified:!!c.social?.x}; }
+    return null;
+  },
+  all(){ return ['news','p',...Univ.brands().map(b=>'b:'+b.id),...Store.chars().map(c=>'c:'+c.id),...[...Data.fans.keys()].map(id=>'f:'+id)].map(k=>this.acc(k)).filter(Boolean); },
+  byHandle(h){ h=String(h||'').replace(/^@/,'').toLowerCase(); return this.all().find(a=>a.handle.toLowerCase()===h)||null; },
+  /** bu oyuncu hangi hesaplarla yazabilir */
+  mine(){ const k=Store.chars().filter(c=>c.owner===Me.id).map(c=>'c:'+c.id);
+    if(Univ.isGM()) k.push('p','news',...Univ.brands().map(b=>'b:'+b.id),...Store.chars().filter(c=>!c.owner).map(c=>'c:'+c.id),...[...Data.fans.keys()].map(id=>'f:'+id));
+    return [...new Set(k)].map(x=>this.acc(x)).filter(Boolean); },
+  aiCtl(key){ if(key.startsWith('f:')||key==='news') return true; if(key.startsWith('c:')){ const c=Data.char(key.slice(2)); return !!c && !(c.owner&&Data.player(c.owner)); } return false; },
+  mentions(text){ return [...new Set((String(text).match(/@([A-Za-z0-9_]{1,15})/g)||[]).map(h=>this.byHandle(h)?.key).filter(Boolean))]; },
+  showTag(ev){ const sh=Univ.show(ev?.showId); return '#'+slugH((sh?.name||ev?.title||'Sov').replace(/\s+/g,''))+(ev?.title?.match(/#(\d+)/)?.[1]||''); },
+  async post({by,text,replyTo=null,ai=false,eventId=null,depth=0}){
+    text=String(text||'').trim().slice(0,280); if(!text||!this.acc(by)) return null;
+    const parent=replyTo?Data.tweets.find(t=>t.id===replyTo):null;
+    const t={by,text,ts:Date.now(),replyTo,root:parent?(parent.root||parent.id):null,mentions:this.mentions(text),likes:[],pid:Me.id,ai,depth,eventId};
+    const id='tw_'+uid(); await B.set('tweets/'+id,t); t.id=id;
+    this.autoReplies(t).catch(e=>console.warn(e));
+    return t;
+  },
+  /** etiketlenen / cevap verilen AI karakterleri cevap yazar (sadece tweeti atan istemcide) */
+  async autoReplies(t){
+    if((t.depth||0)>=3) return;
+    const targets=new Set(t.mentions.filter(k=>k!==t.by&&this.aiCtl(k)&&!k.startsWith('f:')&&k!=='news'));
+    const parent=t.replyTo?Data.tweets.find(x=>x.id===t.replyTo):null;
+    if(parent && parent.by!==t.by && this.aiCtl(parent.by) && parent.by.startsWith('c:') && Math.random()<0.6) targets.add(parent.by);
+    let n=0;
+    for(const k of targets){ if(n++>=2) break; await sleep(900+Math.random()*1500); await this.aiReply(k,t); }
+  },
+  sheetOf(a){ if(a.c){ const c=a.c; return `${c.ringName} (@${a.handle}) — ${c.alignment}, ${c.gimmick||''} Üslup: ${c.voice||'-'}. Sözleri: ${(c.catchphrases||[]).join(' / ')}${memLine(c)?` · Son gelişmeler: ${memLine(c)}`:''}${titlesOf(c.id).length?` · Şampiyon: ${titlesOf(c.id).map(x=>x.name).join(', ')}`:''}`; }
+    if(a.fan) return `${a.name} (@${a.handle}) — fan hesabı. ${a.fan.bio||''} Favorisi: ${a.fan.fav||'-'}. Tarz: ${a.fan.tone||'-'}`;
+    return `${a.name} (@${a.handle}) — kurumsal hesap`; },
+  thread(t){ const root=t.root?Data.tweets.find(x=>x.id===t.root):null; const list=[root,...Data.tweets.filter(x=>x.root===(t.root||t.id))].filter(Boolean).sort((a,b)=>a.ts-b.ts).slice(-8);
+    return list.map(x=>{ const a=this.acc(x.by); return `@${a?.handle||'?'}: ${x.text}`; }).join('\n'); },
+  async aiReply(key,t){
+    const me=this.acc(key), au=this.acc(t.by); if(!me||!au) return;
+    const rel=me.c&&au.c?relBetween(me.c,au.c):null;
+    const r=await AI.ask({json:true,temperature:1,system:'Profesyonel güreş evreninde (kayfabe) karakterlerin sosyal medya hesaplarını yazıyorsun. Türkçe, kısa, karakterine uygun, tweet dili (emoji / hashtag az ve yerinde). Kayfabe\'yi bozma. Oyuncu karakterleri adına yazma.',
+      prompt:`SEN: ${this.sheetOf(me)}\nKARŞINDAKİ: ${this.sheetOf(au)}${rel?`\nİLİŞKİNİZ: ${au.name}, senin ${REL_TYPES[rel.type]?.tr||rel.type}${rel.note?' ('+rel.note+')':''}`:''}\nKONUŞMA:\n${this.thread(t)}\n\n@${au.handle}'a cevap tweeti yaz (en fazla 240 karakter). JSON: {"text":"..."}`,
+      offline:()=>({text:`@${au.handle} ${me.c?.catchphrases?.[0]||'Görüşeceğiz.'}`})});
+    let text=String(r.data?.text||'').trim(); if(!text) return;
+    if(!text.includes('@'+au.handle)) text=`@${au.handle} `+text;
+    await this.post({by:key,text,replyTo:t.id,ai:true,depth:(t.depth||0)+1,eventId:t.eventId||null});
+  },
+  /** şov sonrası: haber (script) + tepkiler (AI) */
+  async showNews(eventId){
+    const ev=Univ.event(eventId); if(!ev) return;
+    const tag=this.showTag(ev), segs=Univ.segs(eventId).map(s=>Data.rooms.get(s.id)||s);
+    const hd=await this.post({by:'news',text:`📺 ${ev.title} sona erdi! ${ev.headline?ev.headline+' ':''}${ev.rating?`(${ev.rating}★) `:''}${tag}`,ai:true,eventId});
+    for(const s of segs.filter(s=>s.match?.result)){
+      const r=s.match.result; const w=(r.winners||[r.winner]).map(id=>Data.char(id)).filter(Boolean);
+      const hs=w.map(c=>'@'+(c.social?.x||slugH(c.ringName))).join(' & ');
+      await this.post({by:'news',text:r.draw?`🟰 ${Show.label(s)} berabere bitti (${r.method}). ${tag}`:`${r.titleChange?'👑 YENİ ŞAMPİYON':'🏆 SONUÇ'} | ${hs} — ${Show.label(s)} · ${r.method}${r.titleChange&&s.match.title?` · ${s.match.title}`:''} ${tag}`,ai:true,eventId,depth:3});
+      await sleep(120);
+    }
+    const b=Univ.brand(ev.brandId); if(b) await this.post({by:'b:'+b.id,text:`Bu gece ${ev.title} tarih yazdı. Gelecek hafta daha büyüğü geliyor. ${tag}`,ai:true,eventId,depth:3});
+    // AI tepkileri: sadece AI'ın oynadığı güreşçiler + fanlar
+    if(!Data.fans.size) await this.genFans(5);
+    const cast=[...new Set(segs.flatMap(s=>Univ.segParticipants(s)))].map(id=>this.acc('c:'+id)).filter(a=>a&&this.aiCtl(a.key));
+    const fans=[...Data.fans.keys()].map(id=>this.acc('f:'+id)).filter(Boolean);
+    const pool=[...cast,...fans]; if(!pool.length) return;
+    const res=await AI.ask({json:true,temperature:1,system:'Güreş evreninde (kayfabe) sosyal medya akışı yazıyorsun. Türkçe, kısa tweetler, karakterlere uygun. Kazanan övünür, kaybeden bahane bulur ya da intikam yemini eder, fanlar tartışır.',
+      prompt:`ŞOV: ${ev.title} ${tag}\nSONUÇLAR:\n${(ev.aftermath?.results||segs.map(s=>`${Show.label(s)}: ${After.segResult(s)}`)).join('\n')}\nHESAPLAR (sadece bunları kullan):\n${pool.map(a=>'- '+this.sheetOf(a)).join('\n')}\n6-9 tweet yaz. Rakiplerini @ ile etiketleyebilirler. JSON: {"tweets":[{"handle":"hesap","text":"..."}]}`,
+      offline:()=>({tweets:cast.slice(0,4).map(a=>({handle:a.handle,text:`${a.c?.catchphrases?.[0]||'Bu daha başlangıç.'} ${tag}`}))})});
+    for(const x of (res.data?.tweets||[]).slice(0,10)){ const a=pool.find(p=>p.handle.toLowerCase()===String(x.handle||'').replace(/^@/,'').toLowerCase()); if(!a||!x.text) continue;
+      await sleep(250); await this.post({by:a.key,text:String(x.text),ai:true,eventId,depth:1}); }
+  },
+  async genFans(n=6){
+    const favs=Store.chars('wrestler').sort((a,b)=>(b.popularity||50)-(a.popularity||50)).slice(0,12);
+    const res=await AI.ask({json:true,temperature:1.1,system:'Türk güreş fanlarının sosyal medya hesaplarını uyduruyorsun (kurgusal kişiler).',
+      prompt:`${n} farklı fan hesabı üret: farklı tipler (ateşli face fanı, heel savunucusu, istatistik meraklısı, eleştirmen "dirt sheet" meraklısı, genç hype fanı, nostaljik eski toprak…). Favorileri şu kadrodan olsun: ${favs.map(c=>c.ringName).join(', ')||'-'}.
+JSON: {"fans":[{"name":"görünen ad","handle":"kullanıcı_adı (15 harfe kadar, harf/rakam/_)","bio":"kısa bio","fav":"favori güreşçi","tone":"yazım tarzı"}]}`,
+      offline:()=>({fans:[{name:'Ring Kenarı',handle:'ringkenari',bio:'Her pazartesi ön sıradayım.',fav:favs[0]?.ringName||'',tone:'coşkulu'},{name:'Heel Avukatı',handle:'heelavukati',bio:'Kötüler haklıdır.',fav:favs[1]?.ringName||'',tone:'alaycı'},{name:'İstatistik Adamı',handle:'gurestat',bio:'Rakamlar yalan söylemez.',fav:'',tone:'analitik'}]})});
+    const taken=new Set(this.all().map(a=>a.handle.toLowerCase())); let k=0;
+    for(const f of (res.data?.fans||[]).slice(0,n)){ let h=slugH(f.handle||f.name).toLowerCase(); while(taken.has(h)) h=(h.slice(0,12)+rnd(10,99)); taken.add(h);
+      await B.set('fans/f_'+uid(),{name:String(f.name||h).slice(0,40),handle:h,bio:String(f.bio||'').slice(0,160),fav:String(f.fav||''),tone:String(f.tone||'')}); k++; }
+    toast(`${k} fan hesabı oluşturuldu`,'ok');
+  },
+  /** gündem: AI karakterler ve fanlar son olaylar hakkında tweet atar */
+  async buzz(){
+    if(!Data.fans.size) await this.genFans(5);
+    const chars=Store.chars('wrestler').filter(c=>this.aiCtl('c:'+c.id)).sort(()=>Math.random()-0.5).slice(0,8).map(c=>this.acc('c:'+c.id));
+    const fans=[...Data.fans.keys()].map(id=>this.acc('f:'+id)).filter(Boolean);
+    const pool=[...chars,...fans]; if(!pool.length){ toast('AI hesabı yok','err'); return; }
+    const last=Univ.events().filter(e=>e.status==='done').slice(-3);
+    const next=Univ.next();
+    const res=await AI.ask({json:true,temperature:1.05,system:'Güreş evreninde (kayfabe) sosyal medya akışı yazıyorsun. Türkçe, kısa, karakterlere uygun tweetler.',
+      prompt:`SON ŞOVLAR: ${last.map(e=>`${e.title}: ${e.aftermath?.memory||e.recap||''}`).join(' | ')||'-'}\nSIRADAKİ ŞOV: ${next?`${next.title} (${Dt.nice(next.date)}) — kart: ${Univ.segs(next.id).map(s=>Show.label(s)).join(', ')||'henüz yok'}`:'-'}
+SON TWEETLER:\n${Data.tweets.slice(0,12).map(t=>`@${this.acc(t.by)?.handle}: ${t.text}`).join('\n')||'-'}\nHESAPLAR:\n${pool.map(a=>'- '+this.sheetOf(a)).join('\n')}
+4-7 yeni tweet yaz (gündem, meydan okuma, fan tartışması). Etiketleyebilirler. JSON: {"tweets":[{"handle":"...","text":"..."}]}`,
+      offline:()=>({tweets:chars.slice(0,3).map(a=>({handle:a.handle,text:a.c?.catchphrases?.[0]||'Hazırım.'}))})});
+    for(const x of (res.data?.tweets||[]).slice(0,8)){ const a=pool.find(p=>p.handle.toLowerCase()===String(x.handle||'').replace(/^@/,'').toLowerCase()); if(!a||!x.text) continue;
+      await sleep(200); await this.post({by:a.key,text:String(x.text),ai:true,depth:1}); }
+  },
+  fmt(text){ return esc(text).replace(/@([A-Za-z0-9_]{1,15})/g,(m,h)=>{ const a=this.byHandle(h); return a?`<a class="tw-m" data-acc="${a.key}">@${h}</a>`:m; }).replace(/(^|\s)(#[\p{L}_][\p{L}\p{N}_]*)/gu,'$1<span class="tw-h">$2</span>'); },
+  myMentionKeys(){ return new Set(Store.chars().filter(c=>c.owner===Me.id).map(c=>'c:'+c.id)); },
+  unseen(){ const mk=this.myMentionKeys(), seen=Prefs.d.twSeen||0; return Data.tweets.filter(t=>t.ts>seen&&t.pid!==Me.id&&t.mentions?.some(k=>mk.has(k))).length; },
+  item(t,isReply=false){
+    const a=this.acc(t.by)||{name:'Silinmiş',handle:'?',ava:'<div class="ava sm">?</div>'};
+    const replies=isReply?[]:Data.tweets.filter(x=>x.root===t.id).sort((x,y)=>x.ts-y.ts);
+    const liked=(t.likes||[]).includes(Me.id);
+    return `<div class="tw ${isReply?'rep':''}" data-tw="${t.id}">
+      <div class="tw-a" data-acc="${a.key||''}">${a.ava}</div>
+      <div class="tw-b"><div class="tw-hd"><b data-acc="${a.key||''}">${esc(a.name)}</b>${a.verified?'<i class="fas fa-circle-check tw-v"></i>':''}<span class="muted">@${esc(a.handle)} · ${agoTR(t.ts)}</span>${t.ai?'<span class="aib">AI</span>':''}</div>
+        <div class="tw-t">${this.fmt(t.text)}</div>
+        <div class="tw-act"><button data-reply="${t.id}"><i class="far fa-comment"></i> ${isReply?'':replies.length||''}</button><button data-like="${t.id}" class="${liked?'on':''}"><i class="${liked?'fas':'far'} fa-heart"></i> ${(t.likes||[]).length||''}</button><button data-aireply="${t.id}" title="AI cevap üretsin"><i class="fas fa-robot"></i></button>${(t.pid===Me.id||Me.admin)?`<button data-del="${t.id}" title="Sil"><i class="far fa-trash-can"></i></button>`:''}</div>
+        ${this.replyOpen===t.id?this.composeHTML('r',t):''}
+        ${replies.length?`<div class="tw-reps">${replies.map(r=>this.item(r,true)).join('')}</div>`:''}</div></div>`;
+  },
+  composeHTML(kind,t){
+    const mine=this.mine(); if(!mine.length) return `<div class="muted" style="font-size:12px">Tweet atmak için bir karakter sahiplen (Kadro → "Bu karakteri oyna").</div>`;
+    const last=Prefs.d.twAs; const au=t?this.acc(t.by):null;
+    return `<div class="tw-c" data-kind="${kind}" ${t?`data-to="${t.id}"`:''}><select class="tw-as">${mine.map(a=>`<option value="${a.key}" ${a.key===last?'selected':''}>${esc(a.name)} (@${esc(a.handle)})</option>`).join('')}</select>
+      <textarea class="tw-in" rows="${t?2:3}" maxlength="280" placeholder="${t?`@${au?.handle} kullanıcısına yanıt…`:'Neler oluyor? (@ ile etiketle, # ile etiket)'}">${t?`@${esc(au?.handle||'')} `:''}</textarea>
+      <div style="display:flex;justify-content:space-between;align-items:center"><span class="muted tw-cnt">0/280</span><button class="btn sm gold tw-send">${t?'Yanıtla':'Tweetle'}</button></div></div>`;
+  },
+  render(){
+    const el=$('tw-page'); if(!el) return;
+    Prefs.d.twSeen=Date.now(); Prefs.save(); this.badge();
+    const mk=this.myMentionKeys();
+    let list=Data.tweets.filter(t=>!t.root);
+    if(this.filter==='news') list=list.filter(t=>t.by==='news'||t.by==='p'||t.by.startsWith('b:'));
+    if(this.filter==='me') list=Data.tweets.filter(t=>t.mentions?.some(k=>mk.has(k))||mk.has(t.by)).map(t=>t.root?Data.tweets.find(x=>x.id===t.root)||t:t).filter((t,i,a)=>a.indexOf(t)===i);
+    if(this.filter==='fans') list=list.filter(t=>t.by.startsWith('f:'));
+    el.innerHTML=`<div class="tw-wrap">
+      <div class="tw-main">
+        <div class="tile">${this.composeHTML('n')}</div>
+        <div class="chips tw-f">${[['all','Tümü'],['news','Haberler'],['me','Beni ilgilendiren'],['fans','Fanlar']].map(([k,l])=>`<button class="chip ${this.filter===k?'on':''}" data-f="${k}">${l}</button>`).join('')}</div>
+        <div class="tw-feed">${list.slice(0,120).map(t=>this.item(t)).join('')||'<div class="empty"><i class="fab fa-twitter"></i><p>Henüz tweet yok.</p></div>'}</div>
+      </div>
+      <div class="tw-side">
+        <div class="tile"><h3>AI</h3><button class="btn sm gold" id="tw-buzz"><i class="fas fa-fire"></i> Gündem üret</button><button class="btn sm" id="tw-fans"><i class="fas fa-user-plus"></i> Fan hesabı üret</button>
+          ${Univ.events().some(e=>e.status==='done')?`<button class="btn sm" id="tw-news"><i class="fas fa-newspaper"></i> Son şovun haberlerini at</button>`:''}</div>
+        <div class="tile tw-accs-t"><h3>Hesaplar</h3><div class="tw-accs">${this.all().filter(a=>a.kind!=='char'||a.c?.social?.x||Data.tweets.some(t=>t.by===a.key)).slice(0,40).map(a=>`<div class="tw-acc" data-acc="${a.key}">${a.ava}<div style="min-width:0"><b>${esc(a.name)}</b><div class="muted">@${esc(a.handle)}${a.kind==='fan'?' · fan':''}</div></div></div>`).join('')}</div></div>
+      </div></div>`;
+    this.wire();
+  },
+  wire(){
+    const el=$('tw-page');
+    el.querySelectorAll('.tw-f [data-f]').forEach(b=>b.onclick=()=>{ this.filter=b.dataset.f; this.render(); });
+    el.querySelectorAll('.tw-c').forEach(c=>{ const ta=c.querySelector('.tw-in'), cnt=c.querySelector('.tw-cnt');
+      const upd=()=>cnt.textContent=`${ta.value.length}/280`; ta.oninput=upd; upd();
+      c.querySelector('.tw-send').onclick=async()=>{ const by=c.querySelector('.tw-as').value; Prefs.d.twAs=by; Prefs.save();
+        const t=await this.post({by,text:ta.value,replyTo:c.dataset.to||null}); if(t){ this.replyOpen=null; ta.value=''; } };
+      ta.onkeydown=e=>{ if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) c.querySelector('.tw-send').click(); }; });
+    el.querySelectorAll('[data-reply]').forEach(b=>b.onclick=()=>{ const t=Data.tweets.find(x=>x.id===b.dataset.reply); this.replyOpen=this.replyOpen===t.id?null:t.id; this.render(); el.querySelector(`.tw-c[data-to="${t.id}"] .tw-in`)?.focus(); });
+    el.querySelectorAll('[data-like]').forEach(b=>b.onclick=()=>B.txn('tweets/'+b.dataset.like,cur=>cur?{likes:(cur.likes||[]).includes(Me.id)?cur.likes.filter(x=>x!==Me.id):[...(cur.likes||[]),Me.id]}:null));
+    el.querySelectorAll('[data-del]').forEach(b=>b.onclick=async()=>{ if(!confirm('Tweet silinsin mi?')) return; for(const r of Data.tweets.filter(x=>x.root===b.dataset.del)) await B.del('tweets/'+r.id); await B.del('tweets/'+b.dataset.del); });
+    el.querySelectorAll('[data-aireply]').forEach(b=>b.onclick=async()=>{ const t=Data.tweets.find(x=>x.id===b.dataset.aireply); if(!t) return;
+      const au=this.acc(t.by); let k=t.mentions.find(x=>x!==t.by&&this.aiCtl(x)&&x.startsWith('c:'));
+      if(!k&&au?.c){ const riv=relsOf(au.c).find(r=>['feud','enemy','rival','betrayed','betrayer'].includes(r.type)&&this.aiCtl('c:'+r.id)); if(riv) k='c:'+riv.id; }
+      if(!k){ const fs=[...Data.fans.keys()]; if(!fs.length){ await this.genFans(4); } k='f:'+pick([...Data.fans.keys()]); }
+      toast(`${this.acc(k)?.name} yazıyor…`); await this.aiReply(k,t); });
+    el.querySelectorAll('[data-acc]').forEach(x=>x.onclick=e=>{ const k=x.dataset.acc; if(k?.startsWith('c:')){ e.stopPropagation(); Roster.show(k.slice(2)); } });
+    $('tw-buzz')&&($('tw-buzz').onclick=async()=>{ toast('AI gündem üretiyor…'); await this.buzz(); });
+    $('tw-fans')&&($('tw-fans').onclick=()=>this.genFans(4));
+    $('tw-news')&&($('tw-news').onclick=()=>{ const e=Univ.events().filter(x=>x.status==='done').sort((a,b)=>(b.endedAt||0)-(a.endedAt||0))[0]; if(e){ toast('Haberler gönderiliyor…'); this.showNews(e.id); } });
+  },
+  badge(){ const n=this.unseen(); const el=$('nav-tw'); if(el) el.textContent=n?String(n):''; },
+};
+Bus.on('tweets',()=>{ if(UI.page==='tw' && !document.querySelector('#tw-page .tw-in:focus')) Tw.render(); else Tw.badge(); });
+Bus.on('univ',()=>{ if(UI.page==='arch') Arch.render(); });
+// UI aşağıda tanımlanıyor → sayfa yüklenince bağla (boot'tan önce çalışır)
+document.addEventListener('DOMContentLoaded',()=>{ const _rp=UI.renderPage; UI.renderPage=function(){ _rp.call(this); if(this.page==='arch') Arch.render(); if(this.page==='tw') Tw.render(); }; });
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
