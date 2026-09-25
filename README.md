@@ -71,6 +71,12 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
 - **Kontrol:** her köşe/katılımcı "AI" ya da bir oyuncu. AI güreşçilerin turlarını şovu yürüten (host) cihaz oynatır.
 - **Komutlar:** `/me` · `/do` · `/s` bağır · `/l` alçak · `/b` veya `((…))` OOC · `*eylem*` = /me
 - **Kadro:** "AI ile Ekle" (tek isim / toplu kadro / metin yapıştır / custom) ya da **"Manuel Ekle"**. Karakteri "oyna" ile sahiplen, GM markasını atar.
+  - **AI ile Ekle** yeni alanları da doldurur: roller, cinsiyet, hareket tarifleri, kadrodaki karakterlerle ilişkiler; aramada bulursa
+    tema şarkısı ve görseller (açılmayan / geçersiz linkler otomatik elenir). **Linkler** bölümüne kaynak sayfa (Wikipedia, Cagematch…
+    — AI sayfayı okur), render / banner / ikon ve YouTube linki yazılabilir; yazılan link AI'ınkinden önceliklidir.
+  - **Güncelle / yeniden araştır:** profildeki "AI ile güncelle" ya da kadrodaki "Güncelle". Hangi bölümlerin (temel bilgi, stat,
+    move-set, ilişki, görsel, tema) güncelleneceğini seçersin, "son gelişmeler" notu yazabilirsin. Sahip, rekor, marka, mevcut
+    ilişkiler ve senin görsellerin korunur. Tek karakterde önce değişiklik listesi gelir; çoklu güncelleme tek tıkla geri alınır.
   - **Editör** (sekmeli form): kimlik, **çoklu rol** (ör. Superstar + GM aynı anda), **cinsiyet**, gimmick/üslup, statlar,
     **move-set** (hareket ekle/çıkar/sırala + her hareket için AI'ın okuyacağı tarif), **ilişkiler**, müzik ve gelişmiş JSON.
   - **Görseller:** ikon, banner ve **PNG render** — imgur vb. direkt resim linki. Render'ın şeffaf kenarları otomatik kırpılır ve oranı korunur;
