@@ -305,6 +305,7 @@ body.ss .gmonly{display:none!important}
 .fgrid .ff.half{grid-column:auto}
 .fgrid .checks{display:flex;flex-direction:column;gap:3px;max-height:200px;overflow-y:auto;background:var(--bg1);border:1px solid var(--ln);border-radius:var(--r);padding:6px 8px}
 .fgrid .checks label{display:flex;gap:8px;align-items:center;font-size:12.5px}
+.fgrid .checks input,.ff input[type=checkbox],.ff input[type=radio]{width:auto!important;flex:0 0 auto}
 .listrow{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--bg2);border:1px solid var(--ln);border-radius:8px}
 .listrow .mid{flex:1;min-width:0}
 
@@ -601,6 +602,14 @@ body.ss .gmonly{display:none!important}
 .room .rm-act i:hover{color:var(--heel)}
 .sb-sec span button{background:none;border:none;color:var(--t2);cursor:pointer}
 @media(max-width:640px){.vs-card.multi .vs-stage{height:170px}.mb-row .mb-ctl{flex-basis:90px}}
+/* ── segment v2 ── */
+.seg-box{border-color:rgba(227,179,65,.35)}
+.seg-goal{font-size:12.5px;color:var(--t0);background:var(--gold-d);border-radius:6px;padding:6px 8px}
+.seg-beats{margin:0;padding-left:18px;font-size:12px;color:var(--t2);display:flex;flex-direction:column;gap:2px}
+.seg-beats li.done{text-decoration:line-through;opacity:.6}
+.seg-beats li.now{color:var(--gold);font-weight:600}
+.seg-turn{font-size:12.5px}
+.seg-tools{display:flex;flex-wrap:wrap;gap:5px}
 </style>
 </head>
 
@@ -937,9 +946,9 @@ body.ss .gmonly{display:none!important}
 </div></div>
 
 <div class="mbd" id="md-form"><div class="mbox" style="max-width:600px">
-  <div class="mhd"><span class="mti" id="fm-title">Form</span><button class="mcl" onclick="UI.close('md-form')">✕</button></div>
-  <div class="mbdy"><div class="fgrid" id="fm-body"></div></div>
-  <div class="mft"><span id="fm-extra" style="margin-right:auto"></span><button class="btn" onclick="UI.close('md-form')">İptal</button><button class="btn gold" id="fm-go"><i class="fas fa-check"></i> Kaydet</button></div>
+  <div class="mhd"><span class="mti" id="fmx-title">Form</span><button class="mcl" onclick="UI.close('md-form')">✕</button></div>
+  <div class="mbdy"><div class="fgrid" id="fmx-body"></div></div>
+  <div class="mft"><span id="fmx-extra" style="margin-right:auto"></span><button class="btn" onclick="UI.close('md-form')">İptal</button><button class="btn gold" id="fmx-go"><i class="fas fa-check"></i> Kaydet</button></div>
 </div></div>
 
 <div class="mbd" id="md-mb"><div class="mbox" style="max-width:820px">
@@ -2071,7 +2080,7 @@ const Info = {
     return `<div class="box">
       <h3>Sahne</h3>
       <div class="ff"><span class="lbl">Tip</span><select id="if-type" ${can?'':'disabled'}>
-        ${[['free','Serbest (AI yok / sadece çağırınca)'],['promo','Ringde promo (seyirci var)'],['backstage','Backstage'],['interview','Röportaj'],['contract','Kontrat / yüzleşme (seyirci var)']].map(([v,l])=>`<option value="${v}" ${sc.type===v?'selected':''}>${l}</option>`).join('')}</select></div>
+        ${[['free','Serbest (AI yok / sadece çağırınca)'],...Object.entries(SEG_TYPES).filter(([k])=>k!=='match'&&k!=='video').map(([k,v])=>[k,v.tr+(SEG_META[k]?.crowd?' (seyirci var)':'')])].map(([v,l])=>`<option value="${v}" ${sc.type===v?'selected':''}>${l}</option>`).join('')}</select></div>
       <div class="ff"><span class="lbl">Ortam / notlar (AI okur)</span><textarea id="if-ctx" rows="3" ${can?'':'disabled'}>${esc(sc.ctx||'')}</textarea></div>
       <label style="display:flex;gap:8px;align-items:center;font-size:12.5px"><input type="checkbox" id="if-auto" ${sc.auto?'checked':''} ${can?'':'disabled'}> Her IC mesajdan sonra AI otomatik cevap versin</label>
       ${can?'<button class="btn sm gold" data-a="scene-save"><i class="fas fa-save"></i> Kaydet</button>':''}
@@ -2081,7 +2090,7 @@ const Info = {
       ${ai.map(c=>`<div class="part">${avaHTML(c,'sm')}<span class="nm">${esc(c.ringName)}</span><span class="tag neutral">${esc(roleLabel(c))}</span>${can?`<button class="mcl" data-rm="${c.id}">✕</button>`:''}</div>`).join('')||'<span class="muted">Yok</span>'}
       ${can?`<select id="if-add"><option value="">+ AI karakter ekle…</option>${Store.chars().filter(c=>!c.owner&&!(sc.ai||[]).includes(c.id)).map(c=>`<option value="${c.id}">${esc(c.ringName)} — ${roleLabel(c)}</option>`).join('')}</select>`:''}
       <button class="btn sm" data-a="scene-go"><i class="fas fa-forward"></i> AI şimdi devam etsin</button>
-      ${['promo','contract'].includes(sc.type)?`<div class="muted">Seyirci heat: <b style="color:var(--am)">${r.heat||0}</b></div>`:''}
+      ${!!SEG_META[sc.type]?.crowd?`<div class="muted">Seyirci heat: <b style="color:var(--am)">${r.heat||0}</b></div>`:''}
     </div>
     <div class="box" id="if-online"><h3>Burada</h3>${online.map(p=>`<div class="muted"><span class="online"></span>${esc(p.name)}</div>`).join('')||'<span class="muted">—</span>'}
       ${can&&r.id!=='genel'&&!r.eventId?`<button class="btn sm red" data-a="archive"><i class="fas fa-box-archive"></i> Kanalı arşivle</button>`:''}</div>`;
@@ -2350,7 +2359,7 @@ const Scene = {
     const room=Data.rooms.get(roomId); if(!room) return;
     if(room.eventId && room.status!=='live'){ if(manual) toast('Segment canlı değil'); return; }
     const sc=room.scene||{}; const aiChars=(sc.ai||[]).map(id=>Data.char(id)).filter(Boolean);
-    const crowdScene=['promo','contract'].includes(sc.type);
+    const crowdScene=!!SEG_META[sc.type]?.crowd;
     if(!aiChars.length && !crowdScene){ if(manual) toast('Bu kanalda AI karakter yok — sağ panelden ekle'); return; }
     const lock=await B.txn('rooms/'+roomId,cur=>cur&&(!cur.aiBusy||Date.now()-cur.aiBusy>60000)?{aiBusy:Date.now()}:null).catch(()=>null);
     if(!lock){ if(manual) toast('AI zaten yazıyor…'); return; }
@@ -2363,12 +2372,12 @@ const Scene = {
       const sheet=(c,tag)=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}]${tag} Gimmick: ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,inScene)?` | İlişkiler: ${relLine(c,inScene)}`:''}`;
       const r=await AI.ask({json:true,temperature:0.95,
         system:`Profesyonel güreş metin RP'sinde Dungeon Master'sın. Dil TÜRKÇE. Sadece AI kontrolündeki karakterleri oynarsın; OYUNCU karakterleri adına ASLA konuşma, eylem veya düşünce yazma. Kayfabe'yi koru, üsluplara sadık kal. Replikler kısa ve TV'ye uygun olsun. Eylemleri "emote" alanına 3. şahıs yaz (GTA World /me gibi, yıldızsız).
-Sahne: ${({free:'Serbest sahne.',promo:'Ringde canlı promo — seyirci var ve tepki verir.',backstage:'Backstage — seyirci yok.',interview:'Backstage röportaj — röportajcı soru sorar.',contract:'Kontrat imzası / yüzleşme — ring içinde, seyirci var.'})[sc.type||'free']}
+Sahne: ${!sc.type||sc.type==='free'?'Serbest sahne.':(SEG_META[sc.type]?.d||'')}
 Ortam: ${sc.ctx||'-'}
 AI KARAKTERLER (sen oynarsın):\n${aiChars.map(c=>sheet(c,'')).join('\n')||'(yok — sadece seyirci)'}
 OYUNCU KARAKTERLERİ (dokunma, sadece tepki ver):\n${playerChars.map(c=>sheet(c,' [OYUNCU]')).join('\n')||'-'}`,
-        prompt:`Son akış:\n${Msgs.log(recent)}\n\nSıradaki tepkileri yaz: 0-3 replik (gerekmiyorsa boş bırak). ${crowdScene?'Seyirci tepkisi ekle ve heat değişimini ver (-10..+10, oyuncunun promosu ne kadar tuttu).':''}
-JSON: {"replies":[{"speaker":"AI karakterin tam adı","emote":"isteğe bağlı eylem","text":"isteğe bağlı konuşma"}],"crowd":"","heat_delta":0}`,
+        prompt:`Son akış:\n${Msgs.log(recent)}\n\n${Seg.promptBits(room)}Sıradaki tepkileri yaz: 0-3 replik (gerekmiyorsa boş bırak). ${crowdScene?'Seyirci tepkisi ekle ve heat değişimini ver (-10..+10, oyuncunun promosu ne kadar tuttu).':''}
+JSON: {"replies":[{"speaker":"AI karakterin tam adı","emote":"isteğe bağlı eylem","text":"isteğe bağlı konuşma"}],"crowd":"","heat_delta":0,"beat_done":false}`,
         offline:()=>({replies:aiChars.slice(0,1).map(c=>({speaker:c.ringName,text:(c.catchphrases||[])[0]||'',emote:'sessizce dinler ve başını sallar.'})),crowd:crowdScene?pick(['Seyirci bağırıyor!','Yuhalamalar yükseliyor!','"Bu adam haklı!" tezahüratı']):'',heat_delta:rnd(-3,5)})});
       const d=r.data||{};
       for(const rep of (d.replies||[]).slice(0,3)){
@@ -2377,6 +2386,7 @@ JSON: {"replies":[{"speaker":"AI karakterin tam adı","emote":"isteğe bağlı e
         if(rep.text){ await Msgs.post(roomId,{k:'ai',text:rep.text,cid:ch.id,pid:null},{touch:false}); lastText=`${ch.ringName}: ${rep.text}`; }
       }
       if(crowdScene && d.crowd){ await Msgs.post(roomId,{k:'crowd',text:d.crowd,pid:null},{touch:false}); }
+      if(d.beat_done===true && Seg.plan(room).beats?.length) await Seg.advanceBeat(roomId);
       const hd=clamp(parseInt(d.heat_delta)||0,-10,10);
       if(crowdScene && hd){
         await B.update('rooms/'+roomId,{heat:(room.heat||0)+hd});
@@ -2451,6 +2461,18 @@ const STYLES = {
 const SEG_TYPES = {
   match:{tr:'Maç',ic:'fa-ring'}, promo:{tr:'Ringde promo',ic:'fa-microphone'}, backstage:{tr:'Backstage',ic:'fa-door-open'},
   interview:{tr:'Röportaj',ic:'fa-comment-dots'}, contract:{tr:'Kontrat / yüzleşme',ic:'fa-file-signature'},
+};
+/** segment tipleri: seyirci var mı + AI'a sahne tarifi */
+const SEG_META = {
+  promo:{crowd:1,d:'Ringde canlı promo — seyirci var ve tepki verir.'},
+  backstage:{d:'Backstage — seyirci yok.'},
+  interview:{d:'Backstage röportaj — röportajcı soru sorar.'},
+  contract:{crowd:1,d:'Kontrat imzası / yüzleşme — ring içinde, seyirci var.'},
+  video:{d:'Önceden çekilmiş video paketi / vignette — titantronda oynatılır.'},
+  attack:{d:'Backstage saldırısı — ani ve kaotik; güvenlik ve yetkililer araya girebilir, seyirci ekrandan izler.'},
+  celebration:{crowd:1,d:'Ringde kutlama — seyirci coşkulu (heel ise yuhalıyor), konfeti, müzik.'},
+  announcement:{crowd:1,d:'Otorite / GM duyurusu — ringde ya da titantronda önemli bir karar açıklanıyor.'},
+  debut:{crowd:1,d:'İlk çıkış (debut) — seyirci kim olduğunu merak ediyor, büyük giriş.'},
 };
 const MTYPES = {standard:'Standart',nodq:'No DQ',submission:'Submission',lms:'Last Man Standing'};
 const starsHTML = r => r==null ? '' : `<span class="stars" title="${r} yıldız">${'★'.repeat(Math.floor(r))}${r%1>=0.5?'½':''}<span style="color:var(--t3)">${'★'.repeat(Math.max(0,5-Math.ceil(r)))}</span> <span class="muted" style="font-size:11px">${r.toFixed(2).replace(/\.?0+$/,'')}</span></span>`;
@@ -2546,9 +2568,9 @@ const Form = {
   fields:[],
   open({title,fields,onSave,onChange,saveLabel='Kaydet',extra=''}){
     this.fields=fields;
-    $('fm-title').textContent=title; $('fm-extra').innerHTML=extra;
-    $('fm-go').innerHTML=`<i class="fas fa-check"></i> ${esc(saveLabel)}`;
-    $('fm-body').innerHTML=fields.map(f=>{
+    $('fmx-title').textContent=title; $('fmx-extra').innerHTML=extra;
+    $('fmx-go').innerHTML=`<i class="fas fa-check"></i> ${esc(saveLabel)}`;
+    $('fmx-body').innerHTML=fields.map(f=>{
       const v=f.value??'';
       let inp;
       if(f.type==='select') inp=`<select id="fm-${f.id}">${f.options.map(o=>`<option value="${esc(o[0])}" ${String(o[0])===String(v)?'selected':''}>${esc(o[1])}</option>`).join('')}</select>`;
@@ -2559,11 +2581,11 @@ const Form = {
       else inp=`<input id="fm-${f.id}" type="${f.type||'text'}" value="${esc(v)}" ${f.min!=null?`min="${f.min}"`:''} ${f.max!=null?`max="${f.max}"`:''} ${f.ph?`placeholder="${esc(f.ph)}"`:''}>`;
       return `<div class="ff ${f.half?'half':''}" data-wrap="${f.id}"><span class="lbl">${esc(f.label||'')}</span>${inp}${f.hint?`<div class="muted" style="margin-top:3px">${f.hint}</div>`:''}</div>`;
     }).join('');
-    const vals=()=>{ const o={}; fields.forEach(f=>{ if(f.type==='checks') o[f.id]=[...document.querySelectorAll(`[data-f="${f.id}"]:checked`)].map(x=>x.value); else { const el=$('fm-'+f.id); o[f.id]= f.type==='number'?Number(el.value):f.type==='checkbox'?el.checked:f.type==='image'?Media.fixUrl(el.value):el.value; } }); return o; };
+    const vals=()=>{ const o={}; fields.forEach(f=>{ if(f.type==='checks') o[f.id]=[...document.querySelectorAll(`[data-f="${f.id}"]:checked`)].map(x=>x.value); else { const el=$('fmx-body').querySelector('#fm-'+CSS.escape(f.id)); o[f.id]= f.type==='number'?Number(el.value):f.type==='checkbox'?el.checked:f.type==='image'?Media.fixUrl(el.value):el.value; } }); return o; };
     fields.filter(f=>f.type==='image').forEach(f=>$('fm-'+f.id).addEventListener('change',e=>{ const u=Media.fixUrl(e.target.value); e.target.value=u; $('fmp-'+f.id).innerHTML=u?`<img src="${esc(u)}" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'açılmadı — direkt resim linki olmalı'}))">`:'<span>—</span>'; }));
     this.vals=vals;
-    if(onChange){ const run=()=>onChange(vals(),(id,show)=>{ const w=document.querySelector(`[data-wrap="${id}"]`); if(w) w.style.display=show?'':'none'; }); $('fm-body').querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('change',run)); run(); }
-    $('fm-go').onclick=async()=>{ $('fm-go').disabled=true; try{ const ok=await onSave(vals()); if(ok!==false) UI.close('md-form'); }catch(e){ console.error(e); toast(e.message,'err'); } finally{ $('fm-go').disabled=false; } };
+    if(onChange){ const run=()=>onChange(vals(),(id,show)=>{ const w=document.querySelector(`[data-wrap="${id}"]`); if(w) w.style.display=show?'':'none'; }); $('fmx-body').querySelectorAll('input,select,textarea').forEach(el=>el.addEventListener('change',run)); run(); }
+    $('fmx-go').onclick=async()=>{ $('fmx-go').disabled=true; try{ const ok=await onSave(vals()); if(ok!==false) UI.close('md-form'); }catch(e){ console.error(e); toast(e.message,'err'); } finally{ $('fmx-go').disabled=false; } };
     UI.open('md-form');
   },
 };
@@ -2676,10 +2698,10 @@ const Show = {
       system:'Profesyonel güreş şovu eleştirmenisin (Wrestling Observer tarzı). Türkçe yaz.',
       prompt:`Şov: ${ev?.title} (${STYLES[ev?.style]?.tr||''}). Segment tipi: ${SEG_TYPES[r.segType]?.tr}. Seyirci heat: ${r.heat||0}.
 Katılımcılar: ${Univ.segParticipants(r).map(x=>Data.char(x)?.ringName).filter(Boolean).join(', ')||'-'}
-Akış:\n${Msgs.log(recent)}\nBu segmenti puanla (0.5-5 yıldız, çeyrek adımlarla) ve tek cümle özetle. Segmentten açıkça üstün çıkan (seyirciyi kazanan / son sözü söyleyen / rakibini ezen) bir katılımcı varsa "winner" alanına tam adını yaz, yoksa null. JSON: {"rating":3.25,"summary":"...","winner":null}`,
+${Seg.plan(r).goal?`Planlanan hedef: ${Seg.plan(r).goal} (gerçekleştiyse puana olumlu yansıt)\n`:''}Akış:\n${Msgs.log(recent)}\nBu segmenti puanla (0.5-5 yıldız, çeyrek adımlarla) ve tek cümle özetle. Segmentten açıkça üstün çıkan (seyirciyi kazanan / son sözü söyleyen / rakibini ezen) bir katılımcı varsa "winner" alanına tam adını yaz, yoksa null. JSON: {"rating":3.25,"summary":"...","winner":null}`,
       offline:()=>({rating:Rating.scene(r.heat,recent.filter(m=>CHAT_K.includes(m.k)).length),summary:`${Show.label(r)} segmenti tamamlandı.`})});
     const rating=clamp(Math.round((parseFloat(res.data?.rating)||Rating.scene(r.heat,recent.length))*4)/4,0.5,5);
-    await Scene.postWinner(id,r,res.data?.winner);
+    await Scene.postWinner(id,r,Seg.plan(r).winner?Data.char(Seg.plan(r).winner)?.ringName:res.data?.winner);
     await Msgs.post(id,{k:'sys',pid:null,text:`Segment bitti · ${'★'.repeat(Math.round(rating))} (${rating})`},{touch:false});
     await B.update('rooms/'+id,{status:'done',rating,summary:res.data?.summary||'',lastAt:Msgs.ts(),lastText:'Segment bitti'});
     toast(`Segment bitti: ${rating}★`,'ok');
@@ -2804,11 +2826,11 @@ Scene.opening = async function(id){
     system:`Profesyonel güreş TV şovunun yönetmeni ve anlatıcısısın. Türkçe. Şov tonu: ${STYLES[ev?.style]?.tone||''}`,
     prompt:`Segment başlıyor: ${SEG_TYPES[r.segType]?.tr}. Şov: ${ev?.title||''}. Not: ${r.topic||'-'}.
 Katılımcılar: ${ps.map(c=>`${c.ringName} (${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}) — ${c.gimmick}${relLine(c,ps)?` [${relLine(c,ps)}]`:''}`).join(' | ')}
-Sahneyi 1-2 cümleyle kur (kamera nereye bakıyor, kim nerede, giriş müziği vb.). Karakterlere replik yazma. ${['promo','contract'].includes(r.segType)?'Seyircinin ilk tepkisini de ver.':''}
+Sahneyi 1-2 cümleyle kur (kamera nereye bakıyor, kim nerede, giriş müziği vb.). Karakterlere replik yazma. ${!!SEG_META[r.segType]?.crowd?'Seyircinin ilk tepkisini de ver.':''}
 JSON: {"scene":"...","crowd":""}`,
-    offline:()=>({scene:r.segType==='backstage'||r.segType==='interview'?`Kamera backstage'e geçiyor. ${ps.map(c=>c.ringName).join(' ve ')} kadrajda.`:`Işıklar kararıyor, müzik çalıyor: ${ps[0]?.ringName||''} ringe doğru yürüyor.`,crowd:['promo','contract'].includes(r.segType)?'Seyirci ayakta!':''})});
+    offline:()=>({scene:r.segType==='backstage'||r.segType==='interview'?`Kamera backstage'e geçiyor. ${ps.map(c=>c.ringName).join(' ve ')} kadrajda.`:`Işıklar kararıyor, müzik çalıyor: ${ps[0]?.ringName||''} ringe doğru yürüyor.`,crowd:!!SEG_META[r.segType]?.crowd?'Seyirci ayakta!':''})});
   await Msgs.post(id,{k:'sys',pid:null,text:`${SEG_TYPES[r.segType]?.tr} başladı`},{touch:false});
-  if(['promo','contract'].includes(r.segType)) for(const c of ps.filter(c=>c.themeUrl)) await Msgs.post(id,{k:'sys',pid:null,text:`♪ ${c.ringName} sahneye çıkıyor${c.theme?` — ${c.theme}`:''}`,meta:{theme:c.id,mt:'entrance'}},{touch:false});
+  if(!!SEG_META[r.segType]?.crowd) for(const c of ps.filter(c=>c.themeUrl)) await Msgs.post(id,{k:'sys',pid:null,text:`♪ ${c.ringName} sahneye çıkıyor${c.theme?` — ${c.theme}`:''}`,meta:{theme:c.id,mt:'entrance'}},{touch:false});
   if(res.data?.scene) await Msgs.post(id,{k:'narr',pid:null,text:res.data.scene},{touch:false});
   if(res.data?.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:res.data.crowd},{touch:false});
   await B.update('rooms/'+id,{lastAt:Msgs.ts(),lastText:'Segment başladı'});
@@ -2830,9 +2852,9 @@ Scene.sim = async function(id){
     prompt:`Segment: ${SEG_TYPES[r.segType]?.tr}. Şov: ${ev?.title||''}. Not: ${r.topic||'-'}.
 Karakterler:\n${ps.map(c=>`- ${c.ringName} [${roleLabel(c)}, ${c.alignment}${c.gender?(c.gender==='f'?', kadın':', erkek'):''}] ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}${relLine(c,ps)?` | İlişkiler: ${relLine(c,ps)}`:''}`).join('\n')}
 Şimdiye kadar:\n${Msgs.log(recent)||'-'}
-Segmenti baştan sona (veya kaldığı yerden) 5-8 satırda yaz ve bitir. Sonra puanla (0.5-5) ve tek cümle özetle. Segmentten açıkça üstün çıkan biri varsa "winner" alanına tam adını yaz, yoksa null.
+${Seg.promptBits(r)}Segmenti baştan sona (veya kaldığı yerden) 5-8 satırda yaz ve bitir; plan varsa ona uy. Sonra puanla (0.5-5) ve tek cümle özetle. Segmentten açıkça üstün çıkan biri varsa "winner" alanına tam adını yaz, yoksa null.
 JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3,"summary":"...","winner":null}`,
-    offline:()=>({lines:ps.map(c=>({speaker:c.ringName,emote:'kameraya döner',text:(c.catchphrases||[])[0]||'Bu iş burada bitmedi.'})),crowd:['promo','contract'].includes(r.segType)?'Seyirci tezahürat yapıyor!':'',rating:Rating.scene(r.heat,6),summary:`${Show.label(r)} (sim).`})});
+    offline:()=>({lines:ps.map(c=>({speaker:c.ringName,emote:'kameraya döner',text:(c.catchphrases||[])[0]||'Bu iş burada bitmedi.'})),crowd:!!SEG_META[r.segType]?.crowd?'Seyirci tezahürat yapıyor!':'',rating:Rating.scene(r.heat,6),summary:`${Show.label(r)} (sim).`})});
   const d=res.data||{};
   await Msgs.post(id,{k:'sys',pid:null,text:'⏩ Hızlı simülasyon'},{touch:false});
   for(const ln of (d.lines||[]).slice(0,10)){
@@ -2842,7 +2864,7 @@ JSON: {"lines":[{"speaker":"tam ad","emote":"","text":""}],"crowd":"","rating":3
   }
   if(d.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:d.crowd},{touch:false});
   const rating=clamp(Math.round((parseFloat(d.rating)||2.5)*4)/4,0.5,5);
-  await Scene.postWinner(id,r,d.winner);
+  await Scene.postWinner(id,r,Seg.plan(r).winner?Data.char(Seg.plan(r).winner)?.ringName:d.winner);
   await Msgs.post(id,{k:'sys',pid:null,text:`Segment bitti · ${rating}★`},{touch:false});
   await B.update('rooms/'+id,{status:'done',rating,summary:d.summary||'',lastAt:Msgs.ts(),lastText:'Segment bitti'});
 };
@@ -2870,7 +2892,8 @@ Son sonuçlar:\n${recent||'-'}
 Kurallar: ${nm} maç + ${np} konuşma segmenti (promo/backstage/interview/contract). Bir güreşçi en fazla 1 maçta olsun. Intergender (erkek vs kadın) maç yapabilirsin ama nadir olsun ve hikâye gerekçesi olsun (ör. feud, menajer, karma rekabet); öyle bir maçta "intergender":true yaz. Kemer maçlarında kemerin bölümüne (Erkekler / Kadınlar / Açık) uy. Feud'ları maçla, müttefik/aşk/aile ilişkilerini promo ve backstage ile ilerlet. Ana maç en sonda. ${ev.style==='ple'?'PLE: kemer maçları ağırlıkta, büyük hesaplaşmalar.':'TV: hikâyeyi ilerlet, PLE\'ye rekabet kur.'}
 Maç türleri: ${Object.entries(MT).map(([k,v])=>`${k} (${v.tr})`).join(', ')}.
 Formatlar "sides" ile: her iç liste bir taraf. Ör: tekli [["A"],["B"]], tag 2v2 [["A","B"],["C","D"]], triple threat [["A"],["B"],["C"]], handikap [["A"],["B","C"]]. battle / rumble için herkes ayrı taraf. TV'de çoğunlukla tekli ve tag, arada triple threat / handikap; PLE'de büyük maçlar (ladder, cage, hiac, tlc, chamber, mitb, wargames, rumble…) kullan. Takım kemerlerini tag maçlarında ver.
-JSON: {"segments":[{"type":"match","sides":[["isim"],["isim"]],"matchType":"standard","title":"kemer adı ya da boş","intergender":false,"note":"hikâye"},{"type":"promo|backstage|interview|contract","participants":["isim"],"note":"segment fikri"}]}`,
+JSON: {"segments":[{"type":"match","sides":[["isim"],["isim"]],"matchType":"standard","title":"kemer adı ya da boş","intergender":false,"note":"hikâye"},{"type":"promo|backstage|interview|contract|video|attack|celebration|announcement|debut","participants":["isim"],"note":"segment fikri","goal":"segmentin nasıl bitmesi gerektiği (ana an)","winner":"üstün çıkması gereken kişi ya da boş"}]}
+Konuşma segmentleri: promo (ringde konuşma), backstage, interview (röportaj), contract (imza / yüzleşme), video (hype paketi), attack (backstage saldırısı), celebration (kutlama), announcement (GM duyurusu), debut (yeni gelen). Her konuşma segmentine "goal" yaz — hikâyeyi ilerletsin (ör. meydan okuma, saldırı, maç ilanı).`,
       offline:()=>this.offline(ev,roster,titles,nm,np,staffPool)});
     let segs=(r.data?.segments||[]).slice(0,12);
     for(const s of existing){ await B.del('rooms/'+s.id); Data.rooms.delete(s.id); }
@@ -2896,7 +2919,8 @@ JSON: {"segments":[{"type":"match","sides":[["isim"],["isim"]],"matchType":"stan
         } else if(SEG_TYPES[s.type]){
           const ps=(s.participants||[]).map(x=>Data.findCharByName(x,[...roster,...staffPool])).filter(Boolean).map(c=>c.id);
           if(!ps.length) continue;
-          await Show.addSeg(eventId,{type:s.type,participants:[...new Set(ps)],note:s.note||''});
+          const pw=s.winner?Data.findCharByName(String(s.winner),[...roster,...staffPool]):null;
+          await Show.addSeg(eventId,{type:s.type,participants:[...new Set(ps)],note:s.note||'',goal:s.goal||'',pwinner:pw&&ps.includes(pw.id)?pw.id:null});
         } else continue;
         n++;
       }catch(e){ console.warn('booker seg',e); }
@@ -3054,7 +3078,7 @@ const Ev = {
         return `<div class="segrow ${s.status}" ${me?'style="border-color:var(--gold)"':''}>
           <div class="no">${i+1}</div><div class="ic"><i class="fas ${SEG_TYPES[s.segType]?.ic}"></i></div>
           <div class="mid"><b>${esc(Show.label(s))}${res}</b>
-            <div class="muted">${esc(SEG_TYPES[s.segType]?.tr)}${m?` · ${MTYPES[m.type]}${m.title?' · 🏆 '+esc(m.title):''}${m.ig?' · ⚥ Intergender':''}`:''}${s.topic?' · '+esc(s.topic):''}</div>
+            <div class="muted">${esc(SEG_TYPES[s.segType]?.tr)}${m?` · ${MTYPES[m.type]}${m.title?' · 🏆 '+esc(m.title):''}${m.ig?' · ⚥ Intergender':''}`:''}${s.topic?' · '+esc(s.topic):''}${s.plan?.goal?` · 🎯 ${esc(s.plan.goal)}`:''}${s.plan?.mode==='turns'?' · 🎤 sırayla':''}${s.plan?.limit?` · ⏱ ${s.plan.limit} mesaj`:''}</div>
             <div class="muted" style="font-size:11px">${ctl}</div></div>
           ${s.status==='done'?starsHTML(s.rating):s.status==='live'?'<span class="tag al-heel">CANLI</span>':''}
           <div class="acts">
@@ -5396,7 +5420,7 @@ const MatchBuilder = {
     $('mb-body').innerHTML=`
       <div class="ff"><span class="lbl">Hazır format</span><div class="chips">${MB_PRESETS.map((p,k)=>`<button class="chip" data-pre="${k}">${esc(p[0])}</button>`).join('')}</div></div>
       <div class="erow"><div class="ff half"><span class="lbl">Maç türü</span><select id="mb-type">${MT_GROUPS.map(([g,ks])=>`<optgroup label="${g}">${ks.map(k=>`<option value="${k}" ${st.type===k?'selected':''}>${esc(MT[k].tr)}</option>`).join('')}</optgroup>`).join('')}</select><div class="hint">${esc(R.d)}</div></div>
-        <div class="ff half"><span class="lbl">Kemer (kazanan şampiyon olur)</span><select id="mb-title">${tOpts}</select></div></div>
+        <div class="ff half"><span class="lbl">Kemer (kazanan şampiyon olur)</span><select id="mb-belt">${tOpts}</select></div></div>
       <div class="mb-fmt"><b>${st.sides.length>4&&st.sides.every(s=>s.length===1)?`${tot} kişi`:st.sides.map(s=>s.length).join(' vs ')}</b> · ${tot} güreşçi${tagOn?' · tag kuralları':st.sides.some(s=>s.length>1)?' · herkes legal':''}${R.stagger||R.gauntlet?' · sırayla giriş':''}</div>
       ${flat?`<div class="mb-sides big"><div class="mb-side"><div class="mb-sh"><b>Katılımcılar — herkes kendisi için${R.stagger||R.gauntlet?' (numara = giriş sırası)':''}</b></div>
           ${st.sides.map((s,k)=>`<div class="mb-row">${`<span class="mb-no">${k+1}</span>`}<select data-c="${k}|0">${copt(s[0].cid)}</select>${!big?`<select data-t="${k}|0" class="mb-ctl">${ctlOpt(s[0].ctl)}</select>`:''}${st.sides.length>2?`<button class="btn sm" data-rmside="${k}">−</button>`:''}</div>`).join('')}
@@ -5426,7 +5450,7 @@ const MatchBuilder = {
     const b=$('mb-body'), st=this.st, rr=()=>{ this.read(); this.render(); };
     b.querySelectorAll('[data-pre]').forEach(x=>x.onclick=()=>{ this.read(); this.preset(+x.dataset.pre); });
     $('mb-type').onchange=e=>{ this.read(); st.type=e.target.value; this.render(); };
-    $('mb-title').onchange=e=>{ st.titleId=e.target.value; rr(); };
+    $('mb-belt').onchange=e=>{ st.titleId=e.target.value; rr(); };
     b.querySelectorAll('[data-c]').forEach(x=>x.onchange=()=>{ const [k,i]=x.dataset.c.split('|').map(Number); st.sides[k][i].cid=x.value; rr(); });
     b.querySelectorAll('[data-t]').forEach(x=>x.onchange=()=>{ const [k,i]=x.dataset.t.split('|').map(Number); st.sides[k][i].ctl=x.value; });
     b.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ const [k,i]=x.dataset.rm.split('|').map(Number); st.sides[k].splice(i,1); if(!st.sides[k].length) st.sides.splice(k,1); rr(); });
@@ -5608,6 +5632,247 @@ Info.roomAdmin=function(r){
     document.querySelectorAll('#sb [data-arch]').forEach(el=>el.onclick=e=>{ e.stopPropagation(); Rooms.archive(el.dataset.arch); });
     document.querySelectorAll('#sb [data-purge]').forEach(el=>el.onclick=e=>{ e.stopPropagation(); Rooms.purge(el.dataset.purge); });
     const n=Rooms.free().filter(r=>r.archived).length; const a=$('sb-arch-n'); if(a) a.textContent=n?`(${n})`:''; };
+}
+
+/* ════════════════════════════════════════════════════════════
+   SEGMENT v2 — plan (hedef / olay akışı / planlanan kazanan), sıra & süre,
+   segment içi olaylar (yönet, saldırı, sürpriz giriş, maça dönüştür, sözleşme),
+   yeni tipler (video, saldırı, kutlama, duyuru, debut)
+   room.plan = {goal, beats[], winner, mode:'free'|'turns', limit}
+   room.seg  = {beat, turn, count, timeup, hurt:{cid:hasar}}
+════════════════════════════════════════════════════════════ */
+const Seg = {
+  plan(r){ return r?.plan||{}; },
+  st(r){ return r?.seg||{beat:0,turn:0,count:0}; },
+  order(r){ return (r.participants||[]).filter(id=>Data.char(id)); },
+  turnCid(r){ const o=this.order(r); return o.length?o[(this.st(r).turn||0)%o.length]:null; },
+  isAI(r,cid){ return (r.scene?.ai||[]).includes(cid); },
+  live(r){ return r && r.eventId && r.kind==='channel' && r.status==='live'; },
+  /** AI istemine plan + sıra bilgisi */
+  promptBits(r){
+    const p=this.plan(r), s=this.st(r), out=[];
+    if(p.goal) out.push(`SEGMENT HEDEFİ (yönetmen planı): ${p.goal}`);
+    if(p.beats?.length) out.push(`OLAY AKIŞI: ${p.beats.map((b,i)=>`${i+1}) ${b}${i<(s.beat||0)?' [oldu]':i===(s.beat||0)?' [ŞİMDİ]':''}`).join(' ')}`);
+    if(p.winner) out.push(`PLANLANAN KAZANAN: ${Data.char(p.winner)?.ringName} — segment sonunda üstün çıkan o olmalı.`);
+    if(p.goal||p.beats?.length) out.push('Sahneyi oyuncu karakterlerini ZORLAMADAN, AI karakterler ve anlatı yoluyla yavaş yavaş bu plana doğru yönlendir. Şu anki adım gerçekleştiyse "beat_done": true yaz.');
+    if(p.mode==='turns'){ const c=Data.char(this.turnCid(r));
+      if(c) out.push(this.isAI(r,c.id)?`SIRA: ${c.ringName} (AI) — bu tur SADECE ${c.ringName} konuşsun.`:`SIRA oyuncuda: ${c.ringName} — AI karakterler bu tur konuşmasın, sadece gerekirse seyirci tepkisi ver.`); }
+    if(p.limit) out.push(`Kalan süre: ${Math.max(0,p.limit-(s.count||0))} mesaj.`);
+    return out.length?out.join('\n')+'\n':'';
+  },
+  async patchSeg(id,fn){ return B.txn('rooms/'+id,cur=>cur?{seg:{beat:0,turn:0,count:0,...(cur.seg||{}),...fn(cur.seg||{},cur)}}:null).catch(()=>null); },
+  /** her IC mesajda: sayaç + sıra */
+  async onIC(roomId,cid){
+    const r=Data.rooms.get(roomId); if(!this.live(r)) return;
+    const p=this.plan(r); if(!p.limit && p.mode!=='turns') return;
+    const o=this.order(r);
+    let fire=false;
+    await this.patchSeg(roomId,(s)=>{ const n={count:(s.count||0)+1}; fire=false;
+      if(p.mode==='turns' && cid && o.includes(cid)){ const i=o.indexOf(cid); n.turn=(i+1)%o.length; }
+      if(p.limit && n.count>=p.limit && !s.timeup){ n.timeup=true; fire=true; }   // tek istemci tetikler
+      return n; });
+    if(fire) await this.timeUp(roomId);
+  },
+  async timeUp(id){
+    await Msgs.post(id,{k:'sys',pid:null,text:'⏱ Segmentin süresi doldu — yayın devam ediyor'},{touch:false});
+    await sleep(300); await Show.endSeg(id);
+  },
+  async advanceBeat(id,manual=false){
+    const r=Data.rooms.get(id); const p=this.plan(r); if(!p.beats?.length) return;
+    const got=await this.patchSeg(id,s=>({beat:Math.min((s.beat||0)+1,p.beats.length)}));
+    const b=got?.seg?.beat; if(b!=null && manual) toast(b>=p.beats.length?'Tüm adımlar tamamlandı':`Sıradaki adım: ${p.beats[b]}`);
+  },
+  // ── GM olayları ──
+  async direct(id,text){
+    const r=Data.rooms.get(id); if(!r||!text.trim()) return;
+    const ev=Univ.event(r.eventId); const ps=this.order(r).map(x=>Data.char(x)).filter(Boolean);
+    const res=await AI.ask({json:true,temperature:0.9,system:`Profesyonel güreş TV şovunun yönetmeni ve anlatıcısısın. Türkçe. Şov tonu: ${STYLES[ev?.style]?.tone||''}`,
+      prompt:`Segment: ${SEG_TYPES[r.segType]?.tr}. Katılımcılar: ${ps.map(c=>c.ringName).join(', ')}.\nSon akış:\n${Msgs.log(await Msgs.recent(id,12))}\nYÖNETMEN NOTU (şimdi gerçekleşsin): ${text}\nBunu 1-3 cümlelik canlı yayın anlatısıyla sahneye koy. Oyuncu karakterlerinin ağzından konuşma yazma. JSON: {"narration":"...","crowd":""}`,
+      offline:()=>({narration:text,crowd:''})});
+    await Msgs.post(id,{k:'narr',pid:null,text:res.data?.narration||text},{touch:false});
+    if(res.data?.crowd && SEG_META[r.segType]?.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:res.data.crowd},{touch:false});
+    await Scene.respond(id,{manual:true});
+  },
+  async attack(id,aid,vid){
+    const r=Data.rooms.get(id), a=Data.char(aid), v=Data.char(vid); if(!r||!a||!v||a.id===v.id) return;
+    if(!(r.participants||[]).includes(aid)) await this.runIn(id,aid,{silent:true});
+    const res=await AI.ask({json:true,temperature:0.95,system:'Profesyonel güreş TV şovunun anlatıcısısın. Türkçe, sinematik, kısa.',
+      prompt:`${a.ringName} (${a.alignment}; finisher: ${(a.moves?.finisher||[]).join(', ')||'-'}) aniden ${v.ringName}'a SALDIRIYOR. Son akış:\n${Msgs.log(await Msgs.recent(id,8))}\nSaldırıyı 2-3 cümleyle anlat (sandalye, finisher, masaya çarpma… karaktere uygun), sonra güvenlik / hakemlerin araya girdiğini ya da saldırganın çekip gittiğini yaz. ${v.ringName} bir oyuncu karakteriyse onun tepkisini yazma, sadece yerde kaldığını söyle. JSON: {"narration":"...","crowd":""}`,
+      offline:()=>({narration:`${a.ringName} arkadan ${v.ringName}'a saldırıyor! Yumruklar, bir sandalye… ${v.ringName} yerde kalıyor, güvenlik koşarak geliyor!`,crowd:'Salon şokta!'})});
+    await Msgs.post(id,{k:'sys',pid:null,text:`⚡ SALDIRI: ${a.ringName} → ${v.ringName}`,meta:a.themeUrl?{theme:a.id,mt:'manual'}:{}},{touch:false});
+    await Msgs.post(id,{k:'narr',pid:null,text:res.data?.narration||''},{touch:false});
+    if(res.data?.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:res.data.crowd},{touch:false});
+    await this.patchSeg(id,s=>({hurt:{...(s.hurt||{}),[v.id]:((s.hurt||{})[v.id]||0)+25}}));
+    await B.update('rooms/'+id,{heat:(r.heat||0)+6});
+  },
+  async runIn(id,cid,{silent=false}={}){
+    const r=Data.rooms.get(id), c=Data.char(cid); if(!r||!c) return;
+    const ps=[...new Set([...(r.participants||[]),cid])];
+    const ctl={...(r.ctl||{}),[cid]:Univ.ctlFor(cid)};
+    const ai=ctl[cid]==='ai'?[...new Set([...(r.scene?.ai||[]),cid])]:(r.scene?.ai||[]);
+    await B.update('rooms/'+id,{participants:ps,ctl,scene:{...(r.scene||{}),ai}});
+    if(silent) return;
+    await Msgs.post(id,{k:'sys',pid:null,text:`🚪 SÜRPRİZ! ${c.ringName} sahneye çıkıyor${c.theme?` — ♪ ${c.theme}`:''}`,meta:c.themeUrl?{theme:c.id,mt:'manual'}:{}},{touch:false});
+    const res=await AI.ask({json:true,temperature:0.9,system:'Profesyonel güreş TV anlatıcısısın. Türkçe.',
+      prompt:`${c.ringName} (${c.alignment}) beklenmedik şekilde segmente dalıyor. Giriş: ${c.entrance||'-'}. Son akış:\n${Msgs.log(await Msgs.recent(id,8))}\nGirişi 1-2 cümleyle anlat. JSON: {"narration":"...","crowd":""}`,
+      offline:()=>({narration:`Müzik çalıyor… bu ${c.ringName}! Kimse onu beklemiyordu!`,crowd:'Salon yıkılıyor!'})});
+    await Msgs.post(id,{k:'narr',pid:null,text:res.data?.narration||''},{touch:false});
+    if(res.data?.crowd && SEG_META[r.segType]?.crowd) await Msgs.post(id,{k:'crowd',pid:null,text:res.data.crowd},{touch:false});
+    if(ctl[cid]==='ai') await Scene.respond(id,{manual:true});
+  },
+  /** segmenti hemen oynanacak bir maça çevir (bu segment biter, maç sıradaki segment olur) */
+  async toMatch(id,{sides,type='standard'}){
+    const r=Data.rooms.get(id); if(!r) return;
+    const hurt=this.st(r).hurt||{};
+    await Msgs.post(id,{k:'sys',pid:null,text:`🔔 Segment maça dönüşüyor! ${sides.map(s=>s.map(x=>Data.char(x)?.ringName).join(' & ')).join(' vs ')} — ${MT[type]?.tr||'Maç'}`},{touch:false});
+    await Show.endSeg(id);
+    const mid=await Show.addSeg(r.eventId,{type:'match',sides:sides.map(s=>s.map(cid=>({cid}))),mtype:type,note:`${Show.label(r)} segmentinden doğan maç. ${r.topic||''}`.trim()});
+    const segs=Univ.segs(r.eventId).filter(x=>x.id!==mid); const at=segs.findIndex(x=>x.id===id);
+    segs.splice(at+1,0,{id:mid});
+    for(const [i,x] of segs.entries()) await B.update('rooms/'+x.id,{order:i+1});
+    // saldırıya uğrayan güreşçi yıpranmış başlar
+    const m=Data.rooms.get(mid)?.match; if(m && Object.keys(hurt).length){ const f=m.f.map((x,i)=>hurt[m.cids[i]]?{...x,hp:clamp(x.hp-hurt[m.cids[i]],35,100),st:clamp(x.st-10,0,100)}:x); await B.update('rooms/'+mid,{match:{...m,f}}); }
+    await sleep(300); await Show.startSeg(mid);
+  },
+  /** bir sonraki şova maç imzala */
+  async contract(id,{sides,type='standard',titleId=null,note=''}){
+    const r=Data.rooms.get(id), ev=Univ.event(r?.eventId);
+    const nx=Univ.events().filter(e=>e.status==='planned'&&e.id!==ev?.id&&e.date>=(ev?.date||Univ.date())).sort((a,b)=>(a.brandId===ev?.brandId?-1:0)-(b.brandId===ev?.brandId?-1:0)||a.date.localeCompare(b.date))[0];
+    if(!nx){ toast('Takvimde planlı başka şov yok — önce takvimi doldur','err'); return; }
+    await Show.addSeg(nx.id,{type:'match',sides:sides.map(s=>s.map(cid=>({cid}))),mtype:type,titleId,note:note||`${ev?.title||''} şovunda imzalandı.`});
+    const t=titleId&&Data.titles.get(titleId);
+    await Msgs.post(id,{k:'sys',pid:null,text:`📝 SÖZLEŞME İMZALANDI: ${sides.map(s=>s.map(x=>Data.char(x)?.ringName).join(' & ')).join(' vs ')} — ${MT[type]?.tr||'Maç'}${t?` · 🏆 ${t.name}`:''} → ${nx.title} (${Dt.nice(nx.date)})`},{touch:false});
+    toast(`Maç ${nx.title} kartına eklendi`,'ok');
+  },
+  /** video paketi: AI yazar, kendiliğinden biter */
+  async video(id){
+    const r=Data.rooms.get(id), ev=Univ.event(r?.eventId); const ps=this.order(r).map(x=>Data.char(x)).filter(Boolean); const p=this.plan(r);
+    await Msgs.post(id,{k:'sys',pid:null,text:'📺 Video paketi — titantronda'},{touch:false});
+    const res=await AI.ask({json:true,temperature:0.95,system:`Profesyonel güreş TV şovunun video paketi (vignette) yazarısın. Türkçe, sinematik. Şov tonu: ${STYLES[ev?.style]?.tone||''}`,
+      prompt:`Video paketi konusu: ${r.topic||p.goal||'-'}\nKarakterler: ${ps.map(c=>`${c.ringName} (${c.alignment}) — ${c.gimmick} | Üslup: ${c.voice||'-'} | Sözleri: ${(c.catchphrases||[]).join(' / ')}`).join('\n')}\n${relLine(ps[0]||{},ps)?'İlişkiler: '+ps.map(c=>relLine(c,ps)).filter(Boolean).join('; '):''}
+Paketi 4-6 satırda yaz: sahne tarifleri (narration) ve karakterlerin kameraya söyledikleri (line). Son satır gelecek maça / olaya işaret etsin.
+JSON: {"shots":[{"narration":"...","speaker":"isim ya da boş","line":""}],"rating":3,"summary":"..."}`,
+      offline:()=>({shots:ps.map(c=>({narration:`Siyah-beyaz görüntüler: ${c.ringName}.`,speaker:c.ringName,line:(c.catchphrases||[])[0]||'Hazırım.'})),rating:2.5,summary:`${ps.map(c=>c.ringName).join(', ')} video paketi.`})});
+    for(const s of (res.data?.shots||[]).slice(0,8)){
+      if(s.narration) await Msgs.post(id,{k:'narr',pid:null,text:s.narration},{touch:false});
+      const c=Data.findCharByName(String(s.speaker||''),ps); if(c&&s.line) await Msgs.post(id,{k:'ai',pid:null,cid:c.id,text:s.line},{touch:false});
+      await sleep(250);
+    }
+    const rating=clamp(Math.round((parseFloat(res.data?.rating)||2.5)*4)/4,0.5,5);
+    await Msgs.post(id,{k:'sys',pid:null,text:`Video paketi bitti · ${rating}★`},{touch:false});
+    await B.update('rooms/'+id,{status:'done',rating,summary:res.data?.summary||'',lastAt:Msgs.ts(),lastText:'Video paketi'});
+  },
+  // ── GM paneli ──
+  panelHTML(r){
+    if(!this.live(r)) return '';
+    const p=this.plan(r), s=this.st(r), gm=Univ.isGM();
+    const tc=p.mode==='turns'?Data.char(this.turnCid(r)):null;
+    return `<div class="box seg-box"><h3>Segment</h3>
+      ${p.goal?`<div class="seg-goal">🎯 ${esc(p.goal)}</div>`:''}
+      ${p.beats?.length?`<ol class="seg-beats">${p.beats.map((b,i)=>`<li class="${i<(s.beat||0)?'done':i===(s.beat||0)?'now':''}">${esc(b)}</li>`).join('')}</ol>${gm?`<button class="btn sm" data-seg="beat"><i class="fas fa-forward-step"></i> Sonraki adım</button>`:''}`:''}
+      ${p.winner?`<div class="muted">Planlanan kazanan: <b>${esc(Data.char(p.winner)?.ringName||'?')}</b></div>`:''}
+      ${tc?`<div class="seg-turn">🎤 Sıra: <b>${esc(tc.ringName)}</b>${this.isAI(r,tc.id)?' <span class="aib">AI</span>':''}</div>`:''}
+      ${p.limit?`<div class="muted">Süre: ${s.count||0} / ${p.limit} mesaj</div><div class="mbar"><div style="width:${Math.min(100,(s.count||0)/p.limit*100)}%;background:var(--am)"></div></div>`:''}
+      ${gm?`<div class="seg-tools">
+        <button class="btn sm" data-seg="direct"><i class="fas fa-clapperboard"></i> Yönet</button>
+        <button class="btn sm" data-seg="attack"><i class="fas fa-bolt"></i> Saldırı</button>
+        <button class="btn sm" data-seg="runin"><i class="fas fa-door-open"></i> Sürpriz giriş</button>
+        <button class="btn sm" data-seg="match"><i class="fas fa-ring"></i> Maça dönüştür</button>
+        <button class="btn sm" data-seg="contract"><i class="fas fa-file-signature"></i> Sonraki şova maç</button>
+        <button class="btn sm red" data-seg="end"><i class="fas fa-stop"></i> Segmenti bitir</button></div>`:''}
+    </div>`;
+  },
+  sidesForm(r,title,{contract=false}={}){
+    const ps=this.order(r); const all=Store.chars('wrestler');
+    const opts=all.map(c=>[c.id,`${c.ringName}${ps.includes(c.id)?' ★':''}`]);
+    return new Promise(res=>{
+      Form.open({title,saveLabel:contract?'İmzala':'Maçı başlat',fields:[
+        {id:'a',label:'Taraf 1',type:'checks',options:opts,value:ps.slice(0,1)},
+        {id:'b',label:'Taraf 2',type:'checks',options:opts,value:ps.slice(1,2)},
+        {id:'type',label:'Maç türü',type:'select',options:Object.entries(MT).map(([k,v])=>[k,v.tr]),value:r.segType==='contract'?'nodq':'standard'},
+        ...(contract?[{id:'titleId',label:'Kemer',type:'select',options:[['','— yok —'],...Univ.titles().map(t=>[t.id,t.name])]},{id:'note',label:'Hikâye notu',type:'textarea',rows:2}]:[])],
+        onSave:v=>{ const a=v.a, b=v.b.filter(x=>!a.includes(x)); if(!a.length||!b.length){ toast('İki tarafa da en az bir güreşçi seç','err'); return false; } res({sides:[a,b],type:v.type,titleId:v.titleId||null,note:v.note||''}); }});
+    });
+  },
+  async tool(id,a){
+    const r=Data.rooms.get(id); if(!r) return;
+    const ps=this.order(r).map(x=>Data.char(x)).filter(Boolean);
+    if(a==='beat') return this.advanceBeat(id,true);
+    if(a==='end') return Show.endSeg(id);
+    if(a==='direct') return Form.open({title:'Sahneyi yönet',saveLabel:'Sahneye koy',fields:[{id:'t',label:'Ne olsun? (AI anlatır, AI karakterler tepki verir)',type:'textarea',rows:3,ph:'Örn: Işıklar söner, titantronda Viktor\'un yüzü belirir…'}],onSave:v=>{ this.direct(id,v.t); }});
+    if(a==='attack'){ const all=Store.chars().map(c=>[c.id,c.ringName]);
+      return Form.open({title:'Saldırı',saveLabel:'Saldır',fields:[{id:'a',label:'Saldıran',type:'select',options:all,value:ps[1]?.id||ps[0]?.id},{id:'v',label:'Hedef',type:'select',options:all,value:ps[0]?.id}],onSave:v=>{ if(v.a===v.v){ toast('Farklı iki karakter seç','err'); return false; } this.attack(id,v.a,v.v); }}); }
+    if(a==='runin'){ const all=Store.chars().filter(c=>!(r.participants||[]).includes(c.id)).map(c=>[c.id,`${c.ringName} — ${roleLabel(c)}`]);
+      return Form.open({title:'Sürpriz giriş',saveLabel:'Sahneye çıkar',fields:[{id:'c',label:'Kim geliyor?',type:'select',options:all}],onSave:v=>{ this.runIn(id,v.c); }}); }
+    if(a==='match'){ const x=await this.sidesForm(r,'Maça dönüştür'); return this.toMatch(id,x); }
+    if(a==='contract'){ const x=await this.sidesForm(r,'Sonraki şova maç imzalat',{contract:true}); return this.contract(id,x); }
+  },
+};
+
+/* ── segment tipi meta (seyirci, AI tarifi) ── */
+Object.assign(SEG_TYPES,{
+  video:{tr:'Video paketi',ic:'fa-film'}, attack:{tr:'Backstage saldırısı',ic:'fa-bolt'}, celebration:{tr:'Kutlama',ic:'fa-champagne-glasses'},
+  announcement:{tr:'Otorite duyurusu',ic:'fa-bullhorn'}, debut:{tr:'Debut (ilk çıkış)',ic:'fa-star'},
+});
+
+/* ── segment ekleme / düzenleme formu: plan alanları ── */
+{ const _add=Show.addSeg;
+  Show.addSeg=async function(eventId,s){
+    const id=await _add.call(this,eventId,s);
+    if(id && s.type!=='match'){
+      const beats=Array.isArray(s.beats)?s.beats:String(s.beats||'').split('\n').map(x=>x.trim()).filter(Boolean);
+      const plan={goal:String(s.goal||'').trim(),beats,winner:s.pwinner||null,mode:s.mode==='turns'?'turns':'free',limit:Math.max(0,parseInt(s.limit)||0)};
+      if(plan.goal||plan.beats.length||plan.winner||plan.mode==='turns'||plan.limit) await B.update('rooms/'+id,{plan});
+    }
+    return id;
+  };
+  const _sf=Show.segForm;
+  Show.segForm=function(eventId,room){
+    if(room?.segType==='match') return _sf.call(this,eventId,room);
+    const p=room?.plan||{};
+    const _open=Form.open;
+    Form.open=function(cfg){ Form.open=_open;
+      const all=[['','— AI karar versin —'],...Store.chars().map(c=>[c.id,c.ringName])];
+      cfg.fields=[...cfg.fields,
+        {id:'goal',label:'Planlanan sonuç / ana an (AI sahneyi buna yönlendirir)',type:'textarea',rows:2,value:p.goal||'',ph:'Örn: Promo, Viktor\'un Kaan\'ı kemer maçına davet etmesiyle ve arkadan saldırıyla bitsin.'},
+        {id:'beats',label:'Olay akışı (isteğe bağlı, her satır bir adım)',type:'textarea',rows:3,value:(p.beats||[]).join('\n'),ph:'Kaan ringe gelir ve Viktor\'u çağırır\nViktor titantronda belirir\nKavga çıkar'},
+        {id:'pwinner',label:'Planlanan kazanan',type:'select',options:all,value:p.winner||'',half:true},
+        {id:'mode',label:'Konuşma düzeni',type:'select',options:[['free','Serbest (kim yazarsa)'],['turns','Sırayla (katılımcılar sırayla konuşur)']],value:p.mode||'free',half:true},
+        {id:'limit',label:'Süre (IC mesaj sayısı, 0 = sınırsız)',type:'number',value:p.limit||0,min:0,max:200,half:true,hint:'Dolunca segment kendiliğinden biter ve puanlanır.'}];
+      return _open.call(Form,cfg); };
+    try{ return _sf.call(this,eventId,room); } finally{ Form.open=_open; }
+  };
+}
+/* ── başlarken: kimin oynayacağını ŞİMDİ belirle, plan sayaçlarını sıfırla; video paketi ── */
+{ const _ss=Show.startSeg;
+  Show.startSeg=async function(id){
+    const r=Data.rooms.get(id);
+    if(r && r.segType!=='match' && r.status==='pending'){
+      const ps=(r.participants||[]).filter(x=>Data.char(x));
+      const ctl=Object.fromEntries(ps.map(x=>[x,Univ.ctlFor(x)]));
+      await B.update('rooms/'+id,{ctl,scene:{...(r.scene||{}),ai:ps.filter(x=>ctl[x]==='ai')},seg:{beat:0,turn:0,count:0}});
+      await sleep(80);
+    }
+    return _ss.call(this,id);
+  };
+  const _op=Scene.opening;
+  Scene.opening=async function(id){ const r=Data.rooms.get(id); if(r?.segType==='video') return Seg.video(id); return _op.call(this,id); };
+  const _sim=Show.simSeg;
+  Show.simSeg=async function(id){ const r=Data.rooms.get(id); if(r?.segType==='video'&&r.status!=='done'){ if(r.status==='pending') await B.update('rooms/'+id,{status:'live'}); return Seg.video(id); } return _sim.call(this,id); };
+}
+/* ── IC mesaj sayacı / sıra ── */
+{ const _post=Msgs.post;
+  Msgs.post=async function(roomId,m,o){ const d=await _post.call(this,roomId,m,o);
+    if(['say','me','do','shout','low','ai'].includes(m.k)) Seg.onIC(roomId,m.cid||null).catch(()=>{});
+    return d; };
+}
+/* ── panel: segment kutusu + sıra göstergesi ── */
+{ const _ch=Info.channelHTML;
+  Info.channelHTML=function(r){ return Seg.panelHTML(r)+_ch.call(this,r); };
+  const _w=Info.wire;
+  Info.wire=function(r){ _w.call(this,r); $('info').querySelectorAll('[data-seg]').forEach(b=>b.onclick=()=>Seg.tool(r.id,b.dataset.seg)); };
+  const _ty=Chat.typing;
+  Chat.typing=function(){ _ty.call(this); const r=this.R; if(Seg.live(r)&&Seg.plan(r).mode==='turns'&&!$('typing').textContent){ const c=Data.char(Seg.turnCid(r)); if(c) $('typing').textContent=c.owner===Me.id?'🎤 Sıra sende!':`🎤 Sıra: ${c.ringName}${Seg.isAI(r,c.id)?' (AI)':''}`; } };
 }
 
 /* ════════════════════════════════════════════════════════════
