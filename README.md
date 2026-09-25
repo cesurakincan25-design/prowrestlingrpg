@@ -93,7 +93,7 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
   - **Güncelle / yeniden araştır:** profildeki "AI ile güncelle" ya da kadrodaki "Güncelle". Hangi bölümlerin (temel bilgi, stat,
     move-set, ilişki, görsel, tema) güncelleneceğini seçersin, "son gelişmeler" notu yazabilirsin. Sahip, rekor, marka, mevcut
     ilişkiler ve senin görsellerin korunur. Tek karakterde önce değişiklik listesi gelir; çoklu güncelleme tek tıkla geri alınır.
-  - **Editör** (sekmeli form): kimlik, **çoklu rol** (ör. Superstar + GM aynı anda), **cinsiyet**, gimmick/üslup, statlar,
+  - **Editör** (sekmeli form): kimlik (**X / Twitter kullanıcı adı** dahil — @, x.com ya da twitter.com linki yapıştırılabilir), **çoklu rol** (ör. Superstar + GM aynı anda), **cinsiyet**, gimmick/üslup, statlar,
     **move-set** (hareket ekle/çıkar/sırala + her hareket için AI'ın okuyacağı tarif), **ilişkiler**, müzik ve gelişmiş JSON.
   - **Görseller:** ikon, banner ve **PNG render** — imgur vb. direkt resim linki. Render'ın şeffaf kenarları otomatik kırpılır ve oranı korunur;
     ölçek / kaydırma / bakış yönü elle ayarlanır. Render'lar maç öncesi **VS maç kartında** ve maç panelinde görünür.
