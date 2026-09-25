@@ -552,6 +552,7 @@ body.ss .gmonly{display:none!important}
 .up-c.miss{color:var(--am);border-color:rgba(232,167,74,.45);background:var(--am-d)}
 .pk-meta{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--t2);white-space:nowrap}
 .pick small{margin-left:8px!important}
+.xh{text-decoration:none;cursor:pointer;text-transform:none;letter-spacing:0}.xh:hover{color:var(--t0);border-color:var(--t2)}
 </style>
 </head>
 
@@ -1085,7 +1086,15 @@ function blankChar(){
     movesDesc:{strike:[],grapple:[],aerial:[],submission:[],signature:[],finisher:[]},   // moves ile aynı sırada: AI için hareket tarifi
     media:{icon:{url:'',x:50,y:50,z:1},banner:{url:'',x:50,y:50,z:1},render:{url:'',trim:[0,0,1,1],ar:0.6,s:1,ox:0,oy:0,face:'front'}},
     rels:[],                                        // [{id, type, lvl 1-5, note}]
-    themeUrl:'',themeStart:0};
+    themeUrl:'',themeStart:0,
+    social:{x:''}};                                  // sosyal medya hesapları (ileride mini sosyal medya sistemi için)
+}
+/** "@kaan", "x.com/kaan", "https://twitter.com/kaan?s=1" → "kaan" */
+function cleanHandle(v){
+  let h=String(v||'').trim();
+  const m=h.match(/(?:x|twitter)\.com\/(?:#!\/)?@?([A-Za-z0-9_]{1,15})/i); if(m) h=m[1];
+  h=h.replace(/^@+/,'').replace(/[^A-Za-z0-9_]/g,'').slice(0,15);
+  return /^(home|search|intent|share|i)$/i.test(h)?'':h;
 }
 const GENDERS={m:'Erkek',f:'Kadın'};
 const REL_TYPES={
@@ -1144,6 +1153,7 @@ function normalizeChar(c){
   out.image=out.media.icon.url||'';
   out.rels=(Array.isArray(c.rels)?c.rels:[]).filter(r=>r&&r.id&&r.id!==out.id).map(r=>({id:r.id,type:REL_TYPES[r.type]?r.type:'rival',lvl:clamp(parseInt(r.lvl)||3,1,5),note:String(r.note||'')}));
   out.themeUrl=String(c.themeUrl||''); out.themeStart=Math.max(0,parseInt(c.themeStart)||0);
+  out.social={...(c.social&&typeof c.social==='object'?c.social:{}),x:cleanHandle(c.social?.x??c.twitter??'')};
   if(!['face','heel','tweener'].includes(out.alignment)) out.alignment='tweener';
   out.ringName ||= out.name;
   out.record ||= {w:0,l:0,d:0};
@@ -1502,6 +1512,7 @@ const CHAR_SCHEMA = `{
  "hometown":"billed from","height":"","weight":"",
  "nicknames":[],"catchphrases":["orijinal dilinde kısa sloganlar"],"entrance":"giriş tarifi, Türkçe 1 cümle","theme":"giriş müziği adı",
  "voice":"konuşma üslubu tarifi, Türkçe (AI bu karakteri oynarken kullanacak)",
+ "social":{"x":"X (Twitter) kullanıcı adı, @ olmadan — gerçek kişiyse resmi / doğrulanmış hesabı; sadece gerçekten bulduysan, yoksa boş"},
  "stats":{"power":1-100,"technique":1-100,"speed":1-100,"stamina":1-100,"toughness":1-100,"charisma":1-100,"mic":1-100},
  "moves":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]},
  "movesDesc":{"strike":[],"grapple":[],"aerial":[],"submission":[],"signature":[],"finisher":[]}
@@ -1537,7 +1548,7 @@ Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketle
       if(this.mode==='single'){
         const n=$('imp-name').value.trim(); if(!n) throw new Error('İsim yaz');
         const p=$('imp-promo').value.trim(); search=$('imp-search').checked && AI.canSearch();
-        prompt=`Karakter: ${n}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları) ve ':''}kartını oluştur.`;
+        prompt=`Karakter: ${n}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları) ve ':''}kartını oluştur. X (Twitter) hesabını da ara.`;
       } else if(this.mode==='paste'){
         const t=$('imp-text').value.trim(); if(t.length<40) throw new Error('Daha uzun bir metin yapıştır');
         prompt=`Aşağıdaki profil metnini karta dönüştür. Metinde olmayan hareketleri yaygın bilgine göre tamamlayabilirsin.\n---\n${t.slice(0,12000)}`;
@@ -3504,6 +3515,7 @@ const Editor = {
       <div class="erow">${this.sel('style','Güreş stili',STYLE_OPTS,{half:true})}${Univ.brands().length?this.sel('brandId','Marka',Object.fromEntries(Univ.brands().map(b=>[b.id,b.name])),{half:true,none:'— markasız —'}):''}</div>
       <div class="erow">${this.inp('promotion','Promosyon',{ph:'APW',half:true})}${this.inp('hometown','Memleket (billed from)',{ph:'İzmir',half:true})}</div>
       <div class="erow">${this.inp('height','Boy',{ph:'1.85',half:true})}${this.inp('weight','Kilo',{ph:'102 kg',half:true})}</div>
+      <div class="erow">${this.inp('social.x','X (Twitter) kullanıcı adı',{ph:'@kaandemir',half:true,hint:'@ ya da x.com linki de yapıştırabilirsin.'})}<div class="ff half"></div></div>
       ${this.list('nicknames','Lakaplar',{ph:'Kasırga\nEge Rüzgârı'})}`;
   },
   t_char(){
@@ -3681,7 +3693,7 @@ Roster.detailHTML = function(c){
       <div class="prof-id">${avaHTML(c,'lg')}
         <div style="min-width:0"><div class="prof-nm">${esc(c.ringName)}</div>
         <div class="muted">${esc(c.name!==c.ringName?c.name+' · ':'')}${esc(roleLabel(c))}${c.promotion?' · '+esc(c.promotion):''}</div>
-        <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.gender?`<span class="tag neutral">${GENDERS[c.gender]}</span>`:''}${w?`<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}${c.height?`<span class="tag neutral">${esc(c.height)}</span>`:''}${c.weight?`<span class="tag neutral">${esc(c.weight)}</span>`:''}</div></div></div>
+        <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap"><span class="tag al-${c.alignment}">${c.alignment}</span>${c.gender?`<span class="tag neutral">${GENDERS[c.gender]}</span>`:''}${w?`<span class="tag neutral">${esc(STYLE_OPTS[c.style]||c.style)}</span>`:''}${c.hometown?`<span class="tag neutral">${esc(c.hometown)}</span>`:''}${c.height?`<span class="tag neutral">${esc(c.height)}</span>`:''}${c.weight?`<span class="tag neutral">${esc(c.weight)}</span>`:''}${c.social?.x?`<a class="tag neutral xh" href="https://x.com/${esc(c.social.x)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">𝕏 @${esc(c.social.x)}</a>`:''}</div></div></div>
     </div>
     ${c.themeUrl?`<div class="themebar"><button class="btn sm gold" data-theme="${c.id}"><i class="fas fa-play"></i></button><span>♪ ${esc(c.theme||'Tema şarkısı')}</span></div>`:''}
     ${c.gimmick?`<div><span class="lbl">Gimmick</span><div style="font-size:13px">${esc(c.gimmick)}</div></div>`:''}
@@ -3921,7 +3933,7 @@ ${extra}
       if(this.mode==='single'){
         const n=$('imp-name').value.trim(); if(!n && !links.src) throw new Error('İsim ya da kaynak link yaz');
         const p=$('imp-promo').value.trim(); search=$('imp-search').checked && AI.canSearch();
-        prompt=`Karakter: ${n||'(kaynak sayfadaki kişi)'}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları; giriş müziği için YouTube; render için resmi site / fandom) ve ':''}kartını oluştur.`;
+        prompt=`Karakter: ${n||'(kaynak sayfadaki kişi)'}${p?` (${p})`:''}. ${search?'İnternette güncel bilgisini ara (Cagematch, Wikipedia, resmi roster sayfaları; giriş müziği için YouTube; render için resmi site / fandom) ve ':''}kartını oluştur. X (Twitter) hesabını da ara.`;
       } else if(this.mode==='paste'){
         const t=$('imp-text').value.trim(); if(t.length<40) throw new Error('Daha uzun bir metin yapıştır');
         prompt=`Aşağıdaki profil metnini karta dönüştür. Metinde olmayan hareketleri yaygın bilgine göre tamamlayabilirsin.\n---\n${t.slice(0,12000)}`;
@@ -3974,7 +3986,7 @@ ${extra}
   },
 
   // ── güncelle / yeniden araştır ──
-  REFRESH_OPTS:{basic:'Temel bilgiler (gimmick, promosyon, taraf, üslup…)',stats:'Statlar',moves:'Move-set + tarifler',rels:'İlişkiler (sadece yenileri ekler)',images:'Görseller (boş olanları doldurur)',theme:'Tema şarkısı (yoksa bulur)'},
+  REFRESH_OPTS:{basic:'Temel bilgiler (gimmick, promosyon, taraf, üslup, X hesabı…)',stats:'Statlar',moves:'Move-set + tarifler',rels:'İlişkiler (sadece yenileri ekler)',images:'Görseller (boş olanları doldurur)',theme:'Tema şarkısı (yoksa bulur)'},
   /** AI sonucunu mevcut karta birleştir — sahip, rekor, marka, id korunur */
   async merge(old,d,o,links,log){
     const c=normalizeChar(JSON.parse(JSON.stringify(old)));
@@ -3984,6 +3996,7 @@ ${extra}
       for(const k of ['name','ringName','promotion','brand','alignment','style','gimmick','bio','hometown','height','weight','entrance','theme','voice']) if(has(d[k])) c[k]=n[k];
       for(const k of ['nicknames','catchphrases']) if(has(d[k])) c[k]=n[k];
       if(has(d.gender)&&n.gender) c.gender=n.gender;
+      if(n.social?.x) c.social={...c.social,x:n.social.x};
       if(has(d.roles)||has(d.type)){ c.roles=[...new Set([...c.roles,...n.roles])]; c.type=c.roles[0]; }
     }
     if(o.stats && d.stats) for(const k of Object.keys(STAT_TR)){ const v=parseInt(d.stats[k]); if(v>0) c.stats[k]=clamp(v,1,100); }
@@ -4005,6 +4018,7 @@ ${extra}
   diffRows(a,b){
     const rows=[]; const s=v=>Array.isArray(v)?v.join(', '):String(v??'');
     const L={ringName:'Ring adı',name:'Gerçek ad',promotion:'Promosyon',brand:'Brand',alignment:'Taraf',style:'Stil',gimmick:'Gimmick',bio:'Kariyer',hometown:'Memleket',height:'Boy',weight:'Kilo',entrance:'Giriş',theme:'Şarkı adı',voice:'Üslup',nicknames:'Lakaplar',catchphrases:'Sloganlar',gender:'Cinsiyet'};
+    if((a.social?.x||'')!==(b.social?.x||'')) rows.push(['X (Twitter)',a.social?.x?'@'+a.social.x:'—',b.social?.x?'@'+b.social.x:'—']);
     for(const [k,l] of Object.entries(L)) if(s(a[k])!==s(b[k])) rows.push([l,s(a[k]),s(b[k])]);
     if(roleLabel(a)!==roleLabel(b)) rows.push(['Roller',roleLabel(a),roleLabel(b)]);
     const st=Object.keys(STAT_TR).filter(k=>a.stats[k]!==b.stats[k]); if(st.length) rows.push(['Statlar',st.map(k=>`${STAT_TR[k]} ${a.stats[k]}`).join(', '),st.map(k=>`${STAT_TR[k]} ${b.stats[k]}`).join(', ')]);
@@ -4019,7 +4033,7 @@ ${extra}
     const want=Object.entries(o).filter(([,v])=>v).map(([k])=>this.REFRESH_OPTS[k]).join(', ');
     const prompt=`MEVCUT KART (güncellenecek):\n${JSON.stringify(keep).slice(0,6000)}
 Mevcut ilişkileri: ${relLine(old)||'-'}
-${search?'İnternette bu kişinin/karakterin EN GÜNCEL durumunu ara (son gimmick değişimi, promosyon, turn, kemer, hareketler, giriş müziği). ':''}Kartı güncelle. Güncellenecek bölümler: ${want}.
+${search?'İnternette bu kişinin/karakterin EN GÜNCEL durumunu ara (son gimmick değişimi, promosyon, turn, kemer, hareketler, giriş müziği, X / Twitter hesabı). ':''}Kartı güncelle. Güncellenecek bölümler: ${want}.
 Değişmeyen alanları AYNEN koru; bilmediğin şeyi silme ya da uydurma. Kurgusal/custom bir karakterse sadece tutarlılığı ve eksikleri tamamla, kimliğini değiştirme.${note?`\nKULLANICI NOTU (öncelikli, buna göre güncelle): ${note}`:''}${this.srcLine(links)}`;
     const {d,sources}=await this.ask(prompt,{search,urls:!!links.src});
     const c=await this.merge(old,d,o,links,log);
@@ -4446,6 +4460,7 @@ function charGaps(c){
   const g=[], w=hasRole(c,'wrestler');
   const basic=[['gimmick','Gimmick'],['voice','Üslup'],['bio','Kariyer'],['hometown','Memleket']].filter(([k])=>!String(c[k]||'').trim()).map(x=>x[1]);
   if(!c.gender) basic.push('Cinsiyet');
+  if(!c.social?.x) basic.push('X (Twitter)');
   if(basic.length) g.push(['basic',basic.join(', ')]);
   if(w && Object.values(c.stats||{}).every(v=>v===60)) g.push(['stats','Statlar (hep varsayılan 60)']);
   if(w){
