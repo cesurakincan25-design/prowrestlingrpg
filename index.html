@@ -1033,6 +1033,25 @@ body.ss .gmonly{display:none!important}
 .ustab th:first-child,.ustab td:first-child{text-align:left}
 .ustab th{font-family:var(--mono);font-size:9.5px;color:var(--t2);font-weight:500}
 #set3-mlist{display:flex;flex-wrap:wrap;gap:4px}
+/* ═══ SEZONLAR / HIZLI SİM ═══ */
+.se-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.se-card{background:var(--bg2);border:1px solid var(--ln);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.se-card.on{border-color:rgba(77,184,128,.5);box-shadow:0 0 0 1px rgba(77,184,128,.2)}
+.se-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.se-nm{font-family:var(--disp);font-size:24px;letter-spacing:.02em;line-height:1.1}
+.se-st{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--t2)}
+.se-st b{font-family:var(--disp);font-size:18px;color:var(--t0);margin-right:3px;letter-spacing:.02em}
+.se-act{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+#sem-body,#qs-body{display:flex;flex-direction:column;gap:10px}
+#sem-body .ck,#qs-body .ck{display:flex}
+.qs-list{display:flex;flex-direction:column;gap:6px}
+.qs-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,230px);gap:8px;align-items:center;padding:7px 9px;border:1px solid var(--ln);border-radius:9px;background:var(--bg2)}
+.qs-l{display:flex;gap:9px;align-items:center;min-width:0}
+.qs-l i{color:var(--t2);width:16px;text-align:center}
+.qs-l b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qs-l small{font-size:11px;color:var(--t2)}
+.qs-row select{width:100%}
+@media(max-width:640px){.qs-row{grid-template-columns:1fr}.se-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -1078,6 +1097,7 @@ body.ss .gmonly{display:none!important}
       <button data-p="brands" class="gmonly"><i class="fas fa-layer-group"></i> Markalar & Şovlar</button>
       <button data-p="hist"><i class="fas fa-chart-line"></i> Geçmiş & Reyting</button>
       <button data-p="arch"><i class="fas fa-box-archive"></i> Şov Arşivi</button>
+      <button data-p="seasons"><i class="fas fa-floppy-disk"></i> Sezonlar</button>
       <button data-p="tw"><i class="fab fa-twitter"></i> Twitter <span class="nb" id="nav-tw"></span></button>
       <button data-p="set"><i class="fas fa-cog"></i> Ayarlar</button>
     </div>
@@ -1201,6 +1221,10 @@ body.ss .gmonly{display:none!important}
   <section class="page" id="p-groups">
     <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Takımlar & Gruplar</span><span class="s">Tag takımları, stable'lar, fraksiyonlar</span></div>
     <div class="scroll-page"><div class="wide" id="gr-page"></div></div>
+  </section>
+  <section class="page" id="p-seasons">
+    <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Sezonlar</span><span class="s">Kayıt slotları · rol tarihi</span></div>
+    <div class="scroll-page"><div class="wide" id="se-page"></div></div>
   </section>
   <section class="page" id="p-tw">
     <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Twitter</span><span class="s">Güreşçiler, markalar, fanlar</span></div>
@@ -3543,8 +3567,8 @@ const Ev = {
     const st=ev.staff||{};
     const act=[];
     if(gm){
-      if(ev.status==='planned'){ act.push(`<button class="btn gold" onclick="Booker.build('${ev.id}')"><i class="fas fa-wand-magic-sparkles"></i> AI ile kart kur</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn gold" onclick="Show.start('${ev.id}')"><i class="fas fa-play"></i> Şovu başlat</button>`,`<button class="btn" onclick="Ev.staffForm()"><i class="fas fa-user-tie"></i> Ekip</button>`,`<button class="btn red sm" onclick="Ev.del()"><i class="fas fa-trash"></i></button>`); }
-      if(ev.status==='live'){ act.push(`<button class="btn gold" onclick="Show.next('${ev.id}')"><i class="fas fa-forward-step"></i> Sıradaki segment</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn" onclick="Show.simRest('${ev.id}')"><i class="fas fa-forward"></i> Kalanı simüle et</button>`,`<button class="btn red" onclick="Show.finishEvent('${ev.id}')"><i class="fas fa-flag-checkered"></i> Şovu bitir</button>`); }
+      if(ev.status==='planned'){ act.push(`<button class="btn gold" onclick="Booker.build('${ev.id}')"><i class="fas fa-wand-magic-sparkles"></i> AI ile kart kur</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn gold" onclick="Show.start('${ev.id}')"><i class="fas fa-play"></i> Şovu başlat</button>`,`<button class="btn" onclick="QuickSim.show('${ev.id}')"><i class="fas fa-bolt"></i> Tüm şovu simüle et</button>`,`<button class="btn" onclick="Ev.staffForm()"><i class="fas fa-user-tie"></i> Ekip</button>`,`<button class="btn red sm" onclick="Ev.del()"><i class="fas fa-trash"></i></button>`); }
+      if(ev.status==='live'){ act.push(`<button class="btn gold" onclick="Show.next('${ev.id}')"><i class="fas fa-forward-step"></i> Sıradaki segment</button>`,`<button class="btn" onclick="MatchBuilder.open({mode:'seg',eventId:'${ev.id}'})"><i class="fas fa-ring"></i> Maç</button>`,`<button class="btn" onclick="Show.segForm('${ev.id}')"><i class="fas fa-plus"></i> Segment</button>`,`<button class="btn" onclick="QuickSim.show('${ev.id}')"><i class="fas fa-bolt"></i> Kalanı simüle et</button>`,`<button class="btn red" onclick="Show.finishEvent('${ev.id}')"><i class="fas fa-flag-checkered"></i> Şovu bitir</button>`); }
     }
     $('ev-body').innerHTML=`
       <div class="tile">
@@ -3569,7 +3593,7 @@ const Ev = {
           <div class="acts">
             ${s.status!=='pending'||!gm?`<button class="btn sm" onclick="Chat.open('${s.id}')"><i class="fas fa-eye"></i> ${s.status==='pending'?'Oda':'Aç'}</button>`:''}
             ${gm&&ev.status==='live'&&s.status==='pending'?`<button class="btn sm gold" onclick="Show.startSeg('${s.id}')"><i class="fas fa-play"></i></button>`:''}
-            ${gm&&s.status!=='done'&&ev.status!=='done'?`<button class="btn sm" onclick="Show.simSeg('${s.id}').then(()=>Ev.render())" title="Hızlı sim"><i class="fas fa-forward"></i> Sim</button>`:''}
+            ${gm&&s.status!=='done'&&ev.status!=='done'?`<button class="btn sm" onclick="QuickSim.open('${s.id}')" title="Hızlı sim / AI sim"><i class="fas fa-forward"></i> Sim</button>`:''}
             ${gm&&s.status==='pending'?`<button class="btn sm" onclick="Show.moveSeg('${s.id}',-1)">↑</button><button class="btn sm" onclick="Show.moveSeg('${s.id}',1)">↓</button><button class="btn sm" onclick="Show.segForm('${ev.id}',Data.rooms.get('${s.id}'))"><i class="fas fa-pen"></i></button><button class="btn sm red" onclick="Show.removeSeg('${s.id}')">✕</button>`:''}
           </div></div>`; }).join('')||`<div class="empty"><i class="fas fa-list"></i><p>Kart boş.${gm?' "AI ile kart kur" ya da "+ Segment".':''}</p></div>`}
       </div>
@@ -7924,6 +7948,311 @@ document.addEventListener('DOMContentLoaded',()=>{ const _f=Settings.fill, _s=Se
   Settings.fill=function(){ _f.apply(this,arguments); Settings3.fill(); };
   Settings.save=function(){ Settings3.save(); return _s.apply(this,arguments); };
 });
+
+/* ════════════════════════════════════════════════════════════
+   SEZONLAR — kayıt slotları. Şovlar, segmentler, maç geçmişi, serbest maçlar ve tweetler
+   sezona aittir (doc.season). Kemer sahipleri, rekorlar, AI hafızası, popülerlik, taraf ve
+   rol tarihi sezon değişirken anlık görüntü (snapshot) olarak saklanır / geri yüklenir.
+   Karakter profilleri (gimmick, statlar, hareketler, görseller, ilişkiler), markalar,
+   şov şablonları, kemerlerin kendisi ve takımlar asla silinmez.
+════════════════════════════════════════════════════════════ */
+const SEASONAL=['events','matches','tweets','rooms'];
+Object.assign(Data,{seasons:new Map()});
+const Season = {
+  subs:[], _last:undefined,
+  cur(){ return Data.universe?.season||null; },
+  legacy(){ return Data.universe?.seasonLegacy||null; },
+  of(d){ return d?.season||this.legacy()||this.cur(); },
+  seasonalRoom(d){ return !!(d?.eventId||d?.kind==='match'); },
+  inCur(p,d){ if(p==='rooms'&&!this.seasonalRoom(d)) return true; const c=this.cur(); return !c||this.of(d)===c; },
+  refilter(){ for(const s of this.subs) s.cb(s.raw.filter(d=>this.inCur(s.p,d))); },
+  all(){ return [...Data.seasons.values()].sort((a,b)=>(a.createdAt||0)-(b.createdAt||0)); },
+  get(id){ return Data.seasons.get(id)||null; },
+  name(id=this.cur()){ return this.get(id)?.name||'Sezon'; },
+  raw(p){ return this.subs.find(s=>s.p===p)?.raw||[]; },
+  stats(id){ const ev=this.raw('events').filter(d=>this.of(d)===id), m=this.raw('matches').filter(d=>this.of(d)===id);
+    return {events:ev.length,done:ev.filter(e=>e.status==='done').length,matches:m.length,
+      first:ev.map(e=>e.date).sort()[0]||null,last:ev.filter(e=>e.status==='done').map(e=>e.date).sort().pop()||null}; },
+  /** sezon değişirken saklanan durum */
+  snapshot(){
+    const titles={}, chars={}, groups={};
+    for(const t of Data.titles.values()) titles[t.id]={holder:t.holder||null,holders:t.holders||null,since:t.since||null,defenses:t.defenses||0,history:(t.history||[]).slice(-30)};
+    for(const c of Store.chars()){ const r=c.record||{};
+      if((r.w||r.l||r.d)||c.log?.length||(c.popularity??50)!==50||c.alignment) chars[c.id]={record:{w:r.w||0,l:r.l||0,d:r.d||0},popularity:c.popularity??50,alignment:c.alignment,log:(c.log||[]).slice(0,8).map(x=>({...x,text:String(x.text||'').slice(0,220)}))}; }
+    for(const g of Data.groups?.values?.()||[]) groups[g.id]={record:g.record||{w:0,l:0,d:0}};
+    return {date:Univ.date(),at:Date.now(),titles,chars,groups};
+  },
+  async restore(snap,{log}={}){
+    snap=snap||{}; let n=0;
+    for(const t of Data.titles.values()){ const s=snap.titles?.[t.id]||{holder:null,holders:null,since:null,defenses:0,history:[]}; await B.update('titles/'+t.id,s).catch(()=>{}); }
+    const cs=Store.chars();
+    for(const c of cs){ const s=snap.chars?.[c.id];
+      const next={...c,record:s?.record||{w:0,l:0,d:0},log:s?.log||[],popularity:s?.popularity??c.popularity??50,alignment:s?.alignment||c.alignment};
+      if(JSON.stringify([c.record,c.log||[],c.popularity,c.alignment])!==JSON.stringify([next.record,next.log,next.popularity,next.alignment])){ await Store.upsert(next); n++; if(log&&n%10===0) log(`${n} karakter…`); } }
+    for(const g of Data.groups?.values?.()||[]) await B.update('groups/'+g.id,{record:snap.groups?.[g.id]?.record||{w:0,l:0,d:0}}).catch(()=>{});
+    return n;
+  },
+  /** ilk açılış: mevcut her şey "Sezon 1" olur */
+  async ensure(){
+    if(this._ensuring||!Data.universe||Data.universe.season||!Univ.isGM()) return; this._ensuring=true;
+    try{ const id='s_1', d0=[...this.raw('events')].map(e=>e.date).sort()[0]||Univ.date();
+      await B.set('seasons/'+id,{name:'Sezon 1',startDate:d0,status:'active',createdAt:Date.now()},true);
+      await B.txn('meta/universe',cur=>cur&&!cur.season?{season:id,seasonLegacy:id}:null);
+    }finally{ this._ensuring=false; }
+  },
+  async startNew(o){
+    const cur=this.cur(); if(!cur){ await this.ensure(); }
+    const from=this.cur(), st=this.stats(from);
+    const id='s_'+uid();
+    await B.set('seasons/'+from,{snap:this.snapshot(),status:'archived',archivedAt:Date.now(),endDate:Univ.date(),stats:st},true);
+    await B.set('seasons/'+id,{name:o.name||`Sezon ${this.all().length+1}`,startDate:o.date,status:'active',createdAt:Date.now()});
+    // sıfırlama
+    const log=o.log||(()=>{});
+    if(o.titles) for(const t of Data.titles.values()) await B.update('titles/'+t.id,{holder:null,holders:null,since:null,defenses:0,history:[]}).catch(()=>{});
+    else for(const t of Data.titles.values()) if(t.holder) await B.update('titles/'+t.id,{since:o.date,defenses:0,history:[]}).catch(()=>{});
+    if(o.records||o.memory||o.pop){ let n=0;
+      for(const c of Store.chars()){ const next={...c}; let ch=false;
+        if(o.records&&(c.record?.w||c.record?.l||c.record?.d)){ next.record={w:0,l:0,d:0}; ch=true; }
+        if(o.memory&&c.log?.length){ next.log=[]; ch=true; }
+        if(o.pop&&(c.popularity??50)!==50){ next.popularity=50; ch=true; }
+        if(ch){ await Store.upsert(next); if(++n%10===0) log(`${n} karakter sıfırlandı…`); } } }
+    if(o.records) for(const g of Data.groups?.values?.()||[]) await B.update('groups/'+g.id,{record:{w:0,l:0,d:0}}).catch(()=>{});
+    await B.set('meta/universe',{...(Data.universe||{}),season:id,seasonLegacy:Data.universe?.seasonLegacy||from,date:o.date},true);
+    return id;
+  },
+  async load(id,{log}={}){
+    const to=this.get(id), from=this.cur(); if(!to||id===from) return;
+    await B.set('seasons/'+from,{snap:this.snapshot(),status:'archived',archivedAt:Date.now(),endDate:Univ.date(),stats:this.stats(from)},true);
+    const n=await this.restore(to.snap,{log});
+    await B.set('seasons/'+id,{status:'active',loadedAt:Date.now()},true);
+    await B.set('meta/universe',{...(Data.universe||{}),season:id,date:to.snap?.date||to.startDate||Univ.date()},true);
+    return n;
+  },
+  async remove(id,{log}={}){
+    if(id===this.cur()) throw new Error('Aktif sezon silinemez');
+    const mine=d=>this.of(d)===id; let n=0;
+    for(const p of SEASONAL){
+      const docs=(await B.getCol(p)).filter(d=>p!=='rooms'||this.seasonalRoom(d)).filter(mine);
+      for(const d of docs){
+        if(p==='rooms'){ const ms=await B.getCol('rooms/'+d.id+'/messages').catch(()=>[]); for(const m of ms) await B.del('rooms/'+d.id+'/messages/'+m.id).catch(()=>{}); }
+        await B.del(p+'/'+d.id).catch(()=>{}); if(++n%20===0) log?.(`${n} kayıt silindi…`);
+      }
+    }
+    await B.del('seasons/'+id);
+    return n;
+  },
+  /** rol tarihini değiştir; istenirse bu sezonun oynanmamış şovlarını sil */
+  async setDate(d,{dropPlanned=false}={}){
+    if(dropPlanned){ for(const e of Univ.events().filter(e=>e.status==='planned')){ for(const s of Univ.segs(e.id)) await B.del('rooms/'+s.id).catch(()=>{}); await B.del('events/'+e.id).catch(()=>{}); Data.events.delete(e.id); } }
+    await Univ.setDate(d);
+  },
+};
+/* sezona ait koleksiyonlar: izlerken süz, yazarken etiketle */
+{ const _w=B.watchCol.bind(B);
+  B.watchCol=function(p,o,cb){
+    if(!SEASONAL.includes(p)) return _w(p,o,cb);
+    const sub={p,cb,raw:[]}; Season.subs.push(sub);
+    const un=_w(p,o,docs=>{ sub.raw=docs; cb(docs.filter(d=>Season.inCur(p,d))); });
+    return ()=>{ un&&un(); Season.subs=Season.subs.filter(x=>x!==sub); };
+  };
+  const _set=B.set.bind(B);
+  B.set=function(p,d,m){
+    const seg=String(p).split('/');
+    if(seg.length===2&&SEASONAL.includes(seg[0])&&!m&&d&&typeof d==='object'&&!d.season&&Season.cur()&&(seg[0]!=='rooms'||Season.seasonalRoom(d))) d={...d,season:Season.cur()};
+    return _set(p,d,m);
+  };
+}
+{ const _st=Data.start;
+  Data.start=function(){ _st.call(this);
+    B.watchCol('seasons',{},d=>{ this.seasons=new Map(d.map(x=>[x.id,x])); Bus.emit('seasons'); });
+  };
+}
+Bus.on('univ',()=>{ const c=Season.cur(); if(c!==Season._last){ Season._last=c; Season.refilter(); if(UI.page==='seasons') SeasonPage.render(); } if(!c) setTimeout(()=>Season.ensure(),800); });
+Bus.on('seasons',()=>{ if(UI.page==='seasons') SeasonPage.render(); });
+
+const SeasonPage = {
+  render(){
+    const el=$('se-page'); if(!el) return; const gm=Univ.isGM(), cur=Season.cur();
+    const ss=Season.all().sort((a,b)=>(b.id===cur)-(a.id===cur)||(b.createdAt||0)-(a.createdAt||0));
+    const card=s=>{ const act=s.id===cur, st=act?Season.stats(s.id):{...(s.stats||{}),...Season.stats(s.id)};
+      return `<div class="se-card ${act?'on':''}">
+        <div class="se-top"><div><div class="se-nm">${esc(s.name||'Sezon')}</div><div class="muted" style="font-size:12px">${act?'<b style="color:var(--gn)">● Aktif sezon</b> · ':'Arşivde · '}başlangıç ${s.startDate?Dt.nice(s.startDate,{year:'numeric'}):'—'}${act?` · rol tarihi ${Dt.nice(Univ.date(),{year:'numeric'})}`:s.snap?.date?` · kaldığı tarih ${Dt.nice(s.snap.date,{year:'numeric'})}`:''}</div></div>
+          ${gm?`<button class="btn sm ghost" onclick="SeasonPage.rename('${s.id}')" title="Yeniden adlandır"><i class="fas fa-pen"></i></button>`:''}</div>
+        <div class="se-st"><span><b>${st.done||0}</b>/${st.events||0} şov</span><span><b>${st.matches||0}</b> maç</span>${!act&&s.snap?`<span><b>${Object.values(s.snap.titles||{}).filter(t=>t.holder).length}</b> şampiyon</span>`:''}</div>
+        ${gm?`<div class="se-act">${act?`<button class="btn sm" onclick="SeasonPage.date()"><i class="fas fa-calendar-day"></i> Rol tarihini değiştir</button>`
+          :`<button class="btn sm gold" onclick="SeasonPage.load('${s.id}')"><i class="fas fa-folder-open"></i> Bu sezonu yükle</button><button class="btn sm red" onclick="SeasonPage.del('${s.id}')"><i class="fas fa-trash"></i> Tamamen sil</button>`}</div>`:''}
+      </div>`; };
+    el.innerHTML=`<div class="tile"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>Sezonlar = kayıt slotları</h3><div class="muted" style="font-size:12.5px;max-width:720px">Yeni sezon başlatınca şu anki sezon (şovlar, segmentler, maç geçmişi, serbest maçlar, tweetler, kemer sahipleri, rekorlar, AI hafızası, rol tarihi) arşive kaydedilir ve temiz bir sayfa açılır. İstediğin zaman eski bir sezonu geri yükleyebilir ya da tamamen silebilirsin. <b>Karakter profilleri, statlar, hareketler, görseller, ilişkiler, takımlar, markalar ve kemerlerin kendisi hiçbir zaman silinmez.</b></div></div>
+        ${gm?`<button class="btn gold" onclick="SeasonPage.create()"><i class="fas fa-plus"></i> Yeni sezon başlat</button>`:''}</div></div>
+      <div class="se-grid">${ss.map(card).join('')||'<div class="muted">Sezon kaydı hazırlanıyor…</div>'}</div>`;
+  },
+  modal(title,body,foot){ $('sem-title').textContent=title; $('sem-body').innerHTML=body; $('sem-foot').innerHTML=foot; UI.open('md-season'); },
+  create(){
+    const live=Univ.live();
+    this.modal('Yeni sezon başlat',`
+      ${live?`<div class="warnbox">⚠️ Canlı şov var: ${esc(live.title)}. Yeni sezon başlarsa bu şov arşivde yarım kalır.</div>`:''}
+      <div class="fgrid">
+        <div class="ff half"><span class="lbl">Sezon adı</span><input id="se-name" value="Sezon ${Season.all().length+1}"></div>
+        <div class="ff half"><span class="lbl">Rol tarihi (başlangıç)</span><input type="date" id="se-date" value="${Univ.date().slice(0,4)}-01-01"></div>
+      </div>
+      <div class="ff"><span class="lbl">Yeni sezonda sıfırlananlar</span>
+        <label class="ck on"><input type="checkbox" checked disabled> Şovlar, segmentler, maç geçmişi, serbest maçlar, tweetler (arşive gider)</label>
+        <label class="ck on"><input type="checkbox" id="se-titles" checked> Kemerleri boşalt (işaretsizse şampiyonlar kalır, sadece geçmiş sıfırlanır)</label>
+        <label class="ck on"><input type="checkbox" id="se-records" checked> Galibiyet / mağlubiyet rekorlarını sıfırla (takım rekorları dahil)</label>
+        <label class="ck on"><input type="checkbox" id="se-memory" checked> AI hafızasını (şovlardan kalan notlar) temizle</label>
+        <label class="ck"><input type="checkbox" id="se-pop"> Popülerliği herkes için 50'ye çek</label>
+      </div>
+      <div class="muted" style="font-size:12px">Eski sezonun bu değerleri arşivde saklanır; o sezonu geri yüklersen hepsi geri gelir.</div>
+      <div class="log-mini" id="se-log"></div>`,
+      `<button class="btn" onclick="UI.close('md-season')">İptal</button><button class="btn gold" id="se-go"><i class="fas fa-flag-checkered"></i> Sezonu başlat</button>`);
+    $('md-season').querySelectorAll('.ck input').forEach(i=>i.onchange=()=>i.parentNode.classList.toggle('on',i.checked));
+    $('se-go').onclick=async()=>{ const date=$('se-date').value; if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){ toast('Tarih seç','err'); return; }
+      $('se-go').disabled=true; const log=t=>$('se-log').textContent=t;
+      try{ log('Mevcut sezon arşivleniyor…');
+        await Season.startNew({name:$('se-name').value.trim(),date,titles:$('se-titles').checked,records:$('se-records').checked,memory:$('se-memory').checked,pop:$('se-pop').checked,log});
+        UI.close('md-season'); toast('Yeni sezon başladı — takvimi doldurabilirsin','ok'); this.render();
+      }catch(e){ console.error(e); toast('Sezon başlatılamadı: '+e.message,'err'); $('se-go').disabled=false; } };
+  },
+  async load(id){
+    const s=Season.get(id); if(!s) return;
+    if(!confirm(`"${s.name}" yüklensin mi?\n\nŞu anki sezon (${Season.name()}) arşive kaydedilir; kemer sahipleri, rekorlar, AI hafızası ve rol tarihi "${s.name}" sezonundaki haline döner.`)) return;
+    toast('Sezon yükleniyor…');
+    try{ const n=await Season.load(id,{log:t=>toast(t)}); toast(`${s.name} yüklendi (${n} karakter güncellendi)`,'ok'); this.render(); }
+    catch(e){ console.error(e); toast('Yüklenemedi: '+e.message,'err'); }
+  },
+  async del(id){
+    const s=Season.get(id); if(!s) return;
+    const typed=prompt(`"${s.name}" ve içindeki TÜM şovlar, maçlar, mesajlar ve tweetler kalıcı olarak silinecek. Geri alınamaz.\n\nOnaylamak için sezon adını yaz:`);
+    if(typed===null) return; if(typed.trim()!==s.name){ toast('Ad eşleşmedi — silinmedi','err'); return; }
+    toast('Siliniyor…');
+    try{ const n=await Season.remove(id,{log:t=>toast(t)}); toast(`${s.name} silindi (${n} kayıt)`,'ok'); this.render(); }
+    catch(e){ console.error(e); toast('Silinemedi: '+e.message,'err'); }
+  },
+  async rename(id){ const s=Season.get(id); const n=prompt('Sezon adı',s?.name||''); if(!n?.trim()) return; await B.set('seasons/'+id,{name:n.trim()},true); },
+  date(){
+    const planned=Univ.events().filter(e=>e.status==='planned').length;
+    this.modal('Rol tarihini değiştir',`<div class="ff"><span class="lbl">Yeni rol tarihi</span><input type="date" id="sd-date" value="${Univ.date()}"></div>
+      <div class="muted" style="font-size:12px">Evrenin "bugün"ü değişir. Takvim ve "sıradaki şov" buna göre hesaplanır. Geçmiş şovlar ve sonuçlar olduğu gibi kalır.</div>
+      ${planned?`<label class="ck"><input type="checkbox" id="sd-drop"> Bu sezonun oynanmamış ${planned} planlı şovunu sil (takvimi yeni tarihten yeniden doldurmak için)</label>`:''}`,
+      `<button class="btn" onclick="UI.close('md-season')">İptal</button><button class="btn gold" id="sd-go"><i class="fas fa-check"></i> Uygula</button>`);
+    $('md-season').querySelectorAll('.ck input').forEach(i=>i.onchange=()=>i.parentNode.classList.toggle('on',i.checked));
+    $('sd-go').onclick=async()=>{ const d=$('sd-date').value; if(!d) return; $('sd-go').disabled=true;
+      await Season.setDate(d,{dropPlanned:!!$('sd-drop')?.checked}); UI.close('md-season'); toast(`Rol tarihi: ${Dt.nice(d,{year:'numeric'})}`,'ok'); this.render(); };
+  },
+};
+(function(){ const d=document.createElement('div'); d.className='mbd'; d.id='md-season';
+  d.innerHTML=`<div class="mbox" style="max-width:620px"><div class="mhd"><span class="mti" id="sem-title">Sezon</span><button class="mcl" onclick="UI.close('md-season')">✕</button></div><div class="mbdy" id="sem-body"></div><div class="mft" id="sem-foot"></div></div>`;
+  document.body.appendChild(d); })();
+document.addEventListener('DOMContentLoaded',()=>{ const _rp=UI.renderPage; UI.renderPage=function(){ _rp.call(this); if(this.page==='seasons') SeasonPage.render(); }; });
+
+/* ════════════════════════════════════════════════════════════
+   HIZLI SİM — AI'sız: kazananı seç ya da motor/rastgele belirlesin; tüm şov tek tuşla
+════════════════════════════════════════════════════════════ */
+{ const _ask=AI.ask; AI.ask=async function(o){ if(this.offlineOnly){ if(o.offline) return {data:o.offline(),provider:'offline',sources:[]}; throw new Error('Hızlı sim: AI kullanılmıyor'); } return _ask.call(this,o); }; }
+const QuickSim = {
+  async noAI(fn){ const was=AI.offlineOnly; AI.offlineOnly=true; try{ return await fn(); } finally{ AI.offlineOnly=was; } },
+  methodFor(M){ const R=MV.rules(M);
+    if(R.climb) return M.type==='mitb'?'Çantayı indirdi':'Merdivenden indirdi';
+    if(R.over) return 'İpin üstünden atıldı'; if(R.ko) return '10 Sayım (LMS)'; if(R.table) return 'Masadan geçirdi'; if(R.quit) return '"I QUIT!"';
+    if(R.escape&&Math.random()<0.3) return 'Kafesten kaçtı';
+    return R.pins&&R.subs?(Math.random()<0.8?'Pinfall':'Submission'):R.pins?'Pinfall':'Submission'; },
+  /** side: taraf index'i (seçilen kazanan) | 'rand' (rastgele taraf) | null (motor statlara göre simüle etsin) */
+  async match(roomId,side=null){
+    if(side==null) return this.noAI(()=>MatchCtl.sim(roomId));
+    let lock=null;
+    for(let i=0;i<20&&!lock;i++){ lock=await B.txn('rooms/'+roomId,cur=>{ const m=cur?.match; if(!m||m.over) return null; if(m.pending&&Date.now()-m.pending.at<120000) return null;
+      return {match:{...m,pending:{by:Me.id,at:Date.now(),sim:true},started:true,host:m.host||Me.id},...(cur.eventId?{status:'live'}:{})}; }).catch(()=>null); if(!lock) await sleep(400); }
+    if(!lock){ toast('Sim başlatılamadı','err'); return false; }
+    const room=Data.rooms.get(roomId), M=MatchCtl.hydrate({match:lock.match}); let saved=false;
+    try{
+      if(side==='rand') side=rnd(0,M.sides.length-1);
+      const win=M.sides[side], lose=M.c.map((_,j)=>j).filter(j=>!win.includes(j));
+      M.round=rnd(10,22); M.stats={nearFalls:rnd(0,3),bigKickouts:rnd(0,1),reversals:rnd(1,4),finishers:1,quality:0,moves:M.round};
+      lose.forEach(j=>{ M.f[j].hp=rnd(6,32); M.f[j].downed=true; }); win.forEach(j=>{ M.f[j].hp=rnd(35,80); });
+      const method=this.methodFor(M), w=M.c[win[0]], v=lose.length?M.c[pick(lose)]:null;
+      M.over=true; M.result={winners:win.map(i=>M.cids[i]),losers:lose.map(i=>M.cids[i]),winner:M.cids[win[0]],loser:v?.id||null,method,round:M.round,side};
+      const fin=(w.moves.finisher||[])[0]||(w.moves.signature||[])[0]||'finisher';
+      await Msgs.post(roomId,{k:'sys',pid:null,text:'⚡ Hızlı sim (kazanan belirlendi)'},{touch:false});
+      await Msgs.post(roomId,{k:'narr',pid:null,text:`${MV.sideName(M,side)} maçı kazanıyor! ${w.ringName}${v?`, ${v.ringName}'a`:''} ${fin} ile son darbeyi vuruyor — ${method}.`},{touch:false});
+      await this.noAI(()=>MatchCtl.finish(roomId,M,null,{quick:true}));
+      await B.update('rooms/'+roomId,{match:{...MatchCtl.serialize(M),pending:null,v:(M.v||0)+1},lastAt:Msgs.ts(),lastText:'Maç bitti (hızlı sim)',
+        ...(room?.eventId?{status:'done',rating:M.result.rating,summary:M.result.summary}:{})});
+      saved=true; return true;
+    }catch(e){ console.error(e); toast('Sim hatası: '+e.message,'err'); return false; }
+    finally{ if(!saved) await B.txn('rooms/'+roomId,cur=>cur?.match?{match:{...cur.match,pending:null}}:null).catch(()=>{}); }
+  },
+  /** konuşma / backstage / video segmenti: AI'sız bitir. winner: karakter id | 'rand' | '' */
+  async scene(id,winner=''){
+    const r=Data.rooms.get(id); if(!r||r.status==='done') return;
+    const ps=Univ.segParticipants(r).map(x=>Data.char(x)).filter(Boolean);
+    if(winner==='rand') winner=ps.length?[...ps].sort((a,b)=>(b.stats.mic+b.stats.charisma+rnd(0,60))-(a.stats.mic+a.stats.charisma+rnd(0,60)))[0].id:'';
+    const W=Data.char(winner)||(Seg.plan?.(r)?.winner?Data.char(Seg.plan(r).winner):null);
+    const mic=ps.length?ps.reduce((a,c)=>a+((c.stats?.mic||60)+(c.stats?.charisma||60))/2,0)/ps.length:55;
+    const rating=clamp(Math.round((1.4+(mic-45)/22+Math.random()*0.9+(r.heat||0)/40)*4)/4,0.75,4.75);
+    const names=ps.map(c=>c.ringName).join(', ')||'Segment';
+    const summary=`${names} — ${SEG_TYPES[r.segType]?.tr||'segment'}${r.topic?`: ${r.topic}`:''}${W?`. ${W.ringName} üstün çıktı.`:'.'}`;
+    await Msgs.post(id,{k:'sys',pid:null,text:'⚡ Hızlı geçildi (AI yok)'},{touch:false});
+    if(W) await Scene.postWinner(id,r,W.ringName);
+    if(W) await B.txn('chars/'+W.id,cur=>cur?{popularity:clamp((cur.popularity||50)+1,0,100),updatedAt:Date.now()}:null).catch(()=>{});
+    await B.update('rooms/'+id,{status:'done',rating,summary,lastAt:Msgs.ts(),lastText:'Segment bitti (hızlı)'});
+  },
+  async seg(id,choice){ const r=Data.rooms.get(id); if(!r||r.status==='done') return;
+    if(r.segType==='match'&&r.match) return this.match(id,choice===''||choice==null?null:choice==='rand'?'rand':+choice);
+    return this.scene(id,choice||''); },
+  choiceHTML(s,key){
+    if(s.segType==='match'&&s.match){ const M=MatchCtl.hydrate(s);
+      return `<select data-qs="${key}"><option value="">🎲 Motor karar versin (statlara göre)</option><option value="rand">🎯 Tamamen rastgele</option>${M.sides.map((_,k)=>`<option value="${k}">🏆 ${esc(MV.sideName(M,k))}</option>`).join('')}</select>`; }
+    const ps=Univ.segParticipants(s).map(x=>Data.char(x)).filter(Boolean);
+    return `<select data-qs="${key}"><option value="">— galip yok —</option><option value="rand">🎲 Rastgele (mikrofona göre)</option>${ps.map(c=>`<option value="${c.id}" ${Seg.plan?.(s)?.winner===c.id?'selected':''}>🏆 ${esc(c.ringName)}</option>`).join('')}</select>`;
+  },
+  /** tek segment */
+  open(id){
+    const s=Data.rooms.get(id); if(!s) return;
+    $('qs-title').textContent=`Sim — ${Show.label(s)}`;
+    $('qs-body').innerHTML=`<div class="ff"><span class="lbl">${s.segType==='match'?'Kazanan':'Segmentten galip çıkan'}</span>${this.choiceHTML(s,'one')}</div>
+      <div class="muted" style="font-size:12px"><b>⚡ Hızlı sim</b>: AI hiç kullanılmaz, sonuç anında yazılır (rekor, kemer, puan işlenir). <b>🤖 AI sim</b>: AI maçı/segmenti anlatır (kazananı yine motor belirler).</div>`;
+    $('qs-foot').innerHTML=`<button class="btn" onclick="UI.close('md-qs')">İptal</button><button class="btn" id="qs-ai"><i class="fas fa-robot"></i> AI sim</button><button class="btn gold" id="qs-go"><i class="fas fa-bolt"></i> Hızlı sim</button>`;
+    $('qs-ai').onclick=async()=>{ UI.close('md-qs'); await Show.simSeg(id); Ev.render(); };
+    $('qs-go').onclick=async()=>{ const v=document.querySelector('[data-qs="one"]').value; UI.close('md-qs'); await this.seg(id,v); Ev.render(); toast('Segment tamamlandı','ok'); };
+    UI.open('md-qs');
+  },
+  /** tüm şov */
+  show(eventId){
+    const ev=Univ.event(eventId); if(!ev) return;
+    const segs=Univ.segs(eventId).map(s=>Data.rooms.get(s.id)||s).filter(s=>s.status!=='done');
+    if(!segs.length){ toast('Bitmemiş segment yok'); return; }
+    $('qs-title').textContent=`Şovu simüle et — ${ev.title}`;
+    $('qs-body').innerHTML=`<div class="qs-list">${segs.map(s=>`<div class="qs-row"><div class="qs-l"><i class="fas ${SEG_TYPES[s.segType]?.ic||'fa-ring'}"></i><div><b>${esc(Show.label(s))}</b><small>${esc(SEG_TYPES[s.segType]?.tr||'')}${s.match?.title?' · 🏆 '+esc(s.match.title):''}</small></div></div>${this.choiceHTML(s,s.id)}</div>`).join('')}</div>
+      <label class="ck"><input type="checkbox" id="qs-after"> Bitince AI şov sonrası analizi yapsın (ilişki / hafıza önerileri — 1 AI çağrısı)</label>
+      <div class="log-mini" id="qs-log"></div>`;
+    $('qs-foot').innerHTML=`<button class="btn" onclick="UI.close('md-qs')">İptal</button><button class="btn" id="qs-ai"><i class="fas fa-robot"></i> Hepsini AI ile sim</button><button class="btn gold" id="qs-go"><i class="fas fa-bolt"></i> Hepsini hızlı sim</button>`;
+    $('md-qs').querySelectorAll('.ck input').forEach(i=>i.onchange=()=>i.parentNode.classList.toggle('on',i.checked));
+    $('qs-ai').onclick=async()=>{ UI.close('md-qs'); const ev2=Univ.event(eventId); if(ev2?.status==='planned') await B.update('events/'+eventId,{status:'live',startedAt:Date.now()});
+      for(const s of Univ.segs(eventId).sort((a,b)=>(a.order||0)-(b.order||0))){ if(Data.rooms.get(s.id)?.status==='done') continue; await Show.simSeg(s.id); await sleep(150); }
+      await Show.finishEvent(eventId,true); };
+    $('qs-go').onclick=async()=>{ const ch=Object.fromEntries([...document.querySelectorAll('#qs-body [data-qs]')].map(x=>[x.dataset.qs,x.value])); const after=$('qs-after').checked;
+      $('qs-go').disabled=true; $('qs-ai').disabled=true; const log=t=>{ const l=$('qs-log'); if(l) l.textContent=t; };
+      try{ await this.runShow(eventId,ch,{after,log}); UI.close('md-qs'); }catch(e){ console.error(e); toast('Sim hatası: '+e.message,'err'); } };
+    UI.open('md-qs');
+  },
+  async runShow(eventId,choices={},{after=false,log=()=>{}}={}){
+    const ev=Univ.event(eventId); if(!ev) return;
+    if(ev.status==='planned') await B.update('events/'+eventId,{status:'live',startedAt:Date.now()});
+    const segs=Univ.segs(eventId).sort((a,b)=>(a.order||0)-(b.order||0));
+    let n=0; for(const s of segs){ if(Data.rooms.get(s.id)?.status==='done') continue; log(`${++n}. ${Show.label(s)}…`); await this.seg(s.id,choices[s.id]??''); await sleep(120); }
+    log('Şov bitiriliyor…');
+    const gen=After.generate, op=After.open;
+    After.generate=async()=>{}; After.open=()=>{}; const _t=window.toast; window.toast=(m,k)=>/^AI şovun/.test(String(m))?null:_t(m,k);
+    try{ await this.noAI(async()=>{ await Show.finishEvent(eventId,true); }); }
+    finally{ After.generate=gen; After.open=op; window.toast=_t; }
+    if(after){ try{ await After.generate(eventId); await sleep(150); After.open(eventId); }catch(e){ toast('Şov sonrası analiz başarısız: '+e.message,'err'); } }
+    Ev.render?.();
+  },
+};
+(function(){ const d=document.createElement('div'); d.className='mbd'; d.id='md-qs';
+  d.innerHTML=`<div class="mbox" style="max-width:640px"><div class="mhd"><span class="mti" id="qs-title">Sim</span><button class="mcl" onclick="UI.close('md-qs')">✕</button></div><div class="mbdy" id="qs-body"></div><div class="mft" id="qs-foot"></div></div>`;
+  document.body.appendChild(d); })();
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
