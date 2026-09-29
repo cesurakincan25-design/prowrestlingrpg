@@ -163,6 +163,10 @@ Birincil hata verirse yedeğe düşer.
 - Arşivdeki sezon **yüklenebilir** (her şey o sezondaki haline döner) ya da **tamamen silinebilir**. Karakter profilleri, statlar, hareketler, görseller, ilişkiler, takımlar, markalar ve kemerlerin kendisi hiçbir zaman silinmez.
 - "Rol tarihini değiştir": evrenin bugününü değiştirir; istersen oynanmamış planlı şovları da siler.
 
+### Tag / trios kemerleri ve Money in the Bank
+- Kemer düzenle → **Kemer tipi**: Tekli / Tag takımı (2) / Trios (3). Tag kemerini kazanan takımın tüm üyeleri birlikte şampiyon olur; "Takımdan doldur" ile şampiyonları takımdan seç. Tekli kemer takım maçında kazanılırsa sadece tuşu alan şampiyon olur.
+- **Money in the Bank**: "Money in the Bank Ladder Match" (kemersiz) kazanan otomatik çantayı alır; GM Kemerler sayfasından çanta verebilir / devredebilir. Çanta sahibi (GM ya da karakterin oyuncusu) **💼 Cash-in** ile istediği zaman tekli bir kemere meydan okur; şampiyonun çıktığı bir maç bitince maç panelinde "Cash-in fırsatı" çıkar ve şampiyon o maçtan yıpranmış başlar. Canlı şov varsa cash-in maçı karta eklenip hemen başlar, yoksa serbest maç açılır.
+
 ### Hızlı sim
 - Segmentte **Sim** → kazananı seç (ya da motor / rastgele) → **⚡ Hızlı sim** (AI hiç çağrılmaz) veya **🤖 AI sim**.
 - Şovda **Tüm şovu / Kalanı simüle et** → her segment için kazanan seçimi, tek tuşla tüm şov; şov sonrası AI analizi isteğe bağlı.
