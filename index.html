@@ -961,6 +961,78 @@ body.ss .gmonly{display:none!important}
   .gv-ms{grid-template-columns:1fr}
   .rv-top{flex-direction:column}
 }
+
+/* ═══ MAÇ ARAYÜZÜ v3 ═══ */
+.fc{--al:var(--tw);background:var(--bg2);border:1px solid var(--ln);border-left:3px solid var(--al);border-radius:10px;padding:7px 9px;display:flex;flex-direction:column;gap:5px;transition:border-color .15s,box-shadow .15s}
+.fc.turn{border-color:var(--gold);border-left-color:var(--gold);box-shadow:0 0 0 1px rgba(227,179,65,.25),0 0 18px rgba(227,179,65,.12)}
+.fc.out{opacity:.45}.fc.wait{opacity:.6}
+.fc-h{display:flex;gap:8px;align-items:center;cursor:pointer;user-select:none;min-width:0}
+.fc-h .ava{width:34px;height:34px;font-size:12px;flex-shrink:0}
+.fc.mini .fc-h .ava{width:26px;height:26px;font-size:10px}
+.fc-n{flex:1;min-width:0}
+.fc-n div{display:flex;gap:6px;align-items:center;min-width:0}
+.fc-n b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc.mini .fc-n b{font-size:12px}
+.fc-n small{font-family:var(--mono);font-size:9.5px;color:var(--t2)}
+.fc-turn{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:#111;background:var(--gold);border-radius:3px;padding:0 4px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.fc-chev{color:var(--t3);font-size:11px}
+.fc-fl{display:flex;gap:4px;flex-wrap:wrap}
+.fc-fl .tag{font-size:8.5px;padding:0 5px}
+.tag.gold{color:var(--gold);border-color:var(--gold)}
+.tag.fire{color:#ff7a3d;border-color:#ff7a3d;background:rgba(255,122,61,.12);animation:pulse 1s infinite}
+.fxbars{display:flex;flex-direction:column;gap:3px}
+.fxr{display:grid;grid-template-columns:28px 1fr 28px;gap:6px;align-items:center}
+.fxl{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--t2)}
+.fxv{font-family:var(--mono);font-size:10.5px;color:var(--t0);text-align:right}
+.fxb{position:relative;flex:1;min-width:0}
+.fxt{position:relative;height:7px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.fc.mini .fxt{height:5px}
+.fxt b{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--gn);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.fxb.hp.mid .fxt b{background:var(--am)}.fxb.hp.low .fxt b{background:var(--heel)}
+.fxb.st .fxt b{background:var(--face)}
+.fxb.mom .fxt b{background:linear-gradient(90deg,#b98a1f,var(--gold))}
+.fxb.mom .fxt s{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.28)}
+.fxb.mom.ready .fxt b{box-shadow:0 0 6px rgba(227,179,65,.6)}
+.fxb.mom.hot .fxt b{background:linear-gradient(90deg,var(--gold),#ff9a3d 60%,#ff6a2d)}
+.fxb.mom.fire .fxt b{background:linear-gradient(90deg,#ff9a3d,#ff4d2d,#ffd166);background-size:200% 100%;animation:fire 1.2s linear infinite;box-shadow:0 0 10px rgba(255,90,45,.7)}
+@keyframes fire{to{background-position:200% 0}}
+.fx{position:absolute;top:0;bottom:0;animation:fxfade 1.5s ease-out forwards}
+.fx.loss{background:#fff;animation-name:fxloss}
+.fx.gain{background:rgba(255,255,255,.75);animation-name:fxgain}
+@keyframes fxloss{0%{opacity:1;background:#fff}25%{opacity:1;background:var(--heel)}100%{opacity:0;background:var(--heel);transform:scaleX(.2);transform-origin:left}}
+@keyframes fxgain{0%{opacity:.9}100%{opacity:0}}
+.fxn{position:absolute;right:0;top:-13px;font-style:normal;font-family:var(--mono);font-size:10px;font-weight:700;pointer-events:none;animation:fxpop 1.5s ease-out forwards}
+.fxn.loss{color:var(--heel)}.fxn.gain{color:var(--gn)}
+@keyframes fxpop{0%{opacity:0;transform:translateY(4px)}15%{opacity:1;transform:none}75%{opacity:1}100%{opacity:0;transform:translateY(-6px)}}
+.fc-x{display:flex;flex-direction:column;gap:7px;padding-top:4px;border-top:1px dashed var(--ln);animation:fcopen .18s ease-out}
+@keyframes fcopen{from{opacity:0;transform:translateY(-4px)}}
+.fc-x .limb{position:relative;overflow:hidden}
+.fc-x .limb i{position:absolute;left:0;bottom:0;height:2px;background:var(--heel);opacity:.7}
+.fc-st{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.fc-st span{display:flex;flex-direction:column;align-items:center;background:var(--bg3);border-radius:6px;padding:3px 0;font-family:var(--mono);font-size:8.5px;color:var(--t2)}
+.fc-st b{font-size:12px;color:var(--t0)}
+.fc-mv{display:grid;grid-template-columns:72px 1fr;gap:6px;font-size:11.5px}
+.fc-mv span{font-family:var(--mono);font-size:9px;color:var(--t2);letter-spacing:.06em;text-transform:uppercase;padding-top:2px}
+.fc-mv b{font-weight:500;color:var(--t1)}
+/* üst şerit */
+.mstrip3{display:flex;gap:6px;width:100%;overflow-x:auto;align-items:stretch}
+.ms3{flex:1;min-width:104px;border:1px solid var(--ln);border-top:2px solid var(--sc);border-radius:8px;padding:5px 8px;display:flex;flex-direction:column;gap:3px;background:var(--bg2);cursor:pointer}
+.ms3:hover{border-color:var(--ln2)}
+.ms3.turn{border-color:var(--gold);box-shadow:0 0 12px rgba(227,179,65,.15)}
+.ms3 .n{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ms3 .dn{color:var(--heel);font-size:11px}
+.ms3 .fxt{height:5px}
+.ms3 .fxn{top:-12px;font-size:9.5px}
+#fx-body .fc{border-radius:12px}
+#fx-body .fc-h{cursor:default}
+#fx-body .fc-chev{display:none}
+/* ayarlar */
+.ustab{width:100%;border-collapse:collapse;font-size:12px}
+.ustab th,.ustab td{padding:4px 6px;border-bottom:1px solid var(--ln);text-align:right}
+.ustab th:first-child,.ustab td:first-child{text-align:left}
+.ustab th{font-family:var(--mono);font-size:9.5px;color:var(--t2);font-weight:500}
+#set3-mlist{display:flex;flex-wrap:wrap;gap:4px}
 </style>
 </head>
 
@@ -1164,6 +1236,24 @@ body.ss .gmonly{display:none!important}
           <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
           <button class="btn" onclick="Settings.test()"><i class="fas fa-vial"></i> Bağlantıyı test et</button>
         </div>
+      </div>
+      <div class="box">
+        <h3><i class="fas fa-gauge-high"></i> AI tasarrufu & oyun dengesi</h3>
+        <datalist id="set3-models"></datalist>
+        <div class="row2">
+          <div class="ff"><span class="lbl">Hızlı model (maç anlatımı, sahneler, tweetler)</span><input id="set3-lite" list="set3-models" placeholder="gemini-flash-lite-latest"><div class="muted" style="font-size:11px">Boş = ana model. Kart kurma, kadro araştırma ve şov sonrası analiz hep yukarıdaki ana modeli kullanır.</div></div>
+          <div class="ff"><span class="lbl">Modeller</span><button class="btn sm" onclick="Settings3.listModels()"><i class="fas fa-list"></i> Key'imdeki modelleri getir</button><div id="set3-mlist"></div></div>
+        </div>
+        <div class="row2">
+          <div class="ff"><span class="lbl">Düşünme — hızlı model</span><select id="set3-think"><option value="off">Kapalı (en ucuz)</option><option value="low">Az (önerilen)</option><option value="default">Model varsayılanı</option></select></div>
+          <div class="ff"><span class="lbl">Düşünme — ana model</span><select id="set3-thinkmain"><option value="low">Az</option><option value="default">Model varsayılanı (önerilen)</option><option value="off">Kapalı</option></select></div>
+        </div>
+        <div class="row2">
+          <div class="ff"><span class="lbl">AI güreşçi hamle seçimi</span><select id="set3-pick"><option value="script">Script seçer, AI anlatır (1 çağrı — önerilen)</option><option value="ai">AI seçer ve anlatır (2 çağrı)</option></select></div>
+          <div class="ff"><span class="lbl">Oyuncu karakterlerini kayırma</span><select id="set3-bias"><option value="0">Yok</option><option value="1">Hafif (önerilen)</option><option value="2">Belirgin</option></select></div>
+        </div>
+        <div id="set3-usage"></div>
+        <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
       </div>
       <div class="box">
         <h3><i class="fas fa-dice-d20"></i> Görünüm & Oyun</h3>
@@ -1795,15 +1885,15 @@ const Engine = {
     A.counter=false;
     if(A.dazed) A.dazed--;
     // Non-attack actions
-    if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,100); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
+    if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,MOM_MAX); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
     if(cat==='counter'){ A.counter=true; A.st=clamp(A.st+4,0,100); A.downed=false; out.tier='hit'; return this._end(M,out,D); }
     if(cat==='taunt'){
       const ch=this.chance(M,actorIdx,'strike',text); out.chance=ch.chance; out.roll=roll??rnd(1,100);
       const risky = !D.downed;
       const score = ch.chance-out.roll+quality*8+(D.downed?20:0);
       out.tier=this.tierFromScore(score);
-      if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,100); out.events.push('taunt_punished'); }
-      else { A.mom=clamp(A.mom+12+quality*3,0,100); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
+      if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,MOM_MAX); out.events.push('taunt_punished'); }
+      else { A.mom=clamp(A.mom+12+quality*3,0,MOM_MAX); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
       A.st=clamp(A.st-k.cost,0,100); A.downed=false;
       return this._end(M,out,D);
     }
@@ -1836,8 +1926,8 @@ const Engine = {
       const d=Math.round(dmg*mult);
       D.hp=clamp(D.hp-d,0,100); D.limbs[limb]=clamp(D.limbs[limb]+Math.round(d*(cat==='submission'?2.2:1.1)),0,100);
       D.st=clamp(D.st-Math.round(d/3),0,100);
-      A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,100);
-      D.mom=clamp(D.mom-(tier==='partial'?2:6),0,100);
+      A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,MOM_MAX);
+      D.mom=clamp(D.mom-(tier==='partial'?2:6),0,MOM_MAX);
       M.crowd=clamp(M.crowd+(cat==='aerial'||cat==='finisher'?10:cat==='signature'?7:3),0,100);
       if(['grapple','aerial','signature','finisher','weapon'].includes(cat) && tier!=='partial') D.downed=true;
       if(cat==='finisher' && tier!=='partial'){ D.lastBig='finisher'; D.dazed=1; out.keepTurn=true; }
@@ -1855,10 +1945,10 @@ const Engine = {
       }
     } else if(tier==='countered'){
       const back=Math.round(k.base*0.55);
-      A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,100); A.mom=clamp(A.mom-6,0,100); A.downed=cat!=='strike'; D.downed=false;
+      A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,MOM_MAX); A.mom=clamp(A.mom-6,0,MOM_MAX); A.downed=cat!=='strike'; D.downed=false;
       out.backDmg=back; M.crowd=clamp(M.crowd+5,0,100);
     } else { // botch
-      const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,100); A.downed=true;
+      const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,MOM_MAX); A.downed=true;
       out.selfDmg=self; M.crowd=clamp(M.crowd-4,0,100); out.events.push('botch');
     }
     // Last man standing: 10 count if hp low & downed
@@ -1885,7 +1975,7 @@ const Engine = {
     out.nearFall = count===2 && r>kick*0.85;
     out.tier = count===3?'clean':count===2?'hit':'partial';
     if(count===3) out.win={idx:actorIdx,method:'Pinfall'};
-    else { D.mom=clamp(D.mom+(count===2?8:4),0,100); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
+    else { D.mom=clamp(D.mom+(count===2?8:4),0,MOM_MAX); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
     return this._end(M,out,D);
   },
   _end(M,out,D){
@@ -1993,7 +2083,7 @@ Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketle
   async generate(prompt,search){
     const cfg=AI.cfg();
     if(cfg.primary==='offline'&&cfg.fallback==='offline') throw new Error('AI kapalı — Ayarlar\'dan Gemini veya Ollama bağla');
-    const r=await AI.ask({system:this.sys(),prompt,json:true,search,temperature:0.3});
+    const r=await AI.ask({tier:'main',system:this.sys(),prompt,json:true,search,temperature:0.3});
     if(r.provider==='offline') throw new Error(r.error||'AI yanıt vermedi');
     let d=r.data; if(Array.isArray(d)) d=d[0];
     const c=normalizeChar({...d,source:r.provider+(search?'+search':'')});
@@ -2020,7 +2110,7 @@ Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketle
       const c=await this.generate(prompt,search);
       if(this.mode==='custom') c.source='custom-ai';
       this.last=c; this.preview(c);
-    }catch(e){ $('imp-preview').innerHTML=`<div class="toast err" style="position:static">${esc(e.message)}</div>`; }
+    }catch(e){ $('imp-preview').innerHTML=Importer.errHTML(e); }
     finally{ btn.disabled=false; }
   },
   preview(c){
@@ -2033,7 +2123,7 @@ Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketle
     const q=$('imp-roster-q').value.trim(); if(!q){toast('Ne getirileceğini yaz','err');return;}
     const log=$('imp-log'); log.textContent='Kadro aranıyor…';
     try{
-      const r=await AI.ask({system:'Sadece JSON döndür.',prompt:`İstek: "${q}". ${AI.canSearch()?'İnternette güncel bilgiyi ara. ':''}İlgili kişilerin listesini ver. JSON: {"people":[{"name":"ring adı","promotion":"...","role":"wrestler|referee|commentator|interviewer|announcer|manager|gm"}]}`,json:true,search:AI.canSearch(),temperature:0.2});
+      const r=await AI.ask({tier:'main',system:'Sadece JSON döndür.',prompt:`İstek: "${q}". ${AI.canSearch()?'İnternette güncel bilgiyi ara. ':''}İlgili kişilerin listesini ver. JSON: {"people":[{"name":"ring adı","promotion":"...","role":"wrestler|referee|commentator|interviewer|announcer|manager|gm"}]}`,json:true,search:AI.canSearch(),temperature:0.2});
       if(r.provider==='offline') throw new Error(r.error||'AI kapalı');
       const ppl=(r.data.people||r.data||[]).filter(p=>p?.name);
       const have=new Set(Store.d.chars.map(c=>(c.ringName||'').toLowerCase()));
@@ -2056,7 +2146,7 @@ Kurallar: Gerçek bir kişiyse en GÜNCEL gimmick'ini, promosyonunu ve hareketle
         const dup=Store.d.chars.find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase());
         if(dup) c.id=dup.id;
         Store.upsert(c); ok++; line.textContent=`✅ ${c.ringName} (${c.promotion||'-'})`;
-      }catch(e){ line.textContent=`❌ ${name}: ${e.message}`; line.style.color='var(--heel)'; }
+      }catch(e){ line.innerHTML=`❌ ${esc(name)}: ${esc(e.message)}${Importer.rawBtn(e)}`; line.style.color='var(--heel)'; }
       bar.style.width=Math.round((i+1)/lines.length*100)+'%';
       Roster.render();
       await sleep(1200); // rate limit için
@@ -3275,12 +3365,12 @@ const Booker = {
     const staffPool=Store.chars().filter(c=>['interviewer','gm','manager'].some(r=>hasRole(c,r)));
     const recent=Data.history.slice(0,12).map(h=>`${h.a} vs ${h.b} → ${h.winner} (${h.method}${h.titleChange?', YENİ ŞAMPİYON':''})`).join('\n');
     toast('AI kartı kuruyor…');
-    const r=await AI.ask({json:true,temperature:0.9,
+    const r=await AI.ask({tier:'main',json:true,temperature:0.9,
       system:'Deneyimli bir güreş bookerısın (WWE GM modu). Hikâyeleri, kemer yarışlarını ve rekabetleri ilerleten mantıklı bir şov kartı kurarsın. Sadece JSON döndür. İsimleri AYNEN listeden kullan.',
       prompt:`Şov: ${ev.title} · ${STYLES[ev.style]?.tr} · ${Dt.nice(ev.date)}
 Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}${memLine(c,1)?' | hafıza: '+memLine(c,1):''}`).join('\n')}
 Kemerler: ${titles.map(t=>`${t.name} [${TITLE_DIV[t.division||'open']}, ${TITLE_TIER[t.tier||'mid']}] (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
-Takımlar / gruplar (tag maçlarında bunları kullan; üyeler birlikte promo / backstage yapabilir): ${Grp.all().filter(g=>g.members.some(id=>roster.some(c=>c.id===id))).map(g=>Grp.line(g)).join(' ; ')||'-'}
+Takımlar / gruplar (tag maçlarında bunları kullan; üyeler birlikte promo / backstage yapabilir): ${Grp.all().filter(g=>g.members.some(id=>roster.some(c=>c.id===id))).map(g=>Grp.line(g)).join(' ; ')||'-'}${Bias.line(roster,'kart')}
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
 Son şovların hafızası: ${Univ.events().filter(e=>e.aftermath?.memory).sort((a,b)=>(b.endedAt||0)-(a.endedAt||0)).slice(0,3).map(e=>`${e.title}: ${e.aftermath.memory}`).join(' | ')||'-'}
@@ -4352,9 +4442,9 @@ ${extra}
   async ask(prompt,{search=false,urls=false,sys=''}={}){
     const cfg=AI.cfg();
     if(cfg.primary==='offline'&&cfg.fallback==='offline') throw new Error('AI kapalı — Ayarlar\'dan Gemini veya Ollama bağla');
-    let r=await AI.ask({system:this.sys(sys),prompt,json:true,search,urls,temperature:0.3});
+    let r=await AI.ask({tier:'main',system:this.sys(sys),prompt,json:true,search,urls,temperature:0.3});
     if(r.provider==='offline' && urls){   // url_context desteklenmiyorsa linksiz tekrar dene
-      r=await AI.ask({system:this.sys(sys),prompt,json:true,search,temperature:0.3});
+      r=await AI.ask({tier:'main',system:this.sys(sys),prompt,json:true,search,temperature:0.3});
     }
     if(r.provider==='offline') throw new Error(r.error||'AI yanıt vermedi');
     let d=r.data; if(Array.isArray(d)) d=d[0];
@@ -4434,7 +4524,7 @@ ${extra}
       const dup=Store.chars().find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase());
       this.last=c; this.preview(c,dup);
       setTimeout(()=>$('imp-preview').scrollIntoView({behavior:'smooth',block:'start'}),50);
-    }catch(e){ $('imp-preview').innerHTML=`<div class="toast err" style="position:static">${esc(e.message)}</div>`; }
+    }catch(e){ $('imp-preview').innerHTML=Importer.errHTML(e); }
     finally{ btn.disabled=false; }
   },
   preview(c,dup){
@@ -4464,7 +4554,7 @@ ${extra}
         if(dup){ line.textContent=`↷ ${c.ringName} zaten kadroda — atlandı (güncellemek için "Güncelle" sekmesi)`; line.style.color='var(--t2)'; }
         else { await Store.upsert(c); if(Prefs.d.relMirror!==false && c.rels.length) await syncMirrorRels(c,[]); ok++;
           line.textContent=`✅ ${c.ringName} (${c.promotion||'-'})${c.rels.length?` · ${c.rels.length} ilişki`:''}${c.themeUrl?' · ♪':''}${c.media.render.url?' · render':''}`; }
-      }catch(e){ line.textContent=`❌ ${name}: ${e.message}`; line.style.color='var(--heel)'; }
+      }catch(e){ line.innerHTML=`❌ ${esc(name)}: ${esc(e.message)}${Importer.rawBtn(e)}`; line.style.color='var(--heel)'; }
       bar.style.width=Math.round((i+1)/lines.length*100)+'%';
       Roster.render();
       await sleep(1200);
@@ -4559,7 +4649,7 @@ Değişmeyen alanları AYNEN koru; bilmediğin şeyi silme ya da uydurma. Kurgus
         const rows=this.diffRows(normalizeChar(old),c);
         if(rows.length){ backup.push(JSON.parse(JSON.stringify(old))); await Store.upsert(c); if(Prefs.d.relMirror!==false) await syncMirrorRels(c,old.rels||[]); ok++; }
         line.textContent=`${rows.length?'✅':'•'} ${old.ringName}: ${rows.length?rows.map(r=>r[0]).join(', '):'değişiklik yok'}${msgs.length?' · '+msgs.join(', '):''}`;
-      }catch(e){ line.textContent=`❌ ${old.ringName}: ${e.message}`; line.style.color='var(--heel)'; }
+      }catch(e){ line.innerHTML=`❌ ${esc(old.ringName)}: ${esc(e.message)}${Importer.rawBtn(e)}`; line.style.color='var(--heel)'; }
       bar.style.width=Math.round((i+1)/ids.length*100)+'%';
       await sleep(1200);
     }
@@ -5253,13 +5343,13 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
   const A=M.f[a], D=t!=null?M.f[t]:null, ca=M.c[a], cd=t!=null?M.c[t]:null, k=CAT[cat];
   const out={actorIdx:a,tgt:t,cat,move:moveName,text,events:[],tier:null,roll:null,chance:null,win:null};
   A.counter=false; if(A.dazed) A.dazed--;
-  if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,100); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
+  if(cat==='rest'){ A.st=clamp(A.st+14+Math.round(ca.stats.stamina/10),0,100); A.mom=clamp(A.mom-4,0,MOM_MAX); A.downed=false; out.tier='hit'; M.crowd=clamp(M.crowd-3,0,100); return this._end(M,out,D); }
   if(cat==='counter'){ A.counter=true; A.st=clamp(A.st+4,0,100); A.downed=false; out.tier='hit'; return this._end(M,out,D); }
   if(cat==='tag'){
     const ap=MV.apron(M,a); const p=M.tagTo!=null&&ap.includes(M.tagTo)?M.tagTo:ap.sort((x,y)=>M.f[y].hp+M.f[y].st-M.f[x].hp-M.f[x].st)[0];
     if(p==null){ out.tier='partial'; return this._end(M,out,D); }
     const hot=A.hp<40, s=MV.sideOf(M,a); M.legal[s]=p; A.downed=false; A.st=clamp(A.st+6,0,100);
-    M.f[p].mom=clamp(M.f[p].mom+(hot?25:10),0,100); M.crowd=clamp(M.crowd+(hot?12:3),0,100);
+    M.f[p].mom=clamp(M.f[p].mom+(hot?25:10),0,MOM_MAX); M.crowd=clamp(M.crowd+(hot?12:3),0,100);
     out.tier='hit'; out.events.push(hot?'hot_tag':'tag'); out.tagTo=p; return this._end(M,out,D);
   }
   if(cat==='climb'){
@@ -5271,7 +5361,7 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
     if(r<=ch*0.5 && A.climb>=(up?3:2) && (M.round||0)>=6){   /* en az 2 basamak (rakip ayaktaysa 3), ilk turlar geçmiş olmalı */ out.tier='clean'; out.win={idx:a,victim:null,method:R.escape?'Kafesten kaçtı':(M.type==='mitb'?'Çantayı indirdi':'Merdivenden indirdi')}; out.events.push('climb_win'); }
     else if(r<=ch){ A.climb++; out.tier='hit'; out.events.push('climb_up'); M.crowd=clamp(M.crowd+4,0,100); }
     else { A.climb=Math.max(0,A.climb-1); A.hp=clamp(A.hp-7,0,100); A.downed=true; out.tier='countered'; out.events.push('climb_fail');
-      const puller=opp.filter(j=>!M.f[j].downed); if(puller.length){ out.tgt=pick(puller); M.f[out.tgt].mom=clamp(M.f[out.tgt].mom+8,0,100); } }
+      const puller=opp.filter(j=>!M.f[j].downed); if(puller.length){ out.tgt=pick(puller); M.f[out.tgt].mom=clamp(M.f[out.tgt].mom+8,0,MOM_MAX); } }
     return this._end(M,out,D);
   }
   if(cat==='overTop'){
@@ -5288,8 +5378,8 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
     const risky=D?!D.downed:false;
     const score=ch.chance-out.roll+quality*8+(D?.downed?20:0);
     out.tier=this.tierFromScore(score);
-    if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,100); out.events.push('taunt_punished'); }
-    else { A.mom=clamp(A.mom+12+quality*3,0,100); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
+    if(risky && (out.tier==='countered'||out.tier==='botch')){ A.hp-=6; D.mom=clamp(D.mom+10,0,MOM_MAX); out.events.push('taunt_punished'); }
+    else { A.mom=clamp(A.mom+12+quality*3,0,MOM_MAX); M.crowd=clamp(M.crowd+8+Math.round(ca.stats.charisma/15),0,100); }
     A.st=clamp(A.st-k.cost,0,100); A.downed=false;
     return this._end(M,out,D);
   }
@@ -5316,8 +5406,8 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
     const d=Math.round(dmg*mult);
     D.hp=clamp(D.hp-d,0,100); D.limbs[limb]=clamp(D.limbs[limb]+Math.round(d*(cat==='submission'?2.2:1.1)),0,100);
     D.st=clamp(D.st-Math.round(d/3),0,100);
-    A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,100);
-    D.mom=clamp(D.mom-(tier==='partial'?2:6),0,100);
+    A.mom=clamp(A.mom+(tier==='clean'?15:tier==='hit'?10:4),0,MOM_MAX);
+    D.mom=clamp(D.mom-(tier==='partial'?2:6),0,MOM_MAX);
     M.crowd=clamp(M.crowd+(cat==='aerial'||cat==='finisher'?10:cat==='signature'||cat==='table'?7:3),0,100);
     if(['grapple','aerial','signature','finisher','weapon','table'].includes(cat) && tier!=='partial') D.downed=true;
     if(cat==='finisher' && tier!=='partial'){ D.lastBig='finisher'; D.dazed=1; out.keepTurn=true; }
@@ -5334,9 +5424,9 @@ Engine.resolve=function(M,a,cat,moveName,text,{quality=0,aiTier=null,dmPower=1,r
       if(out.events.includes('tap') && MV.isMulti(M)){ const br=MV.opponents(M,t).concat(MV.apron(M,t)).filter(j=>j!==a&&!M.f[j].downed&&MV.active(M,j)); if(br.length && Math.random()<0.35){ out.win=null; out.events=out.events.filter(e=>e!=='tap'); out.events.push('sub_broken'); out.broken=pick(br); } }
     }
   } else if(tier==='countered'){
-    const back=Math.round(k.base*0.55); A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,100); A.mom=clamp(A.mom-6,0,100); A.downed=cat!=='strike'; D.downed=false;
+    const back=Math.round(k.base*0.55); A.hp=clamp(A.hp-back,0,100); D.mom=clamp(D.mom+12,0,MOM_MAX); A.mom=clamp(A.mom-6,0,MOM_MAX); A.downed=cat!=='strike'; D.downed=false;
     out.backDmg=back; M.crowd=clamp(M.crowd+5,0,100);
-  } else { const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,100); A.downed=true; out.selfDmg=self; M.crowd=clamp(M.crowd-4,0,100); out.events.push('botch'); }
+  } else { const self=Math.round(k.base*0.4); A.hp=clamp(A.hp-self,0,100); A.mom=clamp(A.mom-10,0,MOM_MAX); A.downed=true; out.selfDmg=self; M.crowd=clamp(M.crowd-4,0,100); out.events.push('botch'); }
   if(R.ko && D.downed && D.hp<30 && !out.win){
     const up=D.hp*1.6+D.st*0.3+cd.stats.toughness*0.3-(D.lastBig==='finisher'?25:0);
     const r=rnd(1,100); out.lmsRoll={r,up:Math.round(up)};
@@ -5363,7 +5453,7 @@ Engine._pin=function(M,a,out,quality){
   out.count=count; out.nearFall=count===2 && (r>kick*0.85 || out.broken!=null);
   out.tier=count===3?'clean':count===2?'hit':'partial';
   if(count===3) out.win={idx:a,victim:t,method:'Pinfall'};
-  else { D.mom=clamp(D.mom+(count===2?8:4),0,100); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
+  else { D.mom=clamp(D.mom+(count===2?8:4),0,MOM_MAX); M.crowd=clamp(M.crowd+(out.nearFall?14:count===2?6:1),0,100); D.downed=false; D.lastBig=null; }
   return this._end(M,out,D);
 };
 Engine._end=function(M,out,D){
@@ -5530,9 +5620,9 @@ MatchCtl.act=async function(roomId,idx,cat,mv,emote,{byAI=false,target=null}={})
   const M=this.hydrate({match:lock.match}); const c=M.c[idx]; let saved=false;
   try{
     if(!MV.cats(M,idx).includes(cat)) cat=Engine.autoChoose(M,idx);
-    const needT=!['rest','counter','tag','climb'].includes(cat);
-    const opp=MV.opponents(M,idx);
-    M.tgt=needT?(opp.includes(target)?target:(M.tgt!=null&&opp.includes(M.tgt)?M.tgt:MV.pickTarget(M,idx))):null;
+    const needT=!['rest','counter','tag','climb'].includes(cat), allyC=ALLY_CATS.includes(cat);
+    const opp=allyC?MV.allies(M,idx):MV.opponents(M,idx);
+    M.tgt=needT?(opp.includes(target)?target:(M.tgt!=null&&opp.includes(M.tgt)?M.tgt:(allyC?MV.pickAlly(M,idx):MV.pickTarget(M,idx)))):null;
     const t=M.tgt;
     if(!mv) mv=Engine.moveFor(c,cat,M);
     if(!emote) emote=this.autoEmote(c,cat,mv,M,t);
@@ -6306,10 +6396,10 @@ Akıştan: ${Msgs.log(ic).slice(-1400)}`);
     const people=[...cast.values()];
     const sheet=people.map(c=>`- ${c.ringName} [${c.alignment}, pop ${c.popularity||50}, ${c.record.w}-${c.record.l}] İlişkiler: ${relLine(c,people)||'-'}${memLine(c)?` | Önceki hafıza: ${memLine(c)}`:''}`).join('\n');
     const R=Object.keys(REL_TYPES).join('|');
-    const res=await AI.ask({json:true,temperature:0.5,
+    const res=await AI.ask({tier:'main',json:true,temperature:0.5,
       system:'Profesyonel güreş evreninin hikâye editörü ve arşivcisisin. Türkçe yaz. Sadece gerçekten olanlara dayan, uydurma.',
       prompt:`ŞOV: ${ev.title} (${Dt.nice(ev.date)}) · ${ev.rating}★ · ${ev.viewers}M izleyici
-KARAKTERLER (şu anki durum):\n${sheet}
+KARAKTERLER (şu anki durum):\n${sheet}${Bias.line(people,'hikaye')}
 SEGMENTLER:\n${blocks.join('\n\n')}
 
 GÖREV:
@@ -7354,7 +7444,7 @@ const GrpPage = {
   },
   async aiName(){
     const list=this._rv; if(!list?.length) return; toast('AI takım adlarını arıyor…');
-    const r=await AI.ask({json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Sadece JSON döndür.',
+    const r=await AI.ask({tier:'main',json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Sadece JSON döndür.',
       prompt:`Aşağıdaki güreşçi kümeleri için gerçek dünyadaki takım / stable adını bul (yoksa kısa, havalı bir ad uydur). Tür: tag (2 kişilik takım), stable (3+ grup), faction (büyük/siyasi grup). Varsa grubun giriş müziğinin adını ve lideri de yaz.
 ${list.map((x,i)=>`${i}: ${x.members.map(id=>Data.char(id)?.ringName).join(', ')}`).join('\n')}
 JSON: {"groups":[{"i":0,"name":"...","kind":"tag|stable|faction","theme":"müzik adı ya da boş","leader":"lider adı ya da boş","desc":"1 cümle Türkçe"}]}`});
@@ -7367,7 +7457,7 @@ JSON: {"groups":[{"i":0,"name":"...","kind":"tag|stable|faction","theme":"müzik
     const q=prompt('Hangi takımlar? (virgülle yaz, ör. "The Usos, The Judgment Day")\nBoş bırakırsan kadrodaki güncel tüm takım ve stable\'ları arar.','');
     if(q===null) return; toast('AI takımları arıyor…');
     const W=Store.chars('wrestler'), staff=Store.chars();
-    const r=await AI.ask({json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Güncel bilgiyi kullan. Sadece JSON döndür.',
+    const r=await AI.ask({tier:'main',json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Güncel bilgiyi kullan. Sadece JSON döndür.',
       prompt:`${q.trim()?`Şu takımları / grupları bul: ${q}`:'Aşağıdaki kadroda GÜNCEL olarak birlikte olan tüm tag takımlarını, stable ve fraksiyonları bul (en fazla 25).'}
 Kadro (sadece bu isimleri kullan): ${W.map(c=>c.ringName).join(', ')}
 Her grup için: ad, tür (tag | stable | faction), üyeler (kadrodaki adlarıyla), lider, menajer(ler), giriş müziğinin adı, 1-2 cümle Türkçe açıklama, ortak giriş tarifi (Türkçe, 1 cümle).
@@ -7422,6 +7512,418 @@ Store.importFile=function(inp){
     }catch(e){ console.error(e); toast('JSON okunamadı: '+e.message,'err'); }
   }; rd.readAsText(f); inp.value='';
 };
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ MOTORU v3 — katlanan momentum (200'e kadar), takım arkadaşına yardım / ortak şov,
+   oyuncu kayırma (hafif), script ile AI hamle seçimi (daha az AI çağrısı)
+════════════════════════════════════════════════════════════ */
+const MOM_MAX=200;
+const Bias = {
+  lvl(){ return Prefs.d.bias ?? 1; },
+  pc(c){ return !!(c?.owner && Data.player(c.owner)); },
+  players(list){ return (list||Store.chars()).filter(c=>this.pc(c)); },
+  /** AI metinlerine eklenen kayırma satırı */
+  line(list,what='kart'){
+    const b=this.lvl(); if(!b) return '';
+    const ps=this.players(list); if(!ps.length) return '';
+    return `\nOYUNCU KARAKTERLERİ (gerçek arkadaşlarımız oynuyor): ${ps.map(c=>`${c.ringName} (@${Data.player(c.owner)?.name})`).join(', ')}. `+
+      (what==='kart'?(b>=2?'Onlara belirgin öncelik ver: ana maç, kemer yarışı, büyük feud ve öne çıkan segmentler çoğunlukla onların olsun; çoğunlukla güçlü görünsünler ama her maçı kazanmasınlar.'
+                           :'Onlara biraz öncelik ver: her şovda görünür, anlamlı segment ve maçlar alsınlar; hikâyeleri ilerlesin. Abartma, kart inandırıcı kalsın ve her zaman kazanmasınlar.')
+                    :(b>=2?'Anlatımda ve hikâyede onları belirgin şekilde öne çıkar.':'Anlatımda ve hikâyede onları biraz daha öne çıkar (abartmadan).'));
+  },
+};
+/* momentum kuralları — ayar düğmeleri */
+Engine.MOM_STREAK=1.35; Engine.MOM_COMPOUND=0.2; Engine.DMG_X=1.25;
+Engine.momRules=function(M,a,cat,before,out){
+  const A=M.f[a], OFF=['strike','grapple','aerial','submission','signature','finisher','weapon','table','taunt'];
+  if(!OFF.includes(cat)) return;
+  const ok=out.tier==='clean'||out.tier==='hit';
+  if(ok){
+    if(cat==='finisher'||cat==='signature'){ A.mom=clamp(Math.max(20,Math.floor(before/2)),0,MOM_MAX); out.momKept=A.mom; }
+    else { const gain=A.mom-before; if(gain>0){ const mult=Math.pow(Engine.MOM_STREAK,Math.min(A.streak||0,4)); A.mom=clamp(before+Math.round((gain+before*Engine.MOM_COMPOUND)*mult),0,MOM_MAX); if(mult>1) out.momMult=Math.round(mult*10)/10; } }
+    A.streak=(A.streak||0)+1;
+  } else {
+    A.streak=0;
+    if(cat==='finisher'||cat==='signature') A.mom=clamp(Math.min(A.mom,Math.floor(before/4)),0,MOM_MAX);
+  }
+  if(ok && out.tgt!=null && M.f[out.tgt]) M.f[out.tgt].streak=Math.floor((M.f[out.tgt].streak||0)/2);
+  // genel hasar ayarı + 100 üstü momentum bonusu (200'de +%50)
+  if(out.dmg && out.tgt!=null && M.f[out.tgt] && !out.win){
+    const D=M.f[out.tgt], mb=Math.max(0,before-100)/200, ex=Math.round(out.dmg*(Engine.DMG_X-1+mb));
+    if(ex>0){ D.hp=clamp(D.hp-ex,0,100); out.dmg+=ex; if(mb>0) out.momBoost=Math.round(out.dmg*mb); }
+  }
+};
+{ const _res=Engine.resolve;
+  Engine.resolve=function(M,a,cat,mv,text,o={}){
+    if(ALLY_CATS.includes(cat)) return this.allyResolve(M,a,cat,mv,text,o);
+    const before=M.f[a]?.mom??0;
+    const out=_res.call(this,M,a,cat,mv,text,o);
+    try{ this.momRules(M,a,cat,before,out); }catch(e){ console.warn(e); }
+    return out;
+  };
+}
+/* hafif kayırma: oyuncu karakteri ↔ AI karakteri */
+{ const _ch=Engine.chance;
+  Engine.chance=function(M,a,cat,text){
+    const r=_ch.call(this,M,a,cat,text), b=Bias.lvl(); if(!b) return r;
+    const t=this.T(M,a); if(t==null||!M.c[t]) return r;
+    const pa=Bias.pc(M.c[a]), pt=Bias.pc(M.c[t]);
+    if(pa&&!pt){ r.chance=clamp(r.chance+2*b,5,95); } else if(!pa&&pt){ r.chance=clamp(r.chance-1*b,5,95); }
+    return r;
+  };
+  const _pin=Engine._pin;
+  Engine._pin=function(M,a,out,quality){
+    const t=out.tgt, D=t!=null?M.f[t]:null, b=Bias.lvl();
+    let adj=0; if(D&&b){ const pa=Bias.pc(M.c[a]), pt=Bias.pc(M.c[t]); if(pt&&!pa) adj=5*b; else if(pa&&!pt) adj=-3*b; }
+    if(D) D.hp+=adj;
+    try{ return _pin.call(this,M,a,out,quality); } finally{ if(D) D.hp-=adj; }
+  };
+}
+
+/* ── takım arkadaşı: yardım et / kaldır, birlikte şov ── */
+const ALLY_CATS=['assist','teamTaunt'];
+Object.assign(CAT,{assist:{tr:'Yardım et / kaldır',base:0,cost:5,diff:0},teamTaunt:{tr:'Birlikte şov',base:0,cost:4,diff:0}});
+SPECIAL_CATS.push(...ALLY_CATS);
+MV.allies=function(M,i){ const s=this.sideOf(M,i); return M.c.map((_,j)=>j).filter(j=>j!==i&&this.sideOf(M,j)===s&&this.active(M,j)); };
+MV.pickAlly=function(M,i){ const al=this.allies(M,i); if(!al.length) return null;
+  return [...al].sort((x,y)=>(M.f[y].downed-M.f[x].downed)||((M.f[x].st+M.f[x].hp)-(M.f[y].st+M.f[y].hp)))[0]; };
+{ const _c=MV.cats;
+  MV.cats=function(M,i){ const l=_c.call(this,M,i);
+    if(!MV.active(M,i)) return l;
+    const al=this.allies(M,i); if(!al.length) return l;
+    if(al.some(j=>M.f[j].downed||M.f[j].dazed||M.f[j].st<45||M.f[j].hp<45)) l.push('assist');
+    if(al.some(j=>!M.f[j].downed)) l.push('teamTaunt');
+    return l; };
+  const _cl=MV.catLabel; MV.catLabel=function(M,k){ if(k==='assist') return '🤝 Yardım et'; if(k==='teamTaunt') return '🙌 Birlikte şov'; return _cl.call(this,M,k); };
+}
+Engine.allyResolve=function(M,a,cat,mv,text,{quality=0,roll=null}={}){
+  const al=MV.allies(M,a), t=al.includes(M.tgt)?M.tgt:MV.pickAlly(M,a);
+  const A=M.f[a], ca=M.c[a], T=t!=null?M.f[t]:null;
+  const out={actorIdx:a,tgt:t,cat,move:mv,text,events:[],tier:null,roll:null,chance:null,win:null,ally:true};
+  A.counter=false; if(A.dazed) A.dazed--;
+  if(!T){ out.tier='partial'; return this._end(M,out,null); }
+  const up=MV.opponents(M,a).filter(j=>!M.f[j].downed);
+  const g=typeof Grp!=='undefined'?Grp.forSide([M.cids[a],M.cids[t]]):null, syn=g?1.5:1; out.group=g?.name||null;
+  A.st=clamp(A.st-CAT[cat].cost,0,100);
+  if(cat==='assist'){
+    const ch=clamp(Math.round(82-up.length*12+quality*6+(g?6:0)),20,96), r=roll??rnd(1,100); out.chance=ch; out.roll=r;
+    if(r<=ch){ const was=T.downed; T.downed=false; T.dazed=0; T.lastBig=null; T.st=clamp(T.st+14,0,100); T.hp=clamp(T.hp+4,0,100); T.mom=clamp(T.mom+Math.round(10*syn),0,MOM_MAX);
+      A.mom=clamp(A.mom+5,0,MOM_MAX); M.crowd=clamp(M.crowd+(was?5:3),0,100); out.tier='hit'; out.events.push(was?'assist_up':'assist'); }
+    else { const by=up.length?pick(up):null; A.hp=clamp(A.hp-6,0,100); A.downed=true; if(by!=null) M.f[by].mom=clamp(M.f[by].mom+10,0,MOM_MAX); out.by=by; out.tier='countered'; out.events.push('assist_cut'); }
+  } else {
+    const cha=((ca.stats?.charisma||60)+(M.c[t].stats?.charisma||60))/2;
+    const ch=clamp(Math.round(62+cha/8-up.length*10+quality*6+(g?8:0)),15,95), r=roll??rnd(1,100); out.chance=ch; out.roll=r;
+    if(r<=ch){ const gain=Math.round((12+cha/10)*syn); A.mom=clamp(A.mom+gain,0,MOM_MAX); T.mom=clamp(T.mom+gain,0,MOM_MAX); M.crowd=clamp(M.crowd+8+Math.round(cha/12),0,100); A.downed=false; out.tier='hit'; out.events.push('team_taunt'); out.gain=gain; }
+    else { const by=up.length?pick(up):null; A.hp=clamp(A.hp-6,0,100); A.mom=clamp(A.mom-8,0,MOM_MAX); if(by!=null) M.f[by].mom=clamp(M.f[by].mom+12,0,MOM_MAX); out.by=by; out.tier='countered'; out.events.push('taunt_punished'); }
+  }
+  return this._end(M,out,null);
+};
+{ const _mf=Engine.moveFor; Engine.moveFor=function(c,cat,M){ if(cat==='assist') return 'Partnerini kaldırır'; if(cat==='teamTaunt') return 'Ortak poz'; return _mf.call(this,c,cat,M); }; }
+{ const _n=Offline.narr;
+  Offline.narr=function(M,out){
+    if(!ALLY_CATS.includes(out.cat)) { let s=_n.call(this,M,out); if(out.momBoost) s+=` (Momentumun gücü: +${out.momBoost} hasar!)`; return s; }
+    const a=M.c[out.actorIdx]?.ringName, d=out.tgt!=null?M.c[out.tgt]?.ringName:'partneri', by=out.by!=null?M.c[out.by]?.ringName:'rakibi';
+    if(out.cat==='assist'){
+      if(out.events.includes('assist_cut')) return `${a} partnerine uzanırken ${by} arkadan saldırıyor! Yardım yarım kaldı.`;
+      return out.events.includes('assist_up')?pick([`${a}, ${d}'i yerden kaldırıyor, sırtına vuruyor — ${d} yeniden ayakta!`,`${a} koşup ${d}'in koluna giriyor ve onu ayağa dikiyor. Takım ruhu!`])
+        :`${a}, ${d}'i köşeye çekip nefes aldırıyor, kulağına taktik fısıldıyor.`;
+    }
+    if(out.events.includes('taunt_punished')) return `${a} ve ${d} birlikte poz verirken ${by} araya dalıyor! Pahalıya patladı.`;
+    return out.group?`${out.group} imza pozu! ${a} ve ${d} yan yana — salon yıkılıyor!`:pick([`${a} ve ${d} birlikte seyirciye dönüyor — ortak poz, salon ayakta!`,`${a} ile ${d} el çakıp ringin ortasında seyirciyi coşturuyor!`]);
+  };
+}
+/* AI (script) seçim: yerdeki partnere yardım, arada ortak şov */
+{ const _ac=Engine.autoChoose;
+  Engine.autoChoose=function(M,i){
+    const A=M.f[i], al=MV.allies(M,i);
+    if(al.length && !A.downed){
+      const down=al.filter(j=>M.f[j].downed||M.f[j].dazed);
+      if(down.length && Math.random()<0.28){ M.tgt=down[0]; return 'assist'; }
+      const upAl=al.filter(j=>!M.f[j].downed), g=typeof Grp!=='undefined'&&upAl.length?Grp.forSide([M.cids[i],M.cids[upAl[0]]]):null;
+      if(upAl.length && Math.random()<(g?0.07:0.035)){ M.tgt=upAl[0]; return 'teamTaunt'; }
+    }
+    return _ac.call(this,M,i);
+  };
+}
+/* AI turu: varsayılan olarak hamleyi script seçer (tek AI çağrısı: anlatım). Ayarlar → "AI hamle seçimi: AI" ile eski davranış */
+{ const _ait=MatchCtl.aiTakeTurn;
+  MatchCtl.aiTakeTurn=async function(roomId,force=false){
+    if(Prefs.d.aiPick==='ai') return _ait.call(this,roomId,force);
+    if(this.running.has(roomId)) return;
+    const room=Data.rooms.get(roomId); const m=room?.match;
+    if(!m||!m.started||m.over||m.ctl[m.turn]!=='ai'||(m.pending&&Date.now()-m.pending.at<120000)) return;
+    if(!force && m.host!==Me.id) return;
+    this.running.add(roomId);
+    try{
+      const M=this.hydrate(room), idx=M.turn, c=M.c[idx];
+      const cat=Engine.autoChoose(M,idx), target=M.tgt;
+      await this.act(roomId,idx,cat,Engine.moveFor(c,cat,M),'',{byAI:true,target});
+    } finally{ this.running.delete(roomId); }
+  };
+}
+/* AI sistem metni: momentum ölçeği + oyuncu karakterleri */
+{ const _sys=MatchCtl.sys; MatchCtl.sys=function(M){ let s=_sys.call(this,M);
+    s+=`\nMOMENTUM 0-${MOM_MAX} arası (100 üstü = alev almış, yıkıcı).`;
+    s+=Bias.line(M.c,'mac');
+    s+=`\nTAKIM ARKADAŞI HAMLELERİ: "Yardım et" (partnerini yerden kaldırır / toparlar) ve "Birlikte şov" (ortak taunt) saldırı değildir; öyle anlat.`;
+    return s; }; }
+
+/* ════════════════════════════════════════════════════════════
+   MAÇ ARAYÜZÜ v3 — küçük kartlar (tıkla → ayrıntı), animasyonlu barlar, üst şerit
+════════════════════════════════════════════════════════════ */
+const FX = {
+  m:new Map(), open:new Set(),
+  bar(key,v,max,kind){
+    v=Math.round(v||0); const now=Date.now(); let s=this.m.get(key);
+    if(!s){ s={v,prev:v,at:0}; this.m.set(key,s); }
+    if(s.v!==v){ s.prev=s.v; s.v=v; s.at=now; }
+    const age=now-s.at, live=age<1500&&s.prev!==s.v, pct=x=>clamp(x/max*100,0,100), d=s.v-s.prev;
+    const lo=Math.min(s.prev,s.v), hi=Math.max(s.prev,s.v);
+    const fx=live?`<i class="fx ${d<0?'loss':'gain'}" style="left:${pct(lo)}%;width:${pct(hi)-pct(lo)}%;animation-delay:-${age}ms"></i>`:'';
+    const pop=live?`<em class="fxn ${d<0?'loss':'gain'}" style="animation-delay:-${age}ms">${d>0?'+':''}${d}</em>`:'';
+    const hot=kind==='mom'?(v>=150?' fire':v>100?' hot':v>=75?' ready':''):kind==='hp'?(v<25?' low':v<50?' mid':''):'';
+    return `<div class="fxb ${kind}${hot}"><div class="fxt"><b style="width:${pct(v)}%"></b>${fx}${kind==='mom'?'<s></s>':''}</div>${pop}</div>`;
+  },
+  row(key,label,v,max,kind){ return `<div class="fxr"><span class="fxl">${label}</span>${this.bar(key,v,max,kind)}<span class="fxv">${Math.round(v)}</span></div>`; },
+};
+Info.fighterCard=function(M,i,{mini=false}={}){
+  const c=M.c[i], f=M.f[i], k=`${Chat.room}|${c.id}`, open=FX.open.has(c.id), me=M.turn===i&&!M.over&&M.started, legal=MV.inRing(M,i);
+  const ctl=M.ctl[i]==='ai'?'🤖 AI':'🎮 '+esc(Data.player(M.ctl[i])?.name||'?');
+  const flags=[f.elim?'<span class="tag al-heel">ELENDİ</span>':'',!f.entered&&!f.elim?'<span class="tag neutral">BEKLİYOR</span>':'',M.tag&&!legal&&f.entered&&!f.elim?'<span class="tag neutral">APRON</span>':'',
+    f.downed?'<span class="tag al-heel">YERDE</span>':'',f.dazed?'<span class="tag al-heel">SERSEM</span>':'',f.counter?'<span class="tag al-tweener">KONTRA</span>':'',
+    f.mom>=150?'<span class="tag fire">🔥 ALEV</span>':f.mom>=75?'<span class="tag gold">FİNİSHER HAZIR</span>':'',(f.streak||0)>=2?`<span class="tag neutral">SERİ ×${f.streak}</span>`:'',f.climb?`<span class="tag neutral">🪜 ${f.climb}</span>`:''].join('');
+  const bars=f.entered&&!f.elim?`<div class="fxbars">${FX.row(k+'|hp','CAN',f.hp,100,'hp')}${FX.row(k+'|st','DAY',f.st,100,'st')}${FX.row(k+'|mom','MOM',f.mom,MOM_MAX,'mom')}</div>`:'';
+  let det='';
+  if(open){
+    const s=c.stats||{}, gs=typeof Grp!=='undefined'?Grp.ofChar(c.id):[];
+    const opp=M.c.map((_,j)=>j).filter(j=>MV.sideOf(M,j)!==MV.sideOf(M,i)).map(j=>{ const r=relBetween(c,M.c[j]); return r?`${REL_TYPES[r.type]?.ic||'•'} ${esc(M.c[j].ringName)} — ${esc(REL_TYPES[r.type]?.tr||r.type)}`:''; }).filter(Boolean);
+    det=`<div class="fc-x">${Info.fighterHead(c,ctl,i)}
+      <div class="limbs">${['head','body','arms','legs'].map(x=>`<div class="limb">${({head:'Kafa',body:'Gövde',arms:'Kol',legs:'Bacak'})[x]}<b style="color:${f.limbs[x]>60?'var(--heel)':f.limbs[x]>30?'var(--am)':'var(--t1)'}">${f.limbs[x]}</b><i style="width:${f.limbs[x]}%"></i></div>`).join('')}</div>
+      <div class="fc-st">${Object.entries(STAT_TR).map(([x,l])=>`<span>${l}<b>${s[x]??'-'}</b></span>`).join('')}</div>
+      <div class="fc-mv"><span>Finisher</span><b>${esc((c.moves.finisher||[]).join(', ')||'—')}</b></div>
+      <div class="fc-mv"><span>İmza</span><b>${esc((c.moves.signature||[]).join(', ')||'—')}</b></div>
+      <div class="fc-mv"><span>Rekor</span><b>${c.record.w}-${c.record.l}${c.record.d?'-'+c.record.d:''} · ${esc(STYLE_OPTS[c.style]||c.style||'')} · ${esc(c.alignment)}</b></div>
+      ${gs.length?`<div class="fc-mv"><span>Grup</span><b>${gs.map(g=>esc(g.name)).join(', ')}</b></div>`:''}
+      ${opp.length?`<div class="fc-mv"><span>Rakiplerle</span><b>${opp.join('<br>')}</b></div>`:''}
+      ${c.themeUrl?`<button class="btn sm" data-cue="${c.id}">♪ Müziğini çal</button>`:''}</div>`;
+  }
+  return `<div class="fc ${mini?'mini':''} ${me?'turn':''} ${open?'open':''} ${f.elim?'out':''} ${!f.entered?'wait':''}" style="--al:var(--${c.alignment==='heel'?'heel':c.alignment==='face'?'face':'tw'})">
+    <div class="fc-h" data-fc="${c.id}">${avaHTML(c,mini?'sm':'')}<div class="fc-n"><div><b>${esc(c.ringName)}</b>${me?'<span class="fc-turn">SIRA</span>':''}</div><small>${ctl}</small></div><span class="fc-chev">${open?'▴':'▾'}</span></div>
+    ${flags.trim()?`<div class="fc-fl">${flags}</div>`:''}${bars}${det}</div>`;
+};
+Info.fighterHTML=function(M,i){ return this.fighterCard(M,i); };
+Info.miniFighter=function(M,i){ return this.fighterCard(M,i,{mini:true}); };
+{ const _render=Info.render;
+  Info.render=function(){ _render.call(this);
+    $('info').querySelectorAll('[data-fc]').forEach(el=>el.onclick=()=>{ const id=el.dataset.fc; FX.open.has(id)?FX.open.delete(id):FX.open.add(id); this.render(); });
+    $('info').querySelectorAll('.fc [data-cue]').forEach(b=>b.onclick=e=>{ e.stopPropagation(); Music.cue(Chat.room,b.dataset.cue); });
+  };
+}
+/* üst şerit (mobilde asıl ekran): dokun → ayrıntı */
+Chat.strip=function(){
+  const r=this.R, s=$('strip');
+  if(!r||r.kind!=='match'||!r.match){ s.classList.add('hidden'); FXSheet.close(); return; }
+  const M=MatchCtl.hydrate(r); s.classList.remove('hidden');
+  const ids=M.c.map((_,i)=>i).filter(i=>MV.isMulti(M)?MV.inRing(M,i):true).slice(0,10);
+  const col=i=>MV.isMulti(M)?['var(--face)','var(--heel)','var(--gn)','var(--tw)','var(--am)','var(--gold)'][MV.sideOf(M,i)%6]:(i===0?'var(--face)':'var(--heel)');
+  const cell=i=>{ const f=M.f[i], c=M.c[i], k=`${r.id}|${c.id}`;
+    return `<div class="ms3 ${M.turn===i&&!M.over&&M.started?'turn':''}" style="--sc:${col(i)}" data-fs="${c.id}"><div class="n">${esc(c.ringName)}${f.downed?' <span class="dn">⤓</span>':''}${f.mom>=150?' 🔥':''}</div>
+      ${FX.bar(k+'|hp',f.hp,100,'hp')}${FX.bar(k+'|st',f.st,100,'st')}${FX.bar(k+'|mom',f.mom,MOM_MAX,'mom')}</div>`; };
+  const mid=`<div class="sf-mid"><b>${M.crowd}</b>seyirci<br>tur ${M.round}${M.elimLog?.length?`<br>${M.c.filter((_,i)=>!M.f[i].elim).length} kaldı`:''}</div>`;
+  s.innerHTML=`<div class="mstrip3">${M.c.length===2?cell(0)+mid+cell(1):ids.map(cell).join('')+mid}</div>`;
+  s.querySelectorAll('[data-fs]').forEach(el=>el.onclick=()=>FXSheet.open(el.dataset.fs));
+  FXSheet.refresh(M);
+};
+const FXSheet = {
+  cid:null,
+  open(cid){ this.cid=cid; FX.open.add(cid); const r=Chat.R; if(!r?.match) return; this.refresh(MatchCtl.hydrate(r)); UI.open('md-fx'); },
+  close(){ if(this.cid){ this.cid=null; UI.close('md-fx'); } },
+  refresh(M){ if(!this.cid||!$('md-fx').classList.contains('on')) return; const i=M.c.findIndex(c=>c.id===this.cid); if(i<0) return;
+    $('fx-body').innerHTML=Info.fighterCard(M,i).replace('data-fc=','data-x=');
+    $('fx-body').querySelectorAll('[data-cue]').forEach(b=>b.onclick=()=>Music.cue(Chat.room,b.dataset.cue)); },
+};
+(function(){ const d=document.createElement('div'); d.className='mbd'; d.id='md-fx';
+  d.innerHTML=`<div class="mbox" style="max-width:420px"><div class="mhd"><span class="mti">Güreşçi</span><button class="mcl" onclick="UI.close('md-fx');FXSheet.cid=null">✕</button></div><div class="mbdy" id="fx-body"></div></div>`;
+  d.addEventListener('click',e=>{ if(e.target===d){ UI.close('md-fx'); FXSheet.cid=null; } });
+  document.body.appendChild(d); })();
+
+/* hamle çubuğu: yardım / ortak şov için hedef listesi takım arkadaşları */
+{ const _rm=Composer.renderMoves;
+  Composer.renderMoves=function(){ _rm.call(this);
+    if(!ALLY_CATS.includes(this.cat)) return;
+    const M=MatchCtl.hydrate(Chat.R), idx=M.turn, al=MV.allies(M,idx), tg=$('mv-tgt');
+    const def=MV.pickAlly(M,idx);
+    tg.innerHTML=al.map(j=>`<option value="${j}" ${j===def?'selected':''}>🤝 ${esc(M.c[j].ringName)} · can ${M.f[j].hp}${M.f[j].downed?' · yerde':''}</option>`).join('');
+    tg.style.display=al.length>1?'':'none';
+  };
+}
+
+/* ════════════════════════════════════════════════════════════
+   AI v3 — model seçimi (ana / hızlı), düşünme ayarı, kullanım sayacı,
+   sağlam JSON: onarım + gerekirse ikinci adım dönüştürme; ham metin saklanır
+════════════════════════════════════════════════════════════ */
+AI.MODEL_HINTS=['gemini-3.6-flash','gemini-3.6-flash-lite','gemini-3.5-flash','gemini-3.5-flash-lite','gemini-3-flash','gemini-flash-latest','gemini-flash-lite-latest','gemini-2.5-flash','gemini-2.5-flash-lite'];
+{ const _cfg=AI.cfg; AI.cfg=function(){ const c=_cfg.call(this), d=Prefs.d;
+    return {...c,gmodelLite:d.gmodelLite??(APP_CONFIG.modelLite||'gemini-flash-lite-latest'),think:d.think||'low',thinkMain:d.thinkMain||'default'}; }; }
+AI.modelFor=function(o){ const c=this.cfg(); if(o.tier==='main'||o.search||o.urls) return c.gmodel; if(this._liteBad===c.gmodelLite) return c.gmodel; return c.gmodelLite||c.gmodel; };
+AI.thinkFor=function(model,o){
+  const c=this.cfg(), lvl=(o.tier==='main'||o.search||o.urls)?c.thinkMain:c.think;
+  if(lvl==='default'||(this._noThink||new Set()).has(model)) return null;
+  if(/gemini-2\./.test(model)) return {thinkingBudget:lvl==='off'?(/pro/.test(model)?128:0):(/pro/.test(model)?512:384)};
+  return {thinkingLevel:lvl==='off'?'minimal':'low'};
+};
+AI.usage={ KEY:'ringrp_ai_usage',
+  load(){ try{ return JSON.parse(localStorage.getItem(this.KEY)||'{}'); }catch(e){ return {}; } },
+  add(model,u){ try{ const d=this.load(), day=new Date().toISOString().slice(0,10); const m=((d[day] ||= {})[model] ||= {n:0,in:0,out:0,th:0});
+    m.n++; m.in+=u?.promptTokenCount||0; m.out+=u?.candidatesTokenCount||0; m.th+=u?.thoughtsTokenCount||0;
+    for(const k of Object.keys(d).sort().slice(0,-14)) delete d[k]; localStorage.setItem(this.KEY,JSON.stringify(d)); }catch(e){} },
+  html(){ const d=this.load(), days=Object.keys(d).sort().reverse(); if(!days.length) return '<div class="muted">Henüz kayıt yok (bu cihazda).</div>';
+    const fmt=n=>n>=1e6?(n/1e6).toFixed(2)+'M':n>=1e3?(n/1e3).toFixed(1)+'K':String(n);
+    const sum=days.slice(0,7).reduce((a,k)=>{ Object.entries(d[k]).forEach(([m,v])=>{ const x=(a[m] ||= {n:0,in:0,out:0,th:0}); x.n+=v.n; x.in+=v.in; x.out+=v.out; x.th+=v.th; }); return a; },{});
+    return `<table class="ustab"><tr><th>Model (son 7 gün, bu cihaz)</th><th>Çağrı</th><th>Girdi</th><th>Çıktı</th><th>Düşünme</th></tr>${Object.entries(sum).map(([m,v])=>`<tr><td>${esc(m)}</td><td>${v.n}</td><td>${fmt(v.in)}</td><td>${fmt(v.out)}</td><td>${fmt(v.th)}</td></tr>`).join('')}</table>
+      <div class="muted" style="font-size:11px">Bugün: ${Object.values(d[days[0]]||{}).reduce((a,v)=>a+v.n,0)} çağrı. Düşünme token'ları çıktı gibi ücretlendirilir — hızlı modelde "Kapalı / Az" en ucuzu.</div>`; },
+};
+AI.gemini=async function(o){
+  const c=this.cfg(); if(!c.gkey) throw new Error('Gemini key yok (Ayarlar)');
+  let model=this.modelFor(o);
+  const build=think=>{ const body={system_instruction:{parts:[{text:o.system||''}]},contents:[{role:'user',parts:[{text:o.prompt}]}],
+      generationConfig:{temperature:o.temperature??0.8,maxOutputTokens:o.maxTokens||((o.json&&(o.search||o.urls))||o.tier==='main'?8192:4096)}};
+    const tools=[]; if(o.search) tools.push({google_search:{}}); if(o.urls) tools.push({url_context:{}});
+    if(tools.length) body.tools=tools; else if(o.json) body.generationConfig.responseMimeType='application/json';
+    if(think) body.generationConfig.thinkingConfig=think; return body; };
+  const call=async(m,think)=>fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(m)}:generateContent`,
+    {method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':c.gkey},body:JSON.stringify(build(think))});
+  let think=this.thinkFor(model,o), res=await call(model,think);
+  if(!res.ok){
+    const e=await res.json().catch(()=>({})), msg=e.error?.message||res.statusText;
+    if(res.status===400 && think && /think/i.test(msg)){ (this._noThink ||= new Set()).add(model); res=await call(model,null); }
+    else if((res.status===404||/not found|not supported/i.test(msg)) && model!==c.gmodel){ this._liteBad=model; toast(`Hızlı model "${model}" bulunamadı — ana model kullanılıyor (Ayarlar'dan değiştir)`,'err'); model=c.gmodel; think=this.thinkFor(model,{...o,tier:'main'}); res=await call(model,think); }
+    else throw new Error(`Gemini ${res.status}: ${msg}`);
+    if(!res.ok){ const e2=await res.json().catch(()=>({})); throw new Error(`Gemini ${res.status}: ${e2.error?.message||res.statusText}`); }
+  }
+  const d=await res.json(); const cand=d.candidates?.[0];
+  this.usage.add(model,d.usageMetadata);
+  const txt=(cand?.content?.parts||[]).filter(p=>!p.thought).map(p=>p.text||'').join('');
+  if(!txt) throw new Error(cand?.finishReason==='MAX_TOKENS'?'Gemini yanıtı token sınırında kesildi':'Gemini boş yanıt');
+  return {text:txt,sources:(cand?.groundingMetadata?.groundingChunks||[]).map(g=>g.web?.uri).filter(Boolean),cut:cand?.finishReason==='MAX_TOKENS'};
+};
+AI.worker=async function(o){
+  const c=this.cfg(); if(!c.workerUrl) throw new Error('Worker adresi yok (APP_CONFIG.workerUrl)');
+  const model=this.modelFor(o);
+  const res=await fetch(c.workerUrl.replace(/\/$/,'')+'/generate',{method:'POST',headers:{'Content-Type':'application/json',...(c.appToken?{'X-App-Token':c.appToken}:{})},
+    body:JSON.stringify({model,system:o.system,prompt:o.prompt,json:o.json,search:o.search,urls:o.urls,temperature:o.temperature,thinking:this.thinkFor(model,o),maxOutputTokens:o.maxTokens||(o.json&&(o.search||o.urls)?8192:4096)})});
+  const d=await res.json().catch(()=>({}));
+  if(!res.ok) throw new Error(`Worker ${res.status}: ${d.error||''} ${d.detail||''}`.trim());
+  this.usage.add(d.model||model,d.usage);
+  return {text:d.text||'',sources:d.sources||[]};
+};
+/** dayanıklı JSON ayrıştırma: kod bloğu, baştaki/sondaki metin, sondaki virgül, akıllı tırnak, yarım kalmış yapı */
+AI.parseJSON=function(txt){
+  if(typeof txt!=='string') return txt;
+  let t=txt.replace(/^﻿/,'').trim();
+  const fence=t.match(/```(?:json)?\s*([\s\S]*?)```/i); if(fence) t=fence[1].trim();
+  const tryP=s=>{ try{ return {ok:true,v:JSON.parse(s)}; }catch(e){ return {ok:false}; } };
+  let r=tryP(t); if(r.ok) return r.v;
+  const start=t.search(/[\[{]/); if(start<0) throw new Error('AI geçerli JSON döndürmedi');
+  // dengeli parça + yarım kalanı kapat
+  let depth=[], inS=false, esc=false, end=-1;
+  for(let i=start;i<t.length;i++){ const ch=t[i];
+    if(inS){ if(esc) esc=false; else if(ch==='\\') esc=true; else if(ch==='"') inS=false; continue; }
+    if(ch==='"') inS=true; else if(ch==='{'||ch==='[') depth.push(ch==='{'?'}':']'); else if(ch==='}'||ch===']'){ depth.pop(); if(!depth.length){ end=i; break; } } }
+  let s=end>0?t.slice(start,end+1):t.slice(start)+(inS?'"':'')+depth.reverse().join('');
+  const fix=x=>x.replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/,\s*([}\]])/g,'$1').replace(/:\s*undefined/g,':null').replace(/,\s*$/,'');
+  r=tryP(s); if(r.ok) return r.v; r=tryP(fix(s)); if(r.ok) return r.v;
+  if(end<0){ const cut=fix(s).replace(/,\s*"[^"]*"\s*:\s*("[^"]*)?$/,'').replace(/,\s*"[^"]*$/,''); r=tryP(cut+(depth.join?'':'')); if(r.ok) return r.v; }
+  throw new Error('AI geçerli JSON döndürmedi');
+};
+AI.ask=async function(opts){
+  const c=this.cfg(); const chain=[c.primary]; if(c.fallback&&c.fallback!==c.primary) chain.push(c.fallback);
+  let lastErr=null; this.setBusy(1);
+  try{
+    for(const prov of chain){
+      if(prov==='offline'){ if(opts.offline) return {data:opts.offline(),provider:'offline',sources:[],error:lastErr?.message}; continue; }
+      let r=null;
+      try{
+        r=await this[prov](opts);
+        if(!opts.json) return {data:r.text,provider:prov,sources:r.sources};
+        try{ return {data:this.parseJSON(r.text),provider:prov,sources:r.sources}; }
+        catch(pe){
+          // 2. adım: metni JSON moduyla (aramasız, hızlı model) karta çevir
+          if(prov==='ollama') throw pe;
+          const fx=await this[prov]({system:'Sadece geçerli JSON döndür. Başka hiçbir şey yazma.',json:true,tier:'lite',temperature:0,maxTokens:8192,
+            prompt:`Aşağıdaki metni, içindeki bilgileri koruyarak geçerli JSON'a çevir. Bilgi uydurma; eksik alanları boş bırak.${opts.jsonHint?`\nBeklenen yapı: ${opts.jsonHint}`:''}\n---\n${String(r.text).slice(0,16000)}`});
+          return {data:this.parseJSON(fx.text),provider:prov,sources:r.sources,repaired:true};
+        }
+      }catch(e){ lastErr=e; if(r?.text && !e.raw) e.raw=r.text; console.warn('[AI]',prov,e.message); }
+    }
+    if(opts.offline) return {data:opts.offline(),provider:'offline',sources:[],error:lastErr?.message};
+    throw lastErr||new Error('AI sağlayıcı yok');
+  }finally{ this.setBusy(-1); }
+};
+
+/* ── Importer: JSON çıkmazsa AI'ın bulduklarını göster ── */
+Importer.raws=[];
+{ const _ask=Importer.ask;
+  Importer.ask=async function(prompt,o={}){
+    try{ return await _ask.call(this,prompt,o); }
+    catch(e){ if(e.raw){ this.raws.push({at:Date.now(),prompt,raw:e.raw}); e.rawIdx=this.raws.length-1; } throw e; }
+  };
+}
+Importer.errHTML=function(e){
+  return `<div class="toast err" style="position:static">${esc(e.message)}</div>${e.rawIdx!=null?`<div class="box" style="gap:8px;margin-top:8px"><div class="muted" style="font-size:12px">AI bir şeyler buldu ama düzgün karta çevrilemedi. Notlarını görüp elle kullanabilir ya da tekrar dönüştürebilirsin.</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm gold" onclick="Importer.showRaw(${e.rawIdx})"><i class="fas fa-file-lines"></i> AI'ın bulduklarını göster</button></div></div>`:''}`;
+};
+Importer.rawBtn=function(e){ return e?.rawIdx!=null?` <a style="color:var(--gold);cursor:pointer" onclick="Importer.showRaw(${e.rawIdx})">[notlar]</a>`:''; };
+Importer.showRaw=function(i){
+  const x=this.raws[i]; if(!x) return;
+  const d=document.getElementById('md-raw')||(()=>{ const m=document.createElement('div'); m.className='mbd'; m.id='md-raw';
+    m.innerHTML=`<div class="mbox" style="max-width:760px"><div class="mhd"><span class="mti">AI'ın bulduğu bilgiler</span><button class="mcl" onclick="UI.close('md-raw')">✕</button></div><div class="mbdy" id="raw-body"></div><div class="mft" id="raw-foot"></div></div>`;
+    document.body.appendChild(m); return m; })();
+  $('raw-body').innerHTML=`<div class="muted" style="font-size:12px">Metni düzenleyebilirsin. "Karta çevir" aramasız, JSON modunda tekrar dener (ucuz ve genelde sorunsuz). "Yapıştır moduna aktar" metni AI ile Ekle → Yapıştır sekmesine koyar.</div>
+    <textarea id="raw-txt" rows="16" style="width:100%;font-family:var(--mono);font-size:12px">${esc(x.raw)}</textarea>`;
+  $('raw-foot').innerHTML=`<button class="btn" onclick="navigator.clipboard?.writeText($('raw-txt').value);toast('Kopyalandı','ok')"><i class="fas fa-copy"></i> Kopyala</button>
+    <button class="btn" onclick="Importer.rawToPaste()"><i class="fas fa-paste"></i> Yapıştır moduna aktar</button>
+    <button class="btn gold" onclick="Importer.rawConvert()"><i class="fas fa-wand-magic-sparkles"></i> Karta çevir</button>`;
+  UI.open('md-raw');
+};
+Importer.rawToPaste=function(){ const t=$('raw-txt').value; UI.close('md-raw'); this.open(); this.setMode('paste'); $('imp-text').value=t; toast('Metin "Yapıştır" sekmesine kondu — "Oluştur"a bas','ok'); };
+Importer.rawConvert=async function(){
+  const t=$('raw-txt').value; UI.close('md-raw'); this.open(); this.setMode('paste'); $('imp-text').value=t;
+  $('imp-preview').innerHTML='<div class="muted"><i class="fas fa-spinner fa-spin"></i> Karta çevriliyor…</div>';
+  try{ const c=await this.generate(`Aşağıdaki araştırma notlarını karta dönüştür (notlarda olmayan hareketleri yaygın bilgine göre tamamlayabilirsin).\n---\n${t.slice(0,14000)}`,false,{});
+    this.last=c; this.preview(c,Store.chars().find(x=>x.ringName.toLowerCase()===c.ringName.toLowerCase())); }
+  catch(e){ $('imp-preview').innerHTML=this.errHTML(e); }
+};
+
+/* ── ayarlar: model / düşünme / hamle seçimi / kayırma / kullanım ── */
+const Settings3 = {
+  fill(){
+    const c=AI.cfg(), d=Prefs.d, g=id=>$(id);
+    if(!g('set3-lite')) return;
+    g('set3-lite').value=c.gmodelLite||''; g('set3-think').value=c.think; g('set3-thinkmain').value=c.thinkMain;
+    g('set3-pick').value=d.aiPick||'script'; g('set3-bias').value=String(d.bias??1);
+    g('set3-usage').innerHTML=AI.usage.html();
+    const dl=g('set3-models'); if(dl&&!dl.children.length) dl.innerHTML=AI.MODEL_HINTS.map(m=>`<option value="${m}">`).join('');
+    g('set-gmodel')?.setAttribute('list','set3-models');
+  },
+  save(){ const g=id=>$(id); if(!g('set3-lite')) return;
+    Object.assign(Prefs.d,{gmodelLite:g('set3-lite').value.trim(),think:g('set3-think').value,thinkMain:g('set3-thinkmain').value,aiPick:g('set3-pick').value,bias:+g('set3-bias').value});
+    AI._liteBad=null; AI._noThink=new Set(); Prefs.save(); },
+  async listModels(){
+    const c=AI.cfg(); if(!c.gkey){ toast('Model listesi için Gemini key gerekli','err'); return; }
+    try{ const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=200',{headers:{'x-goog-api-key':c.gkey}}); const d=await r.json();
+      const ms=(d.models||[]).filter(m=>(m.supportedGenerationMethods||[]).includes('generateContent')&&/gemini/i.test(m.name)).map(m=>m.name.replace(/^models\//,''));
+      if(!ms.length) throw new Error(d.error?.message||'liste boş');
+      $('set3-models').innerHTML=ms.map(m=>`<option value="${m}">`).join('');
+      $('set3-mlist').innerHTML=ms.map(m=>`<span class="chip" onclick="$('set3-lite').value='${m}'" title="Hızlı model yap">${esc(m)}</span>`).join('');
+      toast(`${ms.length} model bulundu`,'ok');
+    }catch(e){ toast('Modeller alınamadı: '+e.message,'err'); }
+  },
+};
+document.addEventListener('DOMContentLoaded',()=>{ const _f=Settings.fill, _s=Settings.save;
+  Settings.fill=function(){ _f.apply(this,arguments); Settings3.fill(); };
+  Settings.save=function(){ Settings3.save(); return _s.apply(this,arguments); };
+});
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI

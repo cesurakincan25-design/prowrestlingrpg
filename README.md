@@ -132,3 +132,16 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
 
 Cloudflare Worker (varsayılan) · kendi Gemini key'in · lokal Ollama (`OLLAMA_ORIGINS=*` gerekir) · offline şablon.
 Birincil hata verirse yedeğe düşer.
+
+### AI tasarrufu (Ayarlar → "AI tasarrufu & oyun dengesi")
+- **Ana model**: kart kurma, kadro araştırma / güncelleme, takım bulma, şov sonrası analiz.
+- **Hızlı model** (varsayılan `gemini-flash-lite-latest`): maç anlatımı, sahneler, tweetler. Bulunamazsa otomatik ana modele düşer. "Key'imdeki modelleri getir" gerçek listeyi çeker.
+- **Düşünme**: düşünme token'ları çıktı gibi ücretlenir; hızlı modelde "Az" / "Kapalı" en ucuzu.
+- **AI hamle seçimi**: varsayılan "Script seçer, AI anlatır" → AI güreşçinin her hamlesi 2 yerine 1 çağrı.
+- **Kullanım tablosu**: bu cihazdaki son 7 günün çağrı / token sayıları.
+- Arama açıkken JSON gelmezse metin ikinci bir (ucuz, JSON modlu) çağrıyla karta çevrilir; o da olmazsa "AI'ın bulduklarını göster" ile ham notlar düzenlenip kullanılabilir.
+
+### Maç motoru v3
+- Momentum 0-200: başarılı her hamle bir öncekinden daha çok momentum kazandırır (seri + bileşik artış); başarılı imza / finisher momentumun yarısını korur; 100 üstü momentum hasarı artırır (200'de +%50).
+- Takım arkadaşına **Yardım et** (yerden kaldırır, toparlar) ve **Birlikte şov** (ortak taunt) — aynı gruptaysa etkisi ×1.5.
+- Oyuncu karakterlerini kayırma (Yok / Hafif / Belirgin): AI kart ve hikâyede öne çıkarır, maçta çok küçük şans / kick-out payı.
