@@ -1260,6 +1260,7 @@ body.ss .gmonly{display:none!important}
           <div class="ff"><span class="lbl">Ollama bağlam (token)</span><select id="set-octx"><option value="8192">8K — hızlı, az bellek</option><option value="16384">16K (önerilen)</option><option value="32768">32K — uzun şovlar, çok bellek</option></select></div>
           <div class="ff"><span class="lbl">Ollama zaman aşımı (sn)</span><input id="set-otimeout" type="number" min="30" max="900" placeholder="240"></div>
         </div>
+        <div class="box" style="gap:6px;padding:10px"><b style="font-size:13px"><i class="fas fa-tower-broadcast"></i> AI sunucusu (tüm grup)</b><div id="set-aihost"></div></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn sm" onclick="Settings.ollamaList()"><i class="fas fa-server"></i> Ollama modellerini getir</button><span class="muted" id="set-ostatus" style="font-size:12px">Lokal model sadece Ollama'nın kurulu olduğu bilgisayarda çalışır. İnternet araması gereken işler (kadro araştırma) yedekteki Gemini/Worker'a gider.</span></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
@@ -7924,6 +7925,105 @@ AI.ask=async function(opts){
   }finally{ this.setBusy(-1); }
 };
 
+/* ════════════════════════════════════════════════════════════
+   AI SUNUCUSU — grubun tüm AI çağrıları tek bir oyuncunun cihazından (ör. lokal Ollama) çalışır.
+   meta/aihost = {pid,name,at}. Diğer oyuncular isteği aireq/<id> belgesine yazar, sunucu işler ve sonucu geri yazar.
+   Sunucu çevrimdışıysa ya da 15 sn içinde yanıt vermezse istek oyuncunun kendi ayarlarıyla (Gemini) çalışır.
+════════════════════════════════════════════════════════════ */
+const AIHost = {
+  cfg:null, unsub:null, queue:[], seen:new Set(), busy:false, served:0, ACK_MS:15000, MAX_MS:300000,
+  start(){
+    B.watchDoc('meta/aihost',d=>{ this.cfg=d&&d.pid?d:null; this.listen(); if(UI.page==='set') this.renderStatus(); });
+  },
+  id(){ return this.cfg?.pid||null; },
+  amServer(){ return !!Me.id && this.id()===Me.id; },
+  online(){ const id=this.id(); return !!id && Data.online().some(p=>p.id===id); },
+  shouldRelay(opts){ return !opts.local && !!Me.id && !!this.id() && !this.amServer() && this.online(); },
+  /* ── sunucu tarafı ── */
+  listen(){
+    if(this.amServer()&&!this.unsub){
+      this.unsub=B.watchCol('aireq',{where:['to','==',Me.id]},docs=>{
+        for(const d of docs){
+          if(d.status!=='wait'||this.seen.has(d.id)) continue;
+          if(Date.now()-(d.at||0)>this.MAX_MS){ B.del('aireq/'+d.id).catch(()=>{}); continue; }
+          this.seen.add(d.id); this.claim(d.id);
+        }
+      });
+    } else if(!this.amServer()&&this.unsub){ this.unsub(); this.unsub=null; this.queue=[]; }
+  },
+  async claim(id){
+    const got=await B.txn('aireq/'+id,cur=>cur&&cur.status==='wait'?{status:'queued',qat:Date.now()}:null).catch(()=>null);
+    if(!got) return; this.queue.push(id); this.pump();
+  },
+  async pump(){
+    if(this.busy) return; this.busy=true;
+    try{
+      while(this.queue.length){
+        const id=this.queue.shift(); const d=await B.getDoc('aireq/'+id).catch(()=>null);
+        if(!d||d.status!=='queued') continue;
+        await B.update('aireq/'+id,{status:'run'}).catch(()=>{});
+        try{
+          const o=JSON.parse(d.o||'{}');
+          const r=await AI._askLocal({...o,local:true});
+          if(r.provider==='offline') throw new Error(r.error||'sunucuda AI yok');
+          await B.update('aireq/'+id,{status:'done',out:JSON.stringify(r.data??null),provider:r.provider,sources:(r.sources||[]).slice(0,20),repaired:!!r.repaired});
+          this.served++;
+        }catch(e){ await B.update('aireq/'+id,{status:'err',error:String(e.message||e).slice(0,500)}).catch(()=>{}); }
+        if(UI.page==='set') this.renderStatus();
+      }
+    }finally{ this.busy=false; }
+  },
+  /* ── oyuncu tarafı ── */
+  relay(opts){
+    const id=uid(), path='aireq/'+id;
+    const o={system:opts.system||'',prompt:opts.prompt||'',json:!!opts.json,search:!!opts.search,urls:!!opts.urls,
+      temperature:opts.temperature,tier:opts.tier||null,maxTokens:opts.maxTokens||null,jsonHint:opts.jsonHint||null};
+    return new Promise(async(resolve,reject)=>{
+      let un=null, done=false, t1=null, t2=null;
+      const end=(fn,v)=>{ if(done) return; done=true; clearTimeout(t1); clearTimeout(t2); try{ un&&un(); }catch(e){} B.del(path).catch(()=>{}); fn(v); };
+      try{ await B.set(path,{to:this.id(),from:Me.id,at:Date.now(),status:'wait',o:JSON.stringify(o)}); }
+      catch(e){ return reject(e); }
+      t1=setTimeout(async()=>{ // sunucu 15 sn'de almadıysa iptal et
+        const c=await B.txn(path,cur=>cur&&cur.status==='wait'?{status:'cancel'}:null).catch(()=>null);
+        if(c) end(reject,new Error('AI sunucusu yanıt vermedi'));
+      },this.ACK_MS);
+      t2=setTimeout(()=>end(reject,new Error('AI sunucusu zaman aşımı')),this.MAX_MS);
+      un=B.watchDoc(path,d=>{
+        if(!d) return;
+        if(d.status==='done'){ let data=null; try{ data=JSON.parse(d.out); }catch(e){}
+          end(resolve,{data,provider:'sunucu:'+(d.provider||'?'),sources:d.sources||[],repaired:d.repaired}); }
+        else if(d.status==='err') end(reject,new Error('AI sunucusu: '+(d.error||'hata')));
+      });
+    });
+  },
+  /* ── ayarlar ── */
+  async become(){
+    if(this.cfg&&this.cfg.pid!==Me.id&&this.online()&&!confirm(`Şu an AI sunucusu ${this.cfg.name||'başka bir oyuncu'}. Devralınsın mı?`)) return;
+    await B.set('meta/aihost',{pid:Me.id,name:Me.p.name,at:Date.now()}); toast('Artık grubun AI\'ı senin cihazından çalışacak — sekmeyi açık tut','ok');
+  },
+  async stop(){ await B.del('meta/aihost'); toast('AI sunucusu kapatıldı — herkes kendi ayarıyla çalışır','ok'); },
+  renderStatus(){
+    const el=$('set-aihost'); if(!el) return;
+    const c=this.cfg, on=this.online(), mine=this.amServer();
+    el.innerHTML=`<div class="muted" style="font-size:12.5px">${!c?'Kapalı — herkes kendi AI ayarıyla çalışıyor.'
+      :mine?`<b style="color:var(--gold)">Sunucu sensin.</b> Grubun tüm AI çağrıları (maçlar, sahneler, promolar) bu cihazdaki ayarlarla çalışıyor. Bu sekme açık kalmalı. Bu oturumda işlenen: ${this.served}${this.queue.length?` · sırada: ${this.queue.length}`:''}`
+      :`Sunucu: <b>${esc(c.name||'?')}</b> ${on?'(çevrimiçi — AI çağrıların onun cihazından çalışıyor)':'(çevrimdışı — şu an kendi ayarınla çalışıyorsun)'}`}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">${mine?`<button class="btn sm red" onclick="AIHost.stop()"><i class="fas fa-power-off"></i> Sunucuyu kapat</button>`
+      :`<button class="btn sm gold" onclick="AIHost.become()"><i class="fas fa-server"></i> Grubun AI'ı benden çalışsın</button>${c?` <button class="btn sm" onclick="AIHost.stop()"><i class="fas fa-power-off"></i> Kapat</button>`:''}`}</div>`;
+  },
+};
+AI._askLocal=AI.ask;
+AI.ask=async function(opts){
+  if(!AIHost.shouldRelay(opts)) return this._askLocal(opts);
+  this.setBusy(1);
+  try{
+    const r=await AIHost.relay(opts);
+    if(opts.json&&typeof r.data==='string'){ try{ r.data=this.parseJSON(r.data); }catch(e){} }
+    return r;
+  }catch(e){ console.warn('[AI sunucusu]',e.message); return this._askLocal({...opts,local:true}); }
+  finally{ this.setBusy(-1); }
+};
+
 /* ── Importer: JSON çıkmazsa AI'ın bulduklarını göster ── */
 Importer.raws=[];
 { const _ask=Importer.ask;
@@ -8323,6 +8423,7 @@ const Settings = {
       ? `Canlı mod: Firebase <code>${esc(APP_CONFIG.firebase?.projectId||'')}</code> · önek <code>${esc(APP_CONFIG.prefix)}</code>. Herkes aynı veriyi görür.`
       : 'Yerel mod: veri sadece bu tarayıcıda (sekmeler arası senkron var). Çok oyunculu için <code>APP_CONFIG.firebase</code> alanını doldur.';
     $('set-reset').classList.toggle('hidden',B.mode==='firebase');
+    AIHost.renderStatus();
   },
   save(){
     Object.assign(Prefs.d,{primary:$('set-primary').value,fallback:$('set-fallback').value,gkey:$('set-gkey').value.trim(),gmodel:$('set-gmodel').value.trim(),
@@ -8370,7 +8471,7 @@ const UI = {
 ════════════════════════════════════════════════════════════ */
 const App = {
   afterLogin(){
-    Presence.start(); Side.render();
+    Presence.start(); Side.render(); AIHost.start();
     Bus.on('rooms',()=>{
       Side.render();
       if(Chat.room){ if(!Data.rooms.get(Chat.room)||Data.rooms.get(Chat.room).archived){ Chat.room=null; if(UI.page==='chat') UI.show('dash'); } else { Chat.header(); Composer.refresh(); Info.render(); } }

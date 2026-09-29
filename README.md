@@ -140,6 +140,11 @@ Birincil hata verirse yedeğe düşer.
 - İnternet araması gereken işler (kadro araştırma, güncel bilgi) otomatik olarak yedekteki Gemini/Worker'a gider; anlatım, sahneler ve maçlar lokal modelde kalır.
 - Bağlam (varsayılan 16K) ve zaman aşımı Ayarlar'dan değişir. Düşünme modu lokal modelde kapalıdır (hız için).
 
+### AI sunucusu (tüm grubun AI'ı tek cihazdan)
+- Ayarlar → "Grubun AI'ı benden çalışsın": o oyuncu çevrimiçiyken herkesin AI çağrıları (maç hamleleri ve anlatımı, sahneler, promolar) onun cihazındaki ayarlarla çalışır (ör. lokal Ollama). Sunucunun sekmesi açık kalmalı.
+- İstekler `wr_aireq` koleksiyonu üzerinden gider ve iş bitince silinir. Sunucu çevrimdışıysa ya da 15 sn içinde isteği almazsa oyuncu kendi ayarıyla (Gemini) devam eder.
+- İstekler sırayla işlenir; kalabalık anlarda bekleme uzayabilir.
+
 ### AI tasarrufu (Ayarlar → "AI tasarrufu & oyun dengesi")
 - **Ana model**: kart kurma, kadro araştırma / güncelleme, takım bulma, şov sonrası analiz.
 - **Hızlı model** (varsayılan `gemini-flash-lite-latest`): maç anlatımı, sahneler, tweetler. Bulunamazsa otomatik ana modele düşer. "Key'imdeki modelleri getir" gerçek listeyi çeker.
