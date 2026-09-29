@@ -145,3 +145,12 @@ Birincil hata verirse yedeğe düşer.
 - Momentum 0-200: başarılı her hamle bir öncekinden daha çok momentum kazandırır (seri + bileşik artış); başarılı imza / finisher momentumun yarısını korur; 100 üstü momentum hasarı artırır (200'de +%50).
 - Takım arkadaşına **Yardım et** (yerden kaldırır, toparlar) ve **Birlikte şov** (ortak taunt) — aynı gruptaysa etkisi ×1.5.
 - Oyuncu karakterlerini kayırma (Yok / Hafif / Belirgin): AI kart ve hikâyede öne çıkarır, maçta çok küçük şans / kick-out payı.
+
+### Sezonlar (kayıt slotları)
+- **Sezonlar** sayfası: "Yeni sezon başlat" mevcut sezonu arşive kaydeder (şovlar, segmentler, maç geçmişi, serbest maçlar, tweetler + kemer sahipleri, rekorlar, AI hafızası, popülerlik, taraf, rol tarihi) ve seçtiğin rol tarihinden temiz bir sezon açar.
+- Arşivdeki sezon **yüklenebilir** (her şey o sezondaki haline döner) ya da **tamamen silinebilir**. Karakter profilleri, statlar, hareketler, görseller, ilişkiler, takımlar, markalar ve kemerlerin kendisi hiçbir zaman silinmez.
+- "Rol tarihini değiştir": evrenin bugününü değiştirir; istersen oynanmamış planlı şovları da siler.
+
+### Hızlı sim
+- Segmentte **Sim** → kazananı seç (ya da motor / rastgele) → **⚡ Hızlı sim** (AI hiç çağrılmaz) veya **🤖 AI sim**.
+- Şovda **Tüm şovu / Kalanı simüle et** → her segment için kazanan seçimi, tek tuşla tüm şov; şov sonrası AI analizi isteğe bağlı.
