@@ -130,8 +130,15 @@ Firebase web config'i gizli değildir (tarayıcıda zaten görünür); güvenli�
 
 ## AI sağlayıcıları (Ayarlar, cihaza özel)
 
-Cloudflare Worker (varsayılan) · kendi Gemini key'in · lokal Ollama (`OLLAMA_ORIGINS=*` gerekir) · offline şablon.
+Cloudflare Worker (varsayılan) · kendi Gemini key'in · lokal Ollama · offline şablon.
 Birincil hata verirse yedeğe düşer.
+
+### Lokal model (Ollama)
+- Sadece Ollama'nın kurulu olduğu bilgisayarda çalışır; diğer oyuncular Gemini/Worker kullanmaya devam eder.
+- Ollama'nın siteye izin vermesi için kullanıcı ortam değişkeni: `OLLAMA_ORIGINS=https://cesurakincan25-design.github.io` (değiştirdikten sonra Ollama'yı kapatıp aç).
+- Ayarlar → Birincil **Lokal (Ollama)**, Yedek **Gemini/Worker** → "Ollama modellerini getir" → Kaydet → "Bağlantıyı test et". Chrome "yerel ağ erişimi" sorarsa izin ver.
+- İnternet araması gereken işler (kadro araştırma, güncel bilgi) otomatik olarak yedekteki Gemini/Worker'a gider; anlatım, sahneler ve maçlar lokal modelde kalır.
+- Bağlam (varsayılan 16K) ve zaman aşımı Ayarlar'dan değişir. Düşünme modu lokal modelde kapalıdır (hız için).
 
 ### AI tasarrufu (Ayarlar → "AI tasarrufu & oyun dengesi")
 - **Ana model**: kart kurma, kadro araştırma / güncelleme, takım bulma, şov sonrası analiz.
