@@ -1254,8 +1254,13 @@ body.ss .gmonly{display:none!important}
         </div>
         <div class="row2">
           <div class="ff"><span class="lbl">Ollama URL</span><input id="set-ourl" placeholder="http://localhost:11434"></div>
-          <div class="ff"><span class="lbl">Ollama model</span><input id="set-omodel" placeholder="qwen3:14b"></div>
+          <div class="ff"><span class="lbl">Ollama model</span><input id="set-omodel" list="set-omodels" placeholder="qwen3:14b"><datalist id="set-omodels"></datalist></div>
         </div>
+        <div class="row2">
+          <div class="ff"><span class="lbl">Ollama bağlam (token)</span><select id="set-octx"><option value="8192">8K — hızlı, az bellek</option><option value="16384">16K (önerilen)</option><option value="32768">32K — uzun şovlar, çok bellek</option></select></div>
+          <div class="ff"><span class="lbl">Ollama zaman aşımı (sn)</span><input id="set-otimeout" type="number" min="30" max="900" placeholder="240"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><button class="btn sm" onclick="Settings.ollamaList()"><i class="fas fa-server"></i> Ollama modellerini getir</button><span class="muted" id="set-ostatus" style="font-size:12px">Lokal model sadece Ollama'nın kurulu olduğu bilgisayarda çalışır. İnternet araması gereken işler (kadro araştırma) yedekteki Gemini/Worker'a gider.</span></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn gold" onclick="Settings.save()"><i class="fas fa-save"></i> Kaydet</button>
           <button class="btn" onclick="Settings.test()"><i class="fas fa-vial"></i> Bağlantıyı test et</button>
@@ -7841,6 +7846,39 @@ AI.worker=async function(o){
   this.usage.add(d.model||model,d.usage);
   return {text:d.text||'',sources:d.sources||[]};
 };
+/* ── Ollama v2: lokal model — uzun bağlam, düşünme kapalı, zaman aşımı, anlaşılır hatalar ── */
+AI.ollama=async function(o){
+  const c=this.cfg(), base=c.ourl.replace(/\/$/,''), d=Prefs.d;
+  const opts={temperature:o.temperature??0.8, num_ctx:+d.octx||16384, num_predict:o.maxTokens||((o.json||o.tier==='main')?4096:2048)};
+  const body=think=>JSON.stringify({model:c.omodel,stream:false,keep_alive:'30m',...(o.json?{format:'json'}:{}),...(think===false?{think:false}:{}),options:opts,
+    messages:[{role:'system',content:o.system||''},{role:'user',content:o.prompt}]});
+  const call=async think=>{ const ac=new AbortController(), t=setTimeout(()=>ac.abort(),(+d.otimeout||240)*1000);
+    try{ return await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:body(think),signal:ac.signal}); }
+    catch(e){ if(e.name==='AbortError') throw new Error(`Ollama zaman aşımı (${+d.otimeout||240} sn) — daha küçük bir model dene`);
+      throw new Error(`Ollama'ya ulaşılamadı (${base}). Ollama açık mı? Site erişimi için OLLAMA_ORIGINS ayarlı mı? Tarayıcı "yerel ağ erişimi" sorduysa izin ver.`); }
+    finally{ clearTimeout(t); } };
+  let res=await call(this._oNoThink?.has(c.omodel)?null:false);
+  if(!res.ok){ let msg=''; try{ msg=(await res.json()).error||''; }catch(e){}
+    if(/think/i.test(msg)){ (this._oNoThink ||= new Set()).add(c.omodel); res=await call(null); }
+    else if(res.status===404||/not found/i.test(msg)) throw new Error(`Ollama'da "${c.omodel}" modeli yok — terminalde: ollama pull ${c.omodel}`);
+    else if(res.status===403) throw new Error('Ollama bu siteye izin vermiyor (403) — OLLAMA_ORIGINS ortam değişkenini ayarlayıp Ollama\'yı yeniden başlat');
+    else throw new Error(`Ollama ${res.status}: ${msg||res.statusText}`);
+    if(!res.ok){ let m2=''; try{ m2=(await res.json()).error||''; }catch(e){} throw new Error(`Ollama ${res.status}: ${m2||res.statusText}`); }
+  }
+  const j=await res.json();
+  this.usage.add('ollama:'+c.omodel,{promptTokenCount:j.prompt_eval_count,candidatesTokenCount:j.eval_count});
+  const txt=String(j.message?.content||'').replace(/<think>[\s\S]*?<\/think>/g,'').trim();
+  if(!txt) throw new Error(j.done_reason==='length'?'Ollama yanıtı token sınırında kesildi':'Ollama boş yanıt');
+  return {text:txt,sources:[],cut:j.done_reason==='length'};
+};
+AI.ollamaModels=async function(url){
+  const res=await fetch((url||this.cfg().ourl).replace(/\/$/,'')+'/api/tags').catch(()=>{ throw new Error('Ollama\'ya ulaşılamadı'); });
+  if(!res.ok) throw new Error('Ollama '+res.status); const j=await res.json();
+  return (j.models||[]).map(m=>({name:m.name,size:m.size,params:m.details?.parameter_size||''}));
+};
+/* hibrit: internet araması gereken işler (kadro araştırma vb.) zincirdeki Gemini/Worker'a gider, gerisi lokal modele */
+AI.searchProv=function(){ const c=this.cfg(); return [c.primary,c.fallback].find(p=>p==='worker'||p==='gemini')||null; };
+AI.canSearch=function(){ return !!this.searchProv(); };
 /** dayanıklı JSON ayrıştırma: kod bloğu, baştaki/sondaki metin, sondaki virgül, akıllı tırnak, yarım kalmış yapı */
 AI.parseJSON=function(txt){
   if(typeof txt!=='string') return txt;
@@ -7861,7 +7899,8 @@ AI.parseJSON=function(txt){
   throw new Error('AI geçerli JSON döndürmedi');
 };
 AI.ask=async function(opts){
-  const c=this.cfg(); const chain=[c.primary]; if(c.fallback&&c.fallback!==c.primary) chain.push(c.fallback);
+  const c=this.cfg(); let chain=[c.primary]; if(c.fallback&&c.fallback!==c.primary) chain.push(c.fallback);
+  if((opts.search||opts.urls)&&this.searchProv()) chain=[this.searchProv(),...chain.filter(p=>p!==this.searchProv())];
   let lastErr=null; this.setBusy(1);
   try{
     for(const prov of chain){
@@ -8277,7 +8316,7 @@ const Settings = {
   fill(){
     const s=AI.cfg();
     $('set-primary').value=s.primary; $('set-fallback').value=s.fallback; $('set-gkey').value=Prefs.d.gkey||''; $('set-gmodel').value=s.gmodel;
-    $('set-ourl').value=s.ourl; $('set-omodel').value=s.omodel; $('set-dice').checked=!!Prefs.d.dice; $('set-autoai').checked=Prefs.d.autoai!==false; $('set-music').checked=Prefs.d.music!==false;
+    $('set-ourl').value=s.ourl; $('set-omodel').value=s.omodel; $('set-octx').value=String(Prefs.d.octx||16384); $('set-otimeout').value=Prefs.d.otimeout||''; $('set-dice').checked=!!Prefs.d.dice; $('set-autoai').checked=Prefs.d.autoai!==false; $('set-music').checked=Prefs.d.music!==false;
     $('set-worker-info').innerHTML = s.workerUrl ? `Worker: <code>${esc(s.workerUrl)}</code>` : 'Worker adresi tanımlı değil — dosyanın başındaki <code>APP_CONFIG.workerUrl</code> alanını doldur.';
     $('set-uname').value=Univ.name(); $('set-udate').value=Univ.date();
     $('set-backend').innerHTML = B.mode==='firebase'
@@ -8287,7 +8326,7 @@ const Settings = {
   },
   save(){
     Object.assign(Prefs.d,{primary:$('set-primary').value,fallback:$('set-fallback').value,gkey:$('set-gkey').value.trim(),gmodel:$('set-gmodel').value.trim(),
-      ourl:$('set-ourl').value.trim(),omodel:$('set-omodel').value.trim(),dice:$('set-dice').checked,autoai:$('set-autoai').checked,music:$('set-music').checked});
+      ourl:$('set-ourl').value.trim(),omodel:$('set-omodel').value.trim(),octx:+$('set-octx').value,otimeout:+$('set-otimeout').value||0,dice:$('set-dice').checked,autoai:$('set-autoai').checked,music:$('set-music').checked});
     Prefs.save(); toast('Ayarlar kaydedildi','ok');
   },
   async test(){
@@ -8297,6 +8336,14 @@ const Settings = {
       if(r.provider==='offline') throw new Error(r.error||'Offline moddasın');
       toast(`✓ ${r.provider}: ${r.data.mesaj||'bağlandı'}`,'ok');
     }catch(e){ toast('Bağlantı hatası: '+e.message,'err'); }
+  },
+  async ollamaList(){
+    const st=$('set-ostatus'); st.textContent='Bağlanılıyor…';
+    try{ const ms=await AI.ollamaModels($('set-ourl').value.trim()||'http://localhost:11434');
+      $('set-omodels').innerHTML=ms.map(m=>`<option value="${esc(m.name)}">`).join('');
+      if(ms.length&&!ms.some(m=>m.name===$('set-omodel').value.trim())) $('set-omodel').value=ms[0].name;
+      st.innerHTML=ms.length?`✓ Ollama çalışıyor · ${ms.map(m=>`<code>${esc(m.name)}</code>${m.params?' ('+esc(m.params)+')':''}`).join(', ')}`:'Ollama çalışıyor ama model yok — terminalde <code>ollama pull qwen3:14b</code>';
+    }catch(e){ st.innerHTML=`<span style="color:var(--red,#e55)">${esc(e.message)}</span> — Ollama açık mı ve <code>OLLAMA_ORIGINS</code> bu siteye izin veriyor mu?`; }
   },
   async saveUniverse(){ await B.set('meta/universe',{...(Data.universe||{}),name:$('set-uname').value.trim()||'Evren',date:$('set-udate').value||Univ.date()},true); toast('Evren güncellendi','ok'); },
   resetLocal(){ if(B.mode!=='local'||!confirm('Bu tarayıcıdaki tüm yerel veri silinsin mi?')) return; LocalBackend.reset(); localStorage.removeItem('ringrp_me'); location.reload(); },
