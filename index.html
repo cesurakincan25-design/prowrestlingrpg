@@ -890,6 +890,77 @@ body.ss .gmonly{display:none!important}
   .dr-brands{grid-template-columns:1fr 1fr}
   #dr-foot .muted,.dr-b kbd{display:none}
 }
+
+/* ═══ TAKIMLAR & GRUPLAR ═══ */
+.gr-bar{margin-bottom:10px}
+.gr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));grid-auto-rows:max-content;gap:14px;margin-top:12px}
+.gc{--gc:var(--gold);background:var(--bg2);border:1px solid var(--ln);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:transform .12s,border-color .12s,box-shadow .12s}
+.gc:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--gc) 55%,transparent);box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.gc-hero{position:relative;height:170px;overflow:hidden;background:radial-gradient(90% 110% at 50% 100%,color-mix(in srgb,var(--gc) 34%,transparent),transparent 65%),linear-gradient(160deg,var(--bg3),var(--bg1))}
+.gc-hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gc)}
+.gc-rs{position:absolute;inset:8px 8px 0;display:flex;justify-content:center;align-items:flex-end}
+.gc-rs .rnd{flex:1;height:100%;max-width:46%;margin:0 -6%}
+.gc-rs.n1 .rnd{max-width:60%}
+.gc-avs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.gc-avs.fb{display:none}
+.gc-rs:not(:has(.rnd:not(.bad)))+.gc-avs.fb{display:flex}
+.gc-avs .ava{width:74px;height:74px;font-size:24px;margin-left:-16px;box-shadow:0 0 0 3px var(--bg2)}
+.gc-avs .ava:first-child{margin-left:0}
+.gc-logo{position:absolute;inset:16px 20px 12px;display:flex;align-items:center;justify-content:center}
+.gc-logo .gc-lg{width:100%;height:100%}
+.gc-tl{position:absolute;left:10px;top:10px;display:flex;gap:5px;flex-wrap:wrap}
+.gc-kind{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 8px;border-radius:10px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:var(--t0)}
+.gc-play{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;border:1px solid rgba(227,179,65,.5);background:rgba(0,0,0,.55);color:var(--gold);font-size:14px}
+.gc-play:hover{background:var(--gold-d)}
+.gc-body{padding:10px 14px 12px;display:flex;flex-direction:column;gap:6px}
+.gc-nm{font-family:var(--disp);font-size:24px;letter-spacing:.02em;line-height:1.1;color:var(--gc)}
+.gc-mem{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12.5px;color:var(--t1)}
+.gc-mem .lead{color:var(--t0);font-weight:600}
+.gc-mem .mgr{color:var(--t2);font-size:11.5px}
+.gc-f{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.gtag{color:var(--gold);border-color:rgba(227,179,65,.4);background:var(--gold-d);text-transform:none;letter-spacing:.02em}
+.gv-head .gc{cursor:default}
+.gv-head .gc:hover{transform:none;box-shadow:none}
+.gv-head .gc-hero{height:210px}
+.gv-ms{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:4px}
+.gv-m{display:flex;gap:9px;align-items:center;padding:7px 9px;border:1px solid var(--ln);border-radius:9px;background:var(--bg2);cursor:pointer;min-width:0}
+.gv-m:hover{border-color:var(--ln2)}
+.gv-m .ava{width:34px;height:34px;font-size:12px;flex-shrink:0}
+.gv-m b{font-size:13px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gv-m small{font-size:11px;color:var(--t2);display:block}
+.gv-m.mgr{border-style:dashed}
+#grm-body{display:flex;flex-direction:column;gap:12px}
+/* seçici */
+.gp{display:flex;flex-direction:column;gap:6px;border:1px solid var(--ln2);border-radius:var(--r);padding:8px;background:var(--bg1)}
+.gp-sel{display:flex;flex-wrap:wrap;gap:5px;min-height:26px;align-items:center}
+.gp-chip{display:inline-flex;align-items:center;gap:5px;padding:2px 9px 2px 3px;border-radius:14px;background:var(--gold-d);border:1px solid rgba(227,179,65,.45);color:var(--gold);font-size:12px;cursor:pointer}
+.gp-chip .ava{width:20px;height:20px;font-size:8px;border-width:1px}
+.gp-list{display:flex;flex-wrap:wrap;gap:5px;max-height:132px;overflow-y:auto}
+.gp-list button{display:inline-flex;align-items:center;gap:6px;padding:3px 9px 3px 3px;border-radius:14px;background:var(--bg3);border:1px solid var(--ln2);color:var(--t1);font-size:12px}
+.gp-list button:hover{border-color:var(--gold);color:var(--t0)}
+.gp-list button .ava{width:22px;height:22px;font-size:9px;border-width:1px}
+.gp-list small{color:var(--t3);font-size:10px}
+/* öneri listesi */
+.rv-list{display:flex;flex-direction:column;gap:6px}
+.rv-row{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--ln);border-radius:10px;background:var(--bg2)}
+.rv-row .ck{padding:4px}
+.rv-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.rv-top{display:flex;gap:6px}
+.rv-top input{flex:1;min-width:0;font-weight:600}
+.rv-top select{width:auto}
+.rv-ms{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--t1)}
+.rv-ms span{display:inline-flex;align-items:center;gap:4px}
+.rv-ms .ava{width:20px;height:20px;font-size:8px;border-width:1px}
+.rv-ms .mgr{color:var(--t2)}
+.rv-row small{font-size:11px;color:var(--t2)}
+#gf-color{height:36px;padding:3px;width:100%}
+.mb-grp{margin-left:auto;font-size:11px;padding:3px 6px;max-width:170px}
+@media(max-width:760px){
+  .gr-grid{grid-template-columns:1fr}
+  .gc-hero{height:150px}
+  .gv-ms{grid-template-columns:1fr}
+  .rv-top{flex-direction:column}
+}
 </style>
 </head>
 
@@ -930,6 +1001,7 @@ body.ss .gmonly{display:none!important}
       <button data-p="cal"><i class="fas fa-calendar-days"></i> Takvim</button>
       <button data-p="event" id="nav-event"><i class="fas fa-tv"></i> Şov <span class="nb" id="nav-live"></span></button>
       <button data-p="roster"><i class="fas fa-users"></i> Kadro</button>
+      <button data-p="groups"><i class="fas fa-people-group"></i> Takımlar</button>
       <button data-p="titles"><i class="fas fa-trophy"></i> Kemerler</button>
       <button data-p="brands" class="gmonly"><i class="fas fa-layer-group"></i> Markalar & Şovlar</button>
       <button data-p="hist"><i class="fas fa-chart-line"></i> Geçmiş & Reyting</button>
@@ -1053,6 +1125,10 @@ body.ss .gmonly{display:none!important}
   <section class="page" id="p-arch">
     <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Şov Arşivi</span><span class="s">Biten şovlar, sonuçlar ve tüm dökümler</span></div>
     <div class="scroll-page"><div class="wide" id="arch-page"></div></div>
+  </section>
+  <section class="page" id="p-groups">
+    <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Takımlar & Gruplar</span><span class="s">Tag takımları, stable'lar, fraksiyonlar</span></div>
+    <div class="scroll-page"><div class="wide" id="gr-page"></div></div>
   </section>
   <section class="page" id="p-tw">
     <div class="phead"><button class="ibtn mob" onclick="Side.open()"><i class="fas fa-bars"></i></button><span class="t">Twitter</span><span class="s">Güreşçiler, markalar, fanlar</span></div>
@@ -3204,6 +3280,7 @@ const Booker = {
       prompt:`Şov: ${ev.title} · ${STYLES[ev.style]?.tr} · ${Dt.nice(ev.date)}
 Marka kadrosu (isim | cinsiyet | yön | stil | popülerlik | rekor | ilişkiler):\n${roster.map(c=>`${c.ringName} | ${GENDERS[c.gender]||'-'} | ${c.alignment} | ${c.style} | ${c.popularity||50} | ${c.record.w}-${c.record.l} | ${relLine(c,roster)||'-'}${memLine(c,1)?' | hafıza: '+memLine(c,1):''}`).join('\n')}
 Kemerler: ${titles.map(t=>`${t.name} [${TITLE_DIV[t.division||'open']}, ${TITLE_TIER[t.tier||'mid']}] (şampiyon: ${Data.char(t.holder)?.ringName||'boş'})`).join(' ; ')||'-'}
+Takımlar / gruplar (tag maçlarında bunları kullan; üyeler birlikte promo / backstage yapabilir): ${Grp.all().filter(g=>g.members.some(id=>roster.some(c=>c.id===id))).map(g=>Grp.line(g)).join(' ; ')||'-'}
 Yardımcı karakterler (promo/röportaj için): ${staffPool.map(c=>c.ringName).join(', ')}
 Son sonuçlar:\n${recent||'-'}
 Son şovların hafızası: ${Univ.events().filter(e=>e.aftermath?.memory).sort((a,b)=>(b.endedAt||0)-(a.endedAt||0)).slice(0,3).map(e=>`${e.title}: ${e.aftermath.memory}`).join(' | ')||'-'}
@@ -5404,19 +5481,20 @@ MatchCtl.intro=async function(roomId){
   if(!got) return;
   const M=this.hydrate({match:got.match}); const R=MV.rules(M);
   const first=M.c.map((_,i)=>i).filter(i=>M.f[i].entered).slice(0,6);
+  const units=Grp.units(M,first);
   try{
     await Msgs.post(roomId,{k:'card',pid:null,text:'',meta:{sides:M.sides.map(s=>s.map(i=>M.cids[i])),a:M.cids[0],b:M.cids[M.sides[1]?.[0]??1],type:M.type,title:M.title||'',titleId:M.titleId||null,show:M.show||''}},{touch:false});
     await Msgs.post(roomId,{k:'sys',pid:null,text:`${M.show||'Canlı Şov'} — ${R.tr}${M.title?' · '+M.title:''}${M.c.length>2?` · ${M.c.length} güreşçi`:''}`},{touch:false});
     const names=M.sides.map((s,k)=>MV.sideName(M,k));
     const r=await AI.ask({system:this.sys(M),json:true,temperature:0.9,
-      prompt:`Maç başlıyor (${R.tr}). ${M.entry?`Sadece ilk girenler ringe geliyor: ${first.map(i=>M.c[i].ringName).join(', ')}. Diğerleri aralıklarla girecek.`:''} Ring spikeri maçı ve ${M.c.length>8?'kuralları':'tarafları'} takdim etsin, ${first.length<=4?'ilk girenlerin girişlerini':'ringe gelenleri'} karakterlerine uygun kısa ve görkemli anlat (en fazla ${Math.min(first.length,4)} giriş), yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
+      prompt:`Maç başlıyor (${R.tr}). ${M.entry?`Sadece ilk girenler ringe geliyor: ${first.map(i=>M.c[i].ringName).join(', ')}. Diğerleri aralıklarla girecek.`:''} Ring spikeri maçı ve ${M.c.length>8?'kuralları':'tarafları'} takdim etsin, ${units.length<=4?'girişleri':'ringe gelenleri'} karakterlerine uygun kısa ve görkemli anlat (en fazla ${Math.min(units.length,4)} giriş, bu sırayla: ${units.slice(0,4).map(u=>u.label).join(' / ')}. Takımlar / gruplar TEK giriş olarak BİRLİKTE gelir${Grp.mgrText(units)}), yorumcular maç öncesi birer cümle söylesin, seyirci tepkisi ver.
 Taraflar: ${names.join(' vs ')}
 JSON: {"announcer":"spikerin anonsu","entrances":["giriş 1-2 cümle", "..."],"commentary":[{"speaker":"isim","line":"..."}],"crowd":"seyirci"}`,
-      offline:()=>({announcer:`Bu karşılaşma bir ${R.tr}! ${names.slice(0,6).join('! Karşısında ')}!`,entrances:first.slice(0,4).map(i=>M.c[i].entrance||`${M.c[i].ringName} ringe geliyor.`),commentary:[],crowd:'Salon dolu, atmosfer elektrikli.'})});
+      offline:()=>({announcer:`Bu karşılaşma bir ${R.tr}! ${names.slice(0,6).join('! Karşısında ')}!`,entrances:units.slice(0,4).map(u=>Grp.offEntrance(u,M)),commentary:[],crowd:'Salon dolu, atmosfer elektrikli.'})});
     const d=r.data||{};
     if(d.announcer) await Msgs.post(roomId,{k:'com',text:d.announcer,cid:M.staff.ann?.id||null,pid:null,meta:M.staff.ann?{}:{name:'Spiker'}},{touch:false});
-    for(const [n,e] of (d.entrances||[]).slice(0,4).entries()){ const who=M.c[first[n]];
-      await Msgs.post(roomId,{k:'narr',text:e,pid:null,meta:who?.themeUrl?{theme:who.id,mt:'entrance'}:{}},{touch:false}); }
+    for(const [n,e] of (d.entrances||[]).slice(0,4).entries()){ const tk=Grp.unitTheme(units[n],M);
+      await Msgs.post(roomId,{k:'narr',text:e,pid:null,meta:tk?{theme:tk,mt:'entrance'}:{}},{touch:false}); }
     await this.postCom(roomId,M,d.commentary);
     if(d.crowd) await Msgs.post(roomId,{k:'crowd',text:d.crowd,pid:null},{touch:false});
     await Msgs.post(roomId,{k:'ref',pid:null,cid:M.staff.ref?.id||null,text:`${M.staff.ref?.ringName||'Hakem'} kontrolleri yapıyor ve zili çaldırıyor. DING DING!`},{touch:false});
@@ -5561,8 +5639,8 @@ MatchCtl.finish=async function(roomId,M,out,{quick=false}={}){
   const W=(R.winners||[]).map(id=>Store.get(id)||M.c.find(c=>c.id===id)).filter(Boolean);
   const L=(R.losers||[]).map(id=>Store.get(id)||M.c.find(c=>c.id===id)).filter(Boolean);
   const rating=Rating.match(M); R.rating=rating;
-  const wName=W.map(c=>c.ringName).join(' & ')||'Berabere';
-  await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:wName,method:R.method,rating,...(W[0]?.themeUrl?{theme:W[0].id,mt:'win'}:{})}},{touch:false});
+  const wName=(W.length>1&&Grp.forSide(W.map(c=>c.id))?.name)||W.map(c=>c.ringName).join(' & ')||'Berabere';
+  await Msgs.post(roomId,{k:'win',pid:null,text:'',meta:{winner:wName,method:R.method,rating,...Grp.winTheme(W)}},{touch:false});
   const bump=(id,fn)=>B.txn('chars/'+id,cur=>cur?{...fn(normalizeChar(cur)),updatedAt:Date.now()}:null).catch(e=>toast('Rekor yazılamadı: '+e.message,'err'));
   if(R.draw){ for(const c of M.c) await bump(c.id,x=>({record:{...x.record,d:(x.record.d||0)+1}})); }
   for(const c of W) await bump(c.id,x=>({record:{...x.record,w:(x.record.w||0)+1},popularity:clamp((x.popularity||50)+2+Math.round(rating/2),0,100)}));
@@ -7031,6 +7109,319 @@ const XFill = {
 (function(){ const acts=document.querySelector('#rs-bar .rs-acts'); if(!acts) return;
   const b=document.createElement('button'); b.className='btn gmonly'; b.title='Boş X (Twitter) kullanıcı adlarını ring adından doldur'; b.innerHTML='<b style="font-size:13px">𝕏</b><span class="t"> Adları doldur</span>';
   b.onclick=()=>XFill.run(); acts.insertBefore(b,acts.querySelector('[title="JSON indir"]')); })();
+
+/* ════════════════════════════════════════════════════════════
+   TAKIMLAR & GRUPLAR — tag takımı / stable / fraksiyon
+   groups/{id}: {name, kind, members[cid], leader, managers[cid], brandId, color, logo, desc, entrance,
+                 themeUrl, theme, themeStart, record{w,l,d}, active, createdAt}
+   Maçta: aynı taraftaki üyeler grubun adıyla anılır, BİRLİKTE girer, grup müziği çalar, rekor tutulur.
+════════════════════════════════════════════════════════════ */
+const GROUP_KINDS={tag:{tr:'Tag takımı',ic:'🤝'},stable:{tr:'Stable',ic:'👥'},faction:{tr:'Fraksiyon',ic:'⚔️'}};
+Object.assign(Data,{groups:new Map()});
+{ const _st=Data.start;
+  Data.start=function(){ _st.call(this);
+    B.watchCol('groups',{},d=>{ this.groups=new Map(d.map(x=>[x.id,x])); Bus.emit('groups'); });
+  };
+}
+const Grp = {
+  all(inactive=false){ return [...Data.groups.values()].filter(g=>inactive||g.active!==false).sort((a,b)=>a.name.localeCompare(b.name,'tr')); },
+  get(id){ return Data.groups.get(id)||null; },
+  members(g){ return (g?.members||[]).map(id=>Data.char(id)).filter(Boolean); },
+  managers(g){ return (g?.managers||[]).map(id=>Data.char(id)).filter(Boolean); },
+  ofChar(cid){ return this.all().filter(g=>(g.members||[]).includes(cid)); },
+  /** bu kişilerin hepsini içeren en küçük grup (en az 2 kişi) */
+  forSide(cids){
+    cids=(cids||[]).filter(Boolean); if(cids.length<2) return null;
+    return this.all().filter(g=>cids.every(id=>(g.members||[]).includes(id))).sort((a,b)=>a.members.length-b.members.length)[0]||null;
+  },
+  kindTr(g){ return GROUP_KINDS[g?.kind]?.tr||'Grup'; },
+  line(g){ const ms=this.members(g), L=Data.char(g.leader), mg=this.managers(g);
+    return `${g.name} [${this.kindTr(g)}: ${ms.map(c=>c.ringName).join(', ')}${L?`; lider ${L.ringName}`:''}${mg.length?`; menajer ${mg.map(c=>c.ringName).join(', ')}`:''}${g.theme?`; müziği "${g.theme}"`:''}${g.entrance?`; giriş: ${g.entrance}`:''}]`; },
+  rec(g){ const r=g?.record||{}; return `${r.w||0}-${r.l||0}${r.d?'-'+r.d:''}`; },
+  /** maç girişi: ilk girenleri takım/grup birimlerine ayır */
+  units(M,first){
+    const out=[], done=new Set();
+    for(const i of first){ if(done.has(i)) continue;
+      const side=M.sides[MV.sideOf(M,i)]||[i], g=this.forSide(side.map(j=>M.cids[j]));
+      if(g){ const idx=side.filter(j=>first.includes(j)); idx.forEach(j=>done.add(j)); out.push({g,idx,label:`${g.name} (${idx.map(j=>M.c[j].ringName).join(' & ')})`}); }
+      else { done.add(i); out.push({g:null,idx:[i],label:M.c[i].ringName}); }
+    }
+    return out;
+  },
+  unitTheme(u,M){ if(!u) return null; if(u.g?.themeUrl && Music.ytId(u.g.themeUrl)) return 'group:'+u.g.id; const c=u.idx.map(i=>M.c[i]).find(c=>c?.themeUrl); return c?.id||null; },
+  offEntrance(u,M){ if(u.g){ const mg=this.managers(u.g); return u.g.entrance||`${u.g.theme?`"${u.g.theme}" çalıyor — `:''}${u.g.name} birlikte ringe geliyor: ${u.idx.map(i=>M.c[i].ringName).join(' ve ')}${mg.length?`, yanlarında ${mg.map(c=>c.ringName).join(' ve ')}`:''}.`; }
+    const c=M.c[u.idx[0]]; return c.entrance||`${c.ringName} ringe geliyor.`; },
+  mgrText(units){ const t=units.filter(u=>u.g).map(u=>{ const mg=this.managers(u.g); return mg.length?`${u.g.name} ile ${mg.map(c=>c.ringName).join(', ')} ringe eşlik ediyor`:''; }).filter(Boolean); return t.length?'; '+t.join('; '):''; },
+  winTheme(W){ const g=this.forSide(W.map(c=>c.id)); if(g?.themeUrl&&Music.ytId(g.themeUrl)) return {theme:'group:'+g.id,mt:'win'}; return W[0]?.themeUrl?{theme:W[0].id,mt:'win'}:{}; },
+  async record(M){
+    const R=M.result; if(!R) return;
+    for(const side of M.sides){ const ids=side.map(i=>M.cids[i]); const g=this.forSide(ids); if(!g) continue;
+      const k=R.draw?'d':ids.some(id=>(R.winners||[R.winner]).includes(id))?'w':'l';
+      await B.txn('groups/'+g.id,cur=>cur?{record:{w:0,l:0,d:0,...(cur.record||{}),[k]:((cur.record||{})[k]||0)+1}}:null).catch(()=>{});
+    }
+  },
+  /** üyeler arasına tag / stable ilişkisi yaz (yoksa) */
+  async linkRels(g){
+    const type=g.kind==='tag'?'tag':'stable'; let n=0;
+    for(const id of g.members){ const c=Store.get(id); if(!c) continue; const rels=[...(c.rels||[])]; let ch=false;
+      for(const o of g.members){ if(o===id||!Store.get(o)) continue; if(!rels.some(r=>r.id===o)){ rels.push({id:o,type,lvl:4,note:g.name}); ch=true; } }
+      if(ch){ await Store.upsert({...c,rels}); n++; } }
+    return n;
+  },
+  async save(id,g,{link=false}={}){
+    id=id||'g_'+uid();
+    const doc={name:g.name.trim(),kind:GROUP_KINDS[g.kind]?g.kind:'stable',members:[...new Set(g.members||[])],leader:g.leader||null,managers:[...new Set(g.managers||[])],
+      brandId:g.brandId||null,color:g.color||'#e3b341',logo:g.logo||null,desc:g.desc||'',entrance:g.entrance||'',
+      themeUrl:Music.ytId(g.themeUrl)?String(g.themeUrl).trim():'',theme:(g.theme||'').trim(),themeStart:Math.max(0,g.themeStart|0),
+      record:g.record||{w:0,l:0,d:0},active:g.active!==false,createdAt:g.createdAt||Date.now(),updatedAt:Date.now()};
+    await B.set('groups/'+id,doc); Data.groups.set(id,{...doc,id}); Bus.emit('groups');
+    if(link) await this.linkRels(doc);
+    return id;
+  },
+};
+/* grup müziği: Music anahtarı 'group:ID' */
+{ const _src=Music.src; Music.src=function(key){ if(typeof key==='string'&&key.startsWith('group:')){ const g=Grp.get(key.slice(6)); return g&&{id:key,ringName:g.name,themeUrl:g.themeUrl,themeStart:g.themeStart,theme:g.theme}; } return _src.call(this,key); }; }
+/* taraf adı: takım üyeleri → takım adı */
+{ const _sn=MV.sideName; MV.sideName=function(M,k){ const s=M.sides[k]||[]; if(s.length>=2){ const g=Grp.forSide(s.map(i=>M.cids[i])); if(g) return g.name; } return _sn.call(this,M,k); }; }
+/* AI sistem metnine takımlar */
+{ const _sys=MatchCtl.sys; MatchCtl.sys=function(M){ let s=_sys.call(this,M);
+    const gs=[...new Set(M.sides.map(side=>Grp.forSide(side.map(i=>M.cids[i]))).filter(Boolean))];
+    if(gs.length) s+=`\nTAKIMLAR / GRUPLAR: ${gs.map(g=>Grp.line(g)).join(' ; ')}. Grup üyeleri birbirini kollar, ortak (double-team) hareketler yapabilir, menajerleri ringsite'ta; yorumcular onları grup adıyla anar.`;
+    return s; }; }
+/* maç bitince grup rekoru */
+{ const _fin=MatchCtl.finish; MatchCtl.finish=async function(roomId,M,out,o){ const r=await _fin.call(this,roomId,M,out,o); try{ await Grp.record(M); }catch(e){ console.warn(e); } return r; }; }
+/* maç kurucu: taraf başlığında "Takım seç" */
+{ const _r=MatchBuilder.render;
+  MatchBuilder.render=function(){ _r.call(this);
+    const st=this.st, R=MT[st.type], gs=Grp.all(); if(!gs.length||R.over) return;
+    if(st.sides.length>4&&st.sides.every(s=>s.length===1)) return;
+    $('mb-body').querySelectorAll('.mb-sides > .mb-side').forEach((el,k)=>{ const s=st.sides[k]; if(!s) return;
+      const g=Grp.forSide(s.map(x=>x.cid)); const sh=el.querySelector('.mb-sh'); if(!sh) return;
+      if(g) sh.querySelector('b')?.insertAdjacentHTML('beforeend',` · <span style="color:var(--gold)">${GROUP_KINDS[g.kind]?.ic||''} ${esc(g.name)}</span>`);
+      sh.insertAdjacentHTML('beforeend',`<select class="mb-grp" data-g="${k}" title="Takım / grup ile doldur"><option value="">👥 Takım…</option>${gs.map(x=>`<option value="${x.id}" ${g?.id===x.id?'selected':''}>${esc(x.name)} (${x.members.length})</option>`).join('')}</select>`); });
+    $('mb-body').querySelectorAll('.mb-grp').forEach(sel=>sel.onchange=()=>{ const g=Grp.get(sel.value); if(!g) return; this.read();
+      const k=+sel.dataset.g, used=new Set(st.sides.flatMap((s,j)=>j===k?[]:s.map(x=>x.cid)));
+      const ms=g.members.filter(id=>Data.char(id)&&hasRole(Data.char(id),'wrestler')&&!used.has(id));
+      const n=st.sides[k].length>1?st.sides[k].length:(g.kind==='tag'?2:Math.min(ms.length,4));
+      st.sides[k]=ms.slice(0,Math.max(1,n)).map(cid=>({cid,ctl:''})); this.render(); });
+  };
+}
+
+/* ── SAYFA ── */
+const GrpPage = {
+  q:'', kind:'', brand:'',
+  cardHTML(g){
+    const ms=this._ms(g), b=Univ.brand(g.brandId), L=Data.char(g.leader), mg=Grp.managers(g);
+    const withR=ms.filter(c=>Media.hasRender(c)).slice(0,g.kind==='tag'?2:4);
+    const vis=g.logo?.url?`<div class="gc-logo">${Media.fitHTML(g.logo,{cls:'gc-lg'})}</div>`:withR.length?`<div class="gc-rs n${withR.length}">${withR.map(c=>Media.renderHTML(c,{cls:'gc-r'})).join('')}</div><div class="gc-avs fb">${ms.slice(0,5).map(c=>avaHTML(c)).join('')}</div>`:`<div class="gc-avs">${ms.slice(0,5).map(c=>avaHTML(c)).join('')}</div>`;
+    return `<div class="gc" style="--gc:${esc(g.color||b?.color||'var(--gold)')}" onclick="GrpPage.view('${g.id}')">
+      <div class="gc-hero">${vis}<div class="gc-tl"><span class="gc-kind">${GROUP_KINDS[g.kind]?.ic||''} ${esc(Grp.kindTr(g))}</span>${b?brandChip(b):''}</div>
+        ${g.themeUrl?`<button class="gc-play" title="Grup müziğini çal" onclick="event.stopPropagation();Music.play(Music.src('group:${g.id}'),{why:'Grup'})">♪</button>`:''}</div>
+      <div class="gc-body"><div class="gc-nm">${esc(g.name)}</div>
+        <div class="gc-mem">${ms.map(c=>`<span class="${c.id===g.leader?'lead':''}">${c.id===g.leader?'👑 ':''}${esc(c.ringName)}</span>`).join('')}${mg.length?`<span class="mgr">🎙 ${mg.map(c=>esc(c.ringName)).join(', ')}</span>`:''}</div>
+        <div class="gc-f"><span class="tag neutral">${Grp.rec(g)}</span>${g.theme?`<span class="tag neutral" title="Grup müziği">♪ ${esc(g.theme)}</span>`:''}${g.active===false?'<span class="tag neutral">dağıldı</span>':''}${titlesOfGroup(g).map(t=>`<span class="beltchip" title="${esc(t.name)}">🏆</span>`).join('')}</div></div>
+    </div>`;
+  },
+  _ms(g){ return Grp.members(g); },
+  render(){
+    const el=$('gr-page'); if(!el) return; const gm=Univ.isGM();
+    const all=Grp.all(true), q=this.q.toLocaleLowerCase('tr');
+    const list=all.filter(g=>(!this.kind||g.kind===this.kind)&&(!this.brand||(this.brand==='none'?!Univ.brand(g.brandId):g.brandId===this.brand))
+      &&(!q||[g.name,g.theme,...Grp.members(g).map(c=>c.ringName)].join(' ').toLocaleLowerCase('tr').includes(q)));
+    el.innerHTML=`<div class="rs-row gr-bar">
+        <div class="rs-search"><i class="fas fa-magnifying-glass"></i><input id="gr-q" placeholder="Ara: grup ya da üye adı…" value="${esc(this.q)}"></div>
+        <select id="gr-kind"><option value="">Tüm türler</option>${Object.entries(GROUP_KINDS).map(([k,v])=>`<option value="${k}" ${this.kind===k?'selected':''}>${v.ic} ${v.tr}</option>`).join('')}</select>
+        <select id="gr-brand"><option value="">Tüm markalar</option><option value="none" ${this.brand==='none'?'selected':''}>Markasız</option>${Univ.brands().map(b=>`<option value="${b.id}" ${this.brand===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select>
+        ${gm?`<div class="rs-acts"><button class="btn gold" onclick="GrpPage.edit()"><i class="fas fa-plus"></i><span class="t"> Yeni grup</span></button>
+          <button class="btn" onclick="GrpPage.suggest()" title="Karakter ilişkilerindeki tag / stable bağlarından grup öner"><i class="fas fa-diagram-project"></i><span class="t"> İlişkilerden öner</span></button>
+          <button class="btn" onclick="GrpPage.aiAdd()" title="Gerçek takımları AI ile bul"><i class="fas fa-wand-magic-sparkles"></i><span class="t"> AI ile bul</span></button></div>`:''}
+      </div>
+      <div class="rs-sum"><span><b>${list.length}</b> grup</span>${Object.entries(GROUP_KINDS).map(([k,v])=>`<span>${v.ic} ${v.tr} <b>${all.filter(g=>g.kind===k).length}</b></span>`).join('')}</div>
+      <div class="gr-grid">${list.map(g=>this.cardHTML(g)).join('')||`<div class="empty" style="grid-column:1/-1"><i class="fas fa-people-group"></i><p>${all.length?'Sonuç yok':'Henüz takım / grup yok.'}</p>${gm&&!all.length?'<p class="muted" style="font-size:12px">"İlişkilerden öner" kadrodaki tag / stable bağlarından otomatik grup çıkarır; "AI ile bul" gerçek takımları arar.</p>':''}</div>`}</div>`;
+    const rr=()=>this.render();
+    $('gr-q').oninput=e=>{ this.q=e.target.value; clearTimeout(this._t); this._t=setTimeout(()=>{ rr(); const i=$('gr-q'); i.focus(); i.setSelectionRange(i.value.length,i.value.length); },200); };
+    $('gr-kind').onchange=e=>{ this.kind=e.target.value; rr(); }; $('gr-brand').onchange=e=>{ this.brand=e.target.value; rr(); };
+  },
+  modal(title,body,foot,wide=760){ $('grm-title').textContent=title; $('grm-body').innerHTML=body; $('grm-foot').innerHTML=foot; $('grm-box').style.maxWidth=wide+'px'; UI.open('md-grp'); },
+  view(id){
+    const g=Grp.get(id); if(!g) return; UI.close('md-char');
+    const ms=Grp.members(g), mg=Grp.managers(g), b=Univ.brand(g.brandId), gm=Univ.isGM();
+    const hist=(Data.history||[]).filter(h=>(h.winners||[h.winnerId]).some(x=>g.members.includes(x))||[h.a,h.b].some(s=>String(s||'').includes(g.name))).slice(0,6);
+    this.modal(g.name,`<div class="gv-head" style="--gc:${esc(g.color||b?.color||'var(--gold)')}">${this.cardHTML(g).replace(/onclick="GrpPage\.view\('[^']+'\)"/,'')}</div>
+      ${g.desc?`<div style="font-size:13px;color:var(--t1)">${esc(g.desc)}</div>`:''}
+      ${g.entrance?`<div class="mvrow"><span class="k">Ortak giriş</span><span>${esc(g.entrance)}</span></div>`:''}
+      <div><span class="lbl">Üyeler</span><div class="gv-ms">${ms.map(c=>`<div class="gv-m" onclick="UI.close('md-grp');Roster.show('${c.id}')">${avaHTML(c)}<div><b>${c.id===g.leader?'👑 ':''}${esc(c.ringName)}</b><small>${esc(Univ.brand(c.brandId)?.name||'')} · ${c.record.w}-${c.record.l} · OVR ${ovrOf(c)}</small></div></div>`).join('')}
+        ${mg.map(c=>`<div class="gv-m mgr" onclick="UI.close('md-grp');Roster.show('${c.id}')">${avaHTML(c)}<div><b>🎙 ${esc(c.ringName)}</b><small>menajer / eşlikçi</small></div></div>`).join('')}</div></div>
+      ${hist.length?`<div><span class="lbl">Son maçlar</span>${hist.map(h=>`<div class="dz-row"><div class="m"><b>${esc([h.a,h.b].filter(Boolean).join(' vs '))}</b><small>🏆 ${esc(h.winner||'')} · ${esc(h.method||'')}</small></div><div class="r">${h.rating!=null?starsHTML(h.rating):''}</div></div>`).join('')}</div>`:''}`,
+      `${gm?`<button class="btn red sm" onclick="GrpPage.del('${g.id}')"><i class="fas fa-trash"></i></button><button class="btn" onclick="GrpPage.edit('${g.id}')"><i class="fas fa-pen"></i> Düzenle</button>`:''}
+       ${g.themeUrl?`<button class="btn" onclick="Music.play(Music.src('group:${g.id}'),{why:'Grup'})">♪ Müzik</button>`:''}
+       <button class="btn gold" onclick="GrpPage.match('${g.id}')"><i class="fas fa-bell"></i> Maç kur</button>`);
+  },
+  match(id){ const g=Grp.get(id); if(!g) return; UI.close('md-grp'); MatchBuilder.open({mode:'free'});
+    const ms=g.members.filter(x=>hasRole(Data.char(x)||{},'wrestler')).slice(0,g.kind==='tag'?2:4);
+    MatchBuilder.st.sides[0]=ms.map(cid=>({cid,ctl:''})); MatchBuilder.st.sides[1]=MatchBuilder.st.sides[1].filter(x=>!ms.includes(x.cid));
+    while(MatchBuilder.st.sides[1].length<ms.length) MatchBuilder.st.sides[1].push({cid:'',ctl:''});
+    MatchBuilder.render(); },
+  async del(id){ const g=Grp.get(id); if(!g||!confirm(`"${g.name}" silinsin mi? (Karakterler ve ilişkileri silinmez.)`)) return; await B.del('groups/'+id); Data.groups.delete(id); Bus.emit('groups'); UI.close('md-grp'); },
+  /** aranabilir karakter seçici */
+  picker(key,sel,pool,{max=12,single=false}={}){
+    const st=this._pk[key]={sel:[...sel],pool,max,single,q:''};
+    return `<div class="gp" data-pk="${key}"><div class="gp-sel"></div><input class="gp-q" placeholder="Ara ve ekle…"><div class="gp-list"></div></div>`;
+  },
+  _pk:{},
+  pkRender(key){
+    const st=this._pk[key], root=document.querySelector(`[data-pk="${key}"]`); if(!root) return;
+    root.querySelector('.gp-sel').innerHTML=st.sel.map(id=>{ const c=Data.char(id); return c?`<span class="gp-chip" data-rm="${id}">${avaHTML(c)}${esc(c.ringName)} ✕</span>`:''; }).join('')||'<span class="muted" style="font-size:12px">Kimse seçilmedi</span>';
+    const q=st.q.toLocaleLowerCase('tr');
+    const res=st.pool.filter(c=>!st.sel.includes(c.id)&&(!q||[c.ringName,c.name].join(' ').toLocaleLowerCase('tr').includes(q))).slice(0,q?30:12);
+    root.querySelector('.gp-list').innerHTML=res.map(c=>`<button type="button" data-add="${c.id}">${avaHTML(c)}<span>${esc(c.ringName)}</span><small>${esc(Univ.brand(c.brandId)?.name||c.promotion||'')}</small></button>`).join('')||'<span class="muted" style="font-size:12px;padding:4px">Sonuç yok</span>';
+    root.querySelectorAll('[data-rm]').forEach(x=>x.onclick=()=>{ st.sel=st.sel.filter(i=>i!==x.dataset.rm); this.pkRender(key); this.onPick?.(); });
+    root.querySelectorAll('[data-add]').forEach(x=>x.onclick=()=>{ if(st.single) st.sel=[]; if(st.sel.length>=st.max){ toast(`En fazla ${st.max}`,'err'); return; } st.sel.push(x.dataset.add); this.pkRender(key); this.onPick?.(); });
+    const inp=root.querySelector('.gp-q'); inp.oninput=()=>{ st.q=inp.value; this.pkRender(key); const i=root.querySelector('.gp-q'); };
+  },
+  edit(id){
+    const g=id?Grp.get(id):{kind:'tag',members:[],managers:[],color:'#e3b341'}; if(!g) return;
+    const W=Store.chars('wrestler'), staff=[...Store.chars().filter(c=>['manager','gm'].some(r=>hasRole(c,r))),...Store.chars().filter(c=>!['manager','gm'].some(r=>hasRole(c,r)))];
+    const body=`<div class="fgrid">
+      <div class="ff half"><span class="lbl">Grup adı</span><input id="gf-name" value="${esc(g.name||'')}" placeholder="örn. The Usos"></div>
+      <div class="ff half"><span class="lbl">Tür</span><select id="gf-kind">${Object.entries(GROUP_KINDS).map(([k,v])=>`<option value="${k}" ${g.kind===k?'selected':''}>${v.ic} ${v.tr}</option>`).join('')}</select></div>
+      <div class="ff half"><span class="lbl">Marka</span><select id="gf-brand"><option value="">— markasız / ortak —</option>${Univ.brands().map(b=>`<option value="${b.id}" ${g.brandId===b.id?'selected':''}>${esc(b.name)}</option>`).join('')}</select></div>
+      <div class="ff half"><span class="lbl">Renk</span><input type="color" id="gf-color" value="${esc(g.color||'#e3b341')}"></div>
+      <div class="ff"><span class="lbl">Üyeler (güreşçiler)</span>${this.picker('mem',g.members||[],W,{max:12})}</div>
+      <div class="ff half"><span class="lbl">Lider</span><select id="gf-leader"></select></div>
+      <div class="ff half"><span class="lbl">Menajer / eşlikçi</span>${this.picker('mgr',g.managers||[],staff,{max:3})}</div>
+      <div class="ff"><span class="lbl">Logo (PNG / foto, direkt link)</span><input id="gf-logo" value="${esc(g.logo?.url||'')}" placeholder="https://i.imgur.com/….png"></div>
+      <div class="ff"><span class="lbl">Grup müziği (YouTube linki) — maç girişinde ve kazanınca çalar</span><input id="gf-theme-url" value="${esc(g.themeUrl||'')}" placeholder="https://youtu.be/…"></div>
+      <div class="ff half"><span class="lbl">Şarkı adı</span><input id="gf-theme" value="${esc(g.theme||'')}"></div>
+      <div class="ff half"><span class="lbl">Başlangıç saniyesi</span><input type="number" id="gf-theme-start" min="0" value="${g.themeStart||0}"></div>
+      <div class="ff"><span class="lbl">Açıklama / hikâye (AI okur)</span><textarea id="gf-desc" rows="2">${esc(g.desc||'')}</textarea></div>
+      <div class="ff"><span class="lbl">Ortak giriş (AI okur)</span><textarea id="gf-ent" rows="2" placeholder="örn. Işıklar söner, 'Yeet!' yankılanır; ikisi rampada kolları iki yana açar…">${esc(g.entrance||'')}</textarea></div>
+      <label class="ck ${id?'':'on'}"><input type="checkbox" id="gf-link" ${id?'':'checked'}> Üyeler arasına ilişki yaz (tag takımı → "tag", diğerleri → "stable")</label>
+      ${id?`<label class="ck ${g.active===false?'on':''}"><input type="checkbox" id="gf-off" ${g.active===false?'checked':''}> Grup dağıldı (listede kalsın, maçlarda kullanılmasın)</label>`:''}
+    </div>`;
+    this.modal(id?'Grubu düzenle':'Yeni takım / grup',body,`<button class="btn" onclick="UI.close('md-grp')">İptal</button><button class="btn gold" id="gf-go"><i class="fas fa-check"></i> Kaydet</button>`,720);
+    const lead=()=>{ const sel=this._pk.mem.sel, cur=$('gf-leader').value||g.leader||''; $('gf-leader').innerHTML='<option value="">— yok —</option>'+sel.map(id=>`<option value="${id}" ${id===cur?'selected':''}>${esc(Data.char(id)?.ringName||'')}</option>`).join(''); };
+    this.onPick=lead; this.pkRender('mem'); this.pkRender('mgr'); lead();
+    $('gf-go').onclick=async()=>{
+      const name=$('gf-name').value.trim(), mem=this._pk.mem.sel;
+      if(!name){ toast('Grup adı gerekli','err'); return; } if(mem.length<2){ toast('En az 2 üye seç','err'); return; }
+      const tu=$('gf-theme-url').value.trim(); if(tu&&!Music.ytId(tu)){ toast('YouTube linki anlaşılamadı','err'); return; }
+      $('gf-go').disabled=true;
+      try{
+        await Grp.save(id,{...g,name,kind:$('gf-kind').value,brandId:$('gf-brand').value,color:$('gf-color').value,members:mem,leader:mem.includes($('gf-leader').value)?$('gf-leader').value:null,
+          managers:this._pk.mgr.sel.filter(x=>!mem.includes(x)),logo:await fitMedia($('gf-logo').value.trim(),g.logo),themeUrl:tu,theme:$('gf-theme').value,themeStart:+$('gf-theme-start').value||0,
+          desc:$('gf-desc').value.trim(),entrance:$('gf-ent').value.trim(),active:!$('gf-off')?.checked},{link:$('gf-link').checked});
+        UI.close('md-grp'); toast(`${name} kaydedildi`,'ok'); this.render();
+      }catch(e){ console.error(e); toast('Kaydedilemedi: '+e.message,'err'); } finally{ const b=$('gf-go'); if(b) b.disabled=false; }
+    };
+  },
+  /** öneri / AI sonuçlarını gözden geçir → seçilenleri kaydet */
+  review(title,list,{ai=false}={}){
+    this._rv=list;
+    const row=(x,i)=>`<div class="rv-row"><label class="ck on"><input type="checkbox" data-rv="${i}" checked></label>
+      <div class="rv-main"><div class="rv-top"><input data-rvn="${i}" value="${esc(x.name)}"><select data-rvk="${i}">${Object.entries(GROUP_KINDS).map(([k,v])=>`<option value="${k}" ${x.kind===k?'selected':''}>${v.ic} ${v.tr}</option>`).join('')}</select></div>
+        <div class="rv-ms">${x.members.map(id=>Data.char(id)).filter(Boolean).map(c=>`<span>${avaHTML(c)}${esc(c.ringName)}</span>`).join('')}${(x.managers||[]).map(id=>Data.char(id)).filter(Boolean).map(c=>`<span class="mgr">🎙 ${esc(c.ringName)}</span>`).join('')}</div>
+        ${x.theme||x.missing?.length||x.note?`<small>${x.theme?`♪ ${esc(x.theme)} `:''}${x.missing?.length?`<span style="color:var(--am)">· kadroda yok: ${esc(x.missing.join(', '))}</span> `:''}${x.note?`· ${esc(x.note)}`:''}</small>`:''}</div></div>`;
+    this.modal(title,`${!ai&&list.length?`<div class="erow"><button class="btn sm" id="rv-ai" ${AI.cfg().primary==='offline'?'disabled title="AI kapalı"':''}><i class="fas fa-wand-magic-sparkles"></i> AI ile isimlendir (gerçek takım adları + müzik)</button></div>`:''}
+      <div class="rv-list">${list.map(row).join('')||'<div class="empty"><p>Öneri yok.</p></div>'}</div>`,
+      `<span class="muted" style="margin-right:auto;font-size:12px">${list.length} öneri</span><button class="btn" onclick="UI.close('md-grp')">İptal</button><button class="btn gold" id="rv-go" ${list.length?'':'disabled'}><i class="fas fa-check"></i> Seçilenleri kaydet</button>`,760);
+    $('rv-ai')?.addEventListener('click',()=>this.aiName());
+    $('rv-go').onclick=async()=>{ $('rv-go').disabled=true; let n=0;
+      for(const [i,x] of list.entries()){ if(!document.querySelector(`[data-rv="${i}"]`)?.checked) continue;
+        await Grp.save(null,{...x,name:document.querySelector(`[data-rvn="${i}"]`).value.trim()||x.name,kind:document.querySelector(`[data-rvk="${i}"]`).value},{link:true}); n++; }
+      UI.close('md-grp'); toast(`${n} grup eklendi`,'ok'); this.render(); };
+  },
+  /** tag / stable ilişkilerinden bağlı kümeler */
+  suggest(){
+    const W=Store.chars('wrestler'), ids=new Set(W.map(c=>c.id)), adj=new Map();
+    const link=(a,b)=>{ if(!ids.has(a)||!ids.has(b)) return; (adj.get(a)||adj.set(a,new Set()).get(a)).add(b); (adj.get(b)||adj.set(b,new Set()).get(b)).add(a); };
+    W.forEach(c=>(c.rels||[]).forEach(r=>{ if(['tag','stable'].includes(r.type)) link(c.id,r.id); }));
+    // her bağdan başlayıp herkesin birbirine bağlı olduğu en geniş kümeye büyüt (Team Hell No ile Brothers of Destruction karışmasın)
+    const sets=new Map();
+    for(const [a,ns] of adj) for(const b of ns){ if(a>b) continue; const cl=[a,b];
+      for(const x of [...adj.keys()].sort((p,q)=>adj.get(q).size-adj.get(p).size)) if(!cl.includes(x)&&cl.every(y=>adj.get(x).has(y))) cl.push(x);
+      const k=[...cl].sort().join('|'); if(!sets.has(k)) sets.set(k,cl); }
+    const out=[];
+    for(const comp of sets.values()){
+      if(comp.length<2||comp.length>8) continue;
+      if(Grp.all(true).some(g=>comp.every(x=>g.members.includes(x)))) continue;
+      const cs=comp.map(x=>Data.char(x)).sort((a,b)=>(b.popularity||50)-(a.popularity||50));
+      const notes=cs.flatMap(c=>(c.rels||[]).filter(r=>comp.includes(r.id)).map(r=>r.note)).filter(Boolean);
+      out.push({name:cs.length===2?`${cs[0].ringName} & ${cs[1].ringName}`:`${cs[0].ringName} grubu`,kind:cs.length===2?'tag':'stable',members:cs.map(c=>c.id),brandId:cs[0].brandId||null,note:notes[0]?.slice(0,90)||''});
+    }
+    out.sort((a,b)=>b.members.length-a.members.length);
+    this.review('İlişkilerden grup önerileri',out);
+  },
+  async aiName(){
+    const list=this._rv; if(!list?.length) return; toast('AI takım adlarını arıyor…');
+    const r=await AI.ask({json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Sadece JSON döndür.',
+      prompt:`Aşağıdaki güreşçi kümeleri için gerçek dünyadaki takım / stable adını bul (yoksa kısa, havalı bir ad uydur). Tür: tag (2 kişilik takım), stable (3+ grup), faction (büyük/siyasi grup). Varsa grubun giriş müziğinin adını ve lideri de yaz.
+${list.map((x,i)=>`${i}: ${x.members.map(id=>Data.char(id)?.ringName).join(', ')}`).join('\n')}
+JSON: {"groups":[{"i":0,"name":"...","kind":"tag|stable|faction","theme":"müzik adı ya da boş","leader":"lider adı ya da boş","desc":"1 cümle Türkçe"}]}`});
+    for(const x of (r.data?.groups||[])){ const g=list[+x.i]; if(!g) continue; if(x.name) g.name=String(x.name).slice(0,60); if(GROUP_KINDS[x.kind]) g.kind=x.kind; if(x.theme) g.theme=String(x.theme).slice(0,80); if(x.desc) g.desc=String(x.desc).slice(0,300);
+      const L=Data.findCharByName(String(x.leader||''),Grp.members(g)); if(L) g.leader=L.id; }
+    this.review('İlişkilerden grup önerileri',list,{ai:true});
+  },
+  async aiAdd(){
+    if(AI.cfg().primary==='offline'){ toast('AI kapalı — Ayarlar\'dan bağla','err'); return; }
+    const q=prompt('Hangi takımlar? (virgülle yaz, ör. "The Usos, The Judgment Day")\nBoş bırakırsan kadrodaki güncel tüm takım ve stable\'ları arar.','');
+    if(q===null) return; toast('AI takımları arıyor…');
+    const W=Store.chars('wrestler'), staff=Store.chars();
+    const r=await AI.ask({json:true,temperature:0.2,search:AI.canSearch(),system:'Profesyonel güreş uzmanısın. Güncel bilgiyi kullan. Sadece JSON döndür.',
+      prompt:`${q.trim()?`Şu takımları / grupları bul: ${q}`:'Aşağıdaki kadroda GÜNCEL olarak birlikte olan tüm tag takımlarını, stable ve fraksiyonları bul (en fazla 25).'}
+Kadro (sadece bu isimleri kullan): ${W.map(c=>c.ringName).join(', ')}
+Her grup için: ad, tür (tag | stable | faction), üyeler (kadrodaki adlarıyla), lider, menajer(ler), giriş müziğinin adı, 1-2 cümle Türkçe açıklama, ortak giriş tarifi (Türkçe, 1 cümle).
+JSON: {"groups":[{"name":"...","kind":"tag","members":["..."],"leader":"","managers":[""],"theme":"","desc":"","entrance":""}]}`});
+    const out=[];
+    for(const x of (r.data?.groups||[])){ if(!x?.name) continue;
+      const found=[], miss=[]; for(const n of (x.members||[])){ const c=Data.findCharByName(String(n||''),W); if(c&&!found.includes(c.id)) found.push(c.id); else if(!c&&n) miss.push(String(n)); }
+      if(found.length<2) continue;
+      const mg=(x.managers||[]).map(n=>Data.findCharByName(String(n||''),staff)).filter(c=>c&&!found.includes(c.id)).map(c=>c.id);
+      const L=Data.findCharByName(String(x.leader||''),found.map(id=>Data.char(id)));
+      const ex=Grp.all(true).find(g=>g.name.toLowerCase()===String(x.name).toLowerCase());
+      out.push({name:String(x.name).slice(0,60),kind:GROUP_KINDS[x.kind]?x.kind:(found.length===2?'tag':'stable'),members:found,managers:mg,leader:L?.id||null,theme:String(x.theme||'').slice(0,80),
+        desc:String(x.desc||'').slice(0,300),entrance:String(x.entrance||'').slice(0,300),brandId:Data.char(found[0])?.brandId||null,missing:miss,note:ex?'bu adla bir grup zaten var':''});
+    }
+    this.review('AI\'ın bulduğu takımlar',out,{ai:true});
+  },
+};
+function titlesOfGroup(g){ return Univ.titles().filter(t=>t.holder&&g.members.includes(t.holder)&&(g.members.length<=2||t.holder===g.leader)); }
+(function(){
+  const d=document.createElement('div'); d.className='mbd'; d.id='md-grp';
+  d.innerHTML=`<div class="mbox" id="grm-box" style="max-width:760px"><div class="mhd"><span class="mti" id="grm-title">Grup</span><button class="mcl" onclick="UI.close('md-grp')">✕</button></div>
+    <div class="mbdy" id="grm-body"></div><div class="mft" id="grm-foot"></div></div>`;
+  document.body.appendChild(d);
+})();
+document.addEventListener('DOMContentLoaded',()=>{ const _rp=UI.renderPage; UI.renderPage=function(){ _rp.call(this); if(this.page==='groups') GrpPage.render(); }; });
+Bus.on('groups',()=>{ if(UI.page==='groups') GrpPage.render(); if(UI.page==='roster') Roster.render(); });
+
+/* ── kadro entegrasyonu: kartta grup, profilde grup, "takıma göre" gruplama ── */
+RS_GROUPS.group='Takıma / gruba göre';
+{ const _gk=Roster.groupKey; Roster.groupKey=function(c,g){ if(g==='group') return Grp.ofChar(c.id)[0]?.name||'Grupsuz'; return _gk.call(this,c,g); }; }
+{ const _c=Roster.cardHTML; Roster.cardHTML=function(c){ const gs=Grp.ofChar(c.id); const h=_c.call(this,c);
+    return gs.length?h.replace('<div class="rc-f">',`<div class="rc-f">${gs.slice(0,2).map(g=>`<span class="tag gtag" title="${esc(Grp.kindTr(g))}">${GROUP_KINDS[g.kind]?.ic||''} ${esc(g.name)}</span>`).join('')}`):h; }; }
+{ const _d=Roster.detailHTML; Roster.detailHTML=function(c){ const gs=Data.char(c.id)?Grp.ofChar(c.id):[]; const h=_d.call(this,c);
+    return gs.length?h+`<div class="mvrow"><span class="k">Takım / grup</span><span>${gs.map(g=>`<a class="tag gtag" style="cursor:pointer" onclick="GrpPage.view('${g.id}')">${GROUP_KINDS[g.kind]?.ic||''} ${esc(g.name)}${g.leader===c.id?' 👑':''}</a>`).join(' ')}</span></div>`:h; }; }
+/* dışa / içe aktar: kadro JSON'unda "groups" da taşınır (üyeler id ya da isim olabilir) */
+Store.exportFile=function(){
+  const blob=new Blob([JSON.stringify({chars:this.d.chars,groups:Grp.all(true)},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='ringrp_kadro.json'; a.click();
+};
+Store.importFile=function(inp){
+  const f=inp.files[0]; if(!f) return;
+  const rd=new FileReader(); rd.onload=async()=>{
+    try{
+      const j=JSON.parse(rd.result); const list=Array.isArray(j)?j:(j.chars||[]);
+      let n=0; for(const c of list){ if(c&&c.name){ await this.upsert(c); n++; } }
+      let g=0; const ref=x=>Data.char(x)?.id||Data.findCharByName(String(x||''))?.id||null;
+      for(const x of (Array.isArray(j.groups)?j.groups:[])){ if(!x?.name) continue;
+        const members=[...new Set((x.members||[]).map(ref).filter(Boolean))]; if(members.length<2) continue;
+        const ex=x.id&&Grp.get(x.id);
+        await Grp.save(x.id||null,{...(ex||{}),...x,members,managers:(x.managers||[]).map(ref).filter(Boolean),leader:ref(x.leader),logo:x.logo?.url?x.logo:(x.logo?{url:String(x.logo),x:50,y:50,z:1}:null)},{link:!!x.link}); g++; }
+      toast(`${n} karakter${g?` · ${g} grup`:''} yüklendi`,'ok');
+    }catch(e){ console.error(e); toast('JSON okunamadı: '+e.message,'err'); }
+  }; rd.readAsText(f); inp.value='';
+};
 
 /* ════════════════════════════════════════════════════════════
    GEÇMİŞ / AYARLAR / UI
